@@ -46,13 +46,13 @@ fabric.properties
 
 
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
-/vendor/
+App/.env.local
+App/.env.local.php
+App/.env.*.local
+App/config/secrets/prod/prod.decrypt.private.php
+App/public/bundles/
+App/var/
+App/vendor/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
