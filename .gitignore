@@ -56,8 +56,8 @@ App/vendor/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
+App/.phpunit.result.cache
+App/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> phpunit/phpunit ###
