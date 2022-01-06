@@ -61,6 +61,6 @@ App/vendor/
 ###< symfony/phpunit-bridge ###
 
 ###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
+App/phpunit.xml
+App/.phpunit.result.cache
 ###< phpunit/phpunit ###
