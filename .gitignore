@@ -53,6 +53,9 @@ fabric.properties
 /App/public/bundles/
 /App/var/
 /App/vendor/
+!/var/cache
+/var/cache/*
+!/var/cache/.gitkeep
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
