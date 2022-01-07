@@ -8,6 +8,7 @@ use Twig\Environment;
 
 class HomeController extends AbstractController {
 
+    private Environment $twig;
 
     public function __construct(Environment $twig)
     {
