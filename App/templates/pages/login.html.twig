@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OSLO | Contact{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/pages/contact.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/pages/accueil.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div id="main" class="container">
+        <h3 style="text-align: center">Veuillez vous authentifier</h3>
+        <form action="/login" method="post">
+
+            <label for="Login" class="col-sm-auto"><span>Login :</span> </label>
+            <input class="col-sm form-control" id="Login" name="Login" required="required" type="text" placeholder="Login" /><br>
+
+
+            <label for="pwd" class="col-sm-auto"><span>Mot de passe :</span> </label>
+            <input class="col-sm form-control" id="pwd" name="pwd" required="required" type="password" placeholder="Mot de passe" /><br>
+
+            <button type="submit" class="btn btn-dark">M'authentifier</button>
+        </form>
+    </div>
+ {% endblock %}
+
+
+
+
+
