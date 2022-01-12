@@ -29,36 +29,26 @@
                     <ul  class="nav mr-auto">
 
                         <li class="nav-item"><a href="/" class="nav-link">Accueil</a></li>
-                        <?php
-                    if(Auth::isLogged()){
-                      echo '<li class="dropdown nav-item">
+                        <li class="dropdown nav-item">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Profil - '.$_SESSION['Auth']['Login'].'
+                            Profil - {#login#}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Profil</a>';
+                            <a class="dropdown-item" href="#">Profil</a>
+                            <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/admin">Gestion utilisateurs</a>
+                                <a class="dropdown-item" href="/BPT">Gestion BPT</a>
+                                <a class="dropdown-item" href="/BRC">Gestion BRC</a>
+                                <a class="dropdown-item" href="/BCS">Gestion BCS</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/'.$_SESSION['Auth']['role'].'">
 
-                            if(Auth::hasRole()){
-                            if(Auth::isAdmin()){
-                            echo '<div class="dropdown-divider"></div>';
-                            echo '<a class="dropdown-item" href="/admin">Gestion utilisateurs</a>';
-                            echo '<a class="dropdown-item" href="/BPT">Gestion BPT</a>';
-                            echo '<a class="dropdown-item" href="/BRC">Gestion BRC</a>';
-                            echo '<a class="dropdown-item" href="/BCS">Gestion BCS</a>';
-                            } else {
-                            echo '<div class="dropdown-divider"></div>';
-                            echo '<a class="dropdown-item" href="/'.$_SESSION['Auth']['role'].'">Gestion '.$_SESSION['Auth']['role'].'</a>';
-                            }
-                            }
-                            echo '<div class="dropdown-divider"></div>
-                            <a href="/logout" class="dropdown-item">Se déconnecter</a>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                                <a href="/logout" class="dropdown-item">Se déconnecter</a>
                         </div>
                         </li>
-                        ';
-
-                        } else {
-                        echo '<li class="nav-item"><a href="/login" class="nav-link">Se connecter</a></li>';
-                        }?>
+                        <li class="nav-item"><a href="/login" class="nav-link">Se connecter</a></li>
                         <li class="nav-item"><a href="/recherche" class="nav-link">Page de recherche</a></li>
 
                     </ul>
