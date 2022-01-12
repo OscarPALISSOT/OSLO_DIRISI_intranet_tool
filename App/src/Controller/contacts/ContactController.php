@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\contacts;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
@@ -20,7 +20,7 @@ class ContactController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
-        return $this->render('pages/contact.html.twig', [
+        return $this->render('contacts/contact.html.twig', [
 
         ]);
     }
