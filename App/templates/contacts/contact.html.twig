@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OSLO | Contact{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/pages/contact.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/pages/accueil.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div id="main" class="row h-100">
+    <div class="d-flex align-items-start h-100">
+        <div class="d-flex align-items-start h-100">
+            <!-- Nav tabs -->
+            <ul class="sidenav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="organisme-tab" data-bs-toggle="tab" href="#organisme" role="tab" aria-controls="organisme" aria-selected="true">Contact</a>
+                </li>
+                <a id="retourBtn" class="btn btn-dark align-self-baseline" href="javascript:history.back()">Retour</a>
+                </li>
+            </ul>
+            <div id="filAriane" class="vingt" itemscope="" itemtype="">
+                <ul>
+                    <a class="accueil" href="{{ path ('contact') }}" itemprop="">Contact</a> >
+                    <a class="nom1" href="javascript:history.back()"><?php echo $query["Cirisi"]?></a> >
+                    <a class="nom2" href="javascript:history.back()"><?php echo "Contact " .$query["Enseigne"]. " " .$query["Cirisi"]?></a>
+                </ul>
+            </div>
+        </div>
+        <div class="cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
+            <div class="container">
+                <div class="container">
+                    <div id="info">
+                        <div class="bouton cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
+                            <button title="Modifier les informations du quartier" class="align-self-sm-end btn" data-bs-toggle="modal" data-bs-target="{#<?php echo "#edit".$query["Cirisi"] .$query["Enseigne"]?>#}" type="button"><img src="{{ asset('images/edit-regular.svg') }}" width="20" /></button>
+                        </div>
+                    </div>
+                    <p>
+                        <strong>Nom : </strong><br />
+                        <strong>Prénom :</strong><br />
+                        <strong>Email :</strong><br>
+                        <strong>TPH :</strong>
+                    </p>
+                </div>
+            </div>
+{% endblock %}
+
+
+
+

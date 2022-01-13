@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}OSLO{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-5.1.3-dist/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/Jquery.js') }}"></script>
+        <script src="{{ asset('css/bootstrap-5.1.3-dist/js/bootstrap.bundle.js') }}"></script>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a href ="/" class="navbar-brand"><img alt="logo" src="{{ asset('images/logo.png') }}"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="navbar-toggler-icon fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
+                    <ul  class="nav mr-auto">
+
+                        <li class="nav-item"><a href="/" class="nav-link">Accueil</a></li>
+                        <li class="dropdown nav-item">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Profil - {#login#}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Profil</a>
+                                <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/admin">Gestion utilisateurs</a>
+                                    <a class="dropdown-item" href="/BPT">Gestion BPT</a>
+                                    <a class="dropdown-item" href="/BRC">Gestion BRC</a>
+                                    <a class="dropdown-item" href="/BCS">Gestion BCS</a>
+                                <div class="dropdown-divider"></div>
+                                    <a href="/logout" class="dropdown-item">Se déconnecter</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="{{ path ('login') }}" class="nav-link">Se connecter</a></li>
+                        <li class="nav-item"><a href="/recherche" class="nav-link">Page de recherche</a></li>
+
+                    </ul>
+                    <ul  class="nav mr-auto">
+                        <li class="nav-item"><a href="{{ path ('contact') }}" class="nav-link">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block body %}{% endblock %}
+    </body>
+</html>
