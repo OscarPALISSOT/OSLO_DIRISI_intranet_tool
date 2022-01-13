@@ -27,24 +27,27 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
                     <ul  class="nav mr-auto">
-
                         <li class="nav-item"><a href="/" class="nav-link">Accueil</a></li>
-                        <li class="dropdown nav-item">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Profil - {#login#}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Profil</a>
-                                <div class="dropdown-divider"></div>
+
+                        {% if app.user %}
+                            <li class="dropdown nav-item">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Profil - {{ app.user.user }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Profil</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/admin">Gestion utilisateurs</a>
                                     <a class="dropdown-item" href="/BPT">Gestion BPT</a>
                                     <a class="dropdown-item" href="/BRC">Gestion BRC</a>
                                     <a class="dropdown-item" href="/BCS">Gestion BCS</a>
-                                <div class="dropdown-divider"></div>
+                                    <div class="dropdown-divider"></div>
                                     <a href="/logout" class="dropdown-item">Se déconnecter</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a href="{{ path ('login') }}" class="nav-link">Se connecter</a></li>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item"><a href="{{ path ('login') }}" class="nav-link">Se connecter</a></li>
+                        {% endif %}
                         <li class="nav-item"><a href="/recherche" class="nav-link">Page de recherche</a></li>
 
                     </ul>

@@ -12,23 +12,24 @@
 
 {% block body %}
 
-    <div id="main" class="container">
+    <div id="main" class="mx-auto flex-column">
         <h3>Veuillez vous authentifier</h3>
-        <form action="/login" method="post">
 
+        {% if error %}
+            <div class="error">
+                {{error.messageKey | trans(error.messagedata, 'security')}}
+            </div>
+        {% endif %}
+
+
+        <form class="container" action={{path('login')}} method="post" autocomplete="off">
             <label for="Login" class="col-sm-auto"><span>Login :</span> </label>
-            <input class="col-sm form-control" id="Login" name="Login" required="required" type="text" placeholder="Login" /><br>
+            <input type="text" id="username" name="_username"  aria-label="Username" aria-describedby="basic-addon1" value="{{lastUsername}}" class="col-sm form-control" placeholder="Login" /><br>
 
+            <label for="password" class="col-sm-auto"><span>Mot de passe :</span> </label>
+            <input type="password"  name="_password" aria-label="Username" aria-describedby="basic-addon1" class="col-sm form-control" id="password" required="required" placeholder="Mot de passe" /><br>
 
-            <label for="pwd" class="col-sm-auto"><span>Mot de passe :</span> </label>
-            <input class="col-sm form-control" id="pwd" name="pwd" required="required" type="password" placeholder="Mot de passe" /><br>
-
-            <button type="submit" class="btn btn-dark">M'authentifier</button>
+            <button type="submit" class="btn btn-dark">S'authentifier</button>
         </form>
     </div>
  {% endblock %}
-
-
-
-
-
