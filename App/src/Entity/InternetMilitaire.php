@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * InternetMilitaire
  *
+ * @ORM\Entity(repositoryClass="App\Repository\InternetMilitaireRepository")
  * @ORM\Table(name="internet_militaire", indexes={@ORM\Index(name="internet_militaire_Organisme_FK", columns={"id_organisme"})})
- * @ORM\Entity
  */
 class InternetMilitaire
 {

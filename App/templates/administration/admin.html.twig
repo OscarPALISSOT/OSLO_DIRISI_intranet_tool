@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OSLO | Administration{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="main" class="mx-auto flex-column">
+        <h1>Tableau de bord</h1>
+        <div class="container">
+            <div class="row">
+                {# card Bases de défense #}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-building"></i>Bases de défense</h5>
+                            <p class="card-text">Il y a actuellement  bases de défense enregistrées</p>
+                            <a href="" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card Bases de défense #}
+                {# card RFZ#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-building"></i>Routeurs fédérateurs de zone</h5>
+                            <p class="card-text">Il y a actuellement  routeurs fédérateurs de zone enregistrés</p>
+                            <a href="" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card RFZ #}
+            </div>
+        </div>
+    </div>
+{% endblock %}
