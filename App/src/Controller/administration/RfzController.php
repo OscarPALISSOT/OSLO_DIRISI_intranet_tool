@@ -30,6 +30,10 @@ class RfzController extends AbstractController {
         ]);
     }
 
+    public function newRfz() : Response{
+
+    }
+
     /**
      * @Route ("/Admin/RouteursFederateursDeZone/{id}", name="Admin_Rfz_edit")
      * @param Request $request
