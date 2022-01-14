@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-building"></i>Bases de défense</h5>
                             <p class="card-text">Il y a actuellement {{ nbBdd}} bases de défense enregistrées</p>
-                            <a href="{{ path ('AdminBdd') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Admin_Bdd') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
@@ -31,13 +31,24 @@
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-building"></i>Routeurs fédérateurs de zone</h5>
+                            <h5 class="card-title"><i class="fas fa-wifi"></i>Routeurs fédérateurs de zone</h5>
                             <p class="card-text">Il y a actuellement {{ nbRfz }} routeurs fédérateurs de zone enregistrés</p>
-                            <a href="{{ path ('AdminRfz') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Admin_Rfz') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
                 {# /card RFZ #}
+                {# card Contact#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-wifi"></i>Contact</h5>
+                            <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
+                            <a href="{{ path ('Admin') }}" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card Contact #}
             </div>
         </div>
     </div>
