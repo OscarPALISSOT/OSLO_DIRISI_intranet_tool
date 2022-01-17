@@ -22,7 +22,7 @@
         {% endif %}
 
 
-        <form class="container" action={{path('login')}} method="post" autocomplete="off">
+        <form class="container" action="{{path('login')}}" method="post" autocomplete="off">
             <label for="Login" class="col-sm-auto"><span>Login :</span> </label>
             <input type="text" id="username" name="_username"  aria-label="Username" aria-describedby="basic-addon1" value="{{lastUsername}}" class="col-sm form-control" placeholder="Login" /><br>
 

@@ -1,17 +1,16 @@
 //ajout d'un rfz via ajax et modal
-$("#submit").click(function Addrfz() {
+$("#rfzForm").submit(function Addrfz(e) {
+
+    e.preventDefault()
+    var form = $(this);
+    var actionUrl = form.attr('action');
     $.ajax({
-        url: "/Admin/NouveauAdmins",
-        type: "POST",
-        data:{
-            username: $('#username').val(),
-            _token: $('#_token').val()
-        },
-        async:      true,
+        url: actionUrl,
+        type: form.attr('method'),
+        data:form.serialize(),
         success: function(data, status)
         {
-            var html = '<h2>Identifiant : ' + data.login + '</h2>';
-
+            var html = '<h2>Nom du nouveau routeur : ' + data.Rfz + '</h2>';
             $('#ajax-modal').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError)
@@ -19,5 +18,5 @@ $("#submit").click(function Addrfz() {
             $('#ajax-modal').html('Error: ' + xhr.status);
             console.log(thrownError);
         }
-    });
+    })
 });

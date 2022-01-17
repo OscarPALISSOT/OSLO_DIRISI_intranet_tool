@@ -30,8 +30,26 @@ class RfzController extends AbstractController {
         ]);
     }
 
-    public function newRfz() : Response{
 
+    /**
+     * @Route ("/Admin/NewRouteursFederateursDeZone", name="Admin_Rfz_New")
+     * @param Request $request
+     * @param ManagerRegistry $doctrine
+     * @return Response
+     */
+    public function newRfz(Request $request, ManagerRegistry $doctrine) : Response{
+        $NewRfz = new Rfz();
+        $Rfz = $request->request->get('rfz');
+        $NewRfz->setRfz($Rfz);
+        if ($this->isCsrfTokenValid("createRfz", $request->get('_token'))){
+            $em = $doctrine->getManager();
+            $em->persist($NewRfz);
+            $em->flush();
+        }
+        $jsonData = array(
+            'Rfz' => $Rfz,
+        );
+        return $this->json($jsonData, 200);
     }
 
     /**
