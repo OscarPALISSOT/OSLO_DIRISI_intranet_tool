@@ -19,7 +19,7 @@ class Rfz
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idRfz;
+    private int $idRfz;
 
     /**
      * @var string

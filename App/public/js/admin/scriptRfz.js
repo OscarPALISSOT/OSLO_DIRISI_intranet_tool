@@ -1,6 +1,5 @@
 //ajout d'un rfz via ajax et modal
-$("#rfzForm").submit(function Addrfz(e) {
-
+$("#rfzFormCreate").submit(function Addrfz(e) {
     e.preventDefault()
     var form = $(this);
     var actionUrl = form.attr('action');

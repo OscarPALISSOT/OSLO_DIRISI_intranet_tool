@@ -53,24 +53,29 @@ class RfzController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/RouteursFederateursDeZone/{id}", name="Admin_Rfz_edit")
+     * @Route ("/Admin/RouteursFederateursDeZone/{id}", name="Admin_Rfz_Edit")
      * @param Request $request
      * @param Rfz $Rfz
      * @param ManagerRegistry $doctrine
+     * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function editrfz(Request $request, Rfz $Rfz, ManagerRegistry $doctrine) : Response{
-        $form = $this->createForm(RfzFormType::class, $Rfz);
-        $form->handleRequest($request);
+    public function editrfz(Request $request, Rfz $Rfz, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+        $id = $request->query->get('id');
+        dump($id);
+        $Rfz = $rfzRepository->find($id);
+        $RfzName = $request->request->get('rfz');
+        $Rfz->setRfz($RfzName);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($this->isCsrfTokenValid("editRfz", $request->get('_token'))){
             $em = $doctrine->getManager();
-            $em->flush();
-            return $this->redirectToRoute('Admin_Rfz');
+            $em->persist($Rfz);
+            //$em->flush();
         }
 
-        return $this->render('administration/rfz/rfzEdit.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        $jsonData = array(
+            'Rfz' => $Rfz,
+        );
+        return $this->json($jsonData, 200);
     }
 }
