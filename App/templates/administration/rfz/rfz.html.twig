@@ -23,6 +23,7 @@
             </button>
 
             <form id="rfzFormCheck" action="{{ path ('Admin_Rfz_Checked')}}" method="post">
+                <input type="hidden" id="_token" name="_token" value={{ csrf_token ('Rfz')}}>
                 <button type="submit" class="btn btn-outline-danger" name="submit" value="delete" >
                     Supprimer le sélection <i class="fas fa-trash"></i>
                 </button>
@@ -40,7 +41,6 @@
                                 <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form id="rfzFormEdit" action="" method="post">
                                 <div class="modal-body">
                                     <div class="container mt-4">
                                         <h2>Modifier les informations du routeur fédérateur de zone :</h2>
@@ -48,13 +48,11 @@
                                             <span class="input-group-text">Nom</span>
                                             <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="rfzEdit" name="rfzEdit">
                                         </div>
-                                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('editRfz')}}>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" name="submit" value="edit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1">Enregistrer</button>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>

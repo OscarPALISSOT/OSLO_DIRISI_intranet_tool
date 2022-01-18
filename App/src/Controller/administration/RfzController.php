@@ -65,7 +65,7 @@ class RfzController extends AbstractController {
         $ChekedId = array();
         for ( $i = 0; $i < $nbRfz; $i++){
             if ($request->request->get('idChecked' . $Rfzs[$i]->getIdRfz())){
-                array_push($ChekedId, $Rfzs[$i]->getIdRfz());
+                $ChekedId[] = $Rfzs[$i]->getIdRfz();
             }
         }
         if ($request->request->get('submit') == 'edit'){
@@ -75,7 +75,7 @@ class RfzController extends AbstractController {
                 $RfzName = $request->request->get('rfzEdit');
                 $Rfz->setRfz($RfzName);
 
-                if ($this->isCsrfTokenValid("editRfz", $request->get('_token'))){
+                if ($this->isCsrfTokenValid("Rfz", $request->get('_token'))){
                     $em = $doctrine->getManager();
                     $em->persist($Rfz);
                     $em->flush();
@@ -89,13 +89,20 @@ class RfzController extends AbstractController {
                 $jsonData = array(
                     'Rfz' => "Vous ne pouvez modifiez qu'un seul routeur à la fois",
                 );
-
             }
 
         }
         else{
+            foreach ($ChekedId as $item){
+                $rfzToDelete = $rfzRepository->find($item);
+                if ($this->isCsrfTokenValid("Rfz", $request->get('_token'))){
+                    $em = $doctrine->getManager();
+                    $em->remove($rfzToDelete);
+                    $em->flush();
+                }
+            }
             $jsonData = array(
-                'Rfz' => 'test',
+                'Rfz' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
