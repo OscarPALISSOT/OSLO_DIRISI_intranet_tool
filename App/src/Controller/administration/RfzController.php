@@ -53,27 +53,51 @@ class RfzController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/RouteursFederateursDeZone/{id}", name="Admin_Rfz_Edit")
+     * @Route ("/Admin/RouteursFederateursDeZone/Checked", name="Admin_Rfz_Checked")
      * @param Request $request
      * @param ManagerRegistry $doctrine
      * @param RfzRepository $rfzRepository
-     * @param $id
      * @return Response
      */
-    public function editRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository, $id) : Response{
-        $Rfz = $rfzRepository->find($id);
-        $RfzName = $request->request->get('rfzEdit');
-        $Rfz->setRfz($RfzName);
-
-        if ($this->isCsrfTokenValid("editRfz", $request->get('_token'))){
-            $em = $doctrine->getManager();
-            $em->persist($Rfz);
-            $em->flush();
+    public function CheckedRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+        $Rfzs = $rfzRepository->findAll();
+        $nbRfz = count($Rfzs);
+        $ChekedId = array();
+        for ( $i = 0; $i < $nbRfz; $i++){
+            if ($request->request->get('idChecked' . $Rfzs[$i]->getIdRfz())){
+                array_push($ChekedId, $Rfzs[$i]->getIdRfz());
+            }
         }
+        if ($request->request->get('submit') == 'edit'){
+            if (count($ChekedId) == 1){
+                $id = $request->request->get('idChecked');
+                $Rfz = $rfzRepository->find($ChekedId[0]);
+                $RfzName = $request->request->get('rfzEdit');
+                $Rfz->setRfz($RfzName);
 
-        $jsonData = array(
-            'Rfz' => $Rfz->getRfz(),
-        );
+                if ($this->isCsrfTokenValid("editRfz", $request->get('_token'))){
+                    $em = $doctrine->getManager();
+                    $em->persist($Rfz);
+                    $em->flush();
+                }
+
+                $jsonData = array(
+                    'Rfz' => $Rfz->getRfz(),
+                );
+            }
+            else{
+                $jsonData = array(
+                    'Rfz' => "Vous ne pouvez modifiez qu'un seul routeur à la fois",
+                );
+
+            }
+
+        }
+        else{
+            $jsonData = array(
+                'Rfz' => 'test',
+            );
+        }
         return $this->json($jsonData, 200);
     }
 }
