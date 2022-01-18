@@ -55,26 +55,24 @@ class RfzController extends AbstractController {
     /**
      * @Route ("/Admin/RouteursFederateursDeZone/{id}", name="Admin_Rfz_Edit")
      * @param Request $request
-     * @param Rfz $Rfz
      * @param ManagerRegistry $doctrine
      * @param RfzRepository $rfzRepository
+     * @param $id
      * @return Response
      */
-    public function editrfz(Request $request, Rfz $Rfz, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
-        $id = $request->query->get('id');
-        dump($id);
+    public function editRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository, $id) : Response{
         $Rfz = $rfzRepository->find($id);
-        $RfzName = $request->request->get('rfz');
+        $RfzName = $request->request->get('rfzEdit');
         $Rfz->setRfz($RfzName);
 
         if ($this->isCsrfTokenValid("editRfz", $request->get('_token'))){
             $em = $doctrine->getManager();
             $em->persist($Rfz);
-            //$em->flush();
+            $em->flush();
         }
 
         $jsonData = array(
-            'Rfz' => $Rfz,
+            'Rfz' => $Rfz->getRfz(),
         );
         return $this->json($jsonData, 200);
     }
