@@ -12,10 +12,12 @@ $("#rfzFormCreate").submit(function AddRfz(e) {
         success: function(data, status)
         {
             let html = '<h2>Nom du nouveau routeur : ' + data.Rfz + '</h2>';
+            $('.loading').html(null);
             $('#ajax-modal').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError)
         {
+            $('.loading').html(null);
             $('#ajax-modal').html('Error: ' + xhr.status);
             console.log(thrownError);
         }
@@ -33,10 +35,12 @@ $("#rfzFormDelete").submit(function DeleteRfz(e) {
         success: function(data, status)
         {
             let html = '<h2>' + data.Rfz + '</h2>';
+            $('.loading').html(null);
             $('#ajax-modalDelete').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError)
         {
+            $('.loading').html(null);
             $('#ajax-modalDelete').html('Error: ' + xhr.status);
             console.log(thrownError);
         }
@@ -57,11 +61,13 @@ for (let i = 0; i < editForms.length; i++){
             success: function(data, status)
             {
                 let html = '<h2>Nouveau nom du routeur : ' + data.Rfz + '</h2>';
+                $('.loading').html(null);
                 $('#ajax-modalEdit').html(html);
 
             },
             error: function (xhr, ajaxOptions, thrownError)
             {
+                $('.loading').html(null);
                 $('#ajax-modalEdit').html('Error: ' + xhr.status);
                 console.log(thrownError);
             }
