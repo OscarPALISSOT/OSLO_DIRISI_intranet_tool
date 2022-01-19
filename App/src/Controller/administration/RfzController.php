@@ -41,7 +41,7 @@ class RfzController extends AbstractController {
         $NewRfz = new Rfz();
         $Rfz = $request->request->get('rfz');
         $NewRfz->setRfz($Rfz);
-        if ($this->isCsrfTokenValid("createRfz", $request->get('_token'))){
+        if ($this->isCsrfTokenValid("CreateRfz", $request->get('_token'))){
             $em = $doctrine->getManager();
             $em->persist($NewRfz);
             $em->flush();
@@ -88,7 +88,6 @@ class RfzController extends AbstractController {
                 'Rfz' => "Suppression terminée",
             );
         }
-
         return $this->json($jsonData, 200);
     }
 
@@ -99,30 +98,21 @@ class RfzController extends AbstractController {
      * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function CheckedRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+    public function EditRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+        $id = $request->request->get('idEdit');
+        $Rfz = $rfzRepository->find($id);
+        $RfzName = $request->request->get('rfzEdit');
+        $Rfz->setRfz($RfzName);
 
-        if ($this->isCsrfTokenValid("Rfz", $request->get('_token'))){
-            if ($request->request->get('action') == 'edit'){
-                if (count($ChekedId) == 1){
-                    $Rfz = $rfzRepository->find($ChekedId[0]);
-                    $RfzName = $request->request->get('rfzEdit');
-                    $Rfz->setRfz($RfzName);
-
-                    $em = $doctrine->getManager();
-                    $em->persist($Rfz);
-                    //$em->flush();
-
-                    $jsonData = array(
-                        'Rfz' => $Rfz->getRfz(),
-                    );
-                }
-                else{
-                    $jsonData = array(
-                        'Rfz' => "Vous ne pouvez modifiez qu'un seul routeur à la fois",
-                    );
-                }
-            }
+        if ($this->isCsrfTokenValid("EditRfz", $request->get('_token'))) {
+            $em = $doctrine->getManager();
+            $em->persist($Rfz);
+            $em->flush();
         }
+
+        $jsonData = array(
+            'Rfz' => $Rfz->getRfz(),
+        );
 
         return $this->json($jsonData, 200);
     }

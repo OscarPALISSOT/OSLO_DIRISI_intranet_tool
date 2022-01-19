@@ -44,29 +44,27 @@ $("#rfzFormDelete").submit(function DeleteRfz(e) {
 });
 
 //modif d'un rfz via ajax et modal
-$("#rfzFormCheck").submit(function Editrfz(e) {
-    e.preventDefault()
-    let form = $(this);
-    $.ajax({
-        url: form.attr('action'),
-        type: form.attr('method'),
-        data:form.serialize(),
-        success: function(data, status)
-        {
-            if (data.action === 'edit'){
+
+let editForms = document.getElementsByClassName('rfzFormEdit');
+for (let i = 0; i < editForms.length; i++){
+    editForms[i].addEventListener('submit', function Editrfz(e) {
+        e.preventDefault()
+        let form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data:form.serialize(),
+            success: function(data, status)
+            {
                 let html = '<h2>Nouveau nom du routeur : ' + data.Rfz + '</h2>';
                 $('#ajax-modalEdit').html(html);
-            }
-            else {
-                let html = '<h2>' + data.Rfz + '</h2>';
-                $('#ajax-modalDelete').html(html);
-            }
 
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            $('#ajax-modalEdit').html('Error: ' + xhr.status);
-            console.log(thrownError);
-        }
-    })
-});
+            },
+            error: function (xhr, ajaxOptions, thrownError)
+            {
+                $('#ajax-modalEdit').html('Error: ' + xhr.status);
+                console.log(thrownError);
+            }
+        })
+    });
+}
