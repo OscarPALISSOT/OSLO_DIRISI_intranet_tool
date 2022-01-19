@@ -156,7 +156,7 @@
                 </div>
                 <div class="modal-footer">
                     <form id="rfzFormDelete" action="{{ path ('Admin_Rfz_Delete')}}" method="post">
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('deleteRfz')}}>
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteRfz')}}>
                         <button class="btn btn-danger" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
                             Confirmer <i class="fas fa-trash"></i>
                         </button>

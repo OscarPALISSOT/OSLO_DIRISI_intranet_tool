@@ -80,7 +80,7 @@ class RfzController extends AbstractController {
                 if ($this->isCsrfTokenValid("DeleteRfz", $request->get('_token'))){
                     $em = $doctrine->getManager();
                     $em->remove($rfzToDelete);
-                    //$em->flush();
+                    $em->flush();
                 }
 
             }
@@ -93,7 +93,7 @@ class RfzController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/RouteursFederateursDeZone/Checked", name="Admin_Rfz_Checked")
+     * @Route ("/Admin/EditRouteursFederateursDeZone/{id}", name="Admin_Rfz_Edit")
      * @param Request $request
      * @param ManagerRegistry $doctrine
      * @param RfzRepository $rfzRepository

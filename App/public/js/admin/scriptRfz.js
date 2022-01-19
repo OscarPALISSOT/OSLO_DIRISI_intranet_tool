@@ -1,5 +1,8 @@
+
+
+
 //ajout d'un rfz via ajax et modal
-$("#rfzFormCreate").submit(function Addrfz(e) {
+$("#rfzFormCreate").submit(function AddRfz(e) {
     e.preventDefault()
     let form = $(this);
     $.ajax({
@@ -19,6 +22,26 @@ $("#rfzFormCreate").submit(function Addrfz(e) {
     })
 });
 
+//suppression d'un rfz via ajax et modal
+$("#rfzFormDelete").submit(function DeleteRfz(e) {
+    e.preventDefault()
+    let form = $(this);
+    $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        data:form.serialize(),
+        success: function(data, status)
+        {
+            let html = '<h2>' + data.Rfz + '</h2>';
+            $('#ajax-modalDelete').html(html);
+        },
+        error: function (xhr, ajaxOptions, thrownError)
+        {
+            $('#ajax-modalDelete').html('Error: ' + xhr.status);
+            console.log(thrownError);
+        }
+    })
+});
 
 //modif d'un rfz via ajax et modal
 $("#rfzFormCheck").submit(function Editrfz(e) {
