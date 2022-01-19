@@ -14,10 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RfzController extends AbstractController {
 
     private RfzRepository $RfzRepository;
+    private ManagerRegistry $ManagerRegistry;
 
-    public function __construct(RfzRepository $Rfz)
+    public function __construct(RfzRepository $RfzRepository, ManagerRegistry $doctrine)
     {
-        $this->RfzRepository = $Rfz;
+        $this->RfzRepository = $RfzRepository;
+        $this->ManagerRegistry = $doctrine;
     }
 
     /**
@@ -26,23 +28,34 @@ class RfzController extends AbstractController {
      */
     public function index() : Response{
         return $this->render('administration/rfz/rfz.html.twig', [
-            'Rfzs'=>$this->RfzRepository->findAll(),
+            'Rfzs' => $this->RfzRepository->findAll(),
         ]);
     }
 
+    /**
+     * @Route ("/Admin/GetRouteursFederateursDeZone", name="Admin_Rfz_Get")
+     * @return Response
+     */
+    public function GetRfzs() : Response{
+
+        $template = $this->render('loopRfz.html.twig')->getContent();
+        $jsonData = array(
+            'Rfzs' => $this->RfzRepository->findAll(),
+        );
+        return $this->json($jsonData, 200);
+    }
 
     /**
      * @Route ("/Admin/NewRouteursFederateursDeZone", name="Admin_Rfz_New")
      * @param Request $request
-     * @param ManagerRegistry $doctrine
      * @return Response
      */
-    public function newRfz(Request $request, ManagerRegistry $doctrine) : Response{
+    public function newRfz(Request $request) : Response{
         $NewRfz = new Rfz();
         $Rfz = $request->request->get('rfz');
         $NewRfz->setRfz($Rfz);
         if ($this->isCsrfTokenValid("CreateRfz", $request->get('_token'))){
-            $em = $doctrine->getManager();
+            $em = $this->ManagerRegistry->getManager();
             $em->persist($NewRfz);
             $em->flush();
         }
@@ -55,11 +68,10 @@ class RfzController extends AbstractController {
     /**
      * @Route ("/Admin/DeleteRouteursFederateursDeZone", name="Admin_Rfz_Delete")
      * @param Request $request
-     * @param ManagerRegistry $doctrine
      * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function DeleteRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository): Response{
+    public function DeleteRfz(Request $request, RfzRepository $rfzRepository): Response{
         $Rfzs = $rfzRepository->findAll();
         $nbRfz = count($Rfzs);
         $ChekedId = array();
@@ -78,7 +90,7 @@ class RfzController extends AbstractController {
                 $rfzToDelete = $rfzRepository->find($item);
 
                 if ($this->isCsrfTokenValid("DeleteRfz", $request->get('_token'))){
-                    $em = $doctrine->getManager();
+                    $em = $this->ManagerRegistry->getManager();
                     $em->remove($rfzToDelete);
                     $em->flush();
                 }
@@ -94,18 +106,17 @@ class RfzController extends AbstractController {
     /**
      * @Route ("/Admin/EditRouteursFederateursDeZone/{id}", name="Admin_Rfz_Edit")
      * @param Request $request
-     * @param ManagerRegistry $doctrine
      * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function EditRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+    public function EditRfz(Request $request, RfzRepository $rfzRepository) : Response{
         $id = $request->request->get('idEdit');
         $Rfz = $rfzRepository->find($id);
         $RfzName = $request->request->get('rfzEdit');
         $Rfz->setRfz($RfzName);
 
         if ($this->isCsrfTokenValid("EditRfz", $request->get('_token'))) {
-            $em = $doctrine->getManager();
+            $em = $this->ManagerRegistry->getManager();
             $em->persist($Rfz);
             $em->flush();
         }

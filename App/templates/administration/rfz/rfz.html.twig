@@ -36,51 +36,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for rfz in Rfzs %}
-                        <tr>
-                            <th scope="row">
-                                <div class="form-check">
-                                    <label for="checkbox{{ rfz.idRfz }}"></label>
-                                    <input form="rfzFormDelete" class="form-check-input checkboxRfz" name="idChecked{{ rfz.idRfz }}" type="checkbox" value="{{ rfz.idRfz }}" id="checkbox{{ rfz.idRfz }}">
-                                </div>
-                            </th>
-                            <td>{{ rfz.rfz }}</td>
-                            <td>
-                                <!-- Button trigger modal edit -->
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ rfz.idRfz }}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-
-                                <!-- Modal edit-->
-                                <div class="modal fade" id="modalEdit1{{ rfz.idRfz }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form id="rfzFormEdit{{ rfz.idRfz }}" class="rfzFormEdit" action="{{ path ('Admin_Rfz_Edit', {id: rfz.idRfz })}}" method="post">
-                                                <div class="modal-body">
-                                                    <div class="container mt-4">
-                                                        <h2>Modifier les informations du routeur fédérateur de zone :</h2>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Nom</span>
-                                                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="rfzEdit" name="rfzEdit">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditRfz')}}>
-                                                    <input type="hidden" name="idEdit" value="{{ rfz.idRfz }}">
-                                                    <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ rfz.idRfz }}">Enregistrer</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    <div id="loop-container">
+                        {% include 'administration/rfz/loopRfz.html.twig' %}
+                    </div>
                 </tbody>
             </table>
         </div>

@@ -1,5 +1,8 @@
 
+//affichage des item via ajax
+$( document ).ready(function() {
 
+});
 
 //ajout d'un rfz via ajax et modal
 $("#rfzFormCreate").submit(function AddRfz(e) {
