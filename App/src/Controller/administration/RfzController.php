@@ -53,13 +53,13 @@ class RfzController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/RouteursFederateursDeZone/Checked", name="Admin_Rfz_Checked")
+     * @Route ("/Admin/DeleteRouteursFederateursDeZone", name="Admin_Rfz_Delete")
      * @param Request $request
      * @param ManagerRegistry $doctrine
      * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function CheckedRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+    public function DeleteRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository): Response{
         $Rfzs = $rfzRepository->findAll();
         $nbRfz = count($Rfzs);
         $ChekedId = array();
@@ -68,43 +68,62 @@ class RfzController extends AbstractController {
                 $ChekedId[] = $Rfzs[$i]->getIdRfz();
             }
         }
-        if ($request->request->get('submit') == 'edit'){
-            if (count($ChekedId) == 1){
-                $id = $request->request->get('idChecked');
-                $Rfz = $rfzRepository->find($ChekedId[0]);
-                $RfzName = $request->request->get('rfzEdit');
-                $Rfz->setRfz($RfzName);
-
-                if ($this->isCsrfTokenValid("Rfz", $request->get('_token'))){
-                    $em = $doctrine->getManager();
-                    $em->persist($Rfz);
-                    $em->flush();
-                }
-
-                $jsonData = array(
-                    'Rfz' => $Rfz->getRfz(),
-                );
-            }
-            else{
-                $jsonData = array(
-                    'Rfz' => "Vous ne pouvez modifiez qu'un seul routeur à la fois",
-                );
-            }
-
+        if (count($ChekedId) == 0){
+            $jsonData = array(
+                'Rfz' => "Veuillez sélectionner au moins élément à supprimer",
+            );
         }
         else{
             foreach ($ChekedId as $item){
                 $rfzToDelete = $rfzRepository->find($item);
-                if ($this->isCsrfTokenValid("Rfz", $request->get('_token'))){
+
+                if ($this->isCsrfTokenValid("DeleteRfz", $request->get('_token'))){
                     $em = $doctrine->getManager();
                     $em->remove($rfzToDelete);
-                    $em->flush();
+                    //$em->flush();
                 }
+
             }
             $jsonData = array(
                 'Rfz' => "Suppression terminée",
             );
         }
+
+        return $this->json($jsonData, 200);
+    }
+
+    /**
+     * @Route ("/Admin/RouteursFederateursDeZone/Checked", name="Admin_Rfz_Checked")
+     * @param Request $request
+     * @param ManagerRegistry $doctrine
+     * @param RfzRepository $rfzRepository
+     * @return Response
+     */
+    public function CheckedRfz(Request $request, ManagerRegistry $doctrine, RfzRepository $rfzRepository) : Response{
+
+        if ($this->isCsrfTokenValid("Rfz", $request->get('_token'))){
+            if ($request->request->get('action') == 'edit'){
+                if (count($ChekedId) == 1){
+                    $Rfz = $rfzRepository->find($ChekedId[0]);
+                    $RfzName = $request->request->get('rfzEdit');
+                    $Rfz->setRfz($RfzName);
+
+                    $em = $doctrine->getManager();
+                    $em->persist($Rfz);
+                    //$em->flush();
+
+                    $jsonData = array(
+                        'Rfz' => $Rfz->getRfz(),
+                    );
+                }
+                else{
+                    $jsonData = array(
+                        'Rfz' => "Vous ne pouvez modifiez qu'un seul routeur à la fois",
+                    );
+                }
+            }
+        }
+
         return $this->json($jsonData, 200);
     }
 }

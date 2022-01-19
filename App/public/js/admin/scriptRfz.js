@@ -21,7 +21,7 @@ $("#rfzFormCreate").submit(function Addrfz(e) {
 
 
 //modif d'un rfz via ajax et modal
-$("#rfzFormEdit").submit(function Editrfz(e) {
+$("#rfzFormCheck").submit(function Editrfz(e) {
     e.preventDefault()
     let form = $(this);
     $.ajax({
@@ -30,8 +30,15 @@ $("#rfzFormEdit").submit(function Editrfz(e) {
         data:form.serialize(),
         success: function(data, status)
         {
-            let html = '<h2>Nouveau nom du routeur : ' + data.Rfz + '</h2>';
-            $('#ajax-modalEdit').html(html);
+            if (data.action === 'edit'){
+                let html = '<h2>Nouveau nom du routeur : ' + data.Rfz + '</h2>';
+                $('#ajax-modalEdit').html(html);
+            }
+            else {
+                let html = '<h2>' + data.Rfz + '</h2>';
+                $('#ajax-modalDelete').html(html);
+            }
+
         },
         error: function (xhr, ajaxOptions, thrownError)
         {
