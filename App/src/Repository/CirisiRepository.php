@@ -19,6 +19,19 @@ class CirisiRepository extends ServiceEntityRepository
         parent::__construct($registry, Cirisi::class);
     }
 
+     /**
+      * @return Cirisi[] Returns an array of Cirisi objects
+      */
+    public function findAllWithBdd()
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.idBaseDefense', 'b')
+            ->addSelect('b')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Cirisi[] Returns an array of Cirisi objects
     //  */

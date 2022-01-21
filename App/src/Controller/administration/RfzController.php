@@ -26,7 +26,7 @@ class RfzController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
-        return $this->render('administration/rfz/rfz.html.twig', [
+        return $this->render('administration/rfz.html.twig', [
             'Rfzs' => $this->RfzRepository->findAll(),
         ]);
     }

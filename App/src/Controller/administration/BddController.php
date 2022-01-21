@@ -29,7 +29,7 @@ class BddController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
-        return $this->render('administration/bdd/bdd.html.twig', [
+        return $this->render('administration/bdd.html.twig', [
             'Bdds' => $this->BddRepository->findAllWithRfz(),
             'Rfzs' => $this->rfzRepository->findAll(),
         ]);

@@ -24,9 +24,9 @@ class Cirisi
     /**
      * @var string
      *
-     * @ORM\Column(name="cirirsi", type="string", length=50, nullable=false)
+     * @ORM\Column(name="cirisi", type="string", length=50, nullable=false)
      */
-    private $cirirsi;
+    private $cirisi;
 
     /**
      * @var \BasesDeDefense
@@ -43,14 +43,14 @@ class Cirisi
         return $this->idCirisi;
     }
 
-    public function getCirirsi(): ?string
+    public function getCirisi(): ?string
     {
-        return $this->cirirsi;
+        return $this->cirisi;
     }
 
-    public function setCirirsi(string $cirirsi): self
+    public function setCirisi(string $cirisi): self
     {
-        $this->cirirsi = $cirirsi;
+        $this->cirisi = $cirisi;
 
         return $this;
     }
