@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TravauxOpera
  *
- * @ORM\Entity(repositoryClass="App\Repository\TravauxOperaRepository")
  * @ORM\Table(name="travaux_opera", uniqueConstraints={@ORM\UniqueConstraint(name="Travaux_Opera_Opera_AK", columns={"id_opera"})})
+ * @ORM\Entity(repositoryClass="App\Repository\TravauxOperaRepository")
  */
 class TravauxOpera
 {

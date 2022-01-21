@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Rfz
  *
- * @ORM\Entity(repositoryClass="App\Repository\RfzRepository")
  * @ORM\Table(name="rfz")
+ * @ORM\Entity(repositoryClass="App\Repository\RfzRepository")
  */
 class Rfz
 {
@@ -19,7 +19,7 @@ class Rfz
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private int $idRfz;
+    private $idRfz;
 
     /**
      * @var string

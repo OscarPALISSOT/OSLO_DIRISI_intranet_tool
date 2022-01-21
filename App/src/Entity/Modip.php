@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Modip
  *
- * @ORM\Entity(repositoryClass="App\Repository\ModipRepository")
  * @ORM\Table(name="modip", indexes={@ORM\Index(name="Modip_quartiers_FK", columns={"id_quartier"})})
+ * @ORM\Entity(repositoryClass="App\Repository\ModipRepository")
  */
 class Modip
 {

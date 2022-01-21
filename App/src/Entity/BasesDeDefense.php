@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BasesDeDefense
  *
+ * @ORM\Table(name="bases_de_defense", indexes={@ORM\Index(name="Bases_de_defense_rfz_FK", columns={"id_rfz"})})
  * @ORM\Entity(repositoryClass="App\Repository\BasesDeDefenseRepository")
- * @ORM\Table(name="bases_de_defense", uniqueConstraints={@ORM\UniqueConstraint(name="Bases_de_defense_Contact_AK", columns={"id_contact"})}, indexes={@ORM\Index(name="Bases_de_defense_rfz_FK", columns={"id_rfz"})})
  */
 class BasesDeDefense
 {
@@ -38,16 +38,6 @@ class BasesDeDefense
      */
     private $idRfz;
 
-    /**
-     * @var \Contact
-     *
-     * @ORM\ManyToOne(targetEntity="Contact")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_contact", referencedColumnName="id_contact")
-     * })
-     */
-    private $idContact;
-
     public function getIdBaseDefense(): ?int
     {
         return $this->idBaseDefense;
@@ -73,18 +63,6 @@ class BasesDeDefense
     public function setIdRfz(?Rfz $idRfz): self
     {
         $this->idRfz = $idRfz;
-
-        return $this;
-    }
-
-    public function getIdContact(): ?Contact
-    {
-        return $this->idContact;
-    }
-
-    public function setIdContact(?Contact $idContact): self
-    {
-        $this->idContact = $idContact;
 
         return $this;
     }

@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Contact
  *
+ * @ORM\Table(name="contact", indexes={@ORM\Index(name="Contact_Bases_de_defense_FK", columns={"id_base_defense"})})
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
- * @ORM\Table(name="contact")
  */
 class Contact
 {
@@ -48,6 +48,23 @@ class Contact
      * @ORM\Column(name="email_contact", type="string", length=50, nullable=false)
      */
     private $emailContact;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tel_contact", type="string", length=50, nullable=false)
+     */
+    private $telContact;
+
+    /**
+     * @var \BasesDeDefense
+     *
+     * @ORM\ManyToOne(targetEntity="BasesDeDefense")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_base_defense", referencedColumnName="id_base_defense")
+     * })
+     */
+    private $idBaseDefense;
 
     public function getIdContact(): ?int
     {
@@ -98,6 +115,30 @@ class Contact
     public function setEmailContact(string $emailContact): self
     {
         $this->emailContact = $emailContact;
+
+        return $this;
+    }
+
+    public function getTelContact(): ?string
+    {
+        return $this->telContact;
+    }
+
+    public function setTelContact(string $telContact): self
+    {
+        $this->telContact = $telContact;
+
+        return $this;
+    }
+
+    public function getIdBaseDefense(): ?BasesDeDefense
+    {
+        return $this->idBaseDefense;
+    }
+
+    public function setIdBaseDefense(?BasesDeDefense $idBaseDefense): self
+    {
+        $this->idBaseDefense = $idBaseDefense;
 
         return $this;
     }

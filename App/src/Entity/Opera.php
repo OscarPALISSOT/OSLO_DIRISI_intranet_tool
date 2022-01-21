@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Opera
  *
- * @ORM\Entity(repositoryClass="App\Repository\OperaRepository")
  * @ORM\Table(name="opera", indexes={@ORM\Index(name="Opera_quartiers_FK", columns={"id_quartier"})})
+ * @ORM\Entity(repositoryClass="App\Repository\OperaRepository")
  */
 class Opera
 {
