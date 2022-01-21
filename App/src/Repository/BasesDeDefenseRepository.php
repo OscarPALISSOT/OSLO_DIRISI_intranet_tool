@@ -19,6 +19,19 @@ class BasesDeDefenseRepository extends ServiceEntityRepository
         parent::__construct($registry, BasesDeDefense::class);
     }
 
+     /**
+      * @return BasesDeDefense[] Returns an array of BasesDeDefense objects
+      */
+    public function findAllWithRfz(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.idRfz', 'r')
+            ->addSelect('r')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return BasesDeDefense[] Returns an array of BasesDeDefense objects
     //  */
