@@ -3,7 +3,6 @@
 namespace App\Controller\administration;
 
 use App\Entity\Rfz;
-use App\Form\RfzFormType;
 use App\Repository\RfzRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,19 +32,6 @@ class RfzController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/GetRouteursFederateursDeZone", name="Admin_Rfz_Get")
-     * @return Response
-     */
-    public function GetRfzs() : Response{
-
-        $template = $this->render('loopRfz.html.twig')->getContent();
-        $jsonData = array(
-            'Rfzs' => $this->RfzRepository->findAll(),
-        );
-        return $this->json($jsonData, 200);
-    }
-
-    /**
      * @Route ("/Admin/NewRouteursFederateursDeZone", name="Admin_Rfz_New")
      * @param Request $request
      * @return Response
@@ -68,11 +54,10 @@ class RfzController extends AbstractController {
     /**
      * @Route ("/Admin/DeleteRouteursFederateursDeZone", name="Admin_Rfz_Delete")
      * @param Request $request
-     * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function DeleteRfz(Request $request, RfzRepository $rfzRepository): Response{
-        $Rfzs = $rfzRepository->findAll();
+    public function DeleteRfz(Request $request): Response{
+        $Rfzs = $this->RfzRepository->findAll();
         $nbRfz = count($Rfzs);
         $ChekedId = array();
         for ( $i = 0; $i < $nbRfz; $i++){
@@ -87,7 +72,7 @@ class RfzController extends AbstractController {
         }
         else{
             foreach ($ChekedId as $item){
-                $rfzToDelete = $rfzRepository->find($item);
+                $rfzToDelete = $this->RfzRepository->find($item);
 
                 if ($this->isCsrfTokenValid("DeleteRfz", $request->get('_token'))){
                     $em = $this->ManagerRegistry->getManager();
@@ -106,12 +91,11 @@ class RfzController extends AbstractController {
     /**
      * @Route ("/Admin/EditRouteursFederateursDeZone/{id}", name="Admin_Rfz_Edit")
      * @param Request $request
-     * @param RfzRepository $rfzRepository
      * @return Response
      */
-    public function EditRfz(Request $request, RfzRepository $rfzRepository) : Response{
+    public function EditRfz(Request $request) : Response{
         $id = $request->request->get('idEdit');
-        $Rfz = $rfzRepository->find($id);
+        $Rfz = $this->RfzRepository->find($id);
         $RfzName = $request->request->get('rfzEdit');
         $Rfz->setRfz($RfzName);
 
