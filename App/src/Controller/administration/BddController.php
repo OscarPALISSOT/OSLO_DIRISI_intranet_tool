@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Entity\BasesDeDefense;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\RfzRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,13 @@ class BddController extends AbstractController {
 
     private BasesDeDefenseRepository $BddRepository;
     private ManagerRegistry $ManagerRegistry;
+    private RfzRepository $rfzRepository;
 
-    public function __construct(BasesDeDefenseRepository $BddRepository, ManagerRegistry $doctrine)
+    public function __construct(BasesDeDefenseRepository $BddRepository, ManagerRegistry $doctrine, RfzRepository $rfzRepository)
     {
         $this->BddRepository = $BddRepository;
         $this->ManagerRegistry = $doctrine;
+        $this->rfzRepository = $rfzRepository;
     }
 
     /**
@@ -26,8 +29,11 @@ class BddController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
+        $bdd = $this->BddRepository->findAll();
+        dump($bdd);
         return $this->render('administration/bdd/bdd.html.twig', [
-            'bdds' => $this->BddRepository->findAll(),
+            'Bdds' => $this->BddRepository->findAll(),
+            'Rfzs' => $this->rfzRepository->findAll(),
         ]);
     }
 
@@ -39,7 +45,10 @@ class BddController extends AbstractController {
     public function newBdd(Request $request) : Response{
         $NewBdd = new BasesDeDefense();
         $Bdd = $request->request->get('bdd');
+        $idRfz = $request->request->get('rfz');
         $NewBdd->setBaseDefense($Bdd);
+        $Rfz = $this->rfzRepository->find($idRfz);
+        $NewBdd->setIdRfz($Rfz);
         if ($this->isCsrfTokenValid("CreateBdd", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewBdd);
