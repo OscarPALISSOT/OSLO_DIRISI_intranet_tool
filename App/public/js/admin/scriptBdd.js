@@ -57,7 +57,7 @@ for (let i = 0; i < editForms.length; i++){
             data:form.serialize(),
             success: function(data, status)
             {
-                let html = '<h2>Nouveau nom de la base : ' + data.Bdd + '</h2>';
+                let html = '<h2> Modifications enregistrées </h2>';
                 $('.loading').html(null);
                 $('#ajax-modalEdit').html(html);
 

@@ -105,6 +105,9 @@ class BddController extends AbstractController {
         $Bdd = $this->BddRepository->find($id);
         $BddName = $request->request->get('bddEdit');
         $Bdd->setBaseDefense($BddName);
+        $idRfz = $request->request->get('rfzEdit');
+        $Rfz = $this->rfzRepository->find($idRfz);
+        $Bdd->setIdRfz($Rfz);
 
         if ($this->isCsrfTokenValid("EditBdd", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();

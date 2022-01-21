@@ -67,8 +67,14 @@
                                                     <h2>Modifier les informations de la base de défense :</h2>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Nom</span>
-                                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="bddEdit" name="bddEdit">
+                                                        <input value="{{ bdd.BaseDefense }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="bddEdit" name="bddEdit">
                                                     </div>
+                                                    <select name="rfzEdit" class="form-select" aria-label="Default select example">
+                                                        <option selected value="{{ bdd.idRfz.idRfz }}">{{ bdd.idRfz.Rfz }}</option>
+                                                        {% for Rfz in Rfzs %}
+                                                            <option value="{{ Rfz.idRfz }}">{{ Rfz.Rfz }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
