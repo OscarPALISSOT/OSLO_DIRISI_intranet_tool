@@ -19,6 +19,22 @@ class QuartiersRepository extends ServiceEntityRepository
         parent::__construct($registry, Quartiers::class);
     }
 
+
+     /**
+      * @return Quartiers[] Returns an array of Quartiers objects
+      */
+    public function findAllWithBdd()
+    {
+        return $this->createQueryBuilder('q')
+            ->innerJoin('q.idBaseDefense', 'r')
+            ->addSelect('r')
+            ->orderBy('q.idBaseDefense', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     // /**
     //  * @return Quartiers[] Returns an array of Quartiers objects
     //  */
