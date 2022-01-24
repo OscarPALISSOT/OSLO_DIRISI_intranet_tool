@@ -44,17 +44,25 @@ class BddController extends AbstractController {
         $NewBdd = new BasesDeDefense();
         $Bdd = $request->request->get('bdd');
         $idRfz = $request->request->get('rfz');
+
         $NewBdd->setBaseDefense($Bdd);
         $Rfz = $this->rfzRepository->find($idRfz);
-        $NewBdd->setIdRfz($Rfz);
-        if ($this->isCsrfTokenValid("CreateBdd", $request->get('_token'))){
-            $em = $this->ManagerRegistry->getManager();
-            $em->persist($NewBdd);
-            $em->flush();
+        if (!$Rfz){
+            $jsonData = array(
+                'Bdd' => "Erreur, veuillez renseigner un routeur.",
+            );
         }
-        $jsonData = array(
-            'Bdd' => $Bdd,
-        );
+        else{
+            $NewBdd->setIdRfz($Rfz);
+            if ($this->isCsrfTokenValid("CreateBdd", $request->get('_token'))){
+                $em = $this->ManagerRegistry->getManager();
+                $em->persist($NewBdd);
+                $em->flush();
+            }
+            $jsonData = array(
+                'Bdd' => $Bdd,
+            );
+        }
         return $this->json($jsonData, 200);
     }
 
