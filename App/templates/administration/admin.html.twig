@@ -16,6 +16,17 @@
         <h1>Tableau de bord</h1>
         <div class="container">
             <div class="row">
+                {# card Contact#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-id-card"></i>Contact</h5>
+                            <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
+                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card Contact #}
                 {# card Bases de défense #}
                 <div class="col-lg-3 col-6">
                     <div class="card">
@@ -60,17 +71,17 @@
                     </div>
                 </div>
                 {# /card quartier #}
-                {# card Contact#}
+                {# card organisme#}
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-id-card"></i>Contact</h5>
-                            <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
-                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <h5 class="card-title"><i class="fas fa-building"></i>Organismes</h5>
+                            <p class="card-text">Il y a actuellement {{ nbOrganisme }} organismes enregistrés</p>
+                            <a href="{{ path ('Admin_Quartiers') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
-                {# /card Contact #}
+                {# /card organisme #}
             </div>
         </div>
     </div>

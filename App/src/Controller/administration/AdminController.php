@@ -6,6 +6,7 @@ use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactCirisiRepository;
 use App\Repository\ContactRepository;
+use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\RfzRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +21,9 @@ class AdminController extends AbstractController {
     private ContactCirisiRepository $contactCirisiRepository;
     private CirisiRepository $cirisiRepository;
     private QuartiersRepository $quartiersRepository;
+    private OrganismeRepository $organismeRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, ContactCirisiRepository $contactCirisiRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, ContactCirisiRepository $contactCirisiRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -29,6 +31,7 @@ class AdminController extends AbstractController {
         $this->contactCirisiRepository = $contactCirisiRepository;
         $this->cirisiRepository = $cirisiRepository;
         $this->quartiersRepository = $quartiersRepository;
+        $this->organismeRepository = $organismeRepository;
     }
 
     /**
@@ -42,6 +45,7 @@ class AdminController extends AbstractController {
             'nbContact' => count($this->ContactRepository->findAll() + $this->contactCirisiRepository->findAll()),
             'nbCirisi' => count($this->cirisiRepository->findAll()),
             'nbQuartier' => count($this->quartiersRepository->findAll()),
+            'nbOrganisme' => count($this->organismeRepository->findAll()),
         ]);
     }
 }
