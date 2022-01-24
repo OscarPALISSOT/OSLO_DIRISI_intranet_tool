@@ -47,15 +47,22 @@ class CirisiController extends AbstractController {
         $idCirisi = $request->request->get('bdd');
         $NewCirisi->setCirisi($Cirisi);
         $Bdd = $this->basesDeDefenseRepository->find($idCirisi);
-        $NewCirisi->setIdBaseDefense($Bdd);
-        if ($this->isCsrfTokenValid("CreateCirisi", $request->get('_token'))){
-            $em = $this->ManagerRegistry->getManager();
-            $em->persist($NewCirisi);
-            $em->flush();
+        if (!$Bdd){
+            $jsonData = array(
+                'Cirisi' => "Erreur, veuillez renseigner une base de défense.",
+            );
         }
-        $jsonData = array(
-            'Cirisi' => $Cirisi,
-        );
+        else{
+            $NewCirisi->setIdBaseDefense($Bdd);
+            if ($this->isCsrfTokenValid("CreateCirisi", $request->get('_token'))){
+                $em = $this->ManagerRegistry->getManager();
+                $em->persist($NewCirisi);
+                $em->flush();
+            }
+            $jsonData = array(
+                'Cirisi' => $Cirisi,
+            );
+        }
         return $this->json($jsonData, 200);
     }
 
