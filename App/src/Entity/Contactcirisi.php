@@ -5,22 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Contact
+ * Contactcirisi
  *
- * @ORM\Table(name="contact")
- * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
+ * @ORM\Table(name="contactcirisi", indexes={@ORM\Index(name="ContactCirisi_Cirisi0_FK", columns={"id_cirisi"})})
+ * @ORM\Entity(repositoryClass="App\Repository\ContactCirisiRepository")
  */
-class Contact
+class Contactcirisi
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_contact", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idContact;
-
     /**
      * @var string
      *
@@ -56,10 +47,27 @@ class Contact
      */
     private $telContact;
 
-    public function getIdContact(): ?int
-    {
-        return $this->idContact;
-    }
+    /**
+     * @var \Contact
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Contact")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_contact", referencedColumnName="id_contact")
+     * })
+     */
+    private $idContact;
+
+    /**
+     * @var \Cirisi
+     *
+     * @ORM\ManyToOne(targetEntity="Cirisi")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_cirisi", referencedColumnName="id_cirisi")
+     * })
+     */
+    private $idCirisi;
 
     public function getIntituleContact(): ?string
     {
@@ -117,6 +125,30 @@ class Contact
     public function setTelContact(string $telContact): self
     {
         $this->telContact = $telContact;
+
+        return $this;
+    }
+
+    public function getIdContact(): ?Contact
+    {
+        return $this->idContact;
+    }
+
+    public function setIdContact(?Contact $idContact): self
+    {
+        $this->idContact = $idContact;
+
+        return $this;
+    }
+
+    public function getIdCirisi(): ?Cirisi
+    {
+        return $this->idCirisi;
+    }
+
+    public function setIdCirisi(?Cirisi $idCirisi): self
+    {
+        $this->idCirisi = $idCirisi;
 
         return $this;
     }

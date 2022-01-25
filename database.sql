@@ -81,11 +81,8 @@ CREATE TABLE Contact(
                         nom_contact      Varchar (50) NOT NULL ,
                         prenom_contact   Varchar (50) NOT NULL ,
                         email_contact    Varchar (50) NOT NULL ,
-                        tel_contact      Varchar (50) NOT NULL ,
-                        id_base_defense  Int
+                        tel_contact      Varchar (50) NOT NULL
     ,CONSTRAINT Contact_PK PRIMARY KEY (id_contact)
-
-    ,CONSTRAINT Contact_Bases_de_defense_FK FOREIGN KEY (id_base_defense) REFERENCES Bases_de_defense(id_base_defense)
 )ENGINE=InnoDB;
 
 
@@ -207,7 +204,7 @@ CREATE TABLE Bnr(
 
 CREATE TABLE Cirisi(
                        id_cirisi       Int  Auto_increment  NOT NULL ,
-                       cirirsi         Varchar (50) NOT NULL ,
+                       cirisi          Varchar (50) NOT NULL ,
                        id_base_defense Int NOT NULL
     ,CONSTRAINT Cirisi_PK PRIMARY KEY (id_cirisi)
 
@@ -217,19 +214,39 @@ CREATE TABLE Cirisi(
 
 
 #------------------------------------------------------------
-# Table: Contact_CIRISI
+# Table: ContactBdd
 #------------------------------------------------------------
 
-CREATE TABLE Contact_CIRISI(
-                               id_contact_cirisi       Int  Auto_increment  NOT NULL ,
-                               intitule_contact_cirisi Varchar (50) NOT NULL ,
-                               nom_contact_cirisi      Varchar (50) NOT NULL ,
-                               prenom_contact_cirisi   Varchar (50) NOT NULL ,
-                               email_contact_cirisi    Varchar (50) NOT NULL ,
-                               tel_contact_cirisi      Varchar (50) NOT NULL ,
-                               id_cirisi               Int NOT NULL
-    ,CONSTRAINT Contact_CIRISI_PK PRIMARY KEY (id_contact_cirisi)
+CREATE TABLE ContactBdd(
+                           id_contact       Int NOT NULL ,
+                           intitule_contact Varchar (50) NOT NULL ,
+                           nom_contact      Varchar (50) NOT NULL ,
+                           prenom_contact   Varchar (50) NOT NULL ,
+                           email_contact    Varchar (50) NOT NULL ,
+                           tel_contact      Varchar (50) NOT NULL ,
+                           id_base_defense  Int NOT NULL
+    ,CONSTRAINT ContactBdd_PK PRIMARY KEY (id_contact)
 
-    ,CONSTRAINT Contact_CIRISI_Cirisi_FK FOREIGN KEY (id_cirisi) REFERENCES Cirisi(id_cirisi)
+    ,CONSTRAINT ContactBdd_Contact_FK FOREIGN KEY (id_contact) REFERENCES Contact(id_contact)
+    ,CONSTRAINT ContactBdd_Bases_de_defense0_FK FOREIGN KEY (id_base_defense) REFERENCES Bases_de_defense(id_base_defense)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: ContactCirisi
+#------------------------------------------------------------
+
+CREATE TABLE ContactCirisi(
+                              id_contact       Int NOT NULL ,
+                              intitule_contact Varchar (50) NOT NULL ,
+                              nom_contact      Varchar (50) NOT NULL ,
+                              prenom_contact   Varchar (50) NOT NULL ,
+                              email_contact    Varchar (50) NOT NULL ,
+                              tel_contact      Varchar (50) NOT NULL ,
+                              id_cirisi        Int NOT NULL
+    ,CONSTRAINT ContactCirisi_PK PRIMARY KEY (id_contact)
+
+    ,CONSTRAINT ContactCirisi_Contact_FK FOREIGN KEY (id_contact) REFERENCES Contact(id_contact)
+    ,CONSTRAINT ContactCirisi_Cirisi0_FK FOREIGN KEY (id_cirisi) REFERENCES Cirisi(id_cirisi)
 )ENGINE=InnoDB;
 

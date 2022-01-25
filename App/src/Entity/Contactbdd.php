@@ -5,22 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Contact
+ * Contactbdd
  *
- * @ORM\Table(name="contact")
- * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
+ * @ORM\Table(name="contactbdd", indexes={@ORM\Index(name="ContactBdd_Bases_de_defense0_FK", columns={"id_base_defense"})})
+ * @ORM\Entity(repositoryClass="App\Repository\ContactbddRepository")
  */
-class Contact
+class Contactbdd
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_contact", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idContact;
-
     /**
      * @var string
      *
@@ -56,10 +47,27 @@ class Contact
      */
     private $telContact;
 
-    public function getIdContact(): ?int
-    {
-        return $this->idContact;
-    }
+    /**
+     * @var \Contact
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Contact")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_contact", referencedColumnName="id_contact")
+     * })
+     */
+    private $idContact;
+
+    /**
+     * @var \BasesDeDefense
+     *
+     * @ORM\ManyToOne(targetEntity="BasesDeDefense")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_base_defense", referencedColumnName="id_base_defense")
+     * })
+     */
+    private $idBaseDefense;
 
     public function getIntituleContact(): ?string
     {
@@ -117,6 +125,30 @@ class Contact
     public function setTelContact(string $telContact): self
     {
         $this->telContact = $telContact;
+
+        return $this;
+    }
+
+    public function getIdContact(): ?Contact
+    {
+        return $this->idContact;
+    }
+
+    public function setIdContact(?Contact $idContact): self
+    {
+        $this->idContact = $idContact;
+
+        return $this;
+    }
+
+    public function getIdBaseDefense(): ?BasesDeDefense
+    {
+        return $this->idBaseDefense;
+    }
+
+    public function setIdBaseDefense(?BasesDeDefense $idBaseDefense): self
+    {
+        $this->idBaseDefense = $idBaseDefense;
 
         return $this;
     }
