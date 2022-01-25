@@ -29,8 +29,16 @@ class AdminContactController extends AbstractController
      */
     public function index(): Response
     {
+        $Contacts = $this->ContactRepository->findAll();
+        $i = 0;
+        foreach ($Contacts as $contact){
+            if ($this->contactbddRepository->find($contact->getIdContact()) or $this->ContactCirisiRepository->find($contact->getIdContact())){
+                unset($Contacts[$i]);
+                $Contacts = array_values($Contacts);
+            }
+        }
         return $this->render('administration/Contact/AdminContacts.html.twig', [
-            'nbContact' => count($this->ContactRepository->findAll()),
+            'nbContact' => count($Contacts),
             'nbContactCirisi' => count($this->ContactCirisiRepository->findAll()),
             'nbContactBdd' => count($this->contactbddRepository->findAll()),
         ]);

@@ -4,7 +4,6 @@ namespace App\Controller\administration;
 
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
-use App\Repository\ContactCirisiRepository;
 use App\Repository\ContactRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
