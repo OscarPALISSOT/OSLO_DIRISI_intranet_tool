@@ -19,7 +19,7 @@
                 <a href="{{ path ('Admin') }}" class="btn btn-outline-secondary">Retour</a>
             </div>
             <div class="row">
-                {# card Bases de défense #}
+                {# card Contact bdd #}
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
@@ -29,24 +29,24 @@
                         </div>
                     </div>
                 </div>
-                {# /card Bases de défense #}
-                {# card RFZ#}
+                {# /card Contact bdd #}
+                {# card Contact cirisi#}
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-id-card"></i>Contacts CIRISI</h5>
                             <p class="card-text">Il y a actuellement {{ nbContactCirisi }} contacts de CIRISI enregistrés</p>
-                            <a href="{{ path ('Admin_Rfz') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Admin_ContactCirisi') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
-                {# /card RFZ #}
+                {# /card Contact cirisi #}
                 {# card Contact#}
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-id-card"></i>Contact</h5>
-                            <p class="card-text">Il y a actuellement  contacts enregistrés</p>
+                            <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
                             <a href="{{ path ('Admin') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>

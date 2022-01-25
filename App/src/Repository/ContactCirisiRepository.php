@@ -19,6 +19,22 @@ class ContactCirisiRepository extends ServiceEntityRepository
         parent::__construct($registry, ContactCirisi::class);
     }
 
+     /**
+      * @return ContactCirisi[] Returns an array of ContactCirisi objects
+      */
+    public function findAllWithCirisi()
+    {
+        return $this->createQueryBuilder('cC')
+            ->innerJoin('cC.idContact', 'c')
+            ->addSelect('c')
+            ->innerJoin('cC.idCirisi', 'Cirisi')
+            ->addSelect('Cirisi')
+            ->orderBy('cC.idCirisi', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return ContactCirisi[] Returns an array of ContactCirisi objects
     //  */
