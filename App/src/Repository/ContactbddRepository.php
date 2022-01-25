@@ -19,6 +19,23 @@ class ContactbddRepository extends ServiceEntityRepository
         parent::__construct($registry, Contactbdd::class);
     }
 
+
+     /**
+      * @return Contactbdd[] Returns an array of Contactbdd objects
+      */
+    public function findAllWithBdd()
+    {
+        return $this->createQueryBuilder('cb')
+            ->innerJoin('cb.idContact', 'c')
+            ->addSelect('c')
+            ->innerJoin('cb.idBaseDefense', 'Bdd')
+            ->addSelect('Bdd')
+            ->orderBy('cb.idBaseDefense', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Contactbdd[] Returns an array of Contactbdd objects
     //  */

@@ -18,17 +18,15 @@ class AdminController extends AbstractController {
     private RfzRepository $RfzRepository;
     private BasesDeDefenseRepository $BasesDeDefenseRepository;
     private ContactRepository $ContactRepository;
-    private ContactCirisiRepository $contactCirisiRepository;
     private CirisiRepository $cirisiRepository;
     private QuartiersRepository $quartiersRepository;
     private OrganismeRepository $organismeRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, ContactCirisiRepository $contactCirisiRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
         $this->ContactRepository = $contactRepository;
-        $this->contactCirisiRepository = $contactCirisiRepository;
         $this->cirisiRepository = $cirisiRepository;
         $this->quartiersRepository = $quartiersRepository;
         $this->organismeRepository = $organismeRepository;
@@ -42,7 +40,7 @@ class AdminController extends AbstractController {
         return $this->render('administration/admin.html.twig', [
             'nbBdd' => count($this->BasesDeDefenseRepository->findAll()),
             'nbRfz' => count($this->RfzRepository->findAll()),
-            'nbContact' => count($this->ContactRepository->findAll() + $this->contactCirisiRepository->findAll()),
+            'nbContact' => count($this->ContactRepository->findAll()),
             'nbCirisi' => count($this->cirisiRepository->findAll()),
             'nbQuartier' => count($this->quartiersRepository->findAll()),
             'nbOrganisme' => count($this->organismeRepository->findAll()),

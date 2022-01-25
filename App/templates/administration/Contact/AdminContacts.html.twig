@@ -16,16 +16,16 @@
         <h1>Tableau de bord des contacts</h1>
         <div class="container">
             <div class="col mb-2">
-                <a href="{{ path ('Admin') }}" class="btn btn-outline-secondary">Retour</a>
+                <a href="{{ path ('Admin') }}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
             </div>
             <div class="row">
                 {# card Contact bdd #}
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-id-card"></i>Contacts bases de défense</h5>
+                            <h5 class="card-title"><i class="fas fa-id-card"></i> Contacts bases de défense</h5>
                             <p class="card-text">Il y a actuellement {{ nbContactBdd}} contacts de bases de défense enregistrés</p>
-                            <a href="{{ path ('Admin_Bdd') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Admin_ContactBdd') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-id-card"></i>Contacts CIRISI</h5>
+                            <h5 class="card-title"><i class="fas fa-id-card"></i> Contacts CIRISI</h5>
                             <p class="card-text">Il y a actuellement {{ nbContactCirisi }} contacts de CIRISI enregistrés</p>
                             <a href="{{ path ('Admin_ContactCirisi') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
@@ -45,7 +45,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-id-card"></i>Contact</h5>
+                            <h5 class="card-title"><i class="fas fa-id-card"></i> Contact</h5>
                             <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
                             <a href="{{ path ('Admin') }}" class="btn btn-outline-primary">Voir plus</a>
                         </div>

@@ -13,14 +13,14 @@
 {% block body %}
 
     <div id="main" class="mx-auto flex-column">
-        <h1>Contacts CIRISI</h1>
+        <h1>Contacts bases de défense</h1>
         <div class="container">
 
             <div class="col">
                 <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
             </div>
 
-            <!-- Button trigger modal new contactCirisi -->
+            <!-- Button trigger modal new contactBdd -->
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">
                 Nouveau contact <i class="fas fa-plus-square"></i>
             </button>
@@ -40,75 +40,75 @@
                     <th scope="col">Prénom</th>
                     <th scope="col">Mail</th>
                     <th scope="col">Téléphone</th>
-                    <th scope="col">CIRISI</th>
+                    <th scope="col">Base de défense</th>
                     <th scope="col">Modifier</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for ContactCirisi in ContactCirisis %}
+                {% for ContactBdd in ContactBdds %}
                     <tr>
                         <th scope="row">
                             <div class="form-check">
-                                <label for="checkbox{{ ContactCirisi.idContact.idContact }}"></label>
-                                <input form="contactCirisiFormDelete" class="form-check-input checkboxContactCirisi" name="idChecked{{ ContactCirisi.idContact.idContact }}" type="checkbox" value="{{ ContactCirisi.idContact.idContact }}" id="checkbox{{ ContactCirisi.idContact.idContact }}">
+                                <label for="checkbox{{ ContactBdd.idContact.idContact }}"></label>
+                                <input form="contactBddFormDelete" class="form-check-input checkboxContactBdd" name="idChecked{{ ContactBdd.idContact.idContact }}" type="checkbox" value="{{ ContactBdd.idContact.idContact }}" id="checkbox{{ ContactBdd.idContact.idContact }}">
                             </div>
                         </th>
-                        <td>{{ ContactCirisi.intituleContact }}</td>
-                        <td>{{ ContactCirisi.nomContact }}</td>
-                        <td>{{ ContactCirisi.prenomContact }}</td>
-                        <td>{{ ContactCirisi.emailContact }}</td>
-                        <td>{{ ContactCirisi.telContact }}</td>
-                        <td>{{ ContactCirisi.idCirisi.Cirisi }}</td>
+                        <td>{{ ContactBdd.intituleContact }}</td>
+                        <td>{{ ContactBdd.nomContact }}</td>
+                        <td>{{ ContactBdd.prenomContact }}</td>
+                        <td>{{ ContactBdd.emailContact }}</td>
+                        <td>{{ ContactBdd.telContact }}</td>
+                        <td>{{ ContactBdd.idBaseDefense.BaseDefense }}</td>
                         <td>
                             <!-- Button trigger modal edit -->
-                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ ContactCirisi.idContact.idContact }}">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ ContactBdd.idContact.idContact }}">
                                 <i class="fas fa-edit"></i>
                             </button>
 
                             <!-- Modal edit-->
-                            <div class="modal fade" id="modalEdit1{{ ContactCirisi.idContact.idContact }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="modalEdit1{{ ContactBdd.idContact.idContact }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form id="contactCirisiFormEdit{{ ContactCirisi.idContact.idContact }}" class="contactCirisiFormEdit" action="{{ path ('Admin_ContactCirisi_Edit', {id: ContactCirisi.idContact.idContact })}}" method="post">
+                                        <form id="contactBddFormEdit{{ ContactBdd.idContact.idContact }}" class="contactBddFormEdit" action="{{ path ('Admin_ContactBdd_Edit', {id: ContactBdd.idContact.idContact })}}" method="post">
                                             <div class="modal-body">
                                                 <div class="container mt-4">
                                                     <h2>Modifier les informations du contact :</h2>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Intitulé du contact</span>
-                                                        <input value="{{ ContactCirisi.intituleContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="intituleContactCirisiEdit" name="intituleContactCirisiEdit">
+                                                        <input value="{{ ContactBdd.intituleContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="intituleContactBddEdit" name="intituleContactBddEdit">
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Nom</span>
-                                                        <input value="{{ ContactCirisi.nomContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="nomContactCirisiEdit" name="nomContactCirisiEdit">
+                                                        <input value="{{ ContactBdd.nomContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="nomContactBddEdit" name="nomContactBddEdit">
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Prénom</span>
-                                                        <input value="{{ ContactCirisi.prenomContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="prenomContactCirisiEdit" name="prenomContactCirisiEdit">
+                                                        <input value="{{ ContactBdd.prenomContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="prenomContactBddEdit" name="prenomContactBddEdit">
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Mail</span>
-                                                        <input value="{{ ContactCirisi.emailContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="mailContactCirisiEdit" name="mailContactCirisiEdit">
+                                                        <input value="{{ ContactBdd.emailContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="mailContactBddEdit" name="mailContactBddEdit">
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Téléphone</span>
-                                                        <input value="{{ ContactCirisi.telContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="telContactCirisiEdit" name="telContactCirisiEdit">
+                                                        <input value="{{ ContactBdd.telContact }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="telContactBddEdit" name="telContactBddEdit">
                                                     </div>
-                                                    <select name="cirisiEdit" class="form-select" aria-label="Default select example">
-                                                        <option selected value="{{ ContactCirisi.idCirisi.idCirisi }}">{{ ContactCirisi.idCirisi.Cirisi }}</option>
-                                                        {% for Cirisi in Cirisis %}
-                                                            <option value="{{ Cirisi.idCirisi }}">{{ Cirisi.Cirisi }}</option>
+                                                    <select name="bddEdit" class="form-select" aria-label="Default select example">
+                                                        <option selected value="{{ ContactBdd.idBaseDefense.idBaseDefense }}">{{ ContactBdd.idBaseDefense.BaseDefense }}</option>
+                                                        {% for Bdd in Bdds %}
+                                                            <option value="{{ Bdd.idBaseDefense }}">{{ Bdd.BaseDefense }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditContactCirisi')}}>
-                                                <input type="hidden" name="idEdit" value="{{ ContactCirisi.idContact.idContact }}">
-                                                <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ ContactCirisi.idContact.idContact }}">Enregistrer</button>
+                                                <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditContactBdd')}}>
+                                                <input type="hidden" name="idEdit" value="{{ ContactBdd.idContact.idContact }}">
+                                                <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ ContactBdd.idContact.idContact }}">Enregistrer</button>
                                             </div>
                                         </form>
                                     </div>
@@ -122,7 +122,7 @@
         </div>
     </div>
 
-    <!-- Modals new contactCirisi-->
+    <!-- Modals new contactBdd-->
     <!-- First modal dialog create-->
     <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -131,33 +131,33 @@
                     <h1 class="modal-title" id="modalLabel">Nouveau contact :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="contactCirisiFormCreate" action="{{ path ('Admin_ContactCirisi_New')}}" method="post">
+                <form id="contactBddFormCreate" action="{{ path ('Admin_ContactBdd_New')}}" method="post">
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Intitulé du contact</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="intituleContactCirisi" name="intituleContactCirisi">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="intituleContactBdd" name="intituleContactBdd">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Nom</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="nomContactCirisi" name="nomContactCirisi">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="nomContactBdd" name="nomContactBdd">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Prénom</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="prenomContactCirisi" name="prenomContactCirisi">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="prenomContactBdd" name="prenomContactBdd">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Mail</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="mailContactCirisi" name="mailContactCirisi">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="mailContactBdd" name="mailContactBdd">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Téléphone</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="telContactCirisi" name="telContactCirisi">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="telContactBdd" name="telContactBdd">
                         </div>
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateContactCirisi')}}>
-                        <select name="cirisi" class="form-select" aria-label="Default select example">
-                            <option selected>CIRISI</option>
-                            {% for Cirisi in Cirisis %}
-                                <option value="{{ Cirisi.idCirisi}}">{{ Cirisi.Cirisi}}</option>
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateContactBdd')}}>
+                        <select name="bdd" class="form-select" aria-label="Default select example">
+                            <option selected>Base de défense</option>
+                            {% for Bdd in Bdds %}
+                                <option value="{{ Bdd.idBaseDefense}}">{{ Bdd.BaseDefense}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -190,7 +190,7 @@
         </div>
     </div>
 
-    {#modal delete ContactCirisi#}
+    {#modal delete ContactBdd#}
     <!-- Modal delete-->
     <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -207,8 +207,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <form id="contactCirisiFormDelete" action="{{ path ('Admin_ContactCirisi_Delete')}}" method="post">
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteContactCirisi')}}>
+                    <form id="contactBddFormDelete" action="{{ path ('Admin_ContactBdd_Delete')}}" method="post">
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteContactBdd')}}>
                         <button class="btn btn-danger" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
                             Confirmer <i class="fas fa-trash"></i>
                         </button>
@@ -257,6 +257,6 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset ('js/admin/contact/scriptContactCirisi.js') }}"></script>
+    <script src="{{ asset ('js/admin/contact/scriptContactBdd.js') }}"></script>
 
 {% endblock %}
