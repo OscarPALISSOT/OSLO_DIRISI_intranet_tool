@@ -9,17 +9,14 @@ html, body{
   margin: 0;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   scroll-behavior: smooth;
 }
 
 .navbar{
   height: 100px;
-  background-image: url("../../public/images/navbarbleu.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #5993fd;
   border-bottom: solid 2px black;
-  margin-bottom: 2em;
   .navbar-brand{
     margin-left: 3em;
   }
@@ -56,3 +53,10 @@ html, body{
     }
   }
 }
+
+#main {
+  padding-top: 2em;
+  background-color: whitesmoke;
+  min-height: calc(100% - 100px);
+}
+
