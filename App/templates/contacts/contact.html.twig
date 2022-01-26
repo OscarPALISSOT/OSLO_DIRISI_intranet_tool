@@ -1,62 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'sidenav.html.twig' %}
 
-{% block title %}OSLO | Contact{% endblock %}
+{% block titleSidenav %}OSLO | Contact{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/pages/contact.scss') }}"/>
+{% block stylesheetsSidenav %}
+    {{ encore_entry_link_tags('sidenav') }}
 {% endblock %}
 
-{% block javascripts %}
+{% block javascriptsSidenav %}
 
+{% endblock %}
+
+{% block sideNav %}
+    <li class="sideNavItem">
+        <a href="" class="">Contact</a>
+    </li>
+    <li class="sideNavItem">
+        <a href="" class="">Contact</a>
+    </li>
+    <li class="sideNavItem">
+        <a href="" class="">Contact</a>
+    </li>
 {% endblock %}
 
 {% block body %}
-
-<div class="d-flex align-items-start h-100">
-    <!-- SideBar -->
-    <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
-        <ul class="nav flex-column text-white w-100">
-            <a class="nav-link h3 text-white my-2 navbar-brand" href={{path ('home')}}><i class="fas fa-home"></i>HomePage</a>
-            <hr class="sidebar-divider my-0">
-            <li>
-                <a href="" class="nav-link text-white"><i class="fas fa-info"></i>Tableau de bord</a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <li>
-                <a href="" class="nav-link text-white"><i class="fas fa-user-shield"></i>Admins</a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <li>
-                <a href="" class="nav-link text-white"><i class="fas fa-building"></i>Maternités</a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <li>
-                <a href="" class="nav-link text-white"><i class="fas fa-comment-alt"></i>témoignages</a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <li>
-                <a href="" class="nav-link text-white"><i class="far fa-newspaper"></i>actualités</a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <li>
-                <a href="" class="nav-link text-white"><i class="far fa-question-circle"></i>F.A.Q</a>
-            </li>
-            <hr class="sidebar-divider my-0">
-
-        </ul>
+    <div class="container">
+        <p>
+            <strong>Nom : </strong><br />
+            <strong>Prénom :</strong><br />
+            <strong>Email :</strong><br>
+            <strong>TPH :</strong>
+        </p>
     </div>
-    <!-- \SideBar -->
-    <div class="cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
-        <div class="container">
-            <div class="container">
-                <p>
-                    <strong>Nom : </strong><br />
-                    <strong>Prénom :</strong><br />
-                    <strong>Email :</strong><br>
-                    <strong>TPH :</strong>
-                </p>
-            </div>
-        </div>
+
 {% endblock %}
 
 

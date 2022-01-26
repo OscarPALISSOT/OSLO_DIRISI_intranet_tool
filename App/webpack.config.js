@@ -29,10 +29,12 @@ Encore
     .addEntry('scriptContactBdd', './assets/js/admin/contact/scriptContactBdd.js')
     .addEntry('scriptContactCirisi', './assets/js/admin/contact/scriptContactCirisi.js')
     .addEntry('jquery', './assets/js/Jquery.js')
+    .addEntry('sideNav', './assets/js/sideNav.js')
 
     .addStyleEntry('style', './assets/styles/style.scss')
     .addStyleEntry('home', './assets/styles/pages/home.scss')
     .addStyleEntry('login', './assets/styles/pages/login.scss')
+    .addStyleEntry('sidenav', './assets/styles/sidenav.scss')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

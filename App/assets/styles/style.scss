@@ -16,9 +16,15 @@ html, body{
 .navbar{
   height: 100px;
   background-color: #5993fd;
-  border-bottom: solid 2px black;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 30%);
   .navbar-brand{
     margin-left: 3em;
+    transform: scale(100%);
+    transition: transform .2s ease-in-out;
+  }
+  .navbar-brand:hover{
+    transform: scale(104%);
+    transition: transform .2s ease-in-out;
   }
   .dropdown-item:active {
     color: #1e2125;
@@ -26,6 +32,7 @@ html, body{
   }
   .nav-item{
     font-size: x-large;
+    font-weight: 600;
     a.nav-link{
       color: black;
     }
@@ -58,5 +65,12 @@ html, body{
   padding-top: 2em;
   background-color: whitesmoke;
   min-height: calc(100% - 100px);
+  .mainTitle{
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .container {
+    font-size:x-large;
+  }
 }
 
