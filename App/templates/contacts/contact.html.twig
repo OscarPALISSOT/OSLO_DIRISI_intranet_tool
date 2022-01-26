@@ -3,7 +3,7 @@
 {% block title %}OSLO | Contact{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/pages/contact.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/pages/contact.scss') }}"/>
 {% endblock %}
 
 {% block javascripts %}
@@ -14,31 +14,42 @@
 
 <div id="main" class="row h-100">
     <div class="d-flex align-items-start h-100">
-        <div class="d-flex align-items-start h-100">
-            <!-- Nav tabs -->
-            <ul class="sidenav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="organisme-tab" data-bs-toggle="tab" href="#organisme" role="tab" aria-controls="organisme" aria-selected="true">Contact</a>
+        <!-- SideBar -->
+        <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+            <ul class="nav flex-column text-white w-100">
+                <a class="nav-link h3 text-white my-2 navbar-brand" href={{path ('home')}}><i class="fas fa-home"></i>HomePage</a>
+                <hr class="sidebar-divider my-0">
+                <li>
+                    <a href="" class="nav-link text-white"><i class="fas fa-info"></i>Tableau de bord</a>
                 </li>
-                <a id="retourBtn" class="btn btn-dark align-self-baseline" href="javascript:history.back()">Retour</a>
+                <hr class="sidebar-divider my-0">
+                <li>
+                    <a href="" class="nav-link text-white"><i class="fas fa-user-shield"></i>Admins</a>
                 </li>
+                <hr class="sidebar-divider my-0">
+                <li>
+                    <a href="" class="nav-link text-white"><i class="fas fa-building"></i>Maternités</a>
+                </li>
+                <hr class="sidebar-divider my-0">
+                <li>
+                    <a href="" class="nav-link text-white"><i class="fas fa-comment-alt"></i>témoignages</a>
+                </li>
+                <hr class="sidebar-divider my-0">
+                <li>
+                    <a href="" class="nav-link text-white"><i class="far fa-newspaper"></i>actualités</a>
+                </li>
+                <hr class="sidebar-divider my-0">
+                <li>
+                    <a href="" class="nav-link text-white"><i class="far fa-question-circle"></i>F.A.Q</a>
+                </li>
+                <hr class="sidebar-divider my-0">
+
             </ul>
-            <div id="filAriane" class="vingt" itemscope="" itemtype="">
-                <ul>
-                    <a class="accueil" href="{{ path ('contact') }}" itemprop="">Contact</a> >
-                    <a class="nom1" href="javascript:history.back()"><?php echo $query["Cirisi"]?></a> >
-                    <a class="nom2" href="javascript:history.back()"><?php echo "Contact " .$query["Enseigne"]. " " .$query["Cirisi"]?></a>
-                </ul>
-            </div>
         </div>
+        <!-- \SideBar -->
         <div class="cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
             <div class="container">
                 <div class="container">
-                    <div id="info">
-                        <div class="bouton cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
-                            <button title="Modifier les informations du quartier" class="align-self-sm-end btn" data-bs-toggle="modal" data-bs-target="{#<?php echo "#edit".$query["Cirisi"] .$query["Enseigne"]?>#}" type="button"><img src="{{ asset('images/edit-regular.svg') }}" width="20" /></button>
-                        </div>
-                    </div>
                     <p>
                         <strong>Nom : </strong><br />
                         <strong>Prénom :</strong><br />

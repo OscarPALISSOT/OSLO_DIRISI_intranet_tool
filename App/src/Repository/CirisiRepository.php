@@ -22,7 +22,7 @@ class CirisiRepository extends ServiceEntityRepository
      /**
       * @return Cirisi[] Returns an array of Cirisi objects
       */
-    public function findAllWithBdd()
+    public function findAllWithBdd(): array
     {
         return $this->createQueryBuilder('c')
             ->innerJoin('c.idBaseDefense', 'b')
