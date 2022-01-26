@@ -14,11 +14,6 @@ header {
     margin-bottom: 2rem;
 }
 
-.erreurs {
-    color:red;
-    font-size: small;
-}
-
 .form_control {
     /* display: block;   */
     font-size: inherit;
@@ -33,12 +28,12 @@ header {
 h1 {
     text-align: center;
 }
-.container {
-    /* text-align: center; */
+/*.container {
+    !* text-align: center; *!
     width: 100%;
     height: 100%;
     font-size:xx-large;
-}
+}*/
 
 img#map {
     max-height: 100%;
