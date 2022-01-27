@@ -43,11 +43,16 @@
                                     <a href="/logout" class="dropdown-item">Se déconnecter</a>
                                 </div>
                             </li>
+                            {% if app.user.roles[0] == 'ROLE_ADMIN'%}
+                                <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Administration OSLO</a></li>
+                            {% elseif app.user.roles[0] == 'ROLE_BRC'%}
+                                <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Gestion BRC</a></li>
+                            {% else %}
+                                {#nav vide/ pas d'onglet si pas connecté#}
+                            {% endif %}
                         {% else %}
                             <li class="nav-item"><a href="{{ path ('login') }}" class="nav-link">Se connecter</a></li>
                         {% endif %}
-                        <li class="nav-item"><a href="/recherche" class="nav-link">Page de recherche</a></li>
-
                     </ul>
                     <ul  class="nav mr-auto">
                         <li class="nav-item"><a href="{{ path ('contact') }}" class="nav-link">Contact</a></li>

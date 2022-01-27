@@ -25,6 +25,7 @@ Encore
     .addEntry('scriptOrganisme', './assets/js/admin/scriptOrganisme.js')
     .addEntry('scriptQuartiers', './assets/js/admin/scriptQuartiers.js')
     .addEntry('scriptRfz', './assets/js/admin/scriptRfz.js')
+    .addEntry('scriptUsers', './assets/js/admin/scriptUsers.js')
     .addEntry('scriptContact', './assets/js/admin/contact/scriptContact.js')
     .addEntry('scriptContactBdd', './assets/js/admin/contact/scriptContactBdd.js')
     .addEntry('scriptContactCirisi', './assets/js/admin/contact/scriptContactCirisi.js')

@@ -8,6 +8,7 @@ use App\Repository\ContactRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\RfzRepository;
+use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,8 +21,9 @@ class AdminController extends AbstractController {
     private CirisiRepository $cirisiRepository;
     private QuartiersRepository $quartiersRepository;
     private OrganismeRepository $organismeRepository;
+    private UsersRepository $usersRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -29,6 +31,7 @@ class AdminController extends AbstractController {
         $this->cirisiRepository = $cirisiRepository;
         $this->quartiersRepository = $quartiersRepository;
         $this->organismeRepository = $organismeRepository;
+        $this->usersRepository = $usersRepository;
     }
 
     /**
@@ -43,6 +46,7 @@ class AdminController extends AbstractController {
             'nbCirisi' => count($this->cirisiRepository->findAll()),
             'nbQuartier' => count($this->quartiersRepository->findAll()),
             'nbOrganisme' => count($this->organismeRepository->findAll()),
+            'nbUser' => count($this->usersRepository->findAll()),
         ]);
     }
 }

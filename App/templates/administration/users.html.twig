@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OSLO | Administration des organismes{% endblock %}
+{% block title %}OSLO | Administration des Routeurs fédérateurs de zone{% endblock %}
 
 {% block stylesheets %}
 
@@ -12,16 +12,16 @@
 
 {% block body %}
 
-    <h1 class="mainTitle">Organismes</h1>
+    <h1 class="mainTitle">Routeurs fédérateurs de zone</h1>
     <div class="container">
 
         <div class="col mb-2">
             <a href="{{ path ('Admin') }}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
         </div>
 
-        <!-- Button trigger modal new organisme -->
+        <!-- Button trigger modal new User -->
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">
-            Nouvel organisme <i class="fas fa-plus-square"></i>
+            Nouvel utilisateur <i class="fas fa-plus-square"></i>
         </button>
 
         <!-- Button trigger modal delete -->
@@ -34,56 +34,58 @@
             <thead>
             <tr>
                 <th scope="col"><i class="fas fa-check"></i></th>
-                <th scope="col">Organisme</th>
-                <th scope="col">Quartier</th>
+                <th scope="col">Utilisateur</th>
+                <th scope="col">Rôle</th>
                 <th scope="col">Modifier</th>
             </tr>
             </thead>
             <tbody>
-            {% for Organisme in Organismes %}
+            {% for User in Users %}
                 <tr>
                     <th scope="row">
                         <div class="form-check">
-                            <label for="checkbox{{ Organisme.idOrganisme }}"></label>
-                            <input form="organismeFormDelete" class="form-check-input checkboxOrganisme" name="idChecked{{ Organisme.idOrganisme }}" type="checkbox" value="{{ Organisme.idOrganisme }}" id="checkbox{{ Organisme.idOrganisme }}">
+                            <label for="checkbox{{ User.idUser }}"></label>
+                            <input form="UserFormDelete" class="form-check-input checkboxUser" name="idChecked{{ User.idUser }}" type="checkbox" value="{{ User.idUser }}" id="checkbox{{ User.idUser }}">
                         </div>
                     </th>
-                    <td>{{ Organisme.organisme }}</td>
-                    <td>{{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</td>
+                    <td>{{ User.User }}</td>
+                    <td>
+                        {% if User.roles[0] == 'ROLE_ADMIN' %}
+                            Administrateur
+                        {% elseif User.roles[0] == 'ROLE_BRC'%}
+                            BRC
+                        {% else %}
+                            Rôle inconnu
+                        {% endif %}
+                    </td>
                     <td>
                         <!-- Button trigger modal edit -->
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Organisme.idOrganisme }}">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ User.idUser }}">
                             <i class="fas fa-edit"></i>
                         </button>
 
                         <!-- Modal edit-->
-                        <div class="modal fade" id="modalEdit1{{ Organisme.idOrganisme }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modalEdit1{{ User.idUser }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form id="organismeFormEdit{{ Organisme.idOrganisme }}" class="organismeFormEdit" action="{{ path ('Admin_Organisme_Edit', {id: Organisme.idOrganisme })}}" method="post">
+                                    <form id="UserFormEdit{{ User.idUser }}" class="UserFormEdit" action="{{ path ('Admin_User_Edit', {id: User.idUser })}}" method="post">
                                         <div class="modal-body">
                                             <div class="container mt-4">
-                                                <h2>Modifier les informations du CIRISI :</h2>
+                                                <h2>Modifier les informations de l'utilisateur :</h2>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Nom</span>
-                                                    <input value="{{ Organisme.Organisme }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="organismeEdit" name="organismeEdit">
+                                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="UserEdit" name="UserEdit">
                                                 </div>
-                                                <select name="quartierEdit" class="form-select" aria-label="Default select example">
-                                                    <option selected value="{{ Organisme.idQuartier.idQuartier }}">{{ Organisme.idQuartier.Quartier }}</option>
-                                                    {% for Quartier in Quartiers %}
-                                                        <option value="{{ Quartier.idQuartier }}">{{ Quartier.idBaseDefense.BaseDefense}} - {{ Quartier.Quartier}}</option>
-                                                    {% endfor %}
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditOrganisme')}}>
-                                            <input type="hidden" name="idEdit" value="{{ Organisme.idOrganisme }}">
-                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Organisme.idOrganisme }}">Enregistrer</button>
+                                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditUser')}}>
+                                            <input type="hidden" name="idEdit" value="{{ User.idUser }}">
+                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ User.idUser }}">Enregistrer</button>
                                         </div>
                                     </form>
                                 </div>
@@ -96,28 +98,33 @@
         </table>
     </div>
 
-    <!-- Modals new organisme-->
+    <!-- Modals new User-->
     <!-- First modal dialog create-->
     <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title" id="modalLabel">Nouvel organisme :</h1>
+                    <h1 class="modal-title" id="modalLabel">Nouvel utilisateur :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="organismeFormCreate" action="{{ path ('Admin_Organisme_New')}}" method="post">
+                <form id="UserFormCreate" action="{{ path ('Admin_User_New')}}" method="post">
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Nom</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="organisme" name="organisme">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="User" name="User">
                         </div>
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateOrganisme')}}>
-                        <select name="quartier" class="form-select" aria-label="Default select example">
-                            <option selected>Quartier</option>
-                            {% for Quartier in Quartiers %}
-                                <option value="{{ Quartier.idQuartier}}">{{ Quartier.idBaseDefense.BaseDefense}} - {{ Quartier.Quartier}}</option>
-                            {% endfor %}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Mot de passe</span>
+                            <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="pwd" name="pwd">
+                        </div>
+                        <select name="role" class="form-select" aria-label="Default select example">
+                            <option selected>Rôle</option>
+                            <option value="admin">Administrateur</option>
+                            <option value="brc">BRC</option>
+                            <option value="bpt">BPT</option>
+                            <option value="bcs">BCS</option>
                         </select>
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateUser')}}>
                     </div>
                     <div class="modal-footer">
                         <!-- send request-->
@@ -148,7 +155,7 @@
         </div>
     </div>
 
-    {#modal delete Organisme#}
+    {#modal delete User#}
     <!-- Modal delete-->
     <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -165,8 +172,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <form id="organismeFormDelete" action="{{ path ('Admin_Organisme_Delete')}}" method="post">
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteOrganisme')}}>
+                    <form id="UserFormDelete" action="{{ path ('Admin_User_Delete')}}" method="post">
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteUser')}}>
                         <button class="btn btn-danger" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
                             Confirmer <i class="fas fa-trash"></i>
                         </button>
@@ -215,6 +222,6 @@
             </div>
         </div>
     </div>
-    {{ encore_entry_script_tags('scriptOrganisme') }}
+    {{ encore_entry_script_tags('scriptUsers') }}
 
 {% endblock %}

@@ -81,6 +81,17 @@
                 </div>
             </div>
             {# /card organisme #}
+            {# card users#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-user"></i> Utilisateurs</h3>
+                        <p class="card-text">Il y a actuellement {{ nbUser }} utilisateurs enregistrés</p>
+                        <a href="{{ path ('Admin_Users') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card users #}
         </div>
     </div>
 {% endblock %}
