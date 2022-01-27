@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block javascriptsSidenav %}
-
+    {{ encore_entry_script_tags('contactJS') }}
 {% endblock %}
 
 {% block sideNav %}
@@ -32,7 +32,7 @@
                 {% for contact in contacts %}
                 <li class="list-group-item">
                     <button class="toogleContact" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ contact.idContact }}" aria-expanded="false" aria-controls="collapseExample">
-                        {{ contact.intituleContact }} <i class="fas fa-caret-down"></i>
+                        {{ contact.intituleContact }} <i class="fas fa-chevron-circle-down"></i>
                     </button>
                     <div class="collapse" id="collapse{{ contact.idContact }}">
                         <div>

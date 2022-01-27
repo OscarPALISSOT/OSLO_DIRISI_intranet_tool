@@ -30,6 +30,7 @@ Encore
     .addEntry('scriptContactCirisi', './assets/js/admin/contact/scriptContactCirisi.js')
     .addEntry('jquery', './assets/js/Jquery.js')
     .addEntry('sideNav', './assets/js/sideNav.js')
+    .addEntry('contactJS', './assets/js/pages/contactJS.js')
 
     .addStyleEntry('style', './assets/styles/style.scss')
     .addStyleEntry('home', './assets/styles/pages/home.scss')
