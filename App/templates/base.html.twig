@@ -47,6 +47,10 @@
                                 <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Administration OSLO</a></li>
                             {% elseif app.user.roles[0] == 'ROLE_BRC'%}
                                 <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Gestion BRC</a></li>
+                            {% elseif app.user.roles[0] == 'ROLE_BPT'%}
+                                <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Gestion BPT</a></li>
+                            {% elseif app.user.roles[0] == 'ROLE_BCS'%}
+                                <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Gestion BCS</a></li>
                             {% else %}
                                 {#nav vide/ pas d'onglet si pas connecté#}
                             {% endif %}
