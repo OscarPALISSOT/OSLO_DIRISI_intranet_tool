@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class BRCController extends AbstractController {
+class GestionController extends AbstractController {
 
     private BnrRepository $bnrRepository;
     private ModipRepository $modipRepository;
@@ -27,11 +27,11 @@ class BRCController extends AbstractController {
 
 
     /**
-     * @Route ("/BRC", name="brc")
+     * @Route ("/Gestion/{role}", name="Gestion")
      * @return Response
      */
     public function index() : Response{
-        return $this->render('pages/BRC.html.twig', [
+        return $this->render('pages/gestion.html.twig', [
             'nbBNR' => count($this->bnrRepository->findAll()),
             'nbMODIP' => count($this->modipRepository->findAll()),
             'nbMIM3' => count($this->internetMilitaireRepository->findAll()),

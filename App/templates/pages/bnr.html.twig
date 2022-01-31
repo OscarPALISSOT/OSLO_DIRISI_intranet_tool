@@ -1,0 +1,56 @@
+{% extends 'sidenav.html.twig' %}
+
+{% block titleSidenav %}OSLO | BNR{% endblock %}
+
+{% block stylesheetsSidenav %}
+    {{ encore_entry_link_tags('sidenav') }}
+{% endblock %}
+
+{% block javascriptsSidenav %}
+
+{% endblock %}
+
+{% block sideNav %}
+    {% if app.user.roles[0] == 'ROLE_BRC'%}
+        <li class="sideNavItem">
+            <a href="{{ path ('Gestion', {role: 'BRC'})}}" class="">Accueil</a>
+        </li>
+    {% elseif app.user.roles[0] == 'ROLE_BPT'%}
+        <li class="sideNavItem">
+            <a href="{{ path ('Gestion', {role: 'BPT'})}}" class="">Accueil</a>
+        </li>
+    {% elseif app.user.roles[0] == 'ROLE_BCS'%}
+        <li class="sideNavItem">
+            <a href="{{ path ('Gestion', {role: 'BCS'})}}" class="">Accueil</a>
+        </li>
+    {% else %}
+        {#nav vide/ pas d'onglet si pas connecté#}
+    {% endif %}
+
+    {% if app.User.roles[0] != 'ROLE_BCS' %}
+        <li class="sideNavItem">
+            <a href="{{ path ('contact') }}" class="">BNR</a>
+        </li>
+        <li class="sideNavItem">
+            <a href="{{ path ('contactCirisi') }}" class="">MODIP</a>
+        </li>
+    {% endif %}
+    {% if app.User.roles[0] != 'ROLE_BPT' %}
+        <li class="sideNavItem">
+            <a href="{{ path ('contactBdd') }}" class="">MIM3</a>
+        </li>
+        <li class="sideNavItem">
+            <a href="{{ path ('contactBdd') }}" class="">OPERA</a>
+        </li>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block body %}
+    <h1 class="mainTitle">BNR</h1>
+{% endblock %}
+
+
+
+

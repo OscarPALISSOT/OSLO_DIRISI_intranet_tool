@@ -1,6 +1,5 @@
 //ajout d'un User via ajax et modal
 $("#UserFormCreate").submit(function AddUser(e) {
-    alert('test');
     e.preventDefault()
     let form = $(this);
     $.ajax({
