@@ -9,6 +9,7 @@
         {{ encore_entry_link_tags('style') }}
         <script src="{{ asset('css/bootstrap-5.1.3-dist/js/bootstrap.bundle.js') }}"></script> <!--bootstrap -->
         <script defer src="{{ asset('fontawesome-free-5.15.4-web/js/all.js') }}"></script> <!--font awesome -->
+        {{ encore_entry_script_tags('App') }} {# import Jquery #}
         {% block stylesheets %}
 
         {% endblock %}

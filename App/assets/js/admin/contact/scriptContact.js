@@ -1,5 +1,3 @@
-const $ = require('/assets/js/Jquery.js');
-
 //ajout d'un contact via ajax et modal
 $("#contactFormCreate").submit(function AddContact(e) {
     alert('test')

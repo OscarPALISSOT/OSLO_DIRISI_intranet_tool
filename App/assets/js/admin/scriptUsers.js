@@ -1,5 +1,3 @@
-const $ = require('/assets/js/Jquery.js');
-
 //ajout d'un User via ajax et modal
 $("#UserFormCreate").submit(function AddUser(e) {
     alert('test');
