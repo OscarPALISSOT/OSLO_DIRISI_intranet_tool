@@ -52,14 +52,8 @@
                     <td>
                         {% if User.roles[0] == 'ROLE_ADMIN' %}
                             Administrateur
-                        {% elseif User.roles[0] == 'ROLE_BRC'%}
-                            BRC
-                        {% elseif User.roles[0] == 'ROLE_BPT'%}
-                            BPT
-                        {% elseif User.roles[0] == 'ROLE_BCS'%}
-                            BCS
                         {% else %}
-                            Rôle inconnu
+                            {{ User.roles[0] }}
                         {% endif %}
                     </td>
                     <td>
@@ -99,9 +93,9 @@
                                                         {% endif %}
                                                     </option>
                                                     <option value="admin">Administrateur</option>
-                                                    <option value="brc">BRC</option>
-                                                    <option value="bpt">BPT</option>
-                                                    <option value="bcs">BCS</option>
+                                                    <option value="BRC">BRC</option>
+                                                    <option value="BPT">BPT</option>
+                                                    <option value="BCS">BCS</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -143,9 +137,9 @@
                         <select name="role" class="form-select" aria-label="Default select example">
                             <option selected>Rôle</option>
                             <option value="admin">Administrateur</option>
-                            <option value="brc">BRC</option>
-                            <option value="bpt">BPT</option>
-                            <option value="bcs">BCS</option>
+                            <option value="BRC">BRC</option>
+                            <option value="BPT">BPT</option>
+                            <option value="BCS">BCS</option>
                         </select>
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateUser')}}>
                     </div>

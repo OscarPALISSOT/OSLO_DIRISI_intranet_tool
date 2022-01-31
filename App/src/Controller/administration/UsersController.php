@@ -48,14 +48,14 @@ class UsersController extends AbstractController {
             case 'admin':
                 $role = ['ROLE_ADMIN'];
                 break;
-            case 'brc':
-                $role = ['ROLE_BRC'];
+            case 'BRC':
+                $role = ['BRC'];
                 break;
-            case 'bpt':
-                $role = ['ROLE_BPT'];
+            case 'BPT':
+                $role = ['BPT'];
                 break;
-            case 'bcs':
-                $role = ['ROLE_BCS'];
+            case 'BCS':
+                $role = ['BCS'];
                 break;
         }
         $NewUsers->setUser($UserName);
@@ -117,26 +117,26 @@ class UsersController extends AbstractController {
     public function EditUsers(Request $request) : Response{
         $id = $request->request->get('idEdit');
         $User = $this->usersRepository->find($id);
-        $UserName = $request->request->get('UsersEdit');
+        $UserName = $request->request->get('UserEdit');
         $roleRequest = $request->request->get('roleEdit');
         switch ($roleRequest){
             case 'admin':
                 $role = ['ROLE_ADMIN'];
                 break;
-            case 'brc':
-                $role = ['ROLE_BRC'];
+            case 'BRC':
+                $role = ['BRC'];
                 break;
-            case 'bpt':
-                $role = ['ROLE_BPT'];
+            case 'BPT':
+                $role = ['BPT'];
                 break;
-            case 'bcs':
-                $role = ['ROLE_BCS'];
+            case 'BCS':
+                $role = ['BCS'];
                 break;
         }
         $User->setUser($UserName);
         $User->setRoles($role);
 
-        if ($this->isCsrfTokenValid("EditUsers", $request->get('_token'))) {
+        if ($this->isCsrfTokenValid("EditUser", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();
             $em->persist($User);
             $em->flush();

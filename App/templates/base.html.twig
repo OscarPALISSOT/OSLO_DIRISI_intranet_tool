@@ -41,30 +41,17 @@
                                         <a class="dropdown-item" href="{{ path ('Gestion', {role: 'BPT'})}}">Gestion BPT</a>
                                         <a class="dropdown-item" href="{{ path ('Gestion', {role: 'BRC'})}}">Gestion BRC</a>
                                         <a class="dropdown-item" href="{{ path ('Gestion', {role: 'BCS'})}}">Gestion BCS</a>
-                                    {% elseif app.user.roles[0] == 'ROLE_BRC'%}
-                                        <a class="dropdown-item" href="{{ path ('Gestion', {role: 'BRC'})}}">Gestion BRC</a>
-                                    {% elseif app.user.roles[0] == 'ROLE_BPT'%}
-                                        <a class="dropdown-item" href="{{ path ('Gestion', {role: 'BPT'})}}">Gestion BPT</a>
-                                    {% elseif app.user.roles[0] == 'ROLE_BCS'%}
-                                        <a class="dropdown-item" href="{{ path ('Gestion', {role: 'BCS'})}}">Gestion BCS</a>
                                     {% else %}
-                                        {#nav vide/ pas d'onglet si pas connecté#}
+                                        <a class="dropdown-item" href="{{ path ('Gestion', {role: app.user.roles[0]})}}">Gestion {{ app.user.roles[0] }}</a>
                                     {% endif %}
-
                                     <div class="dropdown-divider"></div>
                                     <a href="/logout" class="dropdown-item">Se déconnecter</a>
                                 </div>
                             </li>
                             {% if app.user.roles[0] == 'ROLE_ADMIN'%}
                                 <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Administration OSLO</a></li>
-                            {% elseif app.user.roles[0] == 'ROLE_BRC'%}
-                                <li class="nav-item"><a class="nav-link" href="{{ path ('Gestion', {role: 'BRC'})}}">Gestion BRC</a></li>
-                            {% elseif app.user.roles[0] == 'ROLE_BPT'%}
-                                <li class="nav-item"><a class="nav-link" href="{{ path ('Gestion', {role: 'BPT'})}}">Gestion BPT</a></li>
-                            {% elseif app.user.roles[0] == 'ROLE_BCS'%}
-                                <li class="nav-item"><a class="nav-link" href="{{ path ('Gestion', {role: 'BCS'})}}">Gestion BCS</a></li>
                             {% else %}
-                                {#nav vide/ pas d'onglet si pas connecté#}
+                                <li class="nav-item"><a class="nav-link" href="{{ path ('Gestion', {role: app.user.roles[0]})}}">Gestion {{ app.user.roles[0] }}</a></li>
                             {% endif %}
                         {% else %}
                             <li class="nav-item"><a href="{{ path ('login') }}" class="nav-link">Se connecter</a></li>
