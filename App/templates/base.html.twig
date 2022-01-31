@@ -35,10 +35,22 @@
                                     Profil - {{ app.user.user }} <i class="fas fa-caret-down"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <a class="dropdown-item" href="{{ path ('Admin') }}">Administration OSLO</a>
-                                    <a class="dropdown-item" href="/BPT">Gestion BPT</a>
-                                    <a class="dropdown-item" href="/BRC">Gestion BRC</a>
-                                    <a class="dropdown-item" href="/BCS">Gestion BCS</a>
+
+                                    {% if app.user.roles[0] == 'ROLE_ADMIN'%}
+                                        <a class="dropdown-item" href="{{ path ('Admin') }}">Administration OSLO</a>
+                                        <a class="dropdown-item" href="/BPT">Gestion BPT</a>
+                                        <a class="dropdown-item" href="{{ path ('brc') }}">Gestion BRC</a>
+                                        <a class="dropdown-item" href="/BCS">Gestion BCS</a>
+                                    {% elseif app.user.roles[0] == 'ROLE_BRC'%}
+                                        <a class="dropdown-item" href="{{ path ('brc') }}">Gestion BRC</a>
+                                    {% elseif app.user.roles[0] == 'ROLE_BPT'%}
+                                        <a class="dropdown-item" href="/BPT">Gestion BPT</a>
+                                    {% elseif app.user.roles[0] == 'ROLE_BCS'%}
+                                        <a class="dropdown-item" href="/BCS">Gestion BCS</a>
+                                    {% else %}
+                                        {#nav vide/ pas d'onglet si pas connecté#}
+                                    {% endif %}
+
                                     <div class="dropdown-divider"></div>
                                     <a href="/logout" class="dropdown-item">Se déconnecter</a>
                                 </div>
@@ -46,7 +58,7 @@
                             {% if app.user.roles[0] == 'ROLE_ADMIN'%}
                                 <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Administration OSLO</a></li>
                             {% elseif app.user.roles[0] == 'ROLE_BRC'%}
-                                <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Gestion BRC</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ path ('brc') }}">Gestion BRC</a></li>
                             {% elseif app.user.roles[0] == 'ROLE_BPT'%}
                                 <li class="nav-item"><a class="nav-link" href="{{ path ('Admin') }}">Gestion BPT</a></li>
                             {% elseif app.user.roles[0] == 'ROLE_BCS'%}

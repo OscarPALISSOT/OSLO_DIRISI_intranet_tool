@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\contacts;
+namespace App\Controller;
 
 use App\Repository\ContactbddRepository;
 use App\Repository\ContactCirisiRepository;
