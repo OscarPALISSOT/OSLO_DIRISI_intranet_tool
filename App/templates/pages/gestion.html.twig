@@ -29,7 +29,7 @@
 
     {% if app.User.roles[0] != 'BCS' %}
         <li class="sideNavItem">
-            <a href="" class="">BNR</a>
+            <a href="{{ path ('Bnr', {role: app.user.roles[0]})}}" class="">BNR</a>
         </li>
         <li class="sideNavItem">
             <a href="{{ path ('contactCirisi') }}" class="">MODIP</a>
@@ -63,7 +63,7 @@
                         <div class="card-body">
                             <h3 class="card-title"><i class="fas fa-id-card"></i> BNR</h3>
                             <p class="card-text">Il y a actuellement {{ nbBNR }} BNR enregistrés</p>
-                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Bnr', {role: app.user.roles[0]})}}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>

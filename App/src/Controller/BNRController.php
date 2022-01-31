@@ -22,7 +22,7 @@ class BNRController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
-        return $this->render('pages/gestion.html.twig', [
+        return $this->render('pages/Bnr.html.twig', [
             'BNRS' => $this->bnrRepository->findAll(),
         ]);
     }
