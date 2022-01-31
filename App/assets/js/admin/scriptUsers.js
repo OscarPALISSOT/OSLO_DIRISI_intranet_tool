@@ -1,5 +1,8 @@
+const $ = require('/assets/js/Jquery.js');
+
 //ajout d'un User via ajax et modal
 $("#UserFormCreate").submit(function AddUser(e) {
+    alert('test');
     e.preventDefault()
     let form = $(this);
     $.ajax({
@@ -8,7 +11,7 @@ $("#UserFormCreate").submit(function AddUser(e) {
         data:form.serialize(),
         success: function(data, status)
         {
-            let html = '<h2>Nom du nouvel utilisateur : ' + data.User + '</h2>';
+            let html = '<h2>Nom du nouvel utilisateur : ' + data.Users + '</h2>';
             $('.loading').html(null);
             $('#ajax-modal').html(html);
         },
@@ -31,7 +34,7 @@ $("#UserFormDelete").submit(function DeleteUser(e) {
         data:form.serialize(),
         success: function(data, status)
         {
-            let html = '<h2>' + data.User + '</h2>';
+            let html = '<h2>' + data.Users + '</h2>';
             $('.loading').html(null);
             $('#ajax-modalDelete').html(html);
         },
@@ -45,7 +48,6 @@ $("#UserFormDelete").submit(function DeleteUser(e) {
 });
 
 //modif d'un User via ajax et modal
-
 let editForms = document.getElementsByClassName('UserFormEdit');
 for (let i = 0; i < editForms.length; i++){
     editForms[i].addEventListener('submit', function EditUser(e) {

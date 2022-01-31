@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OSLO | Administration des bases de défense{% endblock %}
+{% block title %}OSLO | Administration des contacts{% endblock %}
 
 {% block stylesheets %}
 
 {% endblock %}
 
 {% block javascripts %}
-
+    {{ encore_entry_script_tags('scriptContact') }}
 {% endblock %}
 
 {% block body %}
@@ -111,6 +111,9 @@
             </tbody>
         </table>
     </div>
+    <script>
+        $("body").css("background", "deepskyblue");
+    </script>
 
     <!-- Modals new contact-->
     <!-- First modal dialog create-->
@@ -241,6 +244,5 @@
             </div>
         </div>
     </div>
-    {{ encore_entry_script_tags('scriptContact') }}
 
 {% endblock %}

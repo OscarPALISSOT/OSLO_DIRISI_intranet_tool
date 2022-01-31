@@ -42,7 +42,6 @@ class ContactController extends AbstractController {
                 $Contacts = array_values($Contacts);
             }
         }
-        dump($Contacts);
         return $this->render('administration/Contact/contact.html.twig', [
             'Contacts' => $Contacts,
         ]);

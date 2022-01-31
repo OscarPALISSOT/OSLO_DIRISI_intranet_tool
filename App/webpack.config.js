@@ -29,7 +29,6 @@ Encore
     .addEntry('scriptContact', './assets/js/admin/contact/scriptContact.js')
     .addEntry('scriptContactBdd', './assets/js/admin/contact/scriptContactBdd.js')
     .addEntry('scriptContactCirisi', './assets/js/admin/contact/scriptContactCirisi.js')
-    .addEntry('jquery', './assets/js/Jquery.js')
     .addEntry('sideNav', './assets/js/sideNav.js')
     .addEntry('contactJS', './assets/js/pages/contactJS.js')
 

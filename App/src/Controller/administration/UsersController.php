@@ -41,7 +41,7 @@ class UsersController extends AbstractController {
      */
     public function newUsers(Request $request) : Response{
         $NewUsers = new Users();
-        $Users = $request->request->get('User');
+        $UserName = $request->request->get('User');
         $pwd = $request->request->get('pwd');
         $roleRequest = $request->request->get('role');
         switch ($roleRequest){
@@ -58,7 +58,7 @@ class UsersController extends AbstractController {
                 $role = ['ROLE_BCS'];
                 break;
         }
-        $NewUsers->setUser($Users);
+        $NewUsers->setUser($UserName);
         $NewUsers->setPassword($this->hasher->hashPassword($NewUsers, $pwd));
         $NewUsers->setRoles($role);
         if ($this->isCsrfTokenValid("CreateUser", $request->get('_token'))){
@@ -67,23 +67,23 @@ class UsersController extends AbstractController {
             $em->flush();
         }
         $jsonData = array(
-            'Users' => $Users,
+            'Users' => $UserName,
         );
         return $this->json($jsonData, 200);
     }
 
     /**
-     * @Route ("/Admin/DeleteRouteursFederateursDeZone", name="Admin_User_Delete")
+     * @Route ("/Admin/DeleteUsers", name="Admin_User_Delete")
      * @param Request $request
      * @return Response
      */
     public function DeleteUsers(Request $request): Response{
-        $Userss = $this->UsersRepository->findAll();
-        $nbUsers = count($Userss);
+        $Users = $this->usersRepository->findAll();
+        $nbUsers = count($Users);
         $ChekedId = array();
         for ( $i = 0; $i < $nbUsers; $i++){
-            if ($request->request->get('idChecked' . $Userss[$i]->getIdUsers())){
-                $ChekedId[] = $Userss[$i]->getIdUsers();
+            if ($request->request->get('idChecked' . $Users[$i]->getIdUser())){
+                $ChekedId[] = $Users[$i]->getIdUser();
             }
         }
         if (count($ChekedId) == 0){
@@ -93,9 +93,9 @@ class UsersController extends AbstractController {
         }
         else{
             foreach ($ChekedId as $item){
-                $UsersToDelete = $this->UsersRepository->find($item);
+                $UsersToDelete = $this->usersRepository->find($item);
 
-                if ($this->isCsrfTokenValid("DeleteUsers", $request->get('_token'))){
+                if ($this->isCsrfTokenValid("DeleteUser", $request->get('_token'))){
                     $em = $this->ManagerRegistry->getManager();
                     $em->remove($UsersToDelete);
                     $em->flush();
@@ -110,24 +110,40 @@ class UsersController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/EditRouteursFederateursDeZone/{id}", name="Admin_User_Edit")
+     * @Route ("/Admin/EditUser/{id}", name="Admin_User_Edit")
      * @param Request $request
      * @return Response
      */
     public function EditUsers(Request $request) : Response{
         $id = $request->request->get('idEdit');
-        $Users = $this->UsersRepository->find($id);
-        $UsersName = $request->request->get('UsersEdit');
-        $Users->setUsers($UsersName);
+        $User = $this->usersRepository->find($id);
+        $UserName = $request->request->get('UsersEdit');
+        $roleRequest = $request->request->get('roleEdit');
+        switch ($roleRequest){
+            case 'admin':
+                $role = ['ROLE_ADMIN'];
+                break;
+            case 'brc':
+                $role = ['ROLE_BRC'];
+                break;
+            case 'bpt':
+                $role = ['ROLE_BPT'];
+                break;
+            case 'bcs':
+                $role = ['ROLE_BCS'];
+                break;
+        }
+        $User->setUser($UserName);
+        $User->setRoles($role);
 
         if ($this->isCsrfTokenValid("EditUsers", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();
-            $em->persist($Users);
+            $em->persist($User);
             $em->flush();
         }
 
         $jsonData = array(
-            'Users' => $Users->getUsers(),
+            'Users' => $User->getUser(),
         );
 
         return $this->json($jsonData, 200);

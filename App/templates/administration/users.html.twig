@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OSLO | Administration des Routeurs fédérateurs de zone{% endblock %}
+{% block title %}OSLO | Administration des utilisateurs{% endblock %}
 
 {% block stylesheets %}
 
@@ -12,7 +12,7 @@
 
 {% block body %}
 
-    <h1 class="mainTitle">Routeurs fédérateurs de zone</h1>
+    <h1 class="mainTitle">Utilisateurs</h1>
     <div class="container">
 
         <div class="col mb-2">
@@ -54,6 +54,10 @@
                             Administrateur
                         {% elseif User.roles[0] == 'ROLE_BRC'%}
                             BRC
+                        {% elseif User.roles[0] == 'ROLE_BPT'%}
+                            BPT
+                        {% elseif User.roles[0] == 'ROLE_BCS'%}
+                            BCS
                         {% else %}
                             Rôle inconnu
                         {% endif %}
@@ -78,8 +82,27 @@
                                                 <h2>Modifier les informations de l'utilisateur :</h2>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Nom</span>
-                                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="UserEdit" name="UserEdit">
+                                                    <input value="{{ User.User }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="UserEdit" name="UserEdit">
                                                 </div>
+                                                <select name="roleEdit" class="form-select" aria-label="Default select example">
+                                                    <option selected>
+                                                        {% if User.roles[0] == 'ROLE_ADMIN' %}
+                                                            Administrateur
+                                                        {% elseif User.roles[0] == 'ROLE_BRC'%}
+                                                            BRC
+                                                        {% elseif User.roles[0] == 'ROLE_BPT'%}
+                                                            BPT
+                                                        {% elseif User.roles[0] == 'ROLE_BCS'%}
+                                                            BCS
+                                                        {% else %}
+                                                            Rôle inconnu
+                                                        {% endif %}
+                                                    </option>
+                                                    <option value="admin">Administrateur</option>
+                                                    <option value="brc">BRC</option>
+                                                    <option value="bpt">BPT</option>
+                                                    <option value="bcs">BCS</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
