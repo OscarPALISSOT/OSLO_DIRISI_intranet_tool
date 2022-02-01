@@ -20,6 +20,8 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
+    .addEntry('fontawesome', './assets/fontawesome-free-5.15.4-web/js/all.js')
+    .addEntry('bootstrapJS', './assets/bootstrap-5.1.3-dist/js/bootstrap.bundle.js')
     .addEntry('App', './assets/js/app.js')
     .addEntry('scriptBdd', './assets/js/admin/scriptBdd.js')
     .addEntry('scriptCirisi', './assets/js/admin/scriptCirisi.js')
@@ -32,12 +34,16 @@ Encore
     .addEntry('scriptContactCirisi', './assets/js/admin/contact/scriptContactCirisi.js')
     .addEntry('sideNav', './assets/js/sideNav.js')
     .addEntry('contactJS', './assets/js/pages/contactJS.js')
+    .addEntry('datepickerJS', './assets/js/datepicker.js')
+    .addEntry('datepickerMIN', './assets/js/bootstrap-datepicker.min.js')
 
+    .addStyleEntry('bootstrap', './assets/bootstrap-5.1.3-dist/css/bootstrap.css')
     .addStyleEntry('style', './assets/styles/style.scss')
     .addStyleEntry('home', './assets/styles/pages/home.scss')
     .addStyleEntry('login', './assets/styles/pages/login.scss')
     .addStyleEntry('sidenav', './assets/styles/sidenav.scss')
     .addStyleEntry('contact', './assets/styles/pages/contact.scss')
+    .addStyleEntry('datePicker', './assets/styles/datepicker.css')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
