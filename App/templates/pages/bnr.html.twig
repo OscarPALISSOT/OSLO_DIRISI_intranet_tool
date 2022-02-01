@@ -76,9 +76,6 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
-            Popover on top
-        </button>
 
         <div class="row">
             <table class="table table-striped table-hover">
@@ -138,10 +135,12 @@
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </select>
-                        <div class="input-group mb-3" id="datepicker">
-                            <input type="text" class="form-control" placeholder="Échéance" aria-label="Username" aria-describedby="basic-addon1">
+
+                        <div class="input-group mb-3 date datepicker">
+                            <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1"><span class="input-group-addon"></span>
                             <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                         </div>
+
                         <select class="form-select mb-3" aria-label="Default select example">
                             <option selected>État</option>
                             <option value="1">One</option>
@@ -250,6 +249,7 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 

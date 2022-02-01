@@ -8,9 +8,10 @@
         {{ encore_entry_link_tags('bootstrap') }}
         {{ encore_entry_link_tags('style') }}
 
-        {{ encore_entry_script_tags('bootstrapJS') }} {# import bootstrap javascript#}
-        {{ encore_entry_script_tags('fontawesome') }} {# import icons #}
         {{ encore_entry_script_tags('App') }} {# import Jquery #}
+        {{ encore_entry_script_tags('bootstrap.bundle.min.js') }} {# import bootstrap javascript#}
+        {{ encore_entry_script_tags('fontawesome') }} {# import icons #}
+
         {% block stylesheets %}
 
         {% endblock %}
@@ -69,6 +70,7 @@
         {% endblock %}
         <div id="main">
             {% block body %}
+
 
             {% endblock %}
         </div>

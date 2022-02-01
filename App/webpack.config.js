@@ -21,7 +21,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('fontawesome', './assets/fontawesome-free-5.15.4-web/js/all.js')
-    .addEntry('bootstrapJS', './assets/bootstrap-5.1.3-dist/js/bootstrap.bundle.js')
+    .addEntry('bootstrap.bundle.min.js', './assets/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js')
     .addEntry('App', './assets/js/app.js')
     .addEntry('scriptBdd', './assets/js/admin/scriptBdd.js')
     .addEntry('scriptCirisi', './assets/js/admin/scriptCirisi.js')
