@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\BasesDeDefense;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,15 +21,14 @@ class BasesDeDefenseRepository extends ServiceEntityRepository
     }
 
      /**
-      * @return BasesDeDefense[] Returns an array of BasesDeDefense objects
+      * @return Query
       */
-    public function findAllWithRfz(): array
+    public function findAllWithRfzQuery(): Query
     {
         return $this->createQueryBuilder('b')
             ->innerJoin('b.idRfz', 'r')
             ->addSelect('r')
             ->getQuery()
-            ->getResult()
         ;
     }
 
