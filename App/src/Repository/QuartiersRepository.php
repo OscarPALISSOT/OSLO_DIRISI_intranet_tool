@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Quartiers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,16 +22,15 @@ class QuartiersRepository extends ServiceEntityRepository
 
 
      /**
-      * @return Quartiers[] Returns an array of Quartiers objects
+      * @return Query
       */
-    public function findAllWithBdd()
+    public function findAllWithBddQuery(): Query
     {
         return $this->createQueryBuilder('q')
             ->innerJoin('q.idBaseDefense', 'r')
             ->addSelect('r')
             ->orderBy('q.idBaseDefense', 'ASC')
             ->getQuery()
-            ->getResult()
         ;
     }
 

@@ -22,7 +22,7 @@ class ContactCirisiRepository extends ServiceEntityRepository
      /**
       * @return ContactCirisi[] Returns an array of ContactCirisi objects
       */
-    public function findAllWithCirisi()
+    public function findAllWithCirisi(): array
     {
         return $this->createQueryBuilder('cC')
             ->innerJoin('cC.idContact', 'c')

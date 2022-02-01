@@ -7,6 +7,7 @@ use App\Repository\ContactbddRepository;
 use App\Repository\ContactCirisiRepository;
 use App\Repository\ContactRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,7 @@ class ContactController extends AbstractController {
      * @Route ("/Admin/Contact", name="Admin_Contact")
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
         $Contacts = $this->ContactRepository->findAll();
         $i = 0;
         foreach ($Contacts as $contact){
@@ -42,8 +43,14 @@ class ContactController extends AbstractController {
                 $Contacts = array_values($Contacts);
             }
         }
+
+        $ContactsPaginated = $paginator->paginate(
+            $Contacts,
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/Contact/contact.html.twig', [
-            'Contacts' => $Contacts,
+            'Contacts' => $ContactsPaginated,
         ]);
     }
 

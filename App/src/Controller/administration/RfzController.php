@@ -5,6 +5,7 @@ namespace App\Controller\administration;
 use App\Entity\Rfz;
 use App\Repository\RfzRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,9 +26,14 @@ class RfzController extends AbstractController {
      * @Route ("/Admin/RouteursFederateursDeZone", name="Admin_Rfz")
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $Rfzs = $paginator->paginate(
+            $this->RfzRepository->findAll(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/rfz.html.twig', [
-            'Rfzs' => $this->RfzRepository->findAll(),
+            'Rfzs' => $Rfzs,
         ]);
     }
 

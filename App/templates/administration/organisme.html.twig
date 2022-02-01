@@ -94,6 +94,12 @@
             {% endfor %}
             </tbody>
         </table>
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(Organismes) }}
+        </div>
+
     </div>
 
     <!-- Modals new organisme-->

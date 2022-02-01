@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cirisi;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,15 +21,14 @@ class CirisiRepository extends ServiceEntityRepository
     }
 
      /**
-      * @return Cirisi[] Returns an array of Cirisi objects
+      * @return Query
       */
-    public function findAllWithBdd(): array
+    public function findAllWithBddQuery(): Query
     {
         return $this->createQueryBuilder('c')
             ->innerJoin('c.idBaseDefense', 'b')
             ->addSelect('b')
             ->getQuery()
-            ->getResult()
         ;
     }
 

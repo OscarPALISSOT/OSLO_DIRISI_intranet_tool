@@ -8,6 +8,7 @@ use App\Repository\CirisiRepository;
 use App\Repository\ContactCirisiRepository;
 use App\Repository\ContactRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,11 +31,18 @@ class ContactCirisiController extends AbstractController {
 
     /**
      * @Route ("/Admin/ContactCirisi", name="Admin_ContactCirisi")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $ContactCirisis = $paginator->paginate(
+            $this->ContactCirisiRepository->findAllWithCirisi(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/Contact/contactCirisi.html.twig', [
-            'ContactCirisis' => $this->ContactCirisiRepository->findAllWithCirisi(),
+            'ContactCirisis' => $ContactCirisis,
             'Cirisis' => $this->cirisiRepository->findAll(),
         ]);
     }

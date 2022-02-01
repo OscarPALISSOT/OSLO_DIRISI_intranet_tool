@@ -6,6 +6,7 @@ use App\Entity\Organisme;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,12 +27,19 @@ class OrganismeController extends AbstractController {
 
     /**
      * @Route ("/Admin/Organisme", name="Admin_Organisme")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $Organismes = $paginator->paginate(
+            $this->OrganismeRepository->findAllWithQuartierQuery(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/organisme.html.twig', [
-            'Organismes' => $this->OrganismeRepository->findAllWithQuartier(),
-            'Quartiers' => $this->quartiersRepository->findAllWithBdd(),
+            'Organismes' =>$Organismes,
+            'Quartiers' => $this->quartiersRepository->findAllWithBddQuery(),
         ]);
     }
 

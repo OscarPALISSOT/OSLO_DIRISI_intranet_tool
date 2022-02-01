@@ -6,6 +6,7 @@ use App\Entity\Quartiers;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\QuartiersRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +27,18 @@ class QuartiersController extends AbstractController {
 
     /**
      * @Route ("/Admin/Quartiers", name="Admin_Quartiers")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $Quartiers = $paginator->paginate(
+            $this->QuartiersRepository->findAllWithBddQuery(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/quartiers.html.twig', [
-            'Quartierss' => $this->QuartiersRepository->findAllWithBdd(),
+            'Quartierss' => $Quartiers,
             'Bdds' => $this->basesDeDefenseRepository->findAll(),
         ]);
     }

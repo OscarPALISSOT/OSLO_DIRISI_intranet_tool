@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Organisme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,9 +21,9 @@ class OrganismeRepository extends ServiceEntityRepository
     }
 
      /**
-      * @return Organisme[] Returns an array of Organisme objects
+      * @return Query
       */
-    public function findAllWithQuartier()
+    public function findAllWithQuartierQuery(): Query
     {
         return $this->createQueryBuilder('o')
             ->innerJoin('o.idQuartier', 'q')
@@ -31,7 +32,6 @@ class OrganismeRepository extends ServiceEntityRepository
             ->addSelect('b')
             ->orderBy('o.idQuartier')
             ->getQuery()
-            ->getResult()
         ;
     }
 

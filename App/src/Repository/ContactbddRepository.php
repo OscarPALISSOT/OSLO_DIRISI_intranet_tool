@@ -23,7 +23,7 @@ class ContactbddRepository extends ServiceEntityRepository
      /**
       * @return Contactbdd[] Returns an array of Contactbdd objects
       */
-    public function findAllWithBdd()
+    public function findAllWithBdd(): array
     {
         return $this->createQueryBuilder('cb')
             ->innerJoin('cb.idContact', 'c')

@@ -8,6 +8,7 @@ use App\Repository\BasesDeDefenseRepository;
 use App\Repository\ContactbddRepository;
 use App\Repository\ContactRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,11 +31,18 @@ class ContactBddController extends AbstractController {
 
     /**
      * @Route ("/Admin/ContactBdd", name="Admin_ContactBdd")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $ContactBdds = $paginator->paginate(
+            $this->ContactBddRepository->findAllWithBdd(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/Contact/contactBdd.html.twig', [
-            'ContactBdds' => $this->ContactBddRepository->findAllWithBdd(),
+            'ContactBdds' => $ContactBdds,
             'Bdds' => $this->bddRepository->findAll(),
         ]);
     }

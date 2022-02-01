@@ -7,6 +7,7 @@ use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\RfzRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,11 +28,18 @@ class CirisiController extends AbstractController {
 
     /**
      * @Route ("/Admin/Cirisi", name="Admin_Cirisi")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $Cirisis = $paginator->paginate(
+            $this->CirisiRepository->findAllWithBddQuery(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/cirisi.html.twig', [
-            'Cirisis' => $this->CirisiRepository->findAllWithBdd(),
+            'Cirisis' => $Cirisis,
             'Bdds' => $this->basesDeDefenseRepository->findAll(),
         ]);
     }

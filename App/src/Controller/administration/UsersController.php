@@ -5,6 +5,7 @@ namespace App\Controller\administration;
 use App\Entity\Users;
 use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +27,18 @@ class UsersController extends AbstractController {
 
     /**
      * @Route ("/Admin/Users", name="Admin_Users")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $Users = $paginator->paginate(
+            $this->usersRepository->findAll(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('administration/users.html.twig', [
-            'Users' => $this->usersRepository->findAll(),
+            'Users' => $Users,
         ]);
     }
 
