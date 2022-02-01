@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Bnr;
 use App\Repository\BnrRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,22 +15,112 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BNRController extends AbstractController {
 
     private BnrRepository $bnrRepository;
+    private ManagerRegistry $ManagerRegistry;
 
-    public function __construct(BnrRepository $bnrRepository)
+    public function __construct(BnrRepository $bnrRepository, ManagerRegistry $doctrine)
     {
         $this->bnrRepository = $bnrRepository;
+        $this->ManagerRegistry = $doctrine;
     }
 
 
     /**
      * @Route ("/{role}/BNR", name="Bnr")
+     * @param Paginator $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index() : Response{
+    public function index(PaginatorInterface $paginator, Request $request) : Response{
+        $Bnrs = $paginator->paginate(
+            $this->bnrRepository->findAll(),
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
         return $this->render('pages/Bnr.html.twig', [
-            'BNRS' => $this->bnrRepository->findAll(),
+            'Bnrs' => $Bnrs,
         ]);
     }
 
+
+    /**
+     * @Route ("/Admin/NewRouteursFederateursDeZone", name="Admin_Bnr_New")
+     * @param Request $request
+     * @return Response
+     */
+    public function newBnr(Request $request) : Response{
+        $NewBnr = new Bnr();
+        $Bnr = $request->request->get('bnr');
+        $NewBnr->setObjBnr($Bnr);
+        if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
+            $em = $this->ManagerRegistry->getManager();
+            $em->persist($NewBnr);
+            $em->flush();
+        }
+        $jsonData = array(
+            'Bnr' => $Bnr,
+        );
+        return $this->json($jsonData, 200);
+    }
+
+    /**
+     * @Route ("/Admin/DeleteRouteursFederateursDeZone", name="Admin_Bnr_Delete")
+     * @param Request $request
+     * @return Response
+     */
+    public function DeleteBnr(Request $request): Response{
+        $Bnrs = $this->bnrRepository->findAll();
+        $nbBnr = count($Bnrs);
+        $ChekedId = array();
+        for ( $i = 0; $i < $nbBnr; $i++){
+            if ($request->request->get('idChecked' . $Bnrs[$i]->getIdBnr())){
+                $ChekedId[] = $Bnrs[$i]->getIdBnr();
+            }
+        }
+        if (count($ChekedId) == 0){
+            $jsonData = array(
+                'Bnr' => "Veuillez sélectionner au moins élément à supprimer",
+            );
+        }
+        else{
+            foreach ($ChekedId as $item){
+                $bnrToDelete = $this->bnrRepository->find($item);
+
+                if ($this->isCsrfTokenValid("DeleteBnr", $request->get('_token'))){
+                    $em = $this->ManagerRegistry->getManager();
+                    $em->remove($bnrToDelete);
+                    $em->flush();
+                }
+
+            }
+            $jsonData = array(
+                'Bnr' => "Suppression terminée",
+            );
+        }
+        return $this->json($jsonData, 200);
+    }
+
+    /**
+     * @Route ("/Admin/EditRouteursFederateursDeZone/{id}", name="Admin_Bnr_Edit")
+     * @param Request $request
+     * @return Response
+     */
+    public function EditBnr(Request $request) : Response{
+        $id = $request->request->get('idEdit');
+        $Bnr = $this->bnrRepository->find($id);
+        $BnrName = $request->request->get('bnrEdit');
+        $Bnr->setBnr($BnrName);
+
+        if ($this->isCsrfTokenValid("EditBnr", $request->get('_token'))) {
+            $em = $this->ManagerRegistry->getManager();
+            $em->persist($Bnr);
+            $em->flush();
+        }
+
+        $jsonData = array(
+            'Bnr' => $Bnr->getBnr(),
+        );
+
+        return $this->json($jsonData, 200);
+    }
 
 }
