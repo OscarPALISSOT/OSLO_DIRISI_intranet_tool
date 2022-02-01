@@ -10,6 +10,7 @@
 {% block javascriptsSidenav %}
     {{ encore_entry_script_tags('datepickerMIN') }}
     {{ encore_entry_script_tags('datepickerJS') }}
+    {{ encore_entry_script_tags('CrudBnr') }}
 {% endblock %}
 
 {% block sideNav %}
@@ -82,10 +83,12 @@
                 <thead>
                 <tr>
                     <th scope="col"><i class="fas fa-check"></i></th>
-                    <th scope="col">Priorité</th>
                     <th scope="col">Projet</th>
+                    <th scope="col">Priorité</th>
                     <th scope="col">Montant</th>
                     <th scope="col">Organisme</th>
+                    <th scope="col">Quartier</th>
+                    <th scope="col">Trigramme</th>
                     <th scope="col">Échéance</th>
                     <th scope="col">État</th>
                     <th scope="col">Commentaire</th>
@@ -93,19 +96,38 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">
-                        <div class="form-check">
-                        </div>
-                    </th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                {% for Bnr in Bnrs %}
+                    <tr>
+                        <th scope="row">
+                            <div class="form-check">
+                                <label for="checkbox{{ Bnr.idBnr }}"></label>
+                                <input form="bddFormDelete" class="form-check-input checkboxBdd" name="idChecked{{ Bnr.idBnr }}" type="checkbox" value="{{ Bnr.idBnr }}" id="checkbox{{ Bnr.idBnr }}">
+                            </div>
+                        </th>
+                        <td>{{ Bnr.objBnr }}</td>
+                        <td>{{ Bnr.prioBnr }}</td>
+                        <td>{{ Bnr.montantFeb }}</td>
+                        <td>{{ Bnr.IdOrganisme.Organisme }}</td>
+                        <td>{{ Bnr.IdOrganisme.IdQuartier.IdBaseDefense.BaseDefense }} - {{ Bnr.IdOrganisme.IdQuartier.Quartier }}</td>
+                        <td>{{ Bnr.IdOrganisme.IdQuartier.Trigramme }}</td>
+                        <td>{{ Bnr.echeanceBnr|date('d/m/Y')}}</td>
+                        <td>
+                            {% if Bnr.etatBnr == '1' %}
+                                Prévu
+                            {% else %}
+                                Traité
+                            {% endif %}
+
+                        </td>
+                        <td>{{ Bnr.commentaireBnr|nl2br }}</td>
+                        <td>
+                            <!-- Button trigger modal edit -->
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Bnr.idBnr }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
             </table>
         </div>
     </div>
@@ -122,33 +144,37 @@
                 <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_New')}}" method="post">
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="bnr" name="bnr" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="bnr" name="bnr" placeholder="name@example.com">
                             <label for="bnr">Nom du projet</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="montant" name="montant" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="montant" name="montant" placeholder="name@example.com">
                             <label for="montant">Montant</label>
                         </div>
-                        <select class="form-select mb-3" aria-label="Default select example">
+                        <select class="form-select mb-3" aria-label="Default select example" name="organisme">
                             <option selected>Organisme</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {% for Organisme in Organismes %}
+                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
+                            {% endfor %}
                         </select>
-
+                        <select class="form-select mb-3" aria-label="Default select example" name="priority">
+                            <option selected>Priorité</option>
+                            <option value="P1">P1</option>
+                            <option value="P2">P2</option>
+                            <option value="P3">P3</option>
+                        </select>
                         <div class="input-group mb-3 date datepicker">
-                            <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1"><span class="input-group-addon"></span>
+                            <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date"><span class="input-group-addon"></span>
                             <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                         </div>
 
-                        <select class="form-select mb-3" aria-label="Default select example">
-                            <option selected>État</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select mb-3" aria-label="Default select example" name="state">
+                            <option value="1" selected>État</option>
+                            <option value="1">Prévu</option>
+                            <option value="2">Traité</option>
                         </select>
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>
                             <label for="floatingTextarea2">Commentaire</label>
                         </div>
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateBnr')}}>

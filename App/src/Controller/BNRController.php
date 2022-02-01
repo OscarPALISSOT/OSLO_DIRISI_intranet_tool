@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Bnr;
 use App\Repository\BnrRepository;
+use App\Repository\OrganismeRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
@@ -16,11 +18,13 @@ class BNRController extends AbstractController {
 
     private BnrRepository $bnrRepository;
     private ManagerRegistry $ManagerRegistry;
+    private OrganismeRepository $organismeRepository;
 
-    public function __construct(BnrRepository $bnrRepository, ManagerRegistry $doctrine)
+    public function __construct(BnrRepository $bnrRepository, ManagerRegistry $doctrine, OrganismeRepository $organismeRepository)
     {
         $this->bnrRepository = $bnrRepository;
         $this->ManagerRegistry = $doctrine;
+        $this->organismeRepository = $organismeRepository;
     }
 
 
@@ -36,34 +40,59 @@ class BNRController extends AbstractController {
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
+        $Organismes = $this->organismeRepository->findAllWithQuartier();
         return $this->render('pages/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
+            'Organismes' => $Organismes,
         ]);
     }
 
 
     /**
-     * @Route ("/Admin/NewRouteursFederateursDeZone", name="Admin_Bnr_New")
+     * @Route ("/NewBnr", name="Admin_Bnr_New")
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function newBnr(Request $request) : Response{
         $NewBnr = new Bnr();
         $Bnr = $request->request->get('bnr');
+        $montant = $request->request->get('montant');
+        $idOrganisme = $request->request->get('organisme');
+        $Organisme = $this->organismeRepository->find($idOrganisme);
+        $Prio = $request->request->get('priority');
+        $Date = $request->request->get('date');
+        $date = new DateTime($Date);
+        $date->format('Y-m-d');
+        $Sate = $request->request->get('state');
+        $Comment = $request->request->get('comment');
         $NewBnr->setObjBnr($Bnr);
-        if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
-            $em = $this->ManagerRegistry->getManager();
-            $em->persist($NewBnr);
-            $em->flush();
+        $NewBnr->setMontantFeb($montant);
+        $NewBnr->setIdOrganisme($Organisme);
+        $NewBnr->setPrioBnr($Prio);
+        $NewBnr->setEcheanceBnr($date);
+        $NewBnr->setEtatBnr($Sate);
+        $NewBnr->setCommentaireBnr($Comment);
+        if (!$idOrganisme){
+            $jsonData = array(
+                'Bnr' => 'Veuillez entrer un organisme',
+            );
         }
-        $jsonData = array(
-            'Bnr' => $Bnr,
-        );
+        else{
+            if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
+                $em = $this->ManagerRegistry->getManager();
+                $em->persist($NewBnr);
+                $em->flush();
+            }
+            $jsonData = array(
+                'Bnr' => $Bnr,
+            );
+        }
         return $this->json($jsonData, 200);
     }
 
     /**
-     * @Route ("/Admin/DeleteRouteursFederateursDeZone", name="Admin_Bnr_Delete")
+     * @Route ("/DeleteBnr", name="Admin_Bnr_Delete")
      * @param Request $request
      * @return Response
      */
@@ -100,7 +129,7 @@ class BNRController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/EditRouteursFederateursDeZone/{id}", name="Admin_Bnr_Edit")
+     * @Route ("/EditBnr/{id}", name="Admin_Bnr_Edit")
      * @param Request $request
      * @return Response
      */

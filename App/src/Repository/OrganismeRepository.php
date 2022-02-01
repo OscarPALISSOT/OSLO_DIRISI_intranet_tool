@@ -35,6 +35,22 @@ class OrganismeRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Organisme[] Returns an array of Organisme objects
+     */
+    public function findAllWithQuartier(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.idQuartier', 'q')
+            ->addSelect('q')
+            ->innerJoin('q.idBaseDefense', 'b')
+            ->addSelect('b')
+            ->orderBy('o.idQuartier')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Organisme[] Returns an array of Organisme objects
     //  */
