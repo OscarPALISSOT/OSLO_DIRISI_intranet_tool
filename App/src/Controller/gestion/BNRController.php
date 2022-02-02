@@ -5,6 +5,7 @@ namespace App\Controller\gestion;
 use App\Entity\Bnr;
 use App\Repository\BnrRepository;
 use App\Repository\OrganismeRepository;
+use App\Repository\QuartiersRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
@@ -19,12 +20,14 @@ class BNRController extends AbstractController {
     private BnrRepository $bnrRepository;
     private ManagerRegistry $ManagerRegistry;
     private OrganismeRepository $organismeRepository;
+    private QuartiersRepository $quartiersRepository;
 
-    public function __construct(BnrRepository $bnrRepository, ManagerRegistry $doctrine, OrganismeRepository $organismeRepository)
+    public function __construct(BnrRepository $bnrRepository, ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository)
     {
         $this->bnrRepository = $bnrRepository;
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
+        $this->quartiersRepository = $quartiersRepository;
     }
 
 
@@ -48,6 +51,7 @@ class BNRController extends AbstractController {
         return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $Organismes,
+            'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => 'BNR',
         ]);

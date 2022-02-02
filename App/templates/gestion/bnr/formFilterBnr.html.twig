@@ -39,17 +39,17 @@
     <div class="col-4">
         <select class="form-select mb-3" aria-label="Default select example">
             <option selected>Organisme</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            {% for Organisme in Organismes %}
+                <option value="{{ Organisme.IdOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.IdQuartier.Quartier }} - {{ Organisme.IdQuartier.IdBaseDefense.BaseDefense }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="col-2">
         <select class="form-select mb-3" aria-label="Default select example">
             <option selected>Trigramme</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            {% for Quartier in Quartiers %}
+                <option value="{{ Quartier.idQuartier }}">{{ Quartier.Trigramme }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="col-1">

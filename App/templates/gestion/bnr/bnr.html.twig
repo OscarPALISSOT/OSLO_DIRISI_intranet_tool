@@ -9,7 +9,9 @@
 {% endblock %}
 
 {% block FormFilterGestionEntity %}
-    {% include 'gestion/bnr/formFilterBnr.html.twig' %}
+    <div class="js-filter-form">
+        {% include 'gestion/bnr/formFilterBnr.html.twig' with {Quartiers: Quartiers, Organismes: Organismes} only %}
+    </div>
 {% endblock %}
 
 {% block ContentGestionEntity %}
@@ -31,13 +33,15 @@
             </tr>
             </thead>
             <tbody>
-            {% for Bnr in Bnrs %}
-                {% include 'gestion/bnr/content.html.twig' with {Bnr: Bnr}%}
-            {% endfor %}
+            <tr class="js-filter-content">
+                {% for Bnr in Bnrs %}
+                    {% include 'gestion/bnr/content.html.twig' with {Bnr: Bnr, Organismes: Organismes} only%}
+                {% endfor %}
+            </tr>
         </table>
 
         {# display navigation #}
-        <div class="navigation">
+        <div class="navigation js-filter-pagination">
             {{ knp_pagination_render(Bnrs) }}
         </div>
 
