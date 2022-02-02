@@ -9,12 +9,15 @@
 {% endblock %}
 
 {% block FormFilterGestionEntity %}
-    <div class="js-filter-form">
-        {% include 'gestion/bnr/formFilterBnr.html.twig' with {Quartiers: Quartiers, Organismes: Organismes, maxMontant: maxMontant, minMontant: minMontant} only %}
-    </div>
+    {% include 'gestion/bnr/formFilterBnr.html.twig' with {Quartiers: Quartiers, Organismes: Organismes, maxMontant: maxMontant, minMontant: minMontant, form: form} only %}
 {% endblock %}
 
 {% block ContentGestionEntity %}
+
+    <div class="js-filter-sorting">
+
+    </div>
+
     <div class="row">
         <table class="table table-striped table-hover">
             <thead>

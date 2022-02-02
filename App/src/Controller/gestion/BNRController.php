@@ -2,7 +2,9 @@
 
 namespace App\Controller\gestion;
 
+use App\Data\SearchDataBnr;
 use App\Entity\Bnr;
+use App\form\BnrSearchForm;
 use App\Repository\BnrRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -11,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,8 +41,12 @@ class BNRController extends AbstractController {
      * @return Response
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response{
+
+        $Data = new SearchDataBnr();
+        $form = $this->createForm(BnrSearchForm::class, $Data);
+
         $Bnrs = $paginator->paginate(
-            $this->bnrRepository->findAll(),
+            $this->bnrRepository->findSearch(),
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
@@ -48,6 +55,11 @@ class BNRController extends AbstractController {
         if ($role[0] == 'ROLE_ADMIN'){
             $role[0] = 'Administrateur';
         }
+        /*if ($request->isXmlHttpRequest()){
+            return new JsonResponse([
+                'content' => $this->renderView('')
+            ])
+        }*/
         return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $Organismes,
@@ -56,6 +68,7 @@ class BNRController extends AbstractController {
             'title' => 'BNR',
             'maxMontant' => $this->bnrRepository->findMaxMontant(),
             'minMontant' => $this->bnrRepository->findMinMontant(),
+            'form' => $form->createView(),
         ]);
     }
 

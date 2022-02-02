@@ -47,6 +47,15 @@ class BnrRepository extends ServiceEntityRepository
             ;
     }
 
+     /**
+      * @return Bnr[] Returns an array of Bnr objects
+      */
+    public function findSearch(): array
+    {
+        return $this->findAll();
+    }
+
+
     // /**
     //  * @return Bnr[] Returns an array of Bnr objects
     //  */
