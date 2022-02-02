@@ -1,6 +1,5 @@
 //ajout d'un contact via ajax et modal
 $("#contactFormCreate").submit(function AddContact(e) {
-    alert('test')
     e.preventDefault()
     let form = $(this);
     $.ajax({
