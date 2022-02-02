@@ -60,14 +60,22 @@ class BNRController extends AbstractController {
                 'content' => $this->renderView('')
             ])
         }*/
+        if ($this->bnrRepository->findAll()){
+            $max = $this->bnrRepository->findMaxMontant();
+            $min = $this->bnrRepository->findMinMontant();
+        }
+        else{
+            $min = 0;
+            $max = 50000;
+        }
         return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $Organismes,
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => 'BNR',
-            'maxMontant' => $this->bnrRepository->findMaxMontant(),
-            'minMontant' => $this->bnrRepository->findMinMontant(),
+            'maxMontant' => $max,
+            'minMontant' => $min,
             'form' => $form->createView(),
         ]);
     }
