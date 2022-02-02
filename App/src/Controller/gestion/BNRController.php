@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\gestion;
 
 use App\Entity\Bnr;
 use App\Repository\BnrRepository;
@@ -9,10 +9,10 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BNRController extends AbstractController {
 
@@ -41,9 +41,15 @@ class BNRController extends AbstractController {
             12 /*limit per page*/
         );
         $Organismes = $this->organismeRepository->findAllWithQuartier();
-        return $this->render('pages/Bnr.html.twig', [
+        $role = $this->getUser()->getRoles();
+        if ($role[0] == 'ROLE_ADMIN'){
+            $role[0] = 'Administrateur';
+        }
+        return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $Organismes,
+            'role' => $role[0],
+            'title' => 'BNR',
         ]);
     }
 

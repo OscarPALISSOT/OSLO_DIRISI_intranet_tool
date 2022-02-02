@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\gestion;
 
 use App\Repository\BnrRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\ModipRepository;
 use App\Repository\OperaRepository;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class GestionController extends AbstractController {
 
@@ -31,11 +31,16 @@ class GestionController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
-        return $this->render('pages/gestion.html.twig', [
+        $role = $this->getUser()->getRoles();
+        if ($role[0] == 'ROLE_ADMIN'){
+            $role[0] = 'Administrateur';
+        }
+        return $this->render('gestion/gestionHome.html.twig', [
             'nbBNR' => count($this->bnrRepository->findAll()),
             'nbMODIP' => count($this->modipRepository->findAll()),
             'nbMIM3' => count($this->internetMilitaireRepository->findAll()),
             'nbOPERA' => count($this->operaRepository->findAll()),
+            'role' => $role[0],
         ]);
     }
 

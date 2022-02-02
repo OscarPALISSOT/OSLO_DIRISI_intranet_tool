@@ -1,68 +1,27 @@
-{% extends 'sidenav.html.twig' %}
+{% extends 'gestion.html.twig' %}
 
 {% block titleSidenav %}
-    {% if app.user.roles[0] == 'ROLE_ADMIN'%}
-        OSLO |
-    {% else %}
-        OSLO | {{ app.user.roles[0] }}
-    {% endif %}
+    OSLO | {{ role }}
 {% endblock %}
 
-{% block stylesheetsSidenav %}
-    {{ encore_entry_link_tags('sidenav') }}
-{% endblock %}
-
-{% block javascriptsSidenav %}
-
-{% endblock %}
-
-{% block sideNav %}
-    {% if app.user.roles[0] == 'ROLE_ADMIN'%}
-        <li class="sideNavItem">
-            <a href="{{ path ('Gestion', {role: 'BRC'})}}" class="">Accueil</a>
-        </li>
-    {% else %}
-        <li class="sideNavItem">
-            <a href="{{ path ('Gestion', {role: app.user.roles[0]})}}" class="">Accueil {{ app.user.roles[0] }}</a>
-        </li>
-    {% endif %}
-
-    {% if app.User.roles[0] != 'BCS' %}
-        <li class="sideNavItem">
-            <a href="{{ path ('Bnr', {role: app.user.roles[0]})}}" class="">BNR</a>
-        </li>
-        <li class="sideNavItem">
-            <a href="{{ path ('contactCirisi') }}" class="">MODIP</a>
-        </li>
-    {% endif %}
-    {% if app.User.roles[0] != 'BPT' %}
-        <li class="sideNavItem">
-            <a href="{{ path ('contactBdd') }}" class="">MIM3</a>
-        </li>
-        <li class="sideNavItem">
-            <a href="{{ path ('contactBdd') }}" class="">OPERA</a>
-        </li>
-    {% endif %}
-
-{% endblock %}
 
 {% block body %}
-    {% if app.user.roles[0] == 'ROLE_ADMIN'%}
+    {% if role == 'Administrateur'%}
         <h1 class="mainTitle">Gestion </h1>
     {% else %}
-        <h1 class="mainTitle">Gestion {{ app.user.roles[0] }}</h1>
+        <h1 class="mainTitle">Gestion {{ role }}</h1>
     {% endif %}
 
     <div class="container">
         <div class="row">
-            {% if app.User.roles[0] != 'BCS' %}
+            {% if role != 'BCS' %}
                 {# card BNR#}
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
                             <h3 class="card-title"><i class="fas fa-id-card"></i> BNR</h3>
                             <p class="card-text">Il y a actuellement {{ nbBNR }} BNR enregistrés</p>
-                            <a href="{{ path ('Bnr', {role: app.user.roles[0]})}}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Bnr', {role: role})}}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +39,7 @@
                 {# /card MODIP #}
             {% endif %}
 
-            {% if app.User.roles[0] != 'BPT' %}
+            {% if role != 'BPT' %}
                 {# card MIM3#}
                 <div class="col-lg-3 col-6">
                     <div class="card">

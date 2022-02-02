@@ -1,0 +1,189 @@
+{% extends 'gestion/gestionEntity.html.twig' %}
+
+{% block styleGestionEntity %}
+    {{ encore_entry_link_tags('gestionBnr') }}
+{% endblock %}
+
+{% block javascriptGestionEntity %}
+    {{ encore_entry_script_tags('CrudBnr') }}
+{% endblock %}
+
+{% block FormFilterGestionEntity %}
+    {% include 'gestion/bnr/formFilterBnr.html.twig' %}
+{% endblock %}
+
+{% block ContentGestionEntity %}
+    <div class="row">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col"><i class="fas fa-check"></i></th>
+                <th scope="col">Projet</th>
+                <th scope="col">Priorité</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Organisme</th>
+                <th scope="col">Quartier</th>
+                <th scope="col">Trigramme</th>
+                <th scope="col">Échéance</th>
+                <th scope="col">État</th>
+                <th scope="col">Commentaire</th>
+                <th scope="col">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Bnr in Bnrs %}
+                {% include 'gestion/bnr/content.html.twig' with {Bnr: Bnr}%}
+            {% endfor %}
+        </table>
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(Bnrs) }}
+        </div>
+
+    </div>
+
+    <!-- Modals new bnr-->
+    <!-- First modal dialog create-->
+    <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="modalLabel">Nouveau BNR :</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_New')}}" method="post">
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="bnr" name="bnr" placeholder="name@example.com">
+                            <label for="bnr">Nom du projet</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="montant" name="montant" placeholder="name@example.com">
+                            <label for="montant">Montant</label>
+                        </div>
+                        <select class="form-select mb-3" aria-label="Default select example" name="organisme">
+                            <option selected>Organisme</option>
+                            {% for Organisme in Organismes %}
+                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select mb-3" aria-label="Default select example" name="priority">
+                            <option selected>Priorité</option>
+                            <option value="P1">P1</option>
+                            <option value="P2">P2</option>
+                            <option value="P3">P3</option>
+                        </select>
+                        <div class="input-group mb-3 date datepicker">
+                            <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date"><span class="input-group-addon"></span>
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+
+                        <select class="form-select mb-3" aria-label="Default select example" name="state">
+                            <option value="1" selected>État</option>
+                            <option value="1">Prévu</option>
+                            <option value="2">Traité</option>
+                        </select>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Commentaire</label>
+                        </div>
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateBnr')}}>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- send request-->
+                        <button id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second modal create -->
+    <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="loading">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="ajax-modal"></div>
+                </div>
+                <div class="modal-footer">
+                    <!-- close second create -->
+                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#modal delete Bnr#}
+    <!-- Modal delete-->
+    <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-4">
+                        <div class="input-group mb-3">
+                            <h2>Attention ! Cette action est irréversible.</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form id="bnrFormDelete" action="{{ path ('Admin_Bnr_Delete')}}" method="post">
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteBnr')}}>
+                        <button class="btn btn-danger" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
+                            Confirmer <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second modal delete -->
+    <div class="modal fade" id="modalDelete2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="loading">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="ajax-modalDelete"></div>
+                </div>
+                <div class="modal-footer">
+                    <!-- close second delete -->
+                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete2"><i class="fas fa-check"></i> Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second modal edit -->
+    <div class="modal fade" id="modalEdit2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="loading">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="ajax-modalEdit"></div>
+                </div>
+                <div class="modal-footer">
+                    <!-- close second edit -->
+                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit2"><i class="fas fa-check"></i> Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
