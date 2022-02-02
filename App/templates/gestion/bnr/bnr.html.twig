@@ -10,7 +10,7 @@
 
 {% block FormFilterGestionEntity %}
     <div class="js-filter-form">
-        {% include 'gestion/bnr/formFilterBnr.html.twig' with {Quartiers: Quartiers, Organismes: Organismes} only %}
+        {% include 'gestion/bnr/formFilterBnr.html.twig' with {Quartiers: Quartiers, Organismes: Organismes, maxMontant: maxMontant, minMontant: minMontant} only %}
     </div>
 {% endblock %}
 

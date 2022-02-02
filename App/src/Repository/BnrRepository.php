@@ -19,6 +19,34 @@ class BnrRepository extends ServiceEntityRepository
         parent::__construct($registry, Bnr::class);
     }
 
+     /**
+      * @return Bnr[] Returns an array of Bnr objects
+      */
+    public function findMaxMontant()
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.idBnr', 'b.montantFeb')
+            ->orderBy('b.montantFeb', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Bnr[] Returns an array of Bnr objects
+     */
+    public function findMinMontant()
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.idBnr', 'b.montantFeb')
+            ->orderBy('b.montantFeb', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Bnr[] Returns an array of Bnr objects
     //  */

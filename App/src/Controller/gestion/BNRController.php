@@ -54,6 +54,8 @@ class BNRController extends AbstractController {
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => 'BNR',
+            'maxMontant' => $this->bnrRepository->findMaxMontant(),
+            'minMontant' => $this->bnrRepository->findMinMontant(),
         ]);
     }
 
