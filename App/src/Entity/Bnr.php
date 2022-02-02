@@ -36,9 +36,9 @@ class Bnr
     private $objBnr;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="montant_feb", type="string", length=50, nullable=false)
+     * @ORM\Column(name="montant_feb", type="integer", nullable=false)
      */
     private $montantFeb;
 

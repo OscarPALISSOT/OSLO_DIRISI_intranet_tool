@@ -132,12 +132,28 @@ class BNRController extends AbstractController {
      * @Route ("/EditBnr/{id}", name="Admin_Bnr_Edit")
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function EditBnr(Request $request) : Response{
         $id = $request->request->get('idEdit');
         $Bnr = $this->bnrRepository->find($id);
         $BnrName = $request->request->get('bnrEdit');
-        $Bnr->setBnr($BnrName);
+        $montant = $request->request->get('montantEdit');
+        $idOrganisme = $request->request->get('organismeEdit');
+        $Organisme = $this->organismeRepository->find($idOrganisme);
+        $Prio = $request->request->get('priorityEdit');
+        $Date = $request->request->get('dateEdit');
+        $date = new DateTime($Date);
+        $date->format('Y-m-d');
+        $Sate = $request->request->get('stateEdit');
+        $Comment = $request->request->get('commentEdit');
+        $Bnr->setObjBnr($BnrName);
+        $Bnr->setMontantFeb($montant);
+        $Bnr->setIdOrganisme($Organisme);
+        $Bnr->setPrioBnr($Prio);
+        $Bnr->setEcheanceBnr($date);
+        $Bnr->setEtatBnr($Sate);
+        $Bnr->setCommentaireBnr($Comment);
 
         if ($this->isCsrfTokenValid("EditBnr", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();
@@ -146,7 +162,7 @@ class BNRController extends AbstractController {
         }
 
         $jsonData = array(
-            'Bnr' => $Bnr->getBnr(),
+            'Bnr' => $Bnr->getObjBnr(),
         );
 
         return $this->json($jsonData, 200);
