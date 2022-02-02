@@ -65,6 +65,14 @@ label{
   font-size: medium;
 }
 
+#map{
+  max-height: 80vh;
+  img{
+    width: auto;
+    max-height: 100%;
+  }
+}
+
 #main {
   padding-top: 2em;
   padding-bottom: 2em;
