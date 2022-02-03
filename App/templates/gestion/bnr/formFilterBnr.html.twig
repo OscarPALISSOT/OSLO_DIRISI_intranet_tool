@@ -39,9 +39,9 @@
         </div>
         <div class="mb-3 col-4">
             <label for="customRange2" class="form-label">Montant :</label>
-            <input type="range" class="form-range" id="customRange2" name="amountRange" step="100" min="{{ minMontant[0].montantFeb }}" max="{{ maxMontant[0].montantFeb }}" value="{{ minMontant[0].montantFeb }}" oninput="this.form.amountInput.value=this.value" />
+            <input type="range" class="form-range" id="customRange2" name="amountRange" step="100" min="{{ minMontant }}" max="{{ maxMontant }}" value="{{ minMontant }}" oninput="this.form.amountInput.value=this.value" />
             <div class="col-3">
-                <input id="amountInput" type="number" class="form-control" name="amountInput" min="{{ minMontant[0].montantFeb }}" max="{{ maxMontant[0].montantFeb }}" value="{{ minMontant[0].montantFeb }}" oninput="this.form.amountRange.value=this.value" />
+                <input id="amountInput" type="number" class="form-control" name="amountInput" min="{{ minMontant }}" max="{{ maxMontant }}" value="{{ minMontant }}" oninput="this.form.amountRange.value=this.value" />
             </div>
 
         </div>

@@ -60,9 +60,11 @@ class BNRController extends AbstractController {
                 'content' => $this->renderView('')
             ])
         }*/
-        if ($this->bnrRepository->findAll()){
-            $max = $this->bnrRepository->findMaxMontant();
-            $min = $this->bnrRepository->findMinMontant();
+        if (count($this->bnrRepository->findAll()) > 0){
+            $maxMontant = $this->bnrRepository->findMaxMontant();
+            $minMontant = $this->bnrRepository->findMinMontant();
+            $max = $maxMontant[0]['montantFeb'];
+            $min = $minMontant[0]['montantFeb'];
         }
         else{
             $min = 0;
