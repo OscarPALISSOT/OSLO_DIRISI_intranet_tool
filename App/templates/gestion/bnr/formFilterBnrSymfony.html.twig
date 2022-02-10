@@ -1,4 +1,20 @@
-{{ form_start(form) }}
+{{ form_start(form, { attr: {class: 'filter'}}) }}
+
+    <h4>Projet</h4>
+    <div class="col-4">{{ form_row(form.Bnr) }}</div>
+
+    <h4>Organismes</h4>
+    <div class="col-4">{{ form_row(form.idOrganisme) }}</div>
+
+    <h4>Echéance</h4>
+    <div class="row">
+        <div class="col-4">{{ form_row(form.before) }}</div>
+        <div class="col-4">{{ form_row(form.Echeance) }}</div>
+    </div>
+
+    <button type="submit" class="btn btn-outline-secondary">Appliquer les filtres <i class="fas fa-search"></i></button>
+
+
 
 
 {{ form_end(form) }}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataBnr;
 use App\Entity\Bnr;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,9 +51,18 @@ class BnrRepository extends ServiceEntityRepository
      /**
       * @return Bnr[] Returns an array of Bnr objects
       */
-    public function findSearch(): array
+    public function findSearch(SearchDataBnr $data): array
     {
-        return $this->findAll();
+        $query = $this
+            ->createQueryBuilder('b');
+
+        if (!empty($data->Bnr)){
+            $query = $query
+                ->andWhere('b.objBnr LIKE :Bnr')
+                ->setParameter(':Bnr', "%{$data->Bnr}%");
+        }
+
+        return $query->getQuery()->getResult();
     }
 
 

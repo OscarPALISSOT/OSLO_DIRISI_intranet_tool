@@ -44,9 +44,10 @@ class BNRController extends AbstractController {
 
         $Data = new SearchDataBnr();
         $form = $this->createForm(BnrSearchForm::class, $Data);
+        $form->handleRequest($request);
 
         $Bnrs = $paginator->paginate(
-            $this->bnrRepository->findSearch(),
+            $this->bnrRepository->findSearch($Data),
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
