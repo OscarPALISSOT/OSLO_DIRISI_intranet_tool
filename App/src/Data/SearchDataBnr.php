@@ -2,6 +2,7 @@
 
 namespace App\Data;
 
+use App\Entity\Organisme;
 use phpDocumentor\Reflection\Types\Boolean;
 
 class SearchDataBnr{
@@ -45,9 +46,9 @@ class SearchDataBnr{
     private int $Montant;
 
     /**
-     * @var int
+     * @var Organisme[]
      */
-    private int $idOrganisme;
+    private array $idOrganisme;
 
     /**
      * @var int
