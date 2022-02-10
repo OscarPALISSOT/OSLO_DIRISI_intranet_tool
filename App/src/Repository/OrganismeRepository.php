@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Organisme;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method Organisme|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Organisme|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Organisme[]    findAll()
+ * @method Organisme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class OrganismeRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Organisme::class);
+    }
+
+     /**
+      * @return Query
+      */
+    public function findAllWithQuartierQuery(): Query
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.idQuartier', 'q')
+            ->addSelect('q')
+            ->innerJoin('q.idBaseDefense', 'b')
+            ->addSelect('b')
+            ->orderBy('o.idQuartier')
+            ->getQuery()
+        ;
+    }
+
+    /**
+     * @return Organisme[] Returns an array of Organisme objects
+     */
+    public function findAllWithQuartier(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.idQuartier', 'q')
+            ->addSelect('q')
+            ->innerJoin('q.idBaseDefense', 'b')
+            ->addSelect('b')
+            ->orderBy('o.idQuartier')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    // /**
+    //  * @return Organisme[] Returns an array of Organisme objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Organisme
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}

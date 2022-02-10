@@ -1,0 +1,93 @@
+<form method="post">
+    <div class="filterLine">
+        <div class="form-floating mb-3 col-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="projet" name="searchFilter">
+            <label for="floatingInput">Rechercher</label>
+        </div>
+    </div>
+    <div class="filterLine">
+        <div class="form-floating mb-3 col-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="projet" name="projetFilter">
+            <label for="floatingInput">Projet</label>
+        </div>
+        <div class="col-2 priorityFilter">
+            <h5>Priorité :</h5>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="priorityP1">
+                <label class="form-check-label" for="flexCheckDefault">
+                    P1
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="priorityP2">
+                <label class="form-check-label" for="flexCheckDefault">
+                    P2
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="priorityP2">
+                <label class="form-check-label" for="flexCheckDefault">
+                    P3
+                </label>
+            </div>
+        </div>
+        <div class="col-2">
+            <select class="form-select mb-3" aria-label="Default select example" name="sup">
+                <option selected value="1">Supérieur au montant</option>
+                <option value="0">Inférieur au montant</option>
+            </select>
+        </div>
+        <div class="mb-3 col-4">
+            <label for="customRange2" class="form-label">Montant :</label>
+            <input type="range" class="form-range" id="customRange2" name="amountRange" step="100" min="{{ minMontant }}" max="{{ maxMontant }}" value="{{ minMontant }}" oninput="this.form.amountInput.value=this.value" />
+            <div class="col-3">
+                <input id="amountInput" type="number" class="form-control" name="amountInput" min="{{ minMontant }}" max="{{ maxMontant }}" value="{{ minMontant }}" oninput="this.form.amountRange.value=this.value" />
+            </div>
+
+        </div>
+    </div>
+    <div class="filterLine">
+        <div class="col-4">
+            <select class="form-select mb-3" aria-label="Default select example" name="Organisme">
+                <option selected value="">Organisme</option>
+                {% for Organisme in Organismes %}
+                    <option value="{{ Organisme.IdOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.IdQuartier.Quartier }} - {{ Organisme.IdQuartier.IdBaseDefense.BaseDefense }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-2">
+            <select class="form-select mb-3" aria-label="Default select example" name="Quartier">
+                <option selected>Trigramme</option>
+                {% for Quartier in Quartiers %}
+                    <option value="{{ Quartier.idQuartier }}">{{ Quartier.Trigramme }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-1">
+            <select class="form-select mb-3" aria-label="Default select example" name="before">
+                <option selected value="1">avant</option>
+                <option value="0">après</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <div class="input-group mb-3 date datepicker">
+                <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date"><span class="input-group-addon"></span>
+                <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="filterLine">
+        <div class="col-3">
+            <select class="form-select mb-3" aria-label="Default select example" name="state">
+                <option selected>État</option>
+                <option value="1">Prévu</option>
+                <option value="2">Traité</option>
+            </select>
+        </div>
+        <div class="form-floating mb-3 col-8">
+            <input type="text" class="form-control" id="floatingInput" placeholder="projet" name="commentFilter">
+            <label for="floatingInput">Commentaire</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Appliquer les filtres</button>
+</form>

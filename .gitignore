@@ -62,3 +62,5 @@ fabric.properties
 App/.phpunit.result.cache
 App/phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+/App/migrations/

@@ -1,52 +1,58 @@
-{% extends 'base.html.twig' %}
+{% extends 'sidenav.html.twig' %}
 
-{% block title %}OSLO | Contact{% endblock %}
+{% block titleSidenav %}OSLO | Contact{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/pages/contact.css') }}"/>
+{% block stylesheetsSidenav %}
+    {{ encore_entry_link_tags('sidenav') }}
+    {{ encore_entry_link_tags('contact') }}
 {% endblock %}
 
-{% block javascripts %}
-    <script src="{{ asset('js/pages/accueil.js') }}"></script>
+{% block javascriptsSidenav %}
+    {{ encore_entry_script_tags('contactJS') }}
+{% endblock %}
+
+{% block sideNav %}
+    <li class="sideNavItem">
+        <a href="{{ path ('contact') }}" class="">Contacts</a>
+    </li>
+    <li class="sideNavItem">
+        <a href="{{ path ('contactCirisi') }}" class="">Contacts CIRISI</a>
+    </li>
+    <li class="sideNavItem">
+        <a href="{{ path ('contactBdd') }}" class="">Contacts BDD</a>
+    </li>
 {% endblock %}
 
 {% block body %}
 
-<div id="main" class="row h-100">
-    <div class="d-flex align-items-start h-100">
-        <div class="d-flex align-items-start h-100">
-            <!-- Nav tabs -->
-            <ul class="sidenav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="organisme-tab" data-bs-toggle="tab" href="#organisme" role="tab" aria-controls="organisme" aria-selected="true">Contact</a>
-                </li>
-                <a id="retourBtn" class="btn btn-dark align-self-baseline" href="javascript:history.back()">Retour</a>
-                </li>
-            </ul>
-            <div id="filAriane" class="vingt" itemscope="" itemtype="">
-                <ul>
-                    <a class="accueil" href="{{ path ('contact') }}" itemprop="">Contact</a> >
-                    <a class="nom1" href="javascript:history.back()"><?php echo $query["Cirisi"]?></a> >
-                    <a class="nom2" href="javascript:history.back()"><?php echo "Contact " .$query["Enseigne"]. " " .$query["Cirisi"]?></a>
-                </ul>
-            </div>
-        </div>
-        <div class="cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
-            <div class="container">
-                <div class="container">
-                    <div id="info">
-                        <div class="bouton cover-container d-flex p-3 mx-auto flex-column col-form-label-lg">
-                            <button title="Modifier les informations du quartier" class="align-self-sm-end btn" data-bs-toggle="modal" data-bs-target="{#<?php echo "#edit".$query["Cirisi"] .$query["Enseigne"]?>#}" type="button"><img src="{{ asset('images/edit-regular.svg') }}" width="20" /></button>
+    <div class="container">
+        <h1 class="mainTitle">Contacts</h1>
+        <div class="col-5 mx-auto">
+            <ul class="list-group">
+                {% for contact in contacts %}
+                <li class="list-group-item">
+                    <button class="toogleContact" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ contact.idContact }}" aria-expanded="false" aria-controls="collapseExample">
+                        {{ contact.intituleContact }} <i class="fas fa-chevron-circle-down"></i>
+                    </button>
+                    <div class="collapse" id="collapse{{ contact.idContact }}">
+                        <div>
+                            <ul class="coordonnees">
+                                <li>Nom : {{ contact.nomContact }}</li>
+                                <li>Prénom : {{ contact.prenomContact }}</li>
+                                <li>Email : {{ contact.emailContact }}</li>
+                                <li>TPH : {{ contact.telContact }}</li>
+                            </ul>
                         </div>
                     </div>
-                    <p>
-                        <strong>Nom : </strong><br />
-                        <strong>Prénom :</strong><br />
-                        <strong>Email :</strong><br>
-                        <strong>TPH :</strong>
-                    </p>
-                </div>
-            </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+
+    </div>
+
 {% endblock %}
 
 

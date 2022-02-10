@@ -1,0 +1,67 @@
+{% extends 'gestion.html.twig' %}
+
+{% block titleSidenav %}OSLO | BNR{% endblock %}
+
+{% block styleSheetsGestion %}
+    {{ encore_entry_link_tags('sidenav') }}
+    {{ encore_entry_link_tags('datePicker') }}
+    {% block styleGestionEntity %}
+
+    {% endblock %}
+{% endblock %}
+
+{% block javascriptsSidenav %}
+    {{ encore_entry_script_tags('datepickerMIN') }}
+    {{ encore_entry_script_tags('datepickerJS') }}
+    {% block javascriptGestionEntity %}
+
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+    <h1 class="mainTitle">{{ title }}</h1>
+
+    <div class="container-fluid js-filter">
+
+        <div class="col">
+            <a href="{{ path ('Gestion', {role: role})}}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
+        </div>
+
+        <!-- Button trigger modal create -->
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">
+            Ajouter {{ title }} <i class="fas fa-plus-square"></i>
+        </button>
+
+        <!-- Button trigger modal delete -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete1">
+            Supprimer la sélection <i class="fas fa-trash"></i>
+        </button>
+
+        <button type="button" class="btn btn-outline-success">
+            Exporter au format Excel <i class="far fa-file-excel"></i>
+        </button>
+
+        <p>
+            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Filtrer <i class="fas fa-filter"></i>
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                {% block FormFilterGestionEntity %}
+                    <div class="js-filter-form">
+
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+
+        {% block ContentGestionEntity %}
+
+        {% endblock %}
+    </div>
+{% endblock %}
+
+
+
+

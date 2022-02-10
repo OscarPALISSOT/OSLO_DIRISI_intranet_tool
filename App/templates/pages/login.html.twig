@@ -3,7 +3,7 @@
 {% block title %}OSLO | S'authentifier{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/pages/login.css') }}"/>
+    {{ encore_entry_link_tags('login') }}
 {% endblock %}
 
 {% block javascripts %}
@@ -12,23 +12,34 @@
 
 {% block body %}
 
-    <div id="main" class="container">
-        <h3>Veuillez vous authentifier</h3>
-        <form action="/login" method="post">
+    <h3 id="titleContainer">Veuillez vous authentifier</h3>
 
-            <label for="Login" class="col-sm-auto"><span>Login :</span> </label>
-            <input class="col-sm form-control" id="Login" name="Login" required="required" type="text" placeholder="Login" /><br>
+    {% if error %}
+        <div class="col-4" id="error">
+            <div class="card">
+                <div class="card-body">
+                    {{error.messageKey | trans(error.messagedata, 'security')}}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 
-            <label for="pwd" class="col-sm-auto"><span>Mot de passe :</span> </label>
-            <input class="col-sm form-control" id="pwd" name="pwd" required="required" type="password" placeholder="Mot de passe" /><br>
+    <form class="container" action="{{path('login')}}" method="post" autocomplete="off">
 
-            <button type="submit" class="btn btn-dark">M'authentifier</button>
-        </form>
-    </div>
+        <div class="col-4" id="loginForm">
+            <div class="form-floating mb-3">
+                <input type="text" id="username" name="_username"  aria-label="Username" aria-describedby="basic-addon1" value="{{lastUsername}}" class="col-sm form-control" placeholder="Login" />
+                <label for="Login">Login</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password"  name="_password" aria-label="Username" aria-describedby="basic-addon1" class="col-sm form-control" id="password" required="required" placeholder="Mot de passe" />
+                <label for="password">Mot de passe</label>
+            </div>
+
+            <button type="submit" class="btn btn-outline-secondary">S'authentifier</button>
+        </div>
+
+    </form>
  {% endblock %}
-
-
-
-
-

@@ -1,0 +1,68 @@
+#sideNav{
+  background-color: #1e50a1;
+  float: left;
+  margin-right: 3em;
+  max-width: 300px;
+  width: 15%;
+  box-shadow: 3px 3px 6px 0 rgb(0 0 0 / 30%);
+  padding-top: 1em;
+  ul{
+    padding: 0;
+  }
+  .sideNavItem{
+    height: 52px;
+    background-color: whitesmoke;
+    list-style: none;
+    margin: 1.2em 1em;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 0.25em;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    a{
+      margin-left: 0.5em;
+      width: 100%;
+      text-decoration: none;
+      color: black;
+    }
+  }
+  .sideNavItem:hover{
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+    background-color: #e5e5e5;
+    box-shadow: 0 3px 6px 0 rgb(0 0 0 / 30%);
+  }
+
+  .sideNavItem:before, .sideNavItem.active:before{
+    align-items: baseline;
+    content: '';
+    width: 10px;
+    height: 0;
+    background-color: #5993fd;
+    border-radius: .25em;
+    transition: height .2s ease-in-out;
+  }
+
+  .sideNavItem:hover:before, .sideNavItem.active:hover:before {
+    height: 52px;
+    transition: height .2s ease-in-out;
+    border-radius: .25em 0 0 .25em;
+  }
+
+  .sideNavItem.active:before{
+    height: 30px;
+  }
+
+}
+
+
+#main{
+  margin-left: 15%;
+}
+
+@media only screen and (min-width: 2000px) {
+  #main{
+    margin-left: 300px;
+  }
+}

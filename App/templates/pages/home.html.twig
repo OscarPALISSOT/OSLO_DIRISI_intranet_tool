@@ -3,7 +3,7 @@
 {% block title %}OSLO | Accueil{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/pages/home.css') }}"/>
+    {{ encore_entry_link_tags('home') }}
 {% endblock %}
 
 {% block javascripts %}
@@ -12,49 +12,17 @@
 
 {% block body %}
 
-    <div id="main" class="mx-auto flex-column" style="text-align:center">
+
+    <div class="homeContent">
         <div class="Background">
-            <p class="majuscule">Outil de</p>
-            <p class="majuscule">Suivi</p>
-            <p class="minuscule">des Réseaux</p>
-            <p class="majuscule">L<strong id="MajBackground">O</strong>caux</p>
+            <p class="maj">Outil de</p>
+            <p class="maj">Suivi</p>
+            <p>des Réseaux</p>
+            <p class="maj">L<strong>O</strong>caux</p>
         </div>
-        <div id="map"><img src="{{ asset('images/carte.png') }}" alt="" usemap="#image-map" id="map" class="h-100 w-100"/></div>
-        <map id="map_ID" name="image-map" data-toggle="modal" data-target="#ModalQuartier">
-            <area id="1" class="areaclick" target="" alt="Lille" title="Lille" href="" coords="178,117,28" shape="circle">
-            <area id="2" class="areaclick" target="" alt="Charleville-Mézières" title="Charleville-Mézières" href="" coords="394,221,27" shape="circle">
-            <area id="3" class="areaclick" target="" alt="Mourmelon" title="Mourmelon" href="" coords="320,340,27" shape="circle">
-            <area id="4" class="areaclick" target="" alt="Verdun" title="Verdun" href="" coords="463,341,27" shape="circle">
-            <area id="5" class="areaclick" target="" alt="Metz" title="Metz" href="" coords="530,292,27" shape="circle">
-            <area id="6" class="areaclick" target="" alt="Phalsbourg" title="Phalsbourg" href="" coords="644,364,27" shape="circle">
-            <area id="7" class="areaclick" target="" alt="Nancy" title="Nancy" href="" coords="523,410,26" shape="circle">
-            <area id="8" class="areaclick" target="" alt="Saint-Dizier" title="Saint-Dizier" href="" coords="382,478,27" shape="circle">
-            <area id="9" class="areaclick" target="" alt="Luxeuil-lès-Bains" title="Luxeuil-lès-Bains" href="" coords="550,521,27" shape="circle">
-            <area id="10" class="areaclick" target="" alt="Strasbourg" title="Strasbourg" href="" coords="697,470,26" shape="circle">
-            <area id="11" class="areaclick" target="" alt="Belfort" title="Belfort" href="" coords="633,559,27" shape="circle">
-            <area id="12" class="areaclick" target="" alt="Besançon" title="Besançon" href="" coords="401,669,26" shape="circle">
-        </map>
+        <div id="map"><img src="{{ asset('images/map.svg') }}" alt=""/></div>
     </div>
 
-    {% for i in 1..12 %}
-        <div class="modal fade" id="#ModalQuartier" tabindex="-1" aria-labelledby="sitelabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm-4 modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-light">
-                        <h5 class="modal-title" id="sitelabel">Liste des quartiers - {#nom du quartier#}</h5>
-                        <form action="/export" method="post" id="formexport{{ i }}">
-                            <input type="hidden" name="data" value={{ i }}
-                        </form>
-                        <button onsubmit="event.preventDefault()" form="formexport{{ i }}" id="{{ i }}" type="submit" class="export btn border-white text-white col-auto">Exporter</button>
-                        <button type="button" class="btn-close bg-white" onclick= "/*$('#<?php echo $sites[0]['Libelle']?>').modal('toggle');*/" ></button>
-                    </div>
-                    <div class="modal-body"><ul>
-                            {#liens vers les sites#}
-                        </ul></div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
 
 
 {% endblock %}

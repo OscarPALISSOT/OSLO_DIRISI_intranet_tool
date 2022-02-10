@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OSLO | Administration{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="mainTitle">Tableau de bord</h1>
+    <div class="container">
+        <div class="row">
+            {# card Contact#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-id-card"></i> Contact</h3>
+                        <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
+                        <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card Contact #}
+            {# card Bases de défense #}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-building"></i> Bases de défense</h3>
+                        <p class="card-text">Il y a actuellement {{ nbBdd}} bases de défense enregistrées</p>
+                        <a href="{{ path ('Admin_Bdd') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card Bases de défense #}
+            {# card Cirisi#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-building"></i> CIRISI</h3>
+                        <p class="card-text">Il y a actuellement {{ nbCirisi }} CIRISI enregistrés</p>
+                        <a href="{{ path ('Admin_Cirisi') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card Cirisi #}
+            {# card RFZ#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-wifi"></i> Routeurs fédérateurs de zone</h3>
+                        <p class="card-text">Il y a actuellement {{ nbRfz }} routeurs fédérateurs de zone enregistrés</p>
+                        <a href="{{ path ('Admin_Rfz') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card RFZ #}
+            {# card quartier#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-building"></i> Quartiers</h3>
+                        <p class="card-text">Il y a actuellement {{ nbQuartier }} quartiers enregistrés</p>
+                        <a href="{{ path ('Admin_Quartiers') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card quartier #}
+            {# card organisme#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-building"></i> Organismes</h3>
+                        <p class="card-text">Il y a actuellement {{ nbOrganisme }} organismes enregistrés</p>
+                        <a href="{{ path ('Admin_Organisme') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card organisme #}
+            {# card users#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-user"></i> Utilisateurs</h3>
+                        <p class="card-text">Il y a actuellement {{ nbUser }} utilisateurs enregistrés</p>
+                        <a href="{{ path ('Admin_Users') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card users #}
+        </div>
+    </div>
+{% endblock %}

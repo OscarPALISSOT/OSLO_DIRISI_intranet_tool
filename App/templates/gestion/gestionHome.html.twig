@@ -1,0 +1,72 @@
+{% extends 'gestion.html.twig' %}
+
+{% block titleSidenav %}
+    OSLO | {{ role }}
+{% endblock %}
+
+
+{% block body %}
+    {% if role == 'Administrateur'%}
+        <h1 class="mainTitle">Gestion </h1>
+    {% else %}
+        <h1 class="mainTitle">Gestion {{ role }}</h1>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            {% if role != 'BCS' %}
+                {# card BNR#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="fas fa-id-card"></i> BNR</h3>
+                            <p class="card-text">Il y a actuellement {{ nbBNR }} BNR enregistrés</p>
+                            <a href="{{ path ('Bnr', {role: role})}}" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card BNR #}
+                {# card Modip#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="fas fa-id-card"></i> MODIP</h3>
+                            <p class="card-text">Il y a actuellement {{ nbMODIP }} MODIP enregistrés</p>
+                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card MODIP #}
+            {% endif %}
+
+            {% if role != 'BPT' %}
+                {# card MIM3#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="fas fa-id-card"></i> MIM3</h3>
+                            <p class="card-text">Il y a actuellement {{ nbMIM3 }} MIM3 enregistrés</p>
+                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card MIM3 #}
+                {# card OPERA#}
+                <div class="col-lg-3 col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="fas fa-id-card"></i> OPERA</h3>
+                            <p class="card-text">Il y a actuellement {{ nbOPERA }} OPERA enregistrés</p>
+                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {# /card OPERA #}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
