@@ -43,7 +43,7 @@ class SearchDataBnr{
     /**
      * @var Organisme[]
      */
-    public ArrayCollection $idOrganisme;
+    public $idOrganisme;
 
     /**
      * @var Quartiers[]

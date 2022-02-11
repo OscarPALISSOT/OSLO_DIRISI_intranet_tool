@@ -4,20 +4,36 @@ namespace App\form;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Organisme;
+use App\Repository\BnrRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BnrSearchForm extends AbstractType
 {
+    public function __construct(BnrRepository $bnrRepository)
+    {
+        $this->bnrRepository = $bnrRepository;
+    }
 
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if (count($this->bnrRepository->findAll()) > 0){
+            $maxMontant = $this->bnrRepository->findMaxMontant();
+            $minMontant = $this->bnrRepository->findMinMontant();
+            $min = $minMontant[0]['montantFeb'];
+            $max = $maxMontant[0]['montantFeb'];
+        }
+        else{
+            $min = 0;
+            $max = 50000;
+        }
         $builder
             ->add('Bnr', TextType::class, [
                 'label' => false,
@@ -33,11 +49,7 @@ class BnrSearchForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'class' => Organisme::class,
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'placeholder' => 'Organisme',
-                ],
+                'placeholder' => 'Organisme',
 
             ])
 
@@ -56,6 +68,26 @@ class BnrSearchForm extends AbstractType
                 'required' => false,
                 'widget' => 'single_text',
             ])
+
+            ->add('supMontant', ChoiceType::class, [
+                'label' => false,
+                'required' => false,
+                'placeholder' => "Supérieur ou inférieur au montant ?",
+                'choices' => [
+                    'Supérieur' => true,
+                    'Inférieur' => false,
+                ],
+            ])
+
+            ->add('Montant', RangeType::class, [
+
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'min' => $min,
+                    'max' => $max,
+                ],
+            ]);
         ;
     }
 
