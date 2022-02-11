@@ -95,7 +95,7 @@ class BnrSearchForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SearchDataBnr::class,
-            'method' => 'POST',
+            'method' => 'GET',
             'csrf_protection' => false,
         ]);
     }

@@ -9,6 +9,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class SearchDataBnr{
 
     /**
+     * @var int
+     */
+    public $page = 1;
+
+    /**
      * @var string
      */
     public string $Bnr = '';

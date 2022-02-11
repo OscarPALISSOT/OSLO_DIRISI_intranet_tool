@@ -8,6 +8,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method Bnr|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,9 +19,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BnrRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Bnr::class);
+        $this->paginator = $paginator;
     }
 
      /**
@@ -50,10 +55,11 @@ class BnrRepository extends ServiceEntityRepository
             ;
     }
 
-     /**
-      * @return Bnr[] Returns an array of Bnr objects
-      */
-    public function findSearch(SearchDataBnr $data): array
+    /**
+     * @param SearchDataBnr $data
+     * @return PaginationInterface
+     */
+    public function findSearch(SearchDataBnr $data): PaginationInterface
     {
         $query = $this
             ->createQueryBuilder('b')
@@ -84,7 +90,13 @@ class BnrRepository extends ServiceEntityRepository
             }
         }
 
-        return $query->getQuery()->getResult();
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
     }
 
 

@@ -43,14 +43,12 @@ class BNRController extends AbstractController {
     public function index(PaginatorInterface $paginator, Request $request) : Response{
 
         $Data = new SearchDataBnr();
+        $Data->page =$request->get('page', 1);
         $form = $this->createForm(BnrSearchForm::class, $Data);
         $form->handleRequest($request);
 
-        $Bnrs = $paginator->paginate(
-            $this->bnrRepository->findSearch($Data),
-            $request->query->getInt('page', 1), /*page number*/
-            12 /*limit per page*/
-        );
+        $Bnrs = $this->bnrRepository->findSearch($Data);
+
         $Organismes = $this->organismeRepository->findAllWithQuartier();
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){

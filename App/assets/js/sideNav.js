@@ -13,9 +13,12 @@ var navItem = document.querySelectorAll('.sideNavItem');
 
 function activeSideNavitem(){
 
+    let loc = window.location.href;
+    let url = location.protocol + '//' + location.host + location.pathname;
+
     navItem.forEach( function (item){
         item.classList.remove('active')
-        if ( item.firstElementChild.href === window.location.href) {
+        if ( item.firstElementChild.href === url) {
             item.classList.add('active')
         }
     })
