@@ -30,7 +30,7 @@ export default class Filter{
         let sortingLinks = this.sorting.getElementsByTagName('a');
         for (let i = 0; i < sortingLinks.length; i++){
             sortingLinks[i].addEventListener( 'click', e => {
-                e.preventDefault()
+                //e.preventDefault()
                 this.loadUrl(sortingLinks[i].getAttribute('href'))
             })
         }

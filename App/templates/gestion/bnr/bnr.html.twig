@@ -15,8 +15,9 @@
 
 {% block ContentGestionEntity %}
 
-    <div class="js-filter-sorting">
-
+    <div class="js-filter-sorting sorting">
+        {{ knp_pagination_sortable(Bnrs, 'Montant', 'b.montantFeb') }}
+        {{ knp_pagination_sortable(Bnrs, 'Priorité', 'b.prioBnr') }}
     </div>
 
     <div class="row tableContent">

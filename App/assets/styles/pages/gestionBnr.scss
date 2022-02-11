@@ -1,11 +1,6 @@
-.priorityFilter{
-  font-size: medium;
+.sorting{
+  margin: 1em 2em;
+  display: flex;
+  justify-content: end;
 }
 
-.filterLine{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1em;
-}
