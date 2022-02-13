@@ -41,11 +41,13 @@
             Exporter au format Excel <i class="far fa-file-excel"></i>
         </button>
 
-        <p>
+        <div class="col">
             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Filtrer <i class="fas fa-filter"></i>
             </button>
-        </p>
+            <a href="{{ path ('Bnr', {role: role})}}" class="btn btn-outline-secondary">Réinitialiser les filtres <i class="fas fa-redo-alt"></i></a>
+        </div>
+
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
                 {% block FormFilterGestionEntity %}
