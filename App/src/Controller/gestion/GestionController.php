@@ -29,6 +29,7 @@ class GestionController extends AbstractController {
 
     /**
      * @Route ("/Gestion/{role}", name="Gestion")
+     * @param Request $request
      * @return Response
      */
     public function index(Request $request) : Response{
