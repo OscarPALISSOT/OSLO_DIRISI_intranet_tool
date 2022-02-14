@@ -30,7 +30,7 @@ class BnrRepository extends ServiceEntityRepository
      /**
       * @return Bnr[] Returns an array of Bnr objects
       */
-    public function findMaxMontant()
+    public function findMaxMontant(): array
     {
         return $this->createQueryBuilder('b')
             ->select('b.idBnr', 'b.montantFeb')
@@ -44,7 +44,7 @@ class BnrRepository extends ServiceEntityRepository
     /**
      * @return Bnr[] Returns an array of Bnr objects
      */
-    public function findMinMontant()
+    public function findMinMontant(): array
     {
         return $this->createQueryBuilder('b')
             ->select('b.idBnr', 'b.montantFeb')

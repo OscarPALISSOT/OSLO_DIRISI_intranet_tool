@@ -52,7 +52,8 @@ class BNRController extends AbstractController {
         $Organismes = $this->organismeRepository->findAllWithQuartier();
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
-            $role[0] = 'Administrateur';
+            $role[0] = $request->get('role');
+
         }
         /*if ($request->isXmlHttpRequest()){
             return new JsonResponse([

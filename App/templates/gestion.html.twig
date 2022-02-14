@@ -16,25 +16,19 @@
 {% endblock %}
 
 {% block sideNav %}
-    {% if app.user.roles[0] == 'ROLE_ADMIN'%}
-        <li class="sideNavItem">
-            <a href="{{ path ('Gestion', {role: 'BRC'})}}" class="">Accueil</a>
-        </li>
-    {% else %}
-        <li class="sideNavItem">
-            <a href="{{ path ('Gestion', {role: app.user.roles[0]})}}" class="">Accueil {{ app.user.roles[0] }}</a>
-        </li>
-    {% endif %}
+    <li class="sideNavItem">
+        <a href="{{ path ('Gestion', {role: role})}}" class="">Accueil {{ role }}</a>
+    </li>
 
-    {% if app.User.roles[0] != 'BCS' %}
+    {% if role != 'BCS' %}
         <li class="sideNavItem">
-            <a href="{{ path ('Bnr', {role: app.user.roles[0]})}}" class="">BNR</a>
+            <a href="{{ path ('Bnr', {role: role})}}" class="">BNR</a>
         </li>
         <li class="sideNavItem">
             <a href="{{ path ('contactCirisi') }}" class="">MODIP</a>
         </li>
     {% endif %}
-    {% if app.User.roles[0] != 'BPT' %}
+    {% if role != 'BPT' %}
         <li class="sideNavItem">
             <a href="{{ path ('contactBdd') }}" class="">MIM3</a>
         </li>

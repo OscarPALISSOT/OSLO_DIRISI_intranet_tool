@@ -7,6 +7,7 @@ use App\Repository\InternetMilitaireRepository;
 use App\Repository\ModipRepository;
 use App\Repository\OperaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,10 +31,11 @@ class GestionController extends AbstractController {
      * @Route ("/Gestion/{role}", name="Gestion")
      * @return Response
      */
-    public function index() : Response{
+    public function index(Request $request) : Response{
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
-            $role[0] = 'Administrateur';
+            $role[0] = $request->get('role');
+
         }
         return $this->render('gestion/gestionHome.html.twig', [
             'nbBNR' => count($this->bnrRepository->findAll()),
