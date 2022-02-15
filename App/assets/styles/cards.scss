@@ -3,10 +3,12 @@
   box-shadow: 0 2px 4px rgba(128, 128, 128, 0.35);
   border-radius: 3px;
   margin-bottom: 2em;
+  transition: .1s;
 }
 
 
 .card:hover{
+  transition: .1s;
   border: solid 2px rgba(34, 137, 216, 0.5);
 }
 
