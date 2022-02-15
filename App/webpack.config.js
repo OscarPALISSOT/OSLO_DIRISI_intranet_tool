@@ -43,6 +43,7 @@ Encore
     .addStyleEntry('home', './assets/styles/pages/home.scss')
     .addStyleEntry('login', './assets/styles/pages/login.scss')
     .addStyleEntry('sidenav', './assets/styles/sidenav.scss')
+    .addStyleEntry('cards', './assets/styles/cards.scss')
     .addStyleEntry('contact', './assets/styles/pages/contact.scss')
     .addStyleEntry('datePicker', './assets/styles/datepicker.css')
     .addStyleEntry('gestionBnr', './assets/styles/pages/gestionBnr.scss')

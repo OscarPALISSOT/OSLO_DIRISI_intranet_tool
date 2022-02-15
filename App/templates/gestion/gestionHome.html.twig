@@ -4,6 +4,10 @@
     OSLO | {{ role }}
 {% endblock %}
 
+{% block styleSheetsGestion %}
+    {{ encore_entry_link_tags('cards') }}
+{% endblock %}
+
 
 {% block body %}
     {% if role == 'Administrateur'%}
