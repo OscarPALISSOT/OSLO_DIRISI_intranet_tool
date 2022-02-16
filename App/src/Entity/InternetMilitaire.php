@@ -64,6 +64,20 @@ class InternetMilitaire
     private $etatInternetMilitaire;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="commentaire", type="text", length=0, nullable=false)
+     */
+    private $commentaire;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_at", type="date", nullable=false)
+     */
+    private $updateAt;
+
+    /**
      * @var \Organisme
      *
      * @ORM\ManyToOne(targetEntity="Organisme")
@@ -146,6 +160,30 @@ class InternetMilitaire
     public function setEtatInternetMilitaire(string $etatInternetMilitaire): self
     {
         $this->etatInternetMilitaire = $etatInternetMilitaire;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeInterface $updateAt): self
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }

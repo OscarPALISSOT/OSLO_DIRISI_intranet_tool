@@ -48,6 +48,16 @@ class Contactbdd
     private $telContact;
 
     /**
+     * @var \BasesDeDefense
+     *
+     * @ORM\ManyToOne(targetEntity="BasesDeDefense")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_base_defense", referencedColumnName="id_base_defense")
+     * })
+     */
+    private $idBaseDefense;
+
+    /**
      * @var \Contact
      *
      * @ORM\Id
@@ -58,16 +68,6 @@ class Contactbdd
      * })
      */
     private $idContact;
-
-    /**
-     * @var \BasesDeDefense
-     *
-     * @ORM\ManyToOne(targetEntity="BasesDeDefense")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_base_defense", referencedColumnName="id_base_defense")
-     * })
-     */
-    private $idBaseDefense;
 
     public function getIntituleContact(): ?string
     {
@@ -129,18 +129,6 @@ class Contactbdd
         return $this;
     }
 
-    public function getIdContact(): ?Contact
-    {
-        return $this->idContact;
-    }
-
-    public function setIdContact(?Contact $idContact): self
-    {
-        $this->idContact = $idContact;
-
-        return $this;
-    }
-
     public function getIdBaseDefense(): ?BasesDeDefense
     {
         return $this->idBaseDefense;
@@ -149,6 +137,18 @@ class Contactbdd
     public function setIdBaseDefense(?BasesDeDefense $idBaseDefense): self
     {
         $this->idBaseDefense = $idBaseDefense;
+
+        return $this;
+    }
+
+    public function getIdContact(): ?Contact
+    {
+        return $this->idContact;
+    }
+
+    public function setIdContact(?Contact $idContact): self
+    {
+        $this->idContact = $idContact;
 
         return $this;
     }

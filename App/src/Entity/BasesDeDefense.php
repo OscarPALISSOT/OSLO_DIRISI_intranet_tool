@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BasesDeDefense
  *
- * @ORM\Table(name="bases_de_defense", indexes={@ORM\Index(name="Bases_de_defense_rfz_FK", columns={"id_rfz"})})
+ * @ORM\Table(name="bases_de_defense", uniqueConstraints={@ORM\UniqueConstraint(name="Bases_de_defense_Budget_FebCOm_AK", columns={"id_budget_FebCom"})}, indexes={@ORM\Index(name="Bases_de_defense_rfz_FK", columns={"id_rfz"})})
  * @ORM\Entity(repositoryClass="App\Repository\BasesDeDefenseRepository")
  */
 class BasesDeDefense
@@ -27,6 +27,16 @@ class BasesDeDefense
      * @ORM\Column(name="base_defense", type="string", length=50, nullable=false)
      */
     private $baseDefense;
+
+    /**
+     * @var \BudgetFebcom
+     *
+     * @ORM\ManyToOne(targetEntity="BudgetFebcom")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_budget_FebCom", referencedColumnName="id_budget_FebCom")
+     * })
+     */
+    private $idBudgetFebcom;
 
     /**
      * @var \Rfz
@@ -51,6 +61,18 @@ class BasesDeDefense
     public function setBaseDefense(string $baseDefense): self
     {
         $this->baseDefense = $baseDefense;
+
+        return $this;
+    }
+
+    public function getIdBudgetFebcom(): ?BudgetFebcom
+    {
+        return $this->idBudgetFebcom;
+    }
+
+    public function setIdBudgetFebcom(?BudgetFebcom $idBudgetFebcom): self
+    {
+        $this->idBudgetFebcom = $idBudgetFebcom;
 
         return $this;
     }

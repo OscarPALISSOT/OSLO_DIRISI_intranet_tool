@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +40,29 @@ class Organisme
      */
     private $idQuartier;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Affaire", inversedBy="idOrganisme")
+     * @ORM\JoinTable(name="beneficier",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="id_organisme", referencedColumnName="id_organisme")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="id_Affaire", referencedColumnName="id_Affaire")
+     *   }
+     * )
+     */
+    private $idAffaire;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idAffaire = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function getIdOrganisme(): ?int
     {
         return $this->idOrganisme;
@@ -67,9 +92,28 @@ class Organisme
         return $this;
     }
 
-    public function __toString()
+    /**
+     * @return Collection|Affaire[]
+     */
+    public function getIdAffaire(): Collection
     {
-        return $this->organisme;
+        return $this->idAffaire;
+    }
+
+    public function addIdAffaire(Affaire $idAffaire): self
+    {
+        if (!$this->idAffaire->contains($idAffaire)) {
+            $this->idAffaire[] = $idAffaire;
+        }
+
+        return $this;
+    }
+
+    public function removeIdAffaire(Affaire $idAffaire): self
+    {
+        $this->idAffaire->removeElement($idAffaire);
+
+        return $this;
     }
 
 }

@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TravauxOpera
+ * TravauxAccesWan
  *
- * @ORM\Table(name="travaux_opera", uniqueConstraints={@ORM\UniqueConstraint(name="Travaux_Opera_Opera_AK", columns={"id_opera"})})
- * @ORM\Entity(repositoryClass="App\Repository\TravauxOperaRepository")
+ * @ORM\Table(name="travaux_acces_wan", uniqueConstraints={@ORM\UniqueConstraint(name="Travaux_Acces_Wan_Acces_Wan_AK", columns={"id_opera"})})
+ * @ORM\Entity(repositoryClass="App\Repository\TravauxAccesWanRepository")
  */
-class TravauxOpera
+class TravauxAccesWan
 {
     /**
      * @var int
@@ -43,9 +43,9 @@ class TravauxOpera
     private $etatTravauxOpera;
 
     /**
-     * @var \Opera
+     * @var \AccesWan
      *
-     * @ORM\ManyToOne(targetEntity="Opera")
+     * @ORM\ManyToOne(targetEntity="AccesWan")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_opera", referencedColumnName="id_opera")
      * })
@@ -93,12 +93,12 @@ class TravauxOpera
         return $this;
     }
 
-    public function getIdOpera(): ?Opera
+    public function getIdOpera(): ?AccesWan
     {
         return $this->idOpera;
     }
 
-    public function setIdOpera(?Opera $idOpera): self
+    public function setIdOpera(?AccesWan $idOpera): self
     {
         $this->idOpera = $idOpera;
 

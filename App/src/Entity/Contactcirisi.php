@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Contactcirisi
  *
  * @ORM\Table(name="contactcirisi", indexes={@ORM\Index(name="ContactCirisi_Cirisi0_FK", columns={"id_cirisi"})})
- * @ORM\Entity(repositoryClass="App\Repository\ContactCirisiRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ContactcirisiRepository")
  */
-class ContactCirisi
+class Contactcirisi
 {
     /**
      * @var string
@@ -48,6 +48,16 @@ class ContactCirisi
     private $telContact;
 
     /**
+     * @var \Cirisi
+     *
+     * @ORM\ManyToOne(targetEntity="Cirisi")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_cirisi", referencedColumnName="id_cirisi")
+     * })
+     */
+    private $idCirisi;
+
+    /**
      * @var \Contact
      *
      * @ORM\Id
@@ -58,16 +68,6 @@ class ContactCirisi
      * })
      */
     private $idContact;
-
-    /**
-     * @var \Cirisi
-     *
-     * @ORM\ManyToOne(targetEntity="Cirisi")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_cirisi", referencedColumnName="id_cirisi")
-     * })
-     */
-    private $idCirisi;
 
     public function getIntituleContact(): ?string
     {
@@ -129,18 +129,6 @@ class ContactCirisi
         return $this;
     }
 
-    public function getIdContact(): ?Contact
-    {
-        return $this->idContact;
-    }
-
-    public function setIdContact(?Contact $idContact): self
-    {
-        $this->idContact = $idContact;
-
-        return $this;
-    }
-
     public function getIdCirisi(): ?Cirisi
     {
         return $this->idCirisi;
@@ -149,6 +137,18 @@ class ContactCirisi
     public function setIdCirisi(?Cirisi $idCirisi): self
     {
         $this->idCirisi = $idCirisi;
+
+        return $this;
+    }
+
+    public function getIdContact(): ?Contact
+    {
+        return $this->idContact;
+    }
+
+    public function setIdContact(?Contact $idContact): self
+    {
+        $this->idContact = $idContact;
 
         return $this;
     }
