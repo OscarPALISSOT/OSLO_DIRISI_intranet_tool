@@ -1,10 +1,9 @@
 <?php
 
-namespace App\form;
+namespace App\form\filters;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Organisme;
-use App\Repository\BnrRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,17 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BnrSearchForm extends AbstractType
 {
-    public function __construct(BnrRepository $bnrRepository)
+    public function __construct()
     {
-        $this->bnrRepository = $bnrRepository;
     }
 
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (count($this->bnrRepository->findAll()) > 0){
-            $maxMontant = $this->bnrRepository->findMaxMontant();
-            $minMontant = $this->bnrRepository->findMinMontant();
+        if ( $sqdfzz > 0){
+            $maxMontant = 'test';
+            $minMontant = 'test';
             $min = $minMontant[0]['montantFeb'];
             $max = $maxMontant[0]['montantFeb'];
         }

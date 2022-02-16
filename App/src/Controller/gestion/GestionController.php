@@ -12,18 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GestionController extends AbstractController {
-
-    private BnrRepository $bnrRepository;
-    private ModipRepository $modipRepository;
     private InternetMilitaireRepository $internetMilitaireRepository;
-    private OperaRepository $operaRepository;
 
-    public function __construct(BnrRepository $bnrRepository, ModipRepository $modipRepository, InternetMilitaireRepository $internetMilitaireRepository, OperaRepository $operaRepository)
+    public function __construct(InternetMilitaireRepository $internetMilitaireRepository)
     {
-        $this->bnrRepository = $bnrRepository;
-        $this->modipRepository = $modipRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
-        $this->operaRepository = $operaRepository;
     }
 
 
@@ -39,10 +32,10 @@ class GestionController extends AbstractController {
 
         }
         return $this->render('gestion/gestionHome.html.twig', [
-            'nbBNR' => count($this->bnrRepository->findAll()),
-            'nbMODIP' => count($this->modipRepository->findAll()),
+            'nbBNR' => 'test',
+            'nbMODIP' => 'test',
             'nbMIM3' => count($this->internetMilitaireRepository->findAll()),
-            'nbOPERA' => count($this->operaRepository->findAll()),
+            'nbOPERA' => 'test',
             'role' => $role[0],
         ]);
     }

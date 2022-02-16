@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Contactcirisi
+ * ContactCirisi
  *
  * @ORM\Table(name="contactcirisi", indexes={@ORM\Index(name="ContactCirisi_Cirisi0_FK", columns={"id_cirisi"})})
  * @ORM\Entity(repositoryClass="App\Repository\ContactcirisiRepository")
  */
-class Contactcirisi
+class ContactCirisi
 {
     /**
      * @var string
