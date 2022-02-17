@@ -75,7 +75,7 @@ class ContactCirisiController extends AbstractController {
 
         if (!$cirisi){
             $jsonData = array(
-                'ContactCirisi' => "Erreur, veuillez renseigner un CIRISI.",
+                'message' => "Erreur, veuillez renseigner un CIRISI.",
             );
         }
         else{
@@ -90,7 +90,7 @@ class ContactCirisiController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'ContactCirisi' => $ContactCirisi,
+                'message' => 'Contact ajouté.',
             );
         }
         return $this->json($jsonData, 200);
@@ -112,7 +112,7 @@ class ContactCirisiController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'ContactCirisi' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -129,7 +129,7 @@ class ContactCirisiController extends AbstractController {
 
             }
             $jsonData = array(
-                'ContactCirisi' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -171,7 +171,7 @@ class ContactCirisiController extends AbstractController {
         }
 
         $jsonData = array(
-            'ContactCirisi' => $ContactCirisi->getIntituleContact(),
+            'message' => 'Contact modifié.',
         );
 
         return $this->json($jsonData, 200);

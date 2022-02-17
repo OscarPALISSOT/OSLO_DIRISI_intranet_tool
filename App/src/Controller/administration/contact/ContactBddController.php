@@ -75,7 +75,7 @@ class ContactBddController extends AbstractController {
 
         if (!$bdd){
             $jsonData = array(
-                'ContactBdd' => "Erreur, veuillez renseigner une base de défense.",
+                'message' => "Erreur, veuillez renseigner une base de défense.",
             );
         }
         else{
@@ -112,7 +112,7 @@ class ContactBddController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'ContactBdd' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -129,7 +129,7 @@ class ContactBddController extends AbstractController {
 
             }
             $jsonData = array(
-                'ContactBdd' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -171,7 +171,7 @@ class ContactBddController extends AbstractController {
         }
 
         $jsonData = array(
-            'ContactBdd' => $ContactBdd->getIntituleContact(),
+            'message' => 'Contact modifié.',
         );
 
         return $this->json($jsonData, 200);

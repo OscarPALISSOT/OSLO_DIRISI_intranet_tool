@@ -32,6 +32,8 @@ class ContactController extends AbstractController {
 
     /**
      * @Route ("/Admin/Contact", name="Admin_Contact")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response{
@@ -61,7 +63,6 @@ class ContactController extends AbstractController {
      */
     public function newContact(Request $request) : Response{
         $NewContact = new Contact();
-        $NewContact = new Contact();
         $Contact = $request->request->get('intituleContact');
         $nomContact = $request->request->get('nomContact');
         $prenomContact = $request->request->get('prenomContact');
@@ -79,7 +80,7 @@ class ContactController extends AbstractController {
             $em->flush();
         }
         $jsonData = array(
-            'Contact' => $Contact,
+            'message' => 'Contact ajouté',
         );
         return $this->json($jsonData, 200);
     }
@@ -100,7 +101,7 @@ class ContactController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Contact' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -115,7 +116,7 @@ class ContactController extends AbstractController {
 
             }
             $jsonData = array(
-                'Contact' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -148,7 +149,7 @@ class ContactController extends AbstractController {
         }
 
         $jsonData = array(
-            'Contact' => $Contact->getIntituleContact(),
+            'message' => 'Contact modifié.',
         );
 
         return $this->json($jsonData, 200);

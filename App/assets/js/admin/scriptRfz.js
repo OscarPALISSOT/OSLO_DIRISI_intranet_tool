@@ -2,6 +2,7 @@
 $("#rfzFormCreate").submit(function AddRfz(e) {
     e.preventDefault()
     let form = $(this);
+    debugger
     $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
