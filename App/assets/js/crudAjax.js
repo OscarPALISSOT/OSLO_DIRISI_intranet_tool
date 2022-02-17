@@ -41,7 +41,6 @@ export default class CrudAjax{
                 let html = '<h2>' + data.message + '</h2>';
                 $('.loading').html(null);
                 $('#ajax-modal').html(html);
-                debugger
             },
             error: function (xhr, ajaxOptions, thrownError)
             {

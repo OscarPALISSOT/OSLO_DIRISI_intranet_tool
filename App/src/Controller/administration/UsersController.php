@@ -75,7 +75,7 @@ class UsersController extends AbstractController {
             $em->flush();
         }
         $jsonData = array(
-            'Users' => $UserName,
+            'message' => 'Utilisateur ajouté',
         );
         return $this->json($jsonData, 200);
     }
@@ -96,7 +96,7 @@ class UsersController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Users' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -111,7 +111,7 @@ class UsersController extends AbstractController {
 
             }
             $jsonData = array(
-                'Users' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -151,7 +151,7 @@ class UsersController extends AbstractController {
         }
 
         $jsonData = array(
-            'Users' => $User->getUser(),
+            'message' => 'Utilisateur modifié',
         );
 
         return $this->json($jsonData, 200);

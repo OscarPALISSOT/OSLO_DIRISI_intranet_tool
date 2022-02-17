@@ -57,7 +57,7 @@ class CirisiController extends AbstractController {
         $Bdd = $this->basesDeDefenseRepository->find($idCirisi);
         if (!$Bdd){
             $jsonData = array(
-                'Cirisi' => "Erreur, veuillez renseigner une base de défense.",
+                'message' => "Erreur, veuillez renseigner une base de défense.",
             );
         }
         else{
@@ -68,7 +68,7 @@ class CirisiController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'Cirisi' => $Cirisi,
+                'message' => 'CIRISI ajouté',
             );
         }
         return $this->json($jsonData, 200);
@@ -90,7 +90,7 @@ class CirisiController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Cirisi' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -105,7 +105,7 @@ class CirisiController extends AbstractController {
 
             }
             $jsonData = array(
-                'Cirisi' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -132,7 +132,7 @@ class CirisiController extends AbstractController {
         }
 
         $jsonData = array(
-            'Cirisi' => $Cirisi->getCirisi(),
+            'message' => 'CIRISI modifié',
         );
 
         return $this->json($jsonData, 200);

@@ -52,7 +52,7 @@ class RfzController extends AbstractController {
             $em->flush();
         }
         $jsonData = array(
-            'Rfz' => $Rfz,
+            'message' => 'Routeur ajouté',
         );
         return $this->json($jsonData, 200);
     }
@@ -73,7 +73,7 @@ class RfzController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Rfz' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -88,7 +88,7 @@ class RfzController extends AbstractController {
 
             }
             $jsonData = array(
-                'Rfz' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -112,7 +112,7 @@ class RfzController extends AbstractController {
         }
 
         $jsonData = array(
-            'Rfz' => $Rfz->getRfz(),
+            'message' => 'Routeur modifié',
         );
 
         return $this->json($jsonData, 200);

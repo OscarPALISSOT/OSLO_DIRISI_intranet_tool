@@ -22,15 +22,16 @@ class QuartiersRepository extends ServiceEntityRepository
 
 
      /**
-      * @return Query
+      * @return Quartiers[]
       */
-    public function findAllWithBddQuery(): Query
+    public function findAllWithBdd(): array
     {
         return $this->createQueryBuilder('q')
             ->innerJoin('q.idBaseDefense', 'r')
             ->addSelect('r')
             ->orderBy('q.idBaseDefense', 'ASC')
             ->getQuery()
+            ->getResult()
         ;
     }
 

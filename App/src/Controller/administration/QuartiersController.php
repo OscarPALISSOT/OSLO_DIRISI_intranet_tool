@@ -33,7 +33,7 @@ class QuartiersController extends AbstractController {
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response{
         $Quartiers = $paginator->paginate(
-            $this->QuartiersRepository->findAllWithBddQuery(),
+            $this->QuartiersRepository->findAllWithBdd(),
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
@@ -60,7 +60,7 @@ class QuartiersController extends AbstractController {
         $Bdd = $this->basesDeDefenseRepository->find($idQuartiers);
         if (!$Bdd){
             $jsonData = array(
-                'Quartiers' => "Erreur, veuillez renseigner une base de défense.",
+                'message' => "Erreur, veuillez renseigner une base de défense.",
             );
         }
         else{
@@ -71,7 +71,7 @@ class QuartiersController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'Quartiers' => $Quartiers,
+                'message' => 'Quartier ajouté',
             );
         }
         return $this->json($jsonData, 200);
@@ -93,7 +93,7 @@ class QuartiersController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Quartiers' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -108,7 +108,7 @@ class QuartiersController extends AbstractController {
 
             }
             $jsonData = array(
-                'Quartiers' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -139,7 +139,7 @@ class QuartiersController extends AbstractController {
         }
 
         $jsonData = array(
-            'Quartiers' => $Quartiers->getQuartier(),
+            'message' => 'Quartier modifié',
         );
 
         return $this->json($jsonData, 200);

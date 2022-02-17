@@ -7,13 +7,13 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('scriptContactBdd') }}
+
 {% endblock %}
 
 {% block body %}
 
     <h1 class="mainTitle">Contacts bases de défense</h1>
-    <div class="container">
+    <div class="container js-Ajax">
 
         <div class="col">
             <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
@@ -72,7 +72,7 @@
                                         <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form id="contactBddFormEdit{{ ContactBdd.idContact.idContact }}" class="contactBddFormEdit" action="{{ path ('Admin_ContactBdd_Edit', {id: ContactBdd.idContact.idContact })}}" method="post">
+                                    <form id="contactBddFormEdit{{ ContactBdd.idContact.idContact }}" class="contactBddFormEdit js-Ajax-form" action="{{ path ('Admin_ContactBdd_Edit', {id: ContactBdd.idContact.idContact })}}" method="post">
                                         <div class="modal-body">
                                             <div class="container mt-4">
                                                 <h2>Modifier les informations du contact :</h2>
@@ -107,7 +107,7 @@
                                         <div class="modal-footer">
                                             <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditContactBdd')}}>
                                             <input type="hidden" name="idEdit" value="{{ ContactBdd.idContact.idContact }}">
-                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ ContactBdd.idContact.idContact }}">Enregistrer</button>
+                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ ContactBdd.idContact.idContact }}">Enregistrer</button>
                                         </div>
                                     </form>
                                 </div>
@@ -124,142 +124,102 @@
             {{ knp_pagination_render(ContactBdds) }}
         </div>
 
-    </div>
-
-    <!-- Modals new contactBdd-->
-    <!-- First modal dialog create-->
-    <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="modalLabel">Nouveau contact :</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="contactBddFormCreate" action="{{ path ('Admin_ContactBdd_New')}}" method="post">
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Intitulé du contact</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="intituleContactBdd" name="intituleContactBdd">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Nom</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="nomContactBdd" name="nomContactBdd">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Prénom</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="prenomContactBdd" name="prenomContactBdd">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Mail</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="mailContactBdd" name="mailContactBdd">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Téléphone</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="telContactBdd" name="telContactBdd">
-                        </div>
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateContactBdd')}}>
-                        <select name="bdd" class="form-select" aria-label="Default select example">
-                            <option selected>Base de défense</option>
-                            {% for Bdd in Bdds %}
-                                <option value="{{ Bdd.idBaseDefense}}">{{ Bdd.BaseDefense}}</option>
-                            {% endfor %}
-                        </select>
+        <!-- Modals new contactBdd-->
+        <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="modalLabel">Nouveau contact :</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-footer">
-                        <!-- send request-->
-                        <button id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Second modal create -->
-    <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="loading">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                    <form id="contactBddFormCreate" action="{{ path ('Admin_ContactBdd_New')}}" method="post" class="js-Ajax-form">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Intitulé du contact</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="intituleContactBdd" name="intituleContactBdd">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Nom</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="nomContactBdd" name="nomContactBdd">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Prénom</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="prenomContactBdd" name="prenomContactBdd">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Mail</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="mailContactBdd" name="mailContactBdd">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Téléphone</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="telContactBdd" name="telContactBdd">
+                            </div>
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateContactBdd')}}>
+                            <select name="bdd" class="form-select" aria-label="Default select example">
+                                <option selected>Base de défense</option>
+                                {% for Bdd in Bdds %}
+                                    <option value="{{ Bdd.idBaseDefense}}">{{ Bdd.BaseDefense}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                    </div>
-                    <div id="ajax-modal"></div>
-                </div>
-                <div class="modal-footer">
-                    <!-- close second create -->
-                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {#modal delete ContactBdd#}
-    <!-- Modal delete-->
-    <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container mt-4">
-                        <div class="input-group mb-3">
-                            <h2>Attention ! Cette action est irréversible.</h2>
+                        <div class="modal-footer">
+                            <!-- send request-->
+                            <button id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
                         </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <form id="contactBddFormDelete" action="{{ path ('Admin_ContactBdd_Delete')}}" method="post">
-                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteContactBdd')}}>
-                        <button class="btn btn-danger" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
-                            Confirmer <i class="fas fa-trash"></i>
-                        </button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Second modal delete -->
-    <div class="modal fade" id="modalDelete2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="loading">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
+        {#modal delete ContactBdd#}
+        <!-- Modal delete-->
+        <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container mt-4">
+                            <div class="input-group mb-3">
+                                <h2>Attention ! Cette action est irréversible.</h2>
+                            </div>
                         </div>
                     </div>
-                    <div id="ajax-modalDelete"></div>
+                    <div class="modal-footer">
+                        <form id="contactBddFormDelete" action="{{ path ('Admin_ContactBdd_Delete')}}" method="post" class="js-Ajax-form">
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteContactBdd')}}>
+                            <button class="btn btn-danger" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
+                                Confirmer <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <!-- close second delete -->
-                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete2"><i class="fas fa-check"></i> Ok</button>
+            </div>
+        </div>
+
+        <!-- Second modal message -->
+        <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="loading">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div id="ajax-modal"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- close second -->
+                        <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Second modal edit -->
-    <div class="modal fade" id="modalEdit2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="loading">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                    <div id="ajax-modalEdit"></div>
-                </div>
-                <div class="modal-footer">
-                    <!-- close second edit -->
-                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit2"><i class="fas fa-check"></i> Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 {% endblock %}

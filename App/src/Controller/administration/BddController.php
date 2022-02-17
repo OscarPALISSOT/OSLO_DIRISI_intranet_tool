@@ -27,6 +27,8 @@ class BddController extends AbstractController {
 
     /**
      * @Route ("/Admin/BasesDeDefense", name="Admin_Bdd")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response{
@@ -55,7 +57,7 @@ class BddController extends AbstractController {
         $Rfz = $this->rfzRepository->find($idRfz);
         if (!$Rfz){
             $jsonData = array(
-                'Bdd' => "Erreur, veuillez renseigner un routeur.",
+                'message' => "Erreur, veuillez renseigner un routeur.",
             );
         }
         else{
@@ -66,7 +68,7 @@ class BddController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'Bdd' => $Bdd,
+                'message' => 'Base de défense ajoutée',
             );
         }
         return $this->json($jsonData, 200);
@@ -88,7 +90,7 @@ class BddController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Bdd' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -103,7 +105,7 @@ class BddController extends AbstractController {
 
             }
             $jsonData = array(
-                'Bdd' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -130,7 +132,7 @@ class BddController extends AbstractController {
         }
 
         $jsonData = array(
-            'Bdd' => $Bdd->getBaseDefense(),
+            'message' => 'Base de défense modifiée',
         );
 
         return $this->json($jsonData, 200);

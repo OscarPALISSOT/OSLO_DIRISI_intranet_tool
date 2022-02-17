@@ -39,7 +39,7 @@ class OrganismeController extends AbstractController {
         );
         return $this->render('administration/organisme.html.twig', [
             'Organismes' =>$Organismes,
-            'Quartiers' => $this->quartiersRepository->findAllWithBddQuery(),
+            'Quartiers' => $this->quartiersRepository->findAllWithBdd(),
         ]);
     }
 
@@ -56,7 +56,7 @@ class OrganismeController extends AbstractController {
         $Quartier = $this->quartiersRepository->find($idQuartier);
         if (!$Quartier){
             $jsonData = array(
-                'Organisme' => "Erreur, veuillez renseigner une base de défense.",
+                'message' => "Erreur, veuillez renseigner une base de défense.",
             );
         }
         else{
@@ -67,7 +67,7 @@ class OrganismeController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'Organisme' => $Organisme,
+                'message' => 'Organisme ajouté',
             );
         }
         return $this->json($jsonData, 200);
@@ -89,7 +89,7 @@ class OrganismeController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Organisme' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -104,7 +104,7 @@ class OrganismeController extends AbstractController {
 
             }
             $jsonData = array(
-                'Organisme' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -131,7 +131,7 @@ class OrganismeController extends AbstractController {
         }
 
         $jsonData = array(
-            'Organisme' => $Organisme->getOrganisme(),
+            'message' => 'Organisme modifié',
         );
 
         return $this->json($jsonData, 200);

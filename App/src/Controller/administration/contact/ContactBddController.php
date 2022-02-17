@@ -72,7 +72,6 @@ class ContactBddController extends AbstractController {
         $NewContact->setEmailContact($mailContactBdd);
         $NewContact->setTelContact($telContactBdd);
         $bdd = $this->bddRepository->find($idContactBdd);
-
         if (!$bdd){
             $jsonData = array(
                 'message' => "Erreur, veuillez renseigner une base de défense.",
@@ -90,7 +89,7 @@ class ContactBddController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'ContactBdd' => $ContactBdd,
+                'message' => 'Contact ajouté',
             );
         }
         return $this->json($jsonData, 200);
