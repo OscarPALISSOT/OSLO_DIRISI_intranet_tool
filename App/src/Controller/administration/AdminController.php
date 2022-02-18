@@ -5,9 +5,11 @@ namespace App\Controller\administration;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactRepository;
+use App\Repository\GrandsComptesRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\RfzRepository;
+use App\Repository\SigleRepository;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +24,10 @@ class AdminController extends AbstractController {
     private QuartiersRepository $quartiersRepository;
     private OrganismeRepository $organismeRepository;
     private UsersRepository $usersRepository;
+    private SigleRepository $sigleRepository;
+    private GrandsComptesRepository $grandsComptesRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -32,6 +36,8 @@ class AdminController extends AbstractController {
         $this->quartiersRepository = $quartiersRepository;
         $this->organismeRepository = $organismeRepository;
         $this->usersRepository = $usersRepository;
+        $this->sigleRepository = $sigleRepository;
+        $this->grandsComptesRepository = $grandsComptesRepository;
     }
 
     /**
@@ -47,6 +53,8 @@ class AdminController extends AbstractController {
             'nbQuartier' => count($this->quartiersRepository->findAll()),
             'nbOrganisme' => count($this->organismeRepository->findAll()),
             'nbUser' => count($this->usersRepository->findAll()),
+            'nbSigle' => count($this->sigleRepository->findAll()),
+            'nbGrandComptes' => count($this->grandsComptesRepository->findAll()),
         ]);
     }
 }

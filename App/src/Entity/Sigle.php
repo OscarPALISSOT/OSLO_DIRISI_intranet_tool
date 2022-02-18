@@ -28,6 +28,13 @@ class Sigle
      */
     private $sigle;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intitule_sigle", type="string", length=50, nullable=false)
+     */
+    private $intituleSigle;
+
     public function getIdSigle(): ?int
     {
         return $this->idSigle;
@@ -43,6 +50,22 @@ class Sigle
         $this->sigle = $sigle;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntituleSigle(): string
+    {
+        return $this->intituleSigle;
+    }
+
+    /**
+     * @param string $intituleSigle
+     */
+    public function setIntituleSigle(string $intituleSigle): void
+    {
+        $this->intituleSigle = $intituleSigle;
     }
 
 

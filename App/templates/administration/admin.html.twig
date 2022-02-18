@@ -14,18 +14,56 @@
 
     <h1 class="mainTitle">Tableau de bord</h1>
     <div class="container">
+
+        <h2 class="mb-4">Gestion des informations : </h2>
         <div class="row">
             {# card Contact#}
             <div class="col-lg-3 col-6">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title"><i class="fas fa-id-card"></i> Contact</h3>
+                        <h3 class="card-title"><i class="fas fa-id-card"></i> Contacts</h3>
                         <p class="card-text">Il y a actuellement {{ nbContact }} contacts enregistrés</p>
                         <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
                     </div>
                 </div>
             </div>
             {# /card Contact #}
+            {# card sigle#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-spell-check"></i> Sigles</h3>
+                        <p class="card-text">Il y a actuellement {{ nbSigle }} sigles enregistrés</p>
+                        <a href="{{ path ('Admin_Sigle') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card sigle #}
+            {# card GrandsComptes#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-euro-sign"></i> Grands comptes</h3>
+                        <p class="card-text">Il y a actuellement {{ nbGrandComptes }} grands comptes enregistrés</p>
+                        <a href="{{ path ('Admin_GrandsComptes') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card GrandsComptes #}
+            {# card users#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-user"></i> Utilisateurs</h3>
+                        <p class="card-text">Il y a actuellement {{ nbUser }} utilisateurs enregistrés</p>
+                        <a href="{{ path ('Admin_Users') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card users #}
+        </div>
+        <h2 class="mb-4">Gestion de la base de données : </h2>
+        <div class="row">
             {# card Bases de défense #}
             <div class="col-lg-3 col-6">
                 <div class="card">
@@ -81,17 +119,6 @@
                 </div>
             </div>
             {# /card organisme #}
-            {# card users#}
-            <div class="col-lg-3 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title"><i class="fas fa-user"></i> Utilisateurs</h3>
-                        <p class="card-text">Il y a actuellement {{ nbUser }} utilisateurs enregistrés</p>
-                        <a href="{{ path ('Admin_Users') }}" class="btn btn-outline-primary">Voir plus</a>
-                    </div>
-                </div>
-            </div>
-            {# /card users #}
         </div>
     </div>
 {% endblock %}
