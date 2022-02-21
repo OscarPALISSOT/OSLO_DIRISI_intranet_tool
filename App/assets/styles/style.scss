@@ -17,6 +17,7 @@ html, body{
   height: 100px;
   background-color: #5993fd;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 30%);
+  z-index: 1;
   .navbar-brand{
     margin-left: 3em;
     transform: scale(100%);
@@ -63,6 +64,10 @@ html, body{
 
 label{
   font-size: medium;
+}
+
+.modal{
+  position: absolute;
 }
 
 #main {

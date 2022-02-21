@@ -115,7 +115,9 @@ class SigleController extends AbstractController {
         $id = $request->request->get('idEdit');
         $Sigle = $this->SigleRepository->find($id);
         $SigleName = $request->request->get('siglesEdit');
+        $SigleIntitule = $request->request->get('intituleSiglesEdit');
         $Sigle->setSigle($SigleName);
+        $Sigle->setIntituleSigle($SigleIntitule);
 
         if ($this->isCsrfTokenValid("EditSigle", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();
