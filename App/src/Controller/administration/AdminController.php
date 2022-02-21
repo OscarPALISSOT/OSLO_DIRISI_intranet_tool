@@ -12,6 +12,7 @@ use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\RfzRepository;
 use App\Repository\SigleRepository;
+use App\Repository\StatutPdcRepository;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,8 +31,9 @@ class AdminController extends AbstractController {
     private GrandsComptesRepository $grandsComptesRepository;
     private PriorisationRepository $priorisationRepository;
     private NatureAffaireRepository $natureAffaireRepository;
+    private StatutPdcRepository $statutPdcRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -44,6 +46,7 @@ class AdminController extends AbstractController {
         $this->grandsComptesRepository = $grandsComptesRepository;
         $this->priorisationRepository = $priorisationRepository;
         $this->natureAffaireRepository = $natureAffaireRepository;
+        $this->statutPdcRepository = $statutPdcRepository;
     }
 
     /**
@@ -63,6 +66,7 @@ class AdminController extends AbstractController {
             'nbPriorisation' => count($this->priorisationRepository->findAll()),
             'nbGrandComptes' => count($this->grandsComptesRepository->findAll()),
             'nbNatureAffaire' => count($this->natureAffaireRepository->findAll()),
+            'nbStatutPdc' => count($this->statutPdcRepository->findAll()),
         ]);
     }
 }
