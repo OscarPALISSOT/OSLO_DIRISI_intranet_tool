@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OSLO | Administration des Priorisation{% endblock %}
+{% block title %}OSLO | Administration des natures des affaires{% endblock %}
 
 {% block stylesheets %}
 
@@ -12,16 +12,16 @@
 
 {% block body %}
 
-    <h1 class="mainTitle">Priorisations</h1>
+    <h1 class="mainTitle">Natures des Affaires</h1>
     <div class="container js-Ajax">
 
         <div class="col">
             <a href="{{ path ('Admin') }}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
         </div>
 
-        <!-- Button trigger modal new priorisation -->
+        <!-- Button trigger modal new natureAffaire -->
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">
-            Nouvelle priorisation <i class="fas fa-plus-square"></i>
+            Nouvelle nature d'affaire <i class="fas fa-plus-square"></i>
         </button>
 
         <!-- Button trigger modal delete -->
@@ -34,48 +34,48 @@
             <thead>
             <tr>
                 <th scope="col"><i class="fas fa-check"></i></th>
-                <th scope="col">Priorisation</th>
+                <th scope="col">Nature</th>
                 <th scope="col">Modifier</th>
             </tr>
             </thead>
             <tbody>
-            {% for priorisation in Priorisations %}
+            {% for natureAffaire in NatureAffaires %}
                 <tr>
                     <th scope="row">
                         <div class="form-check">
-                            <label for="checkbox{{ priorisation.idPriorisation }}"></label>
-                            <input form="priorisationFormDelete" class="form-check-input checkboxPriorisation" name="idChecked{{ priorisation.idPriorisation }}" type="checkbox" value="{{ priorisation.idPriorisation }}" id="checkbox{{ priorisation.idPriorisation }}">
+                            <label for="checkbox{{ natureAffaire.idNatureAffaire }}"></label>
+                            <input form="natureAffaireFormDelete" class="form-check-input checkboxNatureAffaire" name="idChecked{{ natureAffaire.idNatureAffaire }}" type="checkbox" value="{{ natureAffaire.idNatureAffaire }}" id="checkbox{{ natureAffaire.idNatureAffaire }}">
                         </div>
                     </th>
-                    <td>{{ priorisation.priorisation }}</td>
+                    <td>{{ natureAffaire.natureAffaire }}</td>
                     <td>
                         <!-- Button trigger modal edit -->
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ priorisation.idPriorisation }}">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ natureAffaire.idNatureAffaire }}">
                             <i class="fas fa-edit"></i>
                         </button>
 
                         <!-- Modal edit-->
-                        <div class="modal fade" id="modalEdit1{{ priorisation.idPriorisation }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modalEdit1{{ natureAffaire.idNatureAffaire }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form id="priorisationFormEdit{{ priorisation.idPriorisation }}" class="priorisationFormEdit js-Ajax-form" action="{{ path ('Admin_Priorisation_Edit', {id: priorisation.idPriorisation })}}" method="post">
+                                    <form id="natureAffaireFormEdit{{ natureAffaire.idNatureAffaire }}" class="natureAffaireFormEdit js-Ajax-form" action="{{ path ('Admin_NatureAffaire_Edit', {id: natureAffaire.idNatureAffaire })}}" method="post">
                                         <div class="modal-body">
                                             <div class="container mt-4">
-                                                <h2>Modifier la priorisation :</h2>
+                                                <h2>Modifier les informations de la nature :</h2>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Nom</span>
-                                                    <input type="text" class="form-control" value="{{ priorisation.priorisation }}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="priorisationEdit" name="priorisationEdit">
+                                                    <input type="text" class="form-control" value="{{ natureAffaire.natureAffaire }}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="natureAffaireEdit" name="natureAffaireEdit">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditPriorisation')}}>
-                                            <input type="hidden" name="idEdit" value="{{ priorisation.idPriorisation }}">
-                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ priorisation.idPriorisation }}">Enregistrer</button>
+                                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditNatureAffaire')}}>
+                                            <input type="hidden" name="idEdit" value="{{ natureAffaire.idNatureAffaire }}">
+                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ natureAffaire.idNatureAffaire }}">Enregistrer</button>
                                         </div>
                                     </form>
                                 </div>
@@ -89,25 +89,25 @@
 
         {# display navigation #}
         <div class="navigation">
-            {{ knp_pagination_render(Priorisations) }}
+            {{ knp_pagination_render(NatureAffaires) }}
         </div>
 
-        <!-- Modals new priorisation-->
+        <!-- Modals new natureAffaire-->
         <!-- First modal dialog create-->
         <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title" id="modalLabel">Nouvelle priorisation :</h1>
+                        <h1 class="modal-title" id="modalLabel">Nouvelle nature :</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="priorisationFormCreate" action="{{ path ('Admin_Priorisation_New')}}" method="post" class="js-Ajax-form">
+                    <form id="natureAffaireFormCreate" action="{{ path ('Admin_NatureAffaire_New')}}" method="post" class="js-Ajax-form">
                         <div class="modal-body">
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Intitulé</span>
-                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="priorisation" name="priorisation">
+                                <span class="input-group-text">Nom</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="natureAffaire" name="natureAffaire">
                             </div>
-                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreatePriorisation')}}>
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateNatureAffaire')}}>
                         </div>
                         <div class="modal-footer">
                             <!-- send request-->
@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        {#modal delete Priorisation#}
+        {#modal delete NatureAffaire#}
         <!-- Modal delete-->
         <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -135,8 +135,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <form id="priorisationFormDelete" action="{{ path ('Admin_Priorisation_Delete')}}" method="post" class="js-Ajax-form">
-                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeletePriorisation')}}>
+                        <form id="natureAffaireFormDelete" action="{{ path ('Admin_NatureAffaire_Delete')}}" method="post" class="js-Ajax-form">
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteNatureAffaire')}}>
                             <button class="btn btn-danger" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
                                 Confirmer <i class="fas fa-trash"></i>
                             </button>

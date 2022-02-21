@@ -6,6 +6,7 @@ use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactRepository;
 use App\Repository\GrandsComptesRepository;
+use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
@@ -28,8 +29,9 @@ class AdminController extends AbstractController {
     private SigleRepository $sigleRepository;
     private GrandsComptesRepository $grandsComptesRepository;
     private PriorisationRepository $priorisationRepository;
+    private NatureAffaireRepository $natureAffaireRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -41,6 +43,7 @@ class AdminController extends AbstractController {
         $this->sigleRepository = $sigleRepository;
         $this->grandsComptesRepository = $grandsComptesRepository;
         $this->priorisationRepository = $priorisationRepository;
+        $this->natureAffaireRepository = $natureAffaireRepository;
     }
 
     /**
@@ -59,6 +62,7 @@ class AdminController extends AbstractController {
             'nbSigle' => count($this->sigleRepository->findAll()),
             'nbPriorisation' => count($this->priorisationRepository->findAll()),
             'nbGrandComptes' => count($this->grandsComptesRepository->findAll()),
+            'nbNatureAffaire' => count($this->natureAffaireRepository->findAll()),
         ]);
     }
 }

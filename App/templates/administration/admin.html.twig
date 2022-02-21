@@ -55,12 +55,23 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title"><i class="fas fa-layer-group"></i> Priorisations</h3>
-                        <p class="card-text">Il y a actuellement {{ nbPriorisation }} priorisation enregistrés</p>
+                        <p class="card-text">Il y a actuellement {{ nbPriorisation }} priorisations enregistrées</p>
                         <a href="{{ path ('Admin_Priorisation') }}" class="btn btn-outline-primary">Voir plus</a>
                     </div>
                 </div>
             </div>
             {# /card Priorisation #}
+            {# card NatureAffaire#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-folder-open"></i> Natures des affaires</h3>
+                        <p class="card-text">Il y a actuellement {{ nbNatureAffaire }} natures d'affaire enregistrées</p>
+                        <a href="{{ path ('Admin_NatureAffaire') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card NatureAffaire #}
             {# card users#}
             <div class="col-lg-3 col-6">
                 <div class="card">
