@@ -22,18 +22,18 @@
 
     {% if role != 'BCS' %}
         <li class="sideNavItem">
-            <a href="{{ path ('Bnr', {role: role})}}" class="">BNR</a>
+            <a href="{{ path ('contactCirisi') }}" class="">{{ sigles['besoinNouveauReseau'] }}</a>
         </li>
         <li class="sideNavItem">
-            <a href="{{ path ('contactCirisi') }}" class="">MODIP</a>
+            <a href="{{ path ('contactCirisi') }}" class="">{{ sigles['modifLan'] }}</a>
         </li>
     {% endif %}
     {% if role != 'BPT' %}
         <li class="sideNavItem">
-            <a href="{{ path ('contactBdd') }}" class="">MIM3</a>
+            <a href="{{ path ('contactBdd') }}" class="">{{ sigles['internet_militaire'] }}</a>
         </li>
         <li class="sideNavItem">
-            <a href="{{ path ('contactBdd') }}" class="">OPERA</a>
+            <a href="{{ path ('contactBdd') }}" class="">{{ sigles['accesWan'] }}</a>
         </li>
     {% endif %}
 

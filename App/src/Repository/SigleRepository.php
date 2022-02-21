@@ -19,6 +19,36 @@ class SigleRepository extends ServiceEntityRepository
         parent::__construct($registry, Sigle::class);
     }
 
+
+    /**
+     * @return array
+     * return array of all the acronym with their titles
+     */
+    public function findSigles(): array
+    {
+        $sigleEntity = $this->findAll();
+        $sigles = [];
+        foreach ($sigleEntity as $item) {
+            $sigles[$item->getIntituleSigle()] = $item->getSigle();
+        }
+        if (!array_key_exists('internet_militaire', $sigles)) {
+            $sigles['internet_militaire'] = 'Internet militaire';
+        }
+        if (!array_key_exists('accesWan', $sigles)) {
+            $sigles['accesWan'] = 'Accès wan';
+        }
+        if (!array_key_exists('modifLan', $sigles)) {
+            $sigles['modifLan'] = 'Modification lan';
+        }
+        if (!array_key_exists('besoinNouveauReseau', $sigles)) {
+            $sigles['besoinNouveauReseau'] = 'Besoin nouveau réseau';
+        }
+        if (!array_key_exists('ficheExpressionBesoinCOM', $sigles)) {
+            $sigles['ficheExpressionBesoinCOM'] = 'Fiche expression besoin COM';
+        }
+        return $sigles;
+    }
+
     // /**
     //  * @return Sigle[] Returns an array of Sigle objects
     //  */

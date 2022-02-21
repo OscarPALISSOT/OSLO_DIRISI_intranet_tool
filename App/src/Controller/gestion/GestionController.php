@@ -6,6 +6,7 @@ use App\Repository\BnrRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\ModipRepository;
 use App\Repository\OperaRepository;
+use App\Repository\SigleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GestionController extends AbstractController {
     private InternetMilitaireRepository $internetMilitaireRepository;
+    private SigleRepository $sigleRepository;
 
-    public function __construct(InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository)
     {
         $this->internetMilitaireRepository = $internetMilitaireRepository;
+        $this->sigleRepository = $sigleRepository;
     }
 
 
@@ -31,11 +34,13 @@ class GestionController extends AbstractController {
             $role[0] = $request->get('role');
 
         }
+        $sigles = $this->sigleRepository->findSigles();
         return $this->render('gestion/gestionHome.html.twig', [
             'nbBNR' => 'test',
             'nbMODIP' => 'test',
             'nbMIM3' => count($this->internetMilitaireRepository->findAll()),
             'nbOPERA' => 'test',
+            'sigles' => $sigles,
             'role' => $role[0],
         ]);
     }
