@@ -4,13 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}OSLO{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="icon" type="image/x-icon" href="{{ asset ('images/favicon.ico') }}?v=2" />
         {{ encore_entry_link_tags('bootstrap') }}
         {{ encore_entry_link_tags('style') }}
 
         {{ encore_entry_script_tags('App') }} {# import Jquery #}
         {{ encore_entry_script_tags('bootstrap.bundle.min.js') }} {# import bootstrap javascript#}
         {{ encore_entry_script_tags('fontawesome') }} {# import icons #}
+
 
         {% block stylesheets %}
 
@@ -21,7 +22,7 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a href ="/" class="navbar-brand"><img alt="logo" src="{{ asset('images/logo.png') }}"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
