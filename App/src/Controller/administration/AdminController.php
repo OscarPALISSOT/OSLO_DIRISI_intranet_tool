@@ -7,6 +7,7 @@ use App\Repository\CirisiRepository;
 use App\Repository\ContactRepository;
 use App\Repository\GrandsComptesRepository;
 use App\Repository\OrganismeRepository;
+use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\RfzRepository;
 use App\Repository\SigleRepository;
@@ -26,8 +27,9 @@ class AdminController extends AbstractController {
     private UsersRepository $usersRepository;
     private SigleRepository $sigleRepository;
     private GrandsComptesRepository $grandsComptesRepository;
+    private PriorisationRepository $priorisationRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -38,6 +40,7 @@ class AdminController extends AbstractController {
         $this->usersRepository = $usersRepository;
         $this->sigleRepository = $sigleRepository;
         $this->grandsComptesRepository = $grandsComptesRepository;
+        $this->priorisationRepository = $priorisationRepository;
     }
 
     /**
@@ -54,6 +57,7 @@ class AdminController extends AbstractController {
             'nbOrganisme' => count($this->organismeRepository->findAll()),
             'nbUser' => count($this->usersRepository->findAll()),
             'nbSigle' => count($this->sigleRepository->findAll()),
+            'nbPriorisation' => count($this->priorisationRepository->findAll()),
             'nbGrandComptes' => count($this->grandsComptesRepository->findAll()),
         ]);
     }
