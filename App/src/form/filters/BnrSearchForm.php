@@ -22,6 +22,7 @@ class BnrSearchForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $sqdfzz = 0;
         if ( $sqdfzz > 0){
             $maxMontant = 'test';
             $minMontant = 'test';

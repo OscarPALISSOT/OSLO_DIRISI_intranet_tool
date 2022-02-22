@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -114,10 +115,14 @@ class Affaire
 
     /**
      * Constructor
+     * @throws \Exception
      */
     public function __construct()
     {
         $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
+        $date = new DateTime();
+        $date->format('Y-m-d H:i:s');
+        $this->setUpdateAt($date);
     }
 
     public function getIdAffaire(): ?int

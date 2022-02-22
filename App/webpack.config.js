@@ -27,6 +27,7 @@ Encore
     .addEntry('contactJS', './assets/js/pages/contactJS.js')
     .addEntry('datepickerJS', './assets/js/datepicker.js')
     .addEntry('datepickerMIN', './assets/js/bootstrap-datepicker.min.js')
+    .addEntry('multiselectJS', './assets/js/multiselect.min.js')
     .addEntry('CrudBnr', './assets/js/crud/bnr.js')
 
     .addStyleEntry('bootstrap', './assets/bootstrap-5.1.3-dist/css/bootstrap.css')
@@ -37,6 +38,8 @@ Encore
     .addStyleEntry('cards', './assets/styles/cards.scss')
     .addStyleEntry('contact', './assets/styles/pages/contact.scss')
     .addStyleEntry('datePicker', './assets/styles/datepicker.css')
+    .addStyleEntry('multiselect', './assets/styles/multiselect.scss')
+    .addStyleEntry('multiselectCSS', './assets/styles/multiselectCSS.css')
     .addStyleEntry('gestionBnr', './assets/styles/pages/gestionBnr.scss')
     .addStyleEntry('gestionContent', './assets/styles/pages/gestionContent.scss')
 

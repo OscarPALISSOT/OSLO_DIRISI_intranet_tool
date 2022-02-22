@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataBnr;
 use App\Entity\Affaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method Affaire|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,10 +17,117 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AffaireRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private SigleRepository $sigleRepository;
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, SigleRepository $sigleRepository, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Affaire::class);
+        $this->sigleRepository = $sigleRepository;
+        $this->paginator = $paginator;
     }
+
+    /**
+     * @return Bnr[] Returns an array of Bnr objects
+     */
+    public function findMaxMontant(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.idBnr', 'b.montantFeb')
+            ->orderBy('b.montantFeb', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Bnr[] Returns an array of Bnr objects
+     */
+    public function findMinMontant(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.idBnr', 'b.montantFeb')
+            ->orderBy('b.montantFeb', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+    /**
+     * @param SearchDataBnr $data
+     * @return PaginationInterface
+     */
+    public function findBnrSearch(): PaginationInterface
+    {
+
+        $Nature = $this->sigleRepository->findOneBy([
+            'intituleSigle' => 'besoinNouveauReseau'
+        ]);
+
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('a', 'n')
+            ->join('a.idNatureAffaire', 'n')
+            ->andWhere('a.idNatureAffaire = :val')
+            ->setParameter('val', $Nature->getSigle());
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            1,
+            12,
+        );
+        /*
+        $Nature = $this->sigleRepository->findOneBy([
+            'intituleSigle' => 'besoinNouveauReseau'
+        ]);
+
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('b','o', 'n')
+            ->join('b.idOrganisme', 'o')
+            ->join('a.idNatureAffaire', 'n')
+            ->andWhere('a.idNatureAffaire = :val')
+            ->setParameter('val', $Nature->getSigle());
+
+        if (!empty($data->Bnr)){
+            $query = $query
+                ->andWhere('b.objBnr LIKE :Bnr')
+                ->setParameter('Bnr', "%{$data->Bnr}%");
+        }
+        if (!empty($data->idOrganisme)){
+            $query = $query
+                ->andWhere('b.idOrganisme IN (:Organisme)')
+                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
+        }
+
+        if (!empty($data->Montant)){
+            if ($data->supMontant == false){
+                $query = $query
+                    ->andWhere('b.montantFeb <= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+            else{
+                $query = $query
+                    ->andWhere('b.montantFeb >= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
+        */
+    }
+
 
     // /**
     //  * @return Affaire[] Returns an array of Affaire objects

@@ -22,7 +22,7 @@
 
     {% if role != 'BCS' %}
         <li class="sideNavItem">
-            <a href="{{ path ('contactCirisi') }}" class="">{{ sigles['besoinNouveauReseau'] }}</a>
+            <a href="{{ path ('Bnr', {role: role})}}" class="">{{ sigles['besoinNouveauReseau'] }}</a>
         </li>
         <li class="sideNavItem">
             <a href="{{ path ('contactCirisi') }}" class="">{{ sigles['modifLan'] }}</a>

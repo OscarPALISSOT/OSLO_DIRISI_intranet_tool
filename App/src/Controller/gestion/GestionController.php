@@ -2,6 +2,7 @@
 
 namespace App\Controller\gestion;
 
+use App\Repository\AffaireRepository;
 use App\Repository\BnrRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\ModipRepository;
@@ -15,11 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class GestionController extends AbstractController {
     private InternetMilitaireRepository $internetMilitaireRepository;
     private SigleRepository $sigleRepository;
+    private AffaireRepository $affaireRepository;
 
-    public function __construct(InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository)
+    public function __construct(InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, AffaireRepository $affaireRepository)
     {
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->sigleRepository = $sigleRepository;
+        $this->affaireRepository = $affaireRepository;
     }
 
 

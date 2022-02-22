@@ -23,9 +23,9 @@
                 <div class="col-lg-3 col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title"><i class="fas fa-id-card"></i> BNR</h3>
-                            <p class="card-text">Il y a actuellement {{ nbBNR }} BNR enregistrés</p>
-                            <a href="{{ path ('contactCirisi') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <h3 class="card-title"><i class="fas fa-id-card"></i> {{ sigles['besoinNouveauReseau'] }}</h3>
+                            <p class="card-text">Il y a actuellement {{ nbBNR }} {{ sigles['besoinNouveauReseau'] }} enregistrés</p>
+                            <a href="{{ path ('Bnr', {role: role})}}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
