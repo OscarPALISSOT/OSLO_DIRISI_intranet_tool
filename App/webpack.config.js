@@ -38,8 +38,7 @@ Encore
     .addStyleEntry('cards', './assets/styles/cards.scss')
     .addStyleEntry('contact', './assets/styles/pages/contact.scss')
     .addStyleEntry('datePicker', './assets/styles/datepicker.css')
-    .addStyleEntry('multiselect', './assets/styles/multiselect.scss')
-    .addStyleEntry('multiselectCSS', './assets/styles/multiselectCSS.css')
+    .addStyleEntry('multiselect', './assets/styles/multiselectCSS.css')
     .addStyleEntry('gestionBnr', './assets/styles/pages/gestionBnr.scss')
     .addStyleEntry('gestionContent', './assets/styles/pages/gestionContent.scss')
 

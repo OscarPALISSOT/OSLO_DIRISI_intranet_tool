@@ -55,14 +55,11 @@ class AffaireRepository extends ServiceEntityRepository
             ;
     }
 
-
     /**
-     * @param SearchDataBnr $data
-     * @return PaginationInterface
+     * @return Affaire[] Returns an array of Affaire objects
      */
-    public function findBnrSearch(): PaginationInterface
+    public function findAllBnr(): array
     {
-
         $Nature = $this->sigleRepository->findOneBy([
             'intituleSigle' => 'besoinNouveauReseau'
         ]);
@@ -74,22 +71,23 @@ class AffaireRepository extends ServiceEntityRepository
             ->andWhere('a.idNatureAffaire = :val')
             ->setParameter('val', $Nature->getSigle());
 
-        $query = $query->getQuery();
+        return $query->getQuery()->getResult();
+    }
 
-        return $this->paginator->paginate(
-            $query,
-            1,
-            12,
-        );
-        /*
+    /**
+     * @param SearchDataBnr $data
+     * @return PaginationInterface
+     */
+    public function findBnrSearch(SearchDataBnr $data): PaginationInterface
+    {
         $Nature = $this->sigleRepository->findOneBy([
             'intituleSigle' => 'besoinNouveauReseau'
         ]);
 
         $query = $this
             ->createQueryBuilder('a')
-            ->select('b','o', 'n')
-            ->join('b.idOrganisme', 'o')
+            ->select('a','o', 'n')
+            ->join('a.idOrganisme', 'o')
             ->join('a.idNatureAffaire', 'n')
             ->andWhere('a.idNatureAffaire = :val')
             ->setParameter('val', $Nature->getSigle());
@@ -125,8 +123,8 @@ class AffaireRepository extends ServiceEntityRepository
             $data->page,
             12,
         );
-        */
     }
+
 
 
     // /**

@@ -68,5 +68,13 @@ class Sigle
         $this->intituleSigle = $intituleSigle;
     }
 
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getSigle();
+    }
+
 
 }

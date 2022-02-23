@@ -3,10 +3,7 @@
 namespace App\Controller\gestion;
 
 use App\Repository\AffaireRepository;
-use App\Repository\BnrRepository;
 use App\Repository\InternetMilitaireRepository;
-use App\Repository\ModipRepository;
-use App\Repository\OperaRepository;
 use App\Repository\SigleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +36,7 @@ class GestionController extends AbstractController {
         }
         $sigles = $this->sigleRepository->findSigles();
         return $this->render('gestion/gestionHome.html.twig', [
-            'nbBNR' => 'test',
+            'nbBNR' => count($this->affaireRepository->findAllBnr()),
             'nbMODIP' => 'test',
             'nbMIM3' => count($this->internetMilitaireRepository->findAll()),
             'nbOPERA' => 'test',

@@ -72,7 +72,9 @@ class BNRController extends AbstractController {
             'Organismes' => $Organismes,
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
-            'title' => 'BNR',
+            'title' => $this->sigleRepository->findOneBy([
+                'intituleSigle' => 'besoinNouveauReseau'
+            ]),
             'form' => $form->createView(),
             'sigles' => $sigles,
         ]);
@@ -120,7 +122,7 @@ class BNRController extends AbstractController {
             if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
                 $em = $this->ManagerRegistry->getManager();
                 $em->persist($NewBnr);
-                $em->flush();
+                //$em->flush();
             }
             $jsonData = array(
                 'Bnr' => $Bnr,
