@@ -8,6 +8,7 @@ use App\form\filters\BnrSearchForm;
 use App\Repository\AffaireRepository;
 use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
+use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\SigleRepository;
 use DateTime;
@@ -27,8 +28,9 @@ class BNRController extends AbstractController {
     private AffaireRepository $affaireRepository;
     private SigleRepository $sigleRepository;
     private NatureAffaireRepository $natureAffaireRepository;
+    private PriorisationRepository $priorisationRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -36,6 +38,7 @@ class BNRController extends AbstractController {
         $this->affaireRepository = $affaireRepository;
         $this->sigleRepository = $sigleRepository;
         $this->natureAffaireRepository = $natureAffaireRepository;
+        $this->priorisationRepository = $priorisationRepository;
     }
 
 
@@ -75,6 +78,7 @@ class BNRController extends AbstractController {
             'title' => $this->sigleRepository->findOneBy([
                 'intituleSigle' => 'besoinNouveauReseau'
             ]),
+            'Prios' => $this->priorisationRepository->findAll(),
             'form' => $form->createView(),
             'sigles' => $sigles,
         ]);

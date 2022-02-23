@@ -19,6 +19,12 @@
     <li class="sideNavItem">
         <a href="{{ path ('Gestion', {role: role})}}" class="">Accueil {{ role }}</a>
     </li>
+    <li class="sideNavItem">
+        <a href="{{ path ('Pdc', {role: role})}}" class="">Plans de charge</a>
+    </li>
+    <li class="sideNavItem">
+        <a href="{{ path ('Bnr', {role: role})}}" class="">FEB</a>
+    </li>
 
     {% if role != 'BCS' %}
         <li class="sideNavItem">

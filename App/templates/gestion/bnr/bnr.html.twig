@@ -1,7 +1,6 @@
 {% extends 'gestion/gestionEntity.html.twig' %}
 
 {% block styleGestionEntity %}
-    {{ encore_entry_link_tags('gestionBnr') }}
     {{ encore_entry_link_tags('gestionContent') }}
 {% endblock %}
 
@@ -71,27 +70,16 @@
                             <input type="number" class="form-control" id="montant" name="montant" placeholder="name@example.com">
                             <label for="montant">Montant</label>
                         </div>
-                        <select data-placeholder="Select Categories" multiple class="chosen-select mb-3" tabindex="8">
-                            <option>Design</option>
-                            <option>HTML5</option>
-                            <option>CSS3</option>
-                            <option>jQuery</option>
-                            <option>BS4</option>
-                            <option>Bootstrap</option>
-                            <option>WordPress</option>
-                            <option>FrontEnd</option>
-                        </select>
-                        <select class="form-select mb-3" aria-label="Default select example" name="organisme">
-                            <option selected>Organisme</option>
+                        <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]">
                             {% for Organisme in Organismes %}
                                 <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
                             {% endfor %}
                         </select>
                         <select class="form-select mb-3" aria-label="Default select example" name="priority">
                             <option selected>Priorité</option>
-                            <option value="P1">P1</option>
-                            <option value="P2">P2</option>
-                            <option value="P3">P3</option>
+                            {% for Prio in Prios %}
+                                <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
+                            {% endfor %}
                         </select>
                         <div class="input-group mb-3 date datepicker">
                             <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date"><span class="input-group-addon"></span>
