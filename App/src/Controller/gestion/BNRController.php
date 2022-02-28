@@ -4,8 +4,10 @@ namespace App\Controller\gestion;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Affaire;
+use App\Entity\InfoBnr;
 use App\form\filters\BnrSearchForm;
 use App\Repository\AffaireRepository;
+use App\Repository\FebRepository;
 use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
@@ -15,6 +17,7 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,8 +32,9 @@ class BNRController extends AbstractController {
     private SigleRepository $sigleRepository;
     private NatureAffaireRepository $natureAffaireRepository;
     private PriorisationRepository $priorisationRepository;
+    private FebRepository $febRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -39,6 +43,7 @@ class BNRController extends AbstractController {
         $this->sigleRepository = $sigleRepository;
         $this->natureAffaireRepository = $natureAffaireRepository;
         $this->priorisationRepository = $priorisationRepository;
+        $this->febRepository = $febRepository;
     }
 
 
@@ -69,10 +74,10 @@ class BNRController extends AbstractController {
                 'content' => $this->renderView('')
             ])
         }*/
-
         return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $Organismes,
+            'Febs' => $this->febRepository->findAll(),
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
@@ -92,45 +97,54 @@ class BNRController extends AbstractController {
      * @throws \Exception
      */
     public function newBnr(Request $request) : Response{
-        $NatureSigle = $this->sigleRepository->findOneBy([
-            'intituleSigle' => 'besoinNouveauReseau',
-        ])->getSigle();
         $nature = $this->natureAffaireRepository->findOneBy([
-            'nature' => $NatureSigle,
+            'natureAffaire' => 'besoinNouveauReseau',
         ]);
         $NewBnr = new Affaire();
         $BnrName = $request->request->get('bnr');
         $montant = $request->request->get('montant');
         $idOrganismes = $request->request->get('organisme');
-        foreach ( $idOrganismes as $item){
+        foreach ($idOrganismes as $item){
             $NewBnr->addIdOrganisme($this->organismeRepository->find($item));
         }
-        $Prio = $request->request->get('priority');
+        $idPrio = $request->request->get('priority');
+        $Prio = $this->priorisationRepository->find($idPrio);
         $Date = $request->request->get('date');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
         $State = $request->request->get('state');
         $Comment = $request->request->get('comment');
+        $idFeb = $request->request->get('feb');
+        $Feb = $this->febRepository->find($idFeb);
         $NewBnr->setIdNatureAffaire($nature);
         $NewBnr->setObjectifAffaire($BnrName);
         $NewBnr->setMontantAffaire($montant);
-        $NewBnr->setPrioBnr($Prio);
-        $NewBnr->setEcheanceBnr($date);
-        $NewBnr->setEtatBnr($Sate);
-        $NewBnr->setCommentaireBnr($Comment);
-        if (!$idOrganismes){
+        $NewBnr->setIdPriorisation($Prio);
+        $NewBnr->setEcheanceAffaire($date);
+        $NewBnr->setEtatAffaire($State);
+        $NewBnr->setCommentaire($Comment);
+        $NewBnr->setIdFeb($Feb);
+        $NewBnrInfos = new InfoBnr();
+        $NewBnrInfos->setIdAffaire($NewBnr);
+        $DateDemande = $request->request->get('dateDemande');
+        $dateDemande = new DateTime($DateDemande);
+        $dateDemande->format('Y-m-d');
+        $NewBnrInfos->setDateDemande($dateDemande);
+        $MontantInfo = $request->request->get('montantInfo');
+        $NewBnrInfos->setMontantInfo($MontantInfo);
+        $Impact = $request->request->get('impact');
+        $NewBnrInfos->setImpact($Impact);
+        if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
+            $em = $this->ManagerRegistry->getManager();
+            $em->persist($NewBnr);
+            $em->flush();
             $jsonData = array(
-                'Bnr' => 'Veuillez entrer un organisme',
+                'message' => 'BNR ajouté',
             );
         }
         else{
-            if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
-                $em = $this->ManagerRegistry->getManager();
-                $em->persist($NewBnr);
-                //$em->flush();
-            }
             $jsonData = array(
-                'Bnr' => $Bnr,
+                'message' => "Erreur lors de l'ajout",
             );
         }
         return $this->json($jsonData, 200);
@@ -152,7 +166,7 @@ class BNRController extends AbstractController {
         }
         if (count($ChekedId) == 0){
             $jsonData = array(
-                'Bnr' => "Veuillez sélectionner au moins élément à supprimer",
+                'message' => "Veuillez sélectionner au moins élément à supprimer",
             );
         }
         else{
@@ -167,7 +181,7 @@ class BNRController extends AbstractController {
 
             }
             $jsonData = array(
-                'Bnr' => "Suppression terminée",
+                'message' => "Suppression terminée",
             );
         }
         return $this->json($jsonData, 200);
@@ -207,7 +221,7 @@ class BNRController extends AbstractController {
         }
 
         $jsonData = array(
-            'Bnr' => $Bnr->getObjBnr(),
+            'message' => 'BNR modifié',
         );
 
         return $this->json($jsonData, 200);

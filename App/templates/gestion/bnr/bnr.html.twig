@@ -66,23 +66,37 @@
                             <input type="text" class="form-control" id="bnr" name="bnr" placeholder="name@example.com">
                             <label for="bnr">Nom du projet</label>
                         </div>
+                        <select class="form-select mb-3" aria-label="Default select example" name="feb" autocomplete="off">
+                            <option selected>FEB associée</option>
+                            {% for Feb in Febs %}
+                                <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
+                            {% endfor %}
+                        </select>
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" id="montant" name="montant" placeholder="name@example.com">
                             <label for="montant">Montant</label>
                         </div>
-                        <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="bnr" name="montantInfo" placeholder="name@example.com">
+                            <label for="bnr">Info sur le montant</label>
+                        </div>
+                        <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]" autocomplete="off">
                             {% for Organisme in Organismes %}
                                 <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
                             {% endfor %}
                         </select>
-                        <select class="form-select mb-3" aria-label="Default select example" name="priority">
+                        <select class="form-select mb-3" aria-label="Default select example" name="priority" autocomplete="off">
                             <option selected>Priorité</option>
                             {% for Prio in Prios %}
                                 <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
                             {% endfor %}
                         </select>
                         <div class="input-group mb-3 date datepicker">
-                            <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date"><span class="input-group-addon"></span>
+                            <input type="text" class="form-control" placeholder="Date de la demande" aria-label="datepicker" aria-describedby="basic-addon1" name="dateDemande" autocomplete="off"><span class="input-group-addon"></span>
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <div class="input-group mb-3 date datepicker">
+                            <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
                             <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                         </div>
 
@@ -91,6 +105,10 @@
                             <option value="1">Prévu</option>
                             <option value="2">Traité</option>
                         </select>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="impact" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Impact de non réalisation</label>
+                        </div>
                         <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>
                             <label for="floatingTextarea2">Commentaire</label>
