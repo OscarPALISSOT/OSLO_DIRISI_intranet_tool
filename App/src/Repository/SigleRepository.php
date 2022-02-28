@@ -49,6 +49,24 @@ class SigleRepository extends ServiceEntityRepository
         return $sigles;
     }
 
+     /**
+      * @return Sigle[] Returns an array of Sigle objects
+      */
+
+    public function findNatureSigles()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.intituleSigle = :bnr OR s.intituleSigle =:modip OR s.intituleSigle =:febcom')
+            ->setParameters([
+                'bnr'=> 'besoinNouveauReseau',
+                'modip' => 'internet_militaire',
+                'febcom' => 'ficheExpressionBesoinCOM'
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Sigle[] Returns an array of Sigle objects
     //  */

@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Entity\NatureAffaire;
 use App\Repository\NatureAffaireRepository;
+use App\Repository\SigleRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,15 @@ class NatureAffaireController extends AbstractController {
 
     private NatureAffaireRepository $NatureAffaireRepository;
     private ManagerRegistry $ManagerRegistry;
+    private SigleRepository $sigleRepository;
+    private NatureAffaireRepository $natureAffaireRepository;
 
-    public function __construct(NatureAffaireRepository $NatureAffaireRepository, ManagerRegistry $doctrine)
+    public function __construct(NatureAffaireRepository $NatureAffaireRepository, ManagerRegistry $doctrine, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository)
     {
         $this->NatureAffaireRepository = $NatureAffaireRepository;
         $this->ManagerRegistry = $doctrine;
+        $this->sigleRepository = $sigleRepository;
+        $this->natureAffaireRepository = $natureAffaireRepository;
     }
 
     /**
@@ -35,6 +40,8 @@ class NatureAffaireController extends AbstractController {
             12 /*limit per page*/
         );
         return $this->render('administration/natureAffaire.html.twig', [
+            'SiglesNature' => $this->sigleRepository->findNatureSigles(),
+            'Sigles' => $this->sigleRepository->findSigles(),
             'NatureAffaires' => $NatureAffaires,
         ]);
     }
@@ -48,14 +55,23 @@ class NatureAffaireController extends AbstractController {
         $NewNatureAffaire = new NatureAffaire();
         $NatureAffaire = $request->request->get('natureAffaire');
         $NewNatureAffaire->setNatureAffaire($NatureAffaire);
-        if ($this->isCsrfTokenValid("CreateNatureAffaire", $request->get('_token'))){
+        if (count($this->natureAffaireRepository->findBy([
+                'natureAffaire' => $NatureAffaire,
+            ])) > 0)
+        {
+            $jsonData = array(
+                'message' => 'Nature déja existante',
+            );
+        }
+        else if ($this->isCsrfTokenValid("CreateNatureAffaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewNatureAffaire);
             $em->flush();
+            $jsonData = array(
+                'message' => 'Nature ajoutée',
+            );
         }
-        $jsonData = array(
-            'message' => 'Nature ajoutée',
-        );
+
         return $this->json($jsonData, 200);
     }
 
@@ -93,30 +109,6 @@ class NatureAffaireController extends AbstractController {
                 'message' => "Suppression terminée",
             );
         }
-        return $this->json($jsonData, 200);
-    }
-
-    /**
-     * @Route ("/Admin/EditNatureAffaire/{id}", name="Admin_NatureAffaire_Edit")
-     * @param Request $request
-     * @return Response
-     */
-    public function EditNatureAffaire(Request $request) : Response{
-        $id = $request->request->get('idEdit');
-        $NatureAffaire = $this->NatureAffaireRepository->find($id);
-        $NatureAffaireName = $request->request->get('natureAffaireEdit');
-        $NatureAffaire->setNatureAffaire($NatureAffaireName);
-
-        if ($this->isCsrfTokenValid("EditNatureAffaire", $request->get('_token'))) {
-            $em = $this->ManagerRegistry->getManager();
-            $em->persist($NatureAffaire);
-            $em->flush();
-        }
-
-        $jsonData = array(
-            'message' => 'Nature modifiée',
-        );
-
         return $this->json($jsonData, 200);
     }
 }

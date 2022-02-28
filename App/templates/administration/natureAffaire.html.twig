@@ -35,7 +35,6 @@
             <tr>
                 <th scope="col"><i class="fas fa-check"></i></th>
                 <th scope="col">Nature</th>
-                <th scope="col">Modifier</th>
             </tr>
             </thead>
             <tbody>
@@ -47,40 +46,12 @@
                             <input form="natureAffaireFormDelete" class="form-check-input checkboxNatureAffaire" name="idChecked{{ natureAffaire.idNatureAffaire }}" type="checkbox" value="{{ natureAffaire.idNatureAffaire }}" id="checkbox{{ natureAffaire.idNatureAffaire }}">
                         </div>
                     </th>
-                    <td>{{ natureAffaire.natureAffaire }}</td>
                     <td>
-                        <!-- Button trigger modal edit -->
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ natureAffaire.idNatureAffaire }}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-
-                        <!-- Modal edit-->
-                        <div class="modal fade" id="modalEdit1{{ natureAffaire.idNatureAffaire }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form id="natureAffaireFormEdit{{ natureAffaire.idNatureAffaire }}" class="natureAffaireFormEdit js-Ajax-form" action="{{ path ('Admin_NatureAffaire_Edit', {id: natureAffaire.idNatureAffaire })}}" method="post">
-                                        <div class="modal-body">
-                                            <div class="container mt-4">
-                                                <h2>Modifier les informations de la nature :</h2>
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">Nom</span>
-                                                    <input type="text" class="form-control" value="{{ natureAffaire.natureAffaire }}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="natureAffaireEdit" name="natureAffaireEdit">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditNatureAffaire')}}>
-                                            <input type="hidden" name="idEdit" value="{{ natureAffaire.idNatureAffaire }}">
-                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ natureAffaire.idNatureAffaire }}">Enregistrer</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        {% if  natureAffaire.natureAffaire == 'RDIP' %}
+                            RDIP
+                        {% else %}
+                            {{ Sigles[natureAffaire.natureAffaire] }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -103,10 +74,13 @@
                     </div>
                     <form id="natureAffaireFormCreate" action="{{ path ('Admin_NatureAffaire_New')}}" method="post" class="js-Ajax-form">
                         <div class="modal-body">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Nom</span>
-                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="natureAffaire" name="natureAffaire">
-                            </div>
+                            <select class="form-select mb-3" aria-label="Default select example" id="natureAffaire" name="natureAffaire">
+                                <option selected>Nom</option>
+                                {% for SigleNature in SiglesNature %}
+                                    <option value="{{ SigleNature.intituleSigle }}">{{ SigleNature.Sigle }}</option>
+                                {% endfor %}
+                                <option value="RDIP">RDIP</option>
+                            </select>
                             <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateNatureAffaire')}}>
                         </div>
                         <div class="modal-footer">
