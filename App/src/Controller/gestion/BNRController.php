@@ -101,23 +101,24 @@ class BNRController extends AbstractController {
         $NewBnr = new Affaire();
         $BnrName = $request->request->get('bnr');
         $montant = $request->request->get('montant');
-        $idOrganisme = $request->request->get('organisme');
-        $Organisme = $this->organismeRepository->find($idOrganisme);
+        $idOrganismes = $request->request->get('organisme');
+        foreach ( $idOrganismes as $item){
+            $NewBnr->addIdOrganisme($this->organismeRepository->find($item));
+        }
         $Prio = $request->request->get('priority');
         $Date = $request->request->get('date');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $Sate = $request->request->get('state');
+        $State = $request->request->get('state');
         $Comment = $request->request->get('comment');
         $NewBnr->setIdNatureAffaire($nature);
         $NewBnr->setObjectifAffaire($BnrName);
         $NewBnr->setMontantAffaire($montant);
-        $NewBnr->setIdOrganisme($Organisme);
         $NewBnr->setPrioBnr($Prio);
         $NewBnr->setEcheanceBnr($date);
         $NewBnr->setEtatBnr($Sate);
         $NewBnr->setCommentaireBnr($Comment);
-        if (!$idOrganisme){
+        if (!$idOrganismes){
             $jsonData = array(
                 'Bnr' => 'Veuillez entrer un organisme',
             );
