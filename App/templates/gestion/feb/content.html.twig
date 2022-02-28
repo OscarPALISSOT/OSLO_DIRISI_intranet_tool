@@ -1,0 +1,54 @@
+<tr>
+    <th scope="row">
+        <div class="form-check">
+            <label for="checkbox{{ Feb.idFeb }}"></label>
+            <input form="febFormDelete" class="form-check-input checkboxFeb" name="idChecked{{ Feb.idFeb }}" type="checkbox" value="{{ Feb.idFeb }}" id="checkbox{{ Feb.idFeb }}">
+        </div>
+    </th>
+    <td>{{ Feb.NumFeb }}</td>
+    <td>{{ Feb.montantFeb|number_format(0, '.', ' ') }} €</td>
+    <td>{{ Feb.idPdc.numPdc }}</td>
+    <td> nb affaires</td>
+    <td> test</td>
+    <td>
+        <!-- Button trigger modal edit -->
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Feb.idFeb }}">
+            <i class="fas fa-edit"></i>
+        </button>
+
+        <!-- Modal edit-->
+        <div class="modal fade" id="modalEdit1{{ Feb.idFeb }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="febFormEdit{{ Feb.idFeb }}" class="febFormEdit js-Ajax-form" action="{{ path ('Admin_Feb_Edit', {id: Feb.idFeb })}}" method="post">
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input value="{{ Feb.numFeb }}" type="text" class="form-control" id="feb" name="febEdit" placeholder="name@example.com">
+                                <label for="feb">Numéro de la FEB</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input value="{{ Feb.montantFeb }}" type="number" class="form-control" id="montant" name="montantEdit" placeholder="name@example.com">
+                                <label for="montant">Montant</label>
+                            </div>
+                            <select class="form-select mb-3" aria-label="Default select example" name="PdcEdit">
+                                <option selected value="{{ Feb.idPdc.idPdc }}">{{ Feb.idPdc.numPdc }}</option>
+                                {% for Pdc in Pdcs %}
+                                    <option value="{{ Pdc.idPdc }}">{{ Pdc.numPdc }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditFeb')}}>
+                            <input type="hidden" name="idEdit" value="{{ Feb.idFeb }}">
+                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Feb.idFeb }}">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>

@@ -39,7 +39,6 @@
                                     <option value="{{ Statut.idStatutPdc }}">{{ Statut.StatutPdc }}</option>
                                 {% endfor %}
                             </select>
-                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreatePdc')}}>
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditPdc')}}>
