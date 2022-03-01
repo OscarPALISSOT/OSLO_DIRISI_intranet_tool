@@ -110,9 +110,7 @@ class BNRController extends AbstractController {
         $BnrName = $request->request->get('bnr');
         $montant = $request->request->get('montant');
         $idOrganismes = $request->request->all('organisme', []);
-        $Organisme = [];
         foreach ($idOrganismes as $item){
-            //array_push( $Organisme, $this->organismeRepository->find($item));
             $NewBnr->addIdOrganisme($this->organismeRepository->find($item));
         }
         $idPrio = $request->request->get('priority');
@@ -212,31 +210,57 @@ class BNRController extends AbstractController {
         $Bnr = $this->affaireRepository->find($id);
         $BnrName = $request->request->get('bnrEdit');
         $montant = $request->request->get('montantEdit');
-        $idOrganisme = $request->request->get('organismeEdit');
-        $Organisme = $this->organismeRepository->find($idOrganisme);
-        $Prio = $request->request->get('priorityEdit');
+        $idOrganismes = $request->request->all('organismeEdit', []);
+        foreach ($idOrganismes as $item){
+            $Bnr->addIdOrganisme($this->organismeRepository->find($item));
+        }
+        $idPrio = $request->request->get('priorityEdit');
+        $Prio = $this->priorisationRepository->find($idPrio);
         $Date = $request->request->get('dateEdit');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $Sate = $request->request->get('stateEdit');
+        $State = $request->request->get('stateEdit');
         $Comment = $request->request->get('commentEdit');
-        $Bnr->setObjBnr($BnrName);
-        $Bnr->setMontantFeb($montant);
-        $Bnr->setIdOrganisme($Organisme);
-        $Bnr->setPrioBnr($Prio);
-        $Bnr->setEcheanceBnr($date);
-        $Bnr->setEtatBnr($Sate);
-        $Bnr->setCommentaireBnr($Comment);
-
-        if ($this->isCsrfTokenValid("EditBnr", $request->get('_token'))) {
+        $idFeb = $request->request->get('febEdit');
+        $idGrandsComptes = $request->request->get('grandCompteEdit');
+        $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
+        $Feb = $this->febRepository->find($idFeb);
+        $Bnr->setObjectifAffaire($BnrName);
+        $Bnr->setMontantAffaire($montant);
+        $Bnr->setEtatAffaire($State);
+        $Bnr->setIdGrandsComptes($GrandCompte);
+        $Bnr->setIdPriorisation($Prio);
+        $Bnr->setEcheanceAffaire($date);
+        $Bnr->setCommentaire($Comment);
+        $Bnr->setIdFeb($Feb);
+        $update = new DateTime();
+        $update->format('Y-m-d-H:i:s');
+        $Bnr->setUpdateAt($update);
+        if ($this->isCsrfTokenValid("EditBnr", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($Bnr);
             $em->flush();
+            $BnrInfos = $this->infoBnrRepository->find($Bnr->getIdAffaire());
+            $DateDemande = $request->request->get('dateDemandeEdit');
+            $dateDemande = new DateTime($DateDemande);
+            $dateDemande->format('Y-m-d');
+            $BnrInfos->setDateDemande($dateDemande);
+            $MontantInfo = $request->request->get('montantInfoEdit');
+            $BnrInfos->setMontantInfo($MontantInfo);
+            $Impact = $request->request->get('impactEdit');
+            $BnrInfos->setImpact($Impact);
+            $em = $this->ManagerRegistry->getManager();
+            $em->persist($BnrInfos);
+            $em->flush();
+            $jsonData = array(
+                'message' => 'BNR modifié',
+            );
         }
-
-        $jsonData = array(
-            'message' => 'BNR modifié',
-        );
+        else{
+            $jsonData = array(
+                'message' => "Erreur lors de la modification",
+            );
+        }
 
         return $this->json($jsonData, 200);
     }

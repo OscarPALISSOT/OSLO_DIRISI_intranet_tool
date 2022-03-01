@@ -1,90 +1,174 @@
 
-
-<div class="card col-4">
-    <div class="card-body Entity-card">
-        <h3 class="card-title">
-            {{ Bnr.idAffaire.objectifAffaire }}
-            <div class="form-check" style="font-size: larger">
-                <label for="checkbox{{ Bnr.idAffaire.idAffaire }}"></label>
-                <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idAffaire.idAffaire }}" type="checkbox" value="{{ Bnr.idAffaire.idAffaire }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
-            </div>
-        </h3>
-        <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(0, '.', ' ') }} €</h4>
-        <p class="card-text">
-            <span class="label">Échéances :</span>
-            {{ Bnr.idAffaire.echeanceAffaire|date('d/m/Y')}}
-            <br>
-            <span class="label">Organisme(s) :</span>
-            <br>
-            {% for Orga in Bnr.idAffaire.idOrganisme %}
-                {{ Orga.Organisme }} - {{ Orga.idQuartier.trigramme }};
-            {% endfor %}
-            <br>
-            <span class="label">Impact de non-réalisation :</span>
-            <br>
-            {{ Bnr.impact }}
-            <br>
-        </p>
-        <div class="collapse" id="collapseCard">
-            <p class="info">
-                <span class="label">Priorisation :</span>
-                {{ Bnr.idAffaire.idPriorisation.priorisation }}
+<div class="col-4">
+    <div class="card">
+        <div class="card-body Entity-card">
+            <h3 class="card-title">
+                {{ Bnr.idAffaire.objectifAffaire }}
+                <div class="form-check" style="font-size: larger">
+                    <label for="checkbox{{ Bnr.idAffaire.idAffaire }}"></label>
+                    <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idAffaire.idAffaire }}" type="checkbox" value="{{ Bnr.idAffaire.idAffaire }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
+                </div>
+            </h3>
+            <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(0, '.', ' ') }} €</h4>
+            <p class="card-text">
+                <span class="label">Échéances :</span>
+                {{ Bnr.idAffaire.echeanceAffaire|date('d/m/Y')}}
                 <br>
-                <span class="label">Grand compte :</span>
-                {{ Bnr.idAffaire.idGrandsComptes.grandsComptes }}
+                <span class="label">Organisme(s) :</span>
                 <br>
-                <span class="label">FEB :</span>
-                {{ Bnr.idAffaire.idFeb.numFeb }}
+                {% for Orga in Bnr.idAffaire.idOrganisme %}
+                    {{ Orga.Organisme }} - {{ Orga.idQuartier.trigramme }};
+                {% endfor %}
                 <br>
-                <span class="label">Info sur le montant : </span>
-                {{ Bnr.montantInfo }}
+                <span class="label">Impact de non-réalisation :</span>
                 <br>
-                <span class="label">Date de demande :</span>
-                {{ Bnr.dateDemande|date('d/m/Y') }}
+                {{ Bnr.impact }}
                 <br>
-                <span class="label">État :</span>
-                {% if Bnr.idAffaire.etatAffaire == '1' %}
-                    Prévu
-                {% else %}
-                    Traité
-                {% endif %}
-                <br>
-                <span class="label">Commentaire :</span>
-                <br>
-                {{ Bnr.idAffaire.commentaire|nl2br }}
             </p>
-        </div>
-        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard" aria-expanded="false" aria-controls="collapseCard">
-            Voir plus <i class="far fa-eye"></i>
-        </button>
-        <!-- Button trigger modal edit -->
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Bnr.idAffaire.idAffaire }}">
-            Modifier <i class="fas fa-edit"></i>
-        </button>
-    </div>
-</div>
-
-<!-- Modal edit-->
-<div class="modal fade" id="modalEdit1{{ Bnr.idAffaire.idAffaire }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="collapse" id="collapseCard{{ Bnr.idAffaire.idAffaire }}">
+                <p class="info">
+                    <span class="label">Priorisation :</span>
+                    {{ Bnr.idAffaire.idPriorisation.priorisation }}
+                    <br>
+                    <span class="label">Grand compte :</span>
+                    {{ Bnr.idAffaire.idGrandsComptes.grandsComptes }}
+                    <br>
+                    <span class="label">FEB :</span>
+                    {{ Bnr.idAffaire.idFeb.numFeb }}
+                    <br>
+                    <span class="label">Info sur le montant : </span>
+                    {{ Bnr.montantInfo }}
+                    <br>
+                    <span class="label">Date de demande :</span>
+                    {{ Bnr.dateDemande|date('d/m/Y') }}
+                    <br>
+                    <span class="label">État :</span>
+                    {% if Bnr.idAffaire.etatAffaire == '1' %}
+                        Prévu
+                    {% else %}
+                        Traité
+                    {% endif %}
+                    <br>
+                    <span class="label">Commentaire :</span>
+                    <br>
+                    {{ Bnr.idAffaire.commentaire|nl2br }}
+                </p>
             </div>
-            <form id="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" class="bnrFormEdit" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idAffaire.idAffaire })}}" method="post">
-                <div class="modal-body">
-                    <div class="container mt-4">
+            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Bnr.idAffaire.idAffaire }}" aria-expanded="false" aria-controls="collapseCard">
+                Voir plus <i class="far fa-eye"></i>
+            </button>
+            <!-- Button trigger modal edit -->
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Bnr.idAffaire.idAffaire }}">
+                Modifier <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </div>
 
-
+    <!-- Modal edit-->
+    <div class="modal fade" id="modalEdit1{{ Bnr.idAffaire.idAffaire }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="modalLabel">Modifier</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idAffaire.idAffaire })}}" method="post" class="js-Ajax-form">
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input value="{{ Bnr.idAffaire.objectifAffaire }}" type="text" class="form-control" id="bnr" name="bnrEdit" placeholder="name@example.com">
+                            <label for="bnr">Nom du projet</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <select class="form-select mb-3" aria-label="Default select example" name="febEdit" autocomplete="off">
+                                    <option value="{{ Bnr.idAffaire.idFeb.idFeb}}" selected>{{ Bnr.idAffaire.idFeb.numFeb }}</option>
+                                    {% for Feb in Febs %}
+                                        <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <select class="form-select mb-3" aria-label="Default select example" name="grandCompteEdit" autocomplete="off">
+                                    <option value="{{ Bnr.idAffaire.idGrandsComptes.idGrandsComptes}}" selected>{{ Bnr.idAffaire.idGrandsComptes.GrandsComptes}}</option>
+                                    {% for GrandCompte in GrandComptes %}
+                                        <option value="{{ GrandCompte.idGrandsComptes }}">{{ GrandCompte.GrandsComptes }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <div class="form mb-3">
+                                    <input value="{{ Bnr.idAffaire.montantAffaire }}" type="number" class="form-control" id="montant" name="montantEdit" placeholder="Montant">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input value="{{ Bnr.montantInfo }}" type="text" class="form-control" id="bnr" name="montantInfoEdit" placeholder="name@example.com">
+                            <label for="bnr">Info sur le montant</label>
+                        </div>
+                        <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organismeEdit[]" autocomplete="off">
+                            {% for Orga in Bnr.idAffaire.idOrganisme %}
+                                {<option selected value="{{ Orga.idOrganisme }}">{{ Orga.Organisme }}</option>
+                            {% endfor %}
+                            {% for Organisme in Organismes %}
+                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="priorityEdit" autocomplete="off">
+                                    <option value="{{ Bnr.idAffaire.idPriorisation.idPriorisation }}" selected>{{ Bnr.idAffaire.idPriorisation.priorisation }}</option>
+                                    {% for Prio in Prios %}
+                                        <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="stateEdit">
+                                    <option value="{{ Bnr.idAffaire.etatAffaire }}" selected>
+                                        {% if Bnr.idAffaire.etatAffaire == '1' %}
+                                            Prévu
+                                        {% else %}
+                                            Traité
+                                        {% endif %}
+                                    </option>
+                                    <option value="1">Prévu</option>
+                                    <option value="2">Traité</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input value="{{ Bnr.idAffaire.echeanceAffaire|date('Y-m-d') }}" type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="dateEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input value="{{ Bnr.dateDemande|date('Y-m-d') }}" type="text" class="form-control" placeholder="Date de la demande" aria-label="datepicker" aria-describedby="basic-addon1" name="dateDemandeEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="impactEdit" style="height: 100px">{{ Bnr.impact }}</textarea>
+                            <label for="floatingTextarea2">Impact de non réalisation</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="commentEdit" style="height: 100px">{{ Bnr.idAffaire.commentaire }}</textarea>
+                            <label for="floatingTextarea2">Commentaire</label>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditAffaire')}}>
-                    <input type="hidden" name="idEdit" value="{{ Bnr.idAffaire.idAffaire }}">
-                    <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modalEdit2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Bnr.idAffaire.idAffaire }}">Enregistrer</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <!-- send request-->
+                        <div class="modal-footer">
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
+                            <input type="hidden" name="idEdit" value="{{ Bnr.idAffaire.idAffaire }}">
+                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Bnr.idAffaire.idAffaire }}">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

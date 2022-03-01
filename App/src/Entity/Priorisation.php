@@ -45,5 +45,10 @@ class Priorisation
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->getPriorisation();
+    }
+
 
 }

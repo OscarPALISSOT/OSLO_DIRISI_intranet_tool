@@ -121,7 +121,7 @@ class Affaire
     {
         $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
         $date = new DateTime();
-        $date->format('Y-m-d H:i:s');
+        $date->format('Y-m-d-H:i:s');
         $this->setUpdateAt($date);
     }
 

@@ -17,14 +17,16 @@
 
 
     <div class="js-filter-sorting sorting">
-
+        {{ knp_pagination_sortable(Bnrs, 'Date de modification', 'i.idAffaire.updateAt') }}
     </div>
 
     <div class="row">
         <div class="js-filter-content">
-            {% for Bnr in Bnrs %}
-                {% include 'gestion/bnr/content.html.twig' with {Bnr: Bnr, Organismes: Organismes} only%}
-            {% endfor %}
+            <div class="row">
+                {% for Bnr in Bnrs %}
+                    {% include 'gestion/bnr/content.html.twig' with {Bnr: Bnr, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios} only%}
+                {% endfor %}
+            </div>
         </div>
     </div>
 

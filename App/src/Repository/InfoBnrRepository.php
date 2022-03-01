@@ -35,7 +35,8 @@ class InfoBnrRepository extends ServiceEntityRepository
             ->createQueryBuilder('i')
             ->select('i','o', 'a')
             ->join('i.idAffaire', 'a')
-            ->join('a.idOrganisme', 'o');
+            ->join('a.idOrganisme', 'o')
+            ->orderBy('a.updateAt', 'DESC');
 
 
         if (!empty($data->Bnr)){
