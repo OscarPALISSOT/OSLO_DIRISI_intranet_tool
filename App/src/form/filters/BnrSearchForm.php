@@ -85,6 +85,7 @@ class BnrSearchForm extends AbstractType
                 'attr' => [
                     'min' => $min,
                     'max' => $max,
+                    'value' => $min,
                 ],
             ]);
         ;

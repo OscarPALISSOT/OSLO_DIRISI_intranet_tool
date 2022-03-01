@@ -41,7 +41,7 @@ class InfoBnrRepository extends ServiceEntityRepository
 
         if (!empty($data->Bnr)){
             $query = $query
-                ->andWhere('i.objBnr LIKE :Bnr')
+                ->andWhere('a.objectifAffaire LIKE :Bnr')
                 ->setParameter('Bnr', "%{$data->Bnr}%");
         }
         if (!empty($data->idOrganisme)){
@@ -53,12 +53,12 @@ class InfoBnrRepository extends ServiceEntityRepository
         if (!empty($data->Montant)){
             if ($data->supMontant == false){
                 $query = $query
-                    ->andWhere('i.montantFeb <= :Montant')
+                    ->andWhere('a.montantAffaire <= :Montant')
                     ->setParameter('Montant', $data->Montant);
             }
             else{
                 $query = $query
-                    ->andWhere('i.montantFeb >= :Montant')
+                    ->andWhere('a.montantAffaire >= :Montant')
                     ->setParameter('Montant', $data->Montant);
             }
         }
