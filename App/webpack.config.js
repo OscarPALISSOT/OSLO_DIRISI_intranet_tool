@@ -28,7 +28,6 @@ Encore
     .addEntry('datepickerJS', './assets/js/datepicker.js')
     .addEntry('datepickerMIN', './assets/js/bootstrap-datepicker.min.js')
     .addEntry('multiselectJS', './assets/js/multiselect.min.js')
-    .addEntry('CrudBnr', './assets/js/crud/bnr.js')
 
     .addStyleEntry('bootstrap', './assets/bootstrap-5.1.3-dist/css/bootstrap.css')
     .addStyleEntry('style', './assets/styles/style.scss')

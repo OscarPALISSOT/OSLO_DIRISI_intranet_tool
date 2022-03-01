@@ -8,6 +8,7 @@ use App\Entity\InfoBnr;
 use App\form\filters\BnrSearchForm;
 use App\Repository\AffaireRepository;
 use App\Repository\FebRepository;
+use App\Repository\GrandsComptesRepository;
 use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
@@ -33,8 +34,9 @@ class BNRController extends AbstractController {
     private NatureAffaireRepository $natureAffaireRepository;
     private PriorisationRepository $priorisationRepository;
     private FebRepository $febRepository;
+    private GrandsComptesRepository $grandsComptesRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -44,6 +46,7 @@ class BNRController extends AbstractController {
         $this->natureAffaireRepository = $natureAffaireRepository;
         $this->priorisationRepository = $priorisationRepository;
         $this->febRepository = $febRepository;
+        $this->grandsComptesRepository = $grandsComptesRepository;
     }
 
 
@@ -62,7 +65,6 @@ class BNRController extends AbstractController {
 
         $Bnrs = $this->affaireRepository->findBnrSearch($Data);
 
-        $Organismes = $this->organismeRepository->findAllWithQuartier();
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
             $role[0] = $request->get('role');
@@ -76,8 +78,9 @@ class BNRController extends AbstractController {
         }*/
         return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
-            'Organismes' => $Organismes,
+            'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'Febs' => $this->febRepository->findAll(),
+            'GrandComptes' => $this->grandsComptesRepository->findAll(),
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
@@ -103,8 +106,10 @@ class BNRController extends AbstractController {
         $NewBnr = new Affaire();
         $BnrName = $request->request->get('bnr');
         $montant = $request->request->get('montant');
-        $idOrganismes = $request->request->get('organisme');
+        $idOrganismes = $request->request->all('organisme', []);
+        $Organisme = [];
         foreach ($idOrganismes as $item){
+            //array_push( $Organisme, $this->organismeRepository->find($item));
             $NewBnr->addIdOrganisme($this->organismeRepository->find($item));
         }
         $idPrio = $request->request->get('priority');
@@ -115,6 +120,8 @@ class BNRController extends AbstractController {
         $State = $request->request->get('state');
         $Comment = $request->request->get('comment');
         $idFeb = $request->request->get('feb');
+        $idGrandsComptes = $request->request->get('grandCompte');
+        $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
         $Feb = $this->febRepository->find($idFeb);
         $NewBnr->setIdNatureAffaire($nature);
         $NewBnr->setObjectifAffaire($BnrName);
@@ -124,19 +131,23 @@ class BNRController extends AbstractController {
         $NewBnr->setEtatAffaire($State);
         $NewBnr->setCommentaire($Comment);
         $NewBnr->setIdFeb($Feb);
-        $NewBnrInfos = new InfoBnr();
-        $NewBnrInfos->setIdAffaire($NewBnr);
-        $DateDemande = $request->request->get('dateDemande');
-        $dateDemande = new DateTime($DateDemande);
-        $dateDemande->format('Y-m-d');
-        $NewBnrInfos->setDateDemande($dateDemande);
-        $MontantInfo = $request->request->get('montantInfo');
-        $NewBnrInfos->setMontantInfo($MontantInfo);
-        $Impact = $request->request->get('impact');
-        $NewBnrInfos->setImpact($Impact);
+        $NewBnr->setIdGrandsComptes($GrandCompte);
         if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewBnr);
+            $em->flush();
+            $NewBnrInfos = new InfoBnr();
+            $NewBnrInfos->setIdAffaire($NewBnr);
+            $DateDemande = $request->request->get('dateDemande');
+            $dateDemande = new DateTime($DateDemande);
+            $dateDemande->format('Y-m-d');
+            $NewBnrInfos->setDateDemande($dateDemande);
+            $MontantInfo = $request->request->get('montantInfo');
+            $NewBnrInfos->setMontantInfo($MontantInfo);
+            $Impact = $request->request->get('impact');
+            $NewBnrInfos->setImpact($Impact);
+            $em = $this->ManagerRegistry->getManager();
+            $em->persist($NewBnrInfos);
             $em->flush();
             $jsonData = array(
                 'message' => 'BNR ajouté',

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block javascriptGestionEntity %}
-    {{ encore_entry_script_tags('CrudBnr') }}
+
 {% endblock %}
 
 {% block FormFilterGestionEntity %}
@@ -60,7 +60,7 @@
                     <h1 class="modal-title" id="modalLabel">Nouveau BNR :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_New')}}" method="post">
+                <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_New')}}" method="post" class="js-Ajax-form">
                     <div class="modal-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="bnr" name="bnr" placeholder="name@example.com">
@@ -70,6 +70,12 @@
                             <option selected>FEB associée</option>
                             {% for Feb in Febs %}
                                 <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select mb-3" aria-label="Default select example" name="grandCompte" autocomplete="off">
+                            <option selected>Grand compte</option>
+                            {% for GrandCompte in GrandComptes %}
+                                <option value="{{ GrandCompte.idGrandsComptes }}">{{ GrandCompte.GrandsComptes }}</option>
                             {% endfor %}
                         </select>
                         <div class="form-floating mb-3">
