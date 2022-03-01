@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Affaire;
+use App\Entity\NatureAffaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -17,18 +18,16 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class AffaireRepository extends ServiceEntityRepository
 {
-    private SigleRepository $sigleRepository;
     private PaginatorInterface $paginator;
 
-    public function __construct(ManagerRegistry $registry, SigleRepository $sigleRepository, PaginatorInterface $paginator)
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Affaire::class);
-        $this->sigleRepository = $sigleRepository;
         $this->paginator = $paginator;
     }
 
     /**
-     * @return Bnr[] Returns an array of Bnr objects
+     * @return Affaire[] Returns an array of Bnr objects
      */
     public function findMaxMontant(): array
     {
@@ -42,7 +41,7 @@ class AffaireRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Bnr[] Returns an array of Bnr objects
+     * @return Affaire[] Returns an array of Bnr objects
      */
     public function findMinMontant(): array
     {
@@ -53,76 +52,6 @@ class AffaireRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
-    }
-
-    /**
-     * @return Affaire[] Returns an array of Affaire objects
-     */
-    public function findAllBnr(): array
-    {
-        $Nature = $this->sigleRepository->findOneBy([
-            'intituleSigle' => 'besoinNouveauReseau'
-        ]);
-
-        $query = $this
-            ->createQueryBuilder('a')
-            ->select('a', 'n')
-            ->join('a.idNatureAffaire', 'n')
-            ->andWhere('a.idNatureAffaire = :val')
-            ->setParameter('val', $Nature->getSigle());
-
-        return $query->getQuery()->getResult();
-    }
-
-    /**
-     * @param SearchDataBnr $data
-     * @return PaginationInterface
-     */
-    public function findBnrSearch(SearchDataBnr $data): PaginationInterface
-    {
-        $Nature = $this->sigleRepository->findOneBy([
-            'intituleSigle' => 'besoinNouveauReseau'
-        ]);
-
-        $query = $this
-            ->createQueryBuilder('a')
-            ->select('a','o', 'n')
-            ->join('a.idOrganisme', 'o')
-            ->join('a.idNatureAffaire', 'n')
-            ->andWhere('a.idNatureAffaire = :val')
-            ->setParameter('val', $Nature->getSigle());
-
-        if (!empty($data->Bnr)){
-            $query = $query
-                ->andWhere('b.objBnr LIKE :Bnr')
-                ->setParameter('Bnr', "%{$data->Bnr}%");
-        }
-        if (!empty($data->idOrganisme)){
-            $query = $query
-                ->andWhere('b.idOrganisme IN (:Organisme)')
-                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
-        }
-
-        if (!empty($data->Montant)){
-            if ($data->supMontant == false){
-                $query = $query
-                    ->andWhere('b.montantFeb <= :Montant')
-                    ->setParameter('Montant', $data->Montant);
-            }
-            else{
-                $query = $query
-                    ->andWhere('b.montantFeb >= :Montant')
-                    ->setParameter('Montant', $data->Montant);
-            }
-        }
-
-        $query = $query->getQuery();
-
-        return $this->paginator->paginate(
-            $query,
-            $data->page,
-            12,
-        );
     }
 
 

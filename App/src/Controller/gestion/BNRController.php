@@ -9,6 +9,7 @@ use App\form\filters\BnrSearchForm;
 use App\Repository\AffaireRepository;
 use App\Repository\FebRepository;
 use App\Repository\GrandsComptesRepository;
+use App\Repository\InfoBnrRepository;
 use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
@@ -35,8 +36,9 @@ class BNRController extends AbstractController {
     private PriorisationRepository $priorisationRepository;
     private FebRepository $febRepository;
     private GrandsComptesRepository $grandsComptesRepository;
+    private InfoBnrRepository $infoBnrRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository, InfoBnrRepository $infoBnrRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -47,6 +49,7 @@ class BNRController extends AbstractController {
         $this->priorisationRepository = $priorisationRepository;
         $this->febRepository = $febRepository;
         $this->grandsComptesRepository = $grandsComptesRepository;
+        $this->infoBnrRepository = $infoBnrRepository;
     }
 
 
@@ -59,11 +62,11 @@ class BNRController extends AbstractController {
     public function index(PaginatorInterface $paginator, Request $request) : Response{
 
         $Data = new SearchDataBnr();
-        $Data->page =$request->get('page', 12);
+        $Data->page =$request->get('page', 1);
         $form = $this->createForm(BnrSearchForm::class, $Data);
         $form->handleRequest($request);
 
-        $Bnrs = $this->affaireRepository->findBnrSearch($Data);
+        $Bnrs = $this->infoBnrRepository->findBnrSearch($Data);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){

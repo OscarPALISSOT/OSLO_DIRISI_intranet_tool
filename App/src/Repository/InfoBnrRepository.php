@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataBnr;
 use App\Entity\InfoBnr;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method InfoBnr|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,58 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InfoBnrRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, InfoBnr::class);
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * @param SearchDataBnr $data
+     * @return PaginationInterface
+     */
+    public function findBnrSearch(SearchDataBnr $data): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('i')
+            ->select('i','o', 'a')
+            ->join('i.idAffaire', 'a')
+            ->join('a.idOrganisme', 'o');
+
+
+        if (!empty($data->Bnr)){
+            $query = $query
+                ->andWhere('i.objBnr LIKE :Bnr')
+                ->setParameter('Bnr', "%{$data->Bnr}%");
+        }
+        if (!empty($data->idOrganisme)){
+            $query = $query
+                ->andWhere('i.idOrganisme IN (:Organisme)')
+                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
+        }
+
+        if (!empty($data->Montant)){
+            if ($data->supMontant == false){
+                $query = $query
+                    ->andWhere('i.montantFeb <= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+            else{
+                $query = $query
+                    ->andWhere('i.montantFeb >= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
     }
 
     // /**

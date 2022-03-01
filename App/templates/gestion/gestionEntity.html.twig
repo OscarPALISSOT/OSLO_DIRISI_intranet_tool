@@ -48,14 +48,10 @@
             <a href="{{ path ('Bnr', {role: role})}}" class="btn btn-outline-secondary">Réinitialiser les filtres <i class="fas fa-redo-alt"></i></a>
         </div>
 
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                {% block FormFilterGestionEntity %}
-                    <div class="js-filter-form">
+        <div class="collapse row js-filter-form" id="collapseExample" style="padding-left: 0">
+            {% block FormFilterGestionEntity %}
 
-                    </div>
-                {% endblock %}
-            </div>
+            {% endblock %}
         </div>
 
         {% block ContentGestionEntity %}

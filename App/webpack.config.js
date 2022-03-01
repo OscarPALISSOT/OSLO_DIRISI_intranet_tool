@@ -38,7 +38,7 @@ Encore
     .addStyleEntry('contact', './assets/styles/pages/contact.scss')
     .addStyleEntry('datePicker', './assets/styles/datepicker.css')
     .addStyleEntry('multiselect', './assets/styles/multiselectCSS.css')
-    .addStyleEntry('gestionContent', './assets/styles/pages/gestionContent.scss')
+    .addStyleEntry('gestionEntity', './assets/styles/pages/gestionEntity.scss')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
