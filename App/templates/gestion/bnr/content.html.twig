@@ -5,8 +5,8 @@
             <h3 class="card-title">
                 {{ Bnr.idAffaire.objectifAffaire }}
                 <div class="form-check" style="font-size: larger">
-                    <label for="checkbox{{ Bnr.idAffaire.idAffaire }}"></label>
-                    <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idAffaire.idAffaire }}" type="checkbox" value="{{ Bnr.idAffaire.idAffaire }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
+                    <label for="checkbox{{ Bnr.idInfoBnr }}"></label>
+                    <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idInfoBnr }}" type="checkbox" value="{{ Bnr.idInfoBnr }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
                 </div>
             </h3>
             <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(0, '.', ' ') }} €</h4>

@@ -169,9 +169,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <form id="bnrFormDelete" action="{{ path ('Admin_Bnr_Delete')}}" method="post">
+                    <form id="bnrFormDelete" action="{{ path ('Admin_Bnr_Delete')}}" method="post" class="js-Ajax-form">
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteBnr')}}>
-                        <button class="btn btn-danger" data-bs-target="#modalDelete2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
+                        <button class="btn btn-danger" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
                             Confirmer <i class="fas fa-trash"></i>
                         </button>
                     </form>

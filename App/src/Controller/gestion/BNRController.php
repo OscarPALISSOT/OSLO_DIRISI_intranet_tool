@@ -168,12 +168,12 @@ class BNRController extends AbstractController {
      * @return Response
      */
     public function DeleteBnr(Request $request): Response{
-        $Bnrs = $this->affaireRepository->findAll();
+        $Bnrs = $this->infoBnrRepository->findAll();
         $nbBnr = count($Bnrs);
         $ChekedId = array();
         for ( $i = 0; $i < $nbBnr; $i++){
-            if ($request->request->get('idChecked' . $Bnrs[$i]->getIdBnr())){
-                $ChekedId[] = $Bnrs[$i]->getIdBnr();
+            if ($request->request->get('idChecked' . $Bnrs[$i]->getIdInfoBnr())){
+                $ChekedId[] = $Bnrs[$i]->getIdInfoBnr();
             }
         }
         if (count($ChekedId) == 0){
@@ -183,11 +183,14 @@ class BNRController extends AbstractController {
         }
         else{
             foreach ($ChekedId as $item){
-                $bnrToDelete = $this->affaireRepository->find($item);
+                $bnrToDelete = $this->infoBnrRepository->find($item);
+                $affaireToDelete = $this->affaireRepository->find($bnrToDelete->getIdAffaire());
 
                 if ($this->isCsrfTokenValid("DeleteBnr", $request->get('_token'))){
                     $em = $this->ManagerRegistry->getManager();
                     $em->remove($bnrToDelete);
+                    $em->flush();
+                    $em->remove($affaireToDelete);
                     $em->flush();
                 }
 
