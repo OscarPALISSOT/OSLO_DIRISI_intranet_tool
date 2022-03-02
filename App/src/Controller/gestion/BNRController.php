@@ -213,6 +213,11 @@ class BNRController extends AbstractController {
     public function EditBnr(Request $request) : Response{
         $id = $request->request->get('idEdit');
         $Bnr = $this->affaireRepository->find($id);
+        $Bnr->setIdNatureAffaire($this->natureAffaireRepository->findOneBy([
+            'natureAffaire' => $this->sigleRepository->findOneBy([
+                'intituleSigle' => 'besoinNouveauReseau',
+            ]),
+        ]));
         $BnrName = $request->request->get('bnrEdit');
         $Objectif = $request->request->get('objectifEdit');
         $montant = $request->request->get('montantEdit');
