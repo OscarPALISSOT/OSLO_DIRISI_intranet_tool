@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataModip;
 use App\Entity\InfoModip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method InfoModip|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,59 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InfoModipRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, InfoModip::class);
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * @param SearchDataModip $data
+     * @return PaginationInterface
+     */
+    public function findModipSearch(SearchDataModip $data): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('i')
+            ->select('i','o', 'a')
+            ->join('i.idAffaire', 'a')
+            ->join('a.idOrganisme', 'o')
+            ->orderBy('a.updateAt', 'DESC');
+
+
+        if (!empty($data->Bnr)){
+            $query = $query
+                ->andWhere('a.nomAffaire LIKE :Bnr')
+                ->setParameter('Bnr', "%{$data->Bnr}%");
+        }
+        if (!empty($data->idOrganisme)){
+            $query = $query
+                ->andWhere('i.idOrganisme IN (:Organisme)')
+                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
+        }
+
+        if (!empty($data->Montant)){
+            if ($data->supMontant == false){
+                $query = $query
+                    ->andWhere('a.montantAffaire <= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+            else{
+                $query = $query
+                    ->andWhere('a.montantAffaire >= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
     }
 
     // /**

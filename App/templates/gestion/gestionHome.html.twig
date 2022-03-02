@@ -36,7 +36,7 @@
                         <div class="card-body">
                             <h3 class="card-title"><i class="fas fa-id-card"></i> {{ sigles['modifLan'] }}</h3>
                             <p class="card-text">Il y a actuellement {{ nbMODIP }} {{ sigles['modifLan'] }} enregistrés</p>
-                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('Modip', {role: role})}}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>

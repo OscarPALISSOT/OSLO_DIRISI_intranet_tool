@@ -19,19 +19,19 @@
     <li class="sideNavItem">
         <a href="{{ path ('Gestion', {role: role})}}" class="">Accueil {{ role }}</a>
     </li>
-    <li class="sideNavItem">
-        <a href="{{ path ('Pdc', {role: role})}}" class="">PDC</a>
-    </li>
-    <li class="sideNavItem">
-        <a href="{{ path ('Feb', {role: role})}}" class="">FEB</a>
-    </li>
 
     {% if role != 'BCS' %}
+        <li class="sideNavItem">
+            <a href="{{ path ('Pdc', {role: role})}}" class="">PDC</a>
+        </li>
+        <li class="sideNavItem">
+            <a href="{{ path ('Feb', {role: role})}}" class="">FEB</a>
+        </li>
         <li class="sideNavItem">
             <a href="{{ path ('Bnr', {role: role})}}" class="">{{ sigles['besoinNouveauReseau'] }}</a>
         </li>
         <li class="sideNavItem">
-            <a href="{{ path ('contactCirisi') }}" class="">{{ sigles['modifLan'] }}</a>
+            <a href="{{ path ('Modip', {role: role})}}" class="">{{ sigles['modifLan'] }}</a>
         </li>
     {% endif %}
     {% if role != 'BPT' %}

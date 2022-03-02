@@ -31,9 +31,9 @@ class AffaireRepository extends ServiceEntityRepository
      */
     public function findMaxMontant(): array
     {
-        return $this->createQueryBuilder('b')
-            ->select('b.idBnr', 'b.montantFeb')
-            ->orderBy('b.montantFeb', 'DESC')
+        return $this->createQueryBuilder('a')
+            ->select('a.idAffaire', 'a.montantAffaire')
+            ->orderBy('a.montantAffaire', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult()
@@ -45,9 +45,9 @@ class AffaireRepository extends ServiceEntityRepository
      */
     public function findMinMontant(): array
     {
-        return $this->createQueryBuilder('b')
-            ->select('b.idBnr', 'b.montantFeb')
-            ->orderBy('b.montantFeb', 'ASC')
+        return $this->createQueryBuilder('a')
+            ->select('a.idAffaire', 'a.montantAffaire')
+            ->orderBy('a.montantAffaire', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult()
