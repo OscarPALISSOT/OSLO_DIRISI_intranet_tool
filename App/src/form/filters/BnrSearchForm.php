@@ -4,6 +4,8 @@ namespace App\form\filters;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Organisme;
+use App\Repository\AffaireRepository;
+use App\Repository\InfoBnrRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,19 +17,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BnrSearchForm extends AbstractType
 {
-    public function __construct()
+    private InfoBnrRepository $infoBnrRepository;
+    private AffaireRepository $affaireRepository;
+
+    public function __construct(InfoBnrRepository $infoBnrRepository, AffaireRepository $affaireRepository)
     {
+        $this->infoBnrRepository = $infoBnrRepository;
+        $this->affaireRepository = $affaireRepository;
     }
 
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $sqdfzz = 0;
-        if ( $sqdfzz > 0){
-            $maxMontant = 'test';
-            $minMontant = 'test';
-            $min = $minMontant[0]['montantFeb'];
-            $max = $maxMontant[0]['montantFeb'];
+        if ( count($this->infoBnrRepository->findAll()) > 0){
+            $maxMontant = $this->affaireRepository->findMaxMontant();
+            $minMontant = $this->affaireRepository->findMinMontant();
+            $min = $minMontant[0]['montantAffaire'];
+            $max = $maxMontant[0]['montantAffaire'];
         }
         else{
             $min = 0;
