@@ -213,11 +213,11 @@ class BNRController extends AbstractController {
     public function EditBnr(Request $request) : Response{
         $id = $request->request->get('idEdit');
         $Bnr = $this->affaireRepository->find($id);
-        $Bnr->setIdNatureAffaire($this->natureAffaireRepository->findOneBy([
-            'natureAffaire' => $this->sigleRepository->findOneBy([
-                'intituleSigle' => 'besoinNouveauReseau',
-            ]),
-        ]));
+        $Bnr->setIdNatureAffaire(
+            $this->natureAffaireRepository->findOneBy([
+                'natureAffaire' => 'besoinNouveauReseau',
+            ])
+        );
         $BnrName = $request->request->get('bnrEdit');
         $Objectif = $request->request->get('objectifEdit');
         $montant = $request->request->get('montantEdit');
@@ -252,7 +252,9 @@ class BNRController extends AbstractController {
             $em = $this->ManagerRegistry->getManager();
             $em->persist($Bnr);
             $em->flush();
-            $BnrInfos = $this->infoBnrRepository->find($Bnr->getIdAffaire());
+            $BnrInfos = $this->infoBnrRepository->findOneBy([
+                'idInfoBnr' => $Bnr->getIdAffaire(),
+            ]);
             $DateDemande = $request->request->get('dateDemandeEdit');
             $dateDemande = new DateTime($DateDemande);
             $dateDemande->format('Y-m-d');

@@ -70,14 +70,14 @@
 
     <!-- Modal edit-->
     <div class="modal fade" id="modalEdit1{{ Bnr.idAffaire.idAffaire }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title" id="modalLabel">Modifier</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idAffaire.idAffaire })}}" method="post" class="js-Ajax-form">
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form id="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idAffaire.idAffaire })}}" method="post" class="js-Ajax-form">
                         <div class="form-floating mb-3">
                             <input value="{{ Bnr.idAffaire.nomAffaire }}" type="text" class="form-control" id="bnr" name="bnrEdit" placeholder="name@example.com">
                             <label for="bnr">Nom du projet</label>
@@ -87,7 +87,7 @@
                             <label for="floatingTextarea2">Objectif</label>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="febEdit" autocomplete="off">
                                     <option value="{{ Bnr.idAffaire.idFeb.idFeb}}" selected>{{ Bnr.idAffaire.idFeb.numFeb }}</option>
                                     {% for Feb in Febs %}
@@ -95,7 +95,7 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="grandCompteEdit" autocomplete="off">
                                     <option value="{{ Bnr.idAffaire.idGrandsComptes.idGrandsComptes}}" selected>{{ Bnr.idAffaire.idGrandsComptes.GrandsComptes}}</option>
                                     {% for GrandCompte in GrandComptes %}
@@ -103,11 +103,9 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-4">
-                                <div class="form mb-3">
-                                    <input value="{{ Bnr.idAffaire.montantAffaire }}" type="number" class="form-control" id="montant" name="montantEdit" placeholder="Montant">
-                                </div>
-                            </div>
+                        </div>
+                        <div class="form mb-3">
+                            <input value="{{ Bnr.idAffaire.montantAffaire }}" type="number" class="form-control" id="montant" name="montantEdit" placeholder="Montant">
                         </div>
                         <div class="form-floating mb-3">
                             <input value="{{ Bnr.montantInfo }}" type="text" class="form-control" id="bnr" name="montantInfoEdit" placeholder="name@example.com">
@@ -147,13 +145,13 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="input-group mb-3 date datepicker">
-                                    <input value="{{ Bnr.idAffaire.echeanceAffaire|date('Y-m-d') }}" type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="dateEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <input value="{{ Bnr.idAffaire.echeanceAffaire|date('m/d/Y') }}" type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="dateEdit" autocomplete="off"><span class="input-group-addon"></span>
                                     <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group mb-3 date datepicker">
-                                    <input value="{{ Bnr.dateDemande|date('Y-m-d') }}" type="text" class="form-control" placeholder="Date de la demande" aria-label="datepicker" aria-describedby="basic-addon1" name="dateDemandeEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <input value="{{ Bnr.dateDemande|date('m/d/Y') }}" type="text" class="form-control" placeholder="Date de la demande" aria-label="datepicker" aria-describedby="basic-addon1" name="dateDemandeEdit" autocomplete="off"><span class="input-group-addon"></span>
                                     <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                                 </div>
                             </div>
@@ -166,16 +164,16 @@
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="commentEdit" style="height: 100px">{{ Bnr.idAffaire.commentaire }}</textarea>
                             <label for="floatingTextarea2">Commentaire</label>
                         </div>
-                    </div>
+                    </form>
+                </div>
                     <div class="modal-footer">
                         <!-- send request-->
                         <div class="modal-footer">
-                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
-                            <input type="hidden" name="idEdit" value="{{ Bnr.idAffaire.idAffaire }}">
-                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Bnr.idAffaire.idAffaire }}">Enregistrer</button>
+                            <input form="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
+                            <input form="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" type="hidden" name="idEdit" value="{{ Bnr.idAffaire.idAffaire }}">
+                            <button form="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Bnr.idAffaire.idAffaire }}">Enregistrer</button>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>
