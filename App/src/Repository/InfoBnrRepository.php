@@ -41,7 +41,7 @@ class InfoBnrRepository extends ServiceEntityRepository
 
         if (!empty($data->Bnr)){
             $query = $query
-                ->andWhere('a.objectifAffaire LIKE :Bnr')
+                ->andWhere('a.nomAffaire LIKE :Bnr')
                 ->setParameter('Bnr', "%{$data->Bnr}%");
         }
         if (!empty($data->idOrganisme)){
