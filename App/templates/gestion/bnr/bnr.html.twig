@@ -17,7 +17,8 @@
 
 
     <div class="js-filter-sorting sorting">
-        {{ knp_pagination_sortable(Bnrs, 'Date de modification', 'i.idAffaire.updateAt') }}
+        {{ knp_pagination_sortable(Bnrs, 'Montant', 'a.montantAffaire') }}
+        {{ knp_pagination_sortable(Bnrs, 'Date de modification', 'a.updateAt') }}
     </div>
 
     <div class="row">
