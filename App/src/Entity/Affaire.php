@@ -27,7 +27,14 @@ class Affaire
     /**
      * @var string
      *
-     * @ORM\Column(name="objectif_Affaire", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nom_Affaire", type="string", length=50, nullable=false)
+     */
+    private $nomAffaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="objectif_Affaire", type="text", length=0, nullable=false)
      */
     private $objectifAffaire;
 
@@ -275,6 +282,22 @@ class Affaire
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomAffaire(): string
+    {
+        return $this->nomAffaire;
+    }
+
+    /**
+     * @param string $nomAffaire
+     */
+    public function setNomAffaire(string $nomAffaire): void
+    {
+        $this->nomAffaire = $nomAffaire;
     }
 
 }

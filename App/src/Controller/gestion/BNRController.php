@@ -108,6 +108,7 @@ class BNRController extends AbstractController {
         ]);
         $NewBnr = new Affaire();
         $BnrName = $request->request->get('bnr');
+        $Objectif = $request->request->get('objectif');
         $montant = $request->request->get('montant');
         $idOrganismes = $request->request->all('organisme', []);
         foreach ($idOrganismes as $item){
@@ -125,7 +126,8 @@ class BNRController extends AbstractController {
         $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
         $Feb = $this->febRepository->find($idFeb);
         $NewBnr->setIdNatureAffaire($nature);
-        $NewBnr->setObjectifAffaire($BnrName);
+        $NewBnr->setNomAffaire($BnrName);
+        $NewBnr->setObjectifAffaire($Objectif);
         $NewBnr->setMontantAffaire($montant);
         $NewBnr->setIdPriorisation($Prio);
         $NewBnr->setEcheanceAffaire($date);
@@ -212,6 +214,7 @@ class BNRController extends AbstractController {
         $id = $request->request->get('idEdit');
         $Bnr = $this->affaireRepository->find($id);
         $BnrName = $request->request->get('bnrEdit');
+        $Objectif = $request->request->get('objectifEdit');
         $montant = $request->request->get('montantEdit');
         $idOrganismes = $request->request->all('organismeEdit', []);
         foreach ($idOrganismes as $item){
@@ -228,7 +231,8 @@ class BNRController extends AbstractController {
         $idGrandsComptes = $request->request->get('grandCompteEdit');
         $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
         $Feb = $this->febRepository->find($idFeb);
-        $Bnr->setObjectifAffaire($BnrName);
+        $Bnr->setNomAffaire($BnrName);
+        $Bnr->setObjectifAffaire($Objectif);
         $Bnr->setMontantAffaire($montant);
         $Bnr->setEtatAffaire($State);
         $Bnr->setIdGrandsComptes($GrandCompte);

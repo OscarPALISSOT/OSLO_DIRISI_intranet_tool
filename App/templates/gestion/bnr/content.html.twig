@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-body Entity-card">
             <h3 class="card-title">
-                {{ Bnr.idAffaire.objectifAffaire }}
+                {{ Bnr.idAffaire.nomAffaire }}
                 <div class="form-check" style="font-size: larger">
                     <label for="checkbox{{ Bnr.idInfoBnr }}"></label>
                     <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idInfoBnr }}" type="checkbox" value="{{ Bnr.idInfoBnr }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
@@ -20,9 +20,9 @@
                     {{ Orga.Organisme }} - {{ Orga.idQuartier.trigramme }};
                 {% endfor %}
                 <br>
-                <span class="label">Impact de non-réalisation :</span>
+                <span class="label">Objectif :</span>
                 <br>
-                {{ Bnr.impact }}
+                {{ Bnr.idAffaire.objectifAffaire }}
                 <br>
             </p>
             <div class="collapse" id="collapseCard{{ Bnr.idAffaire.idAffaire }}">
@@ -41,6 +41,10 @@
                     <br>
                     <span class="label">Date de demande :</span>
                     {{ Bnr.dateDemande|date('d/m/Y') }}
+                    <br>
+                    <span class="label">Impact de non-réalisation :</span>
+                    <br>
+                    {{ Bnr.impact }}
                     <br>
                     <span class="label">État :</span>
                     {% if Bnr.idAffaire.etatAffaire == '1' %}
@@ -75,8 +79,12 @@
                 <form id="bnrFormCreate" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idAffaire.idAffaire })}}" method="post" class="js-Ajax-form">
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <input value="{{ Bnr.idAffaire.objectifAffaire }}" type="text" class="form-control" id="bnr" name="bnrEdit" placeholder="name@example.com">
+                            <input value="{{ Bnr.idAffaire.nomAffaire }}" type="text" class="form-control" id="bnr" name="bnrEdit" placeholder="name@example.com">
                             <label for="bnr">Nom du projet</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="objectifEdit" style="height: 100px">{{ Bnr.idAffaire.objectifAffaire }}</textarea>
+                            <label for="floatingTextarea2">Objectif</label>
                         </div>
                         <div class="row">
                             <div class="col-4">
