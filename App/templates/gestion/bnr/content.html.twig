@@ -62,14 +62,14 @@
                 Voir plus <i class="far fa-eye"></i>
             </button>
             <!-- Button trigger modal edit -->
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Bnr.idAffaire.idAffaire }}">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit{{ Bnr.idInfoBnr }}">
                 Modifier <i class="fas fa-edit"></i>
             </button>
         </div>
     </div>
 
     <!-- Modal edit-->
-    <div class="modal fade" id="modalEdit1{{ Bnr.idAffaire.idAffaire }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalEdit{{ Bnr.idInfoBnr }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -77,7 +77,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idAffaire.idAffaire })}}" method="post" class="js-Ajax-form">
+                    <form id="bnrFormEdit{{ Bnr.idInfoBnr }}" action="{{ path ('Admin_Bnr_Edit', {id: Bnr.idInfoBnr })}}" method="post" class="js-Ajax-form">
                         <div class="form-floating mb-3">
                             <input value="{{ Bnr.idAffaire.nomAffaire }}" type="text" class="form-control" id="bnr" name="bnrEdit" placeholder="name@example.com">
                             <label for="bnr">Nom du projet</label>
@@ -169,9 +169,9 @@
                     <div class="modal-footer">
                         <!-- send request-->
                         <div class="modal-footer">
-                            <input form="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
-                            <input form="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" type="hidden" name="idEdit" value="{{ Bnr.idAffaire.idAffaire }}">
-                            <button form="bnrFormEdit{{ Bnr.idAffaire.idAffaire }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Bnr.idAffaire.idAffaire }}">Enregistrer</button>
+                            <input form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
+                            <input form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="hidden" name="idEdit" value="{{ Bnr.idInfoBnr }}">
+                            <button form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit{{ Bnr.idInfoBnr }}">Enregistrer</button>
                         </div>
                     </div>
             </div>
