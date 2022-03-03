@@ -25,7 +25,7 @@
         <div class="js-filter-content">
             <div class="row">
                 {% for Modip in Modips %}
-                    {% include 'gestion/modip/content.html.twig' with {Modip: Modip, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios} only%}
+                    {% include 'gestion/modip/card.html.twig' with {Modip: Modip, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios} only%}
                 {% endfor %}
             </div>
         </div>

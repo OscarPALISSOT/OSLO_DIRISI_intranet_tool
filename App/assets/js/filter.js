@@ -27,14 +27,14 @@ export default class Filter{
      * Ajoute les comportements des éléments
      */
     bindEvents() {
-        let sortingLinks = this.sorting.getElementsByTagName('a');
-        for (let i = 0; i < sortingLinks.length; i++){
-            sortingLinks[i].addEventListener( 'click', e => {
-                //e.preventDefault()
-                this.loadUrl(sortingLinks[i].getAttribute('href'))
-            })
-        }
+        this.sorting.addEventListener( 'click', e => {
+            if (e.target.tagName === 'A'){
+                e.preventDefault()
+                this.loadUrl(e.target.getAttribute('href'))
+            }
+        })
     }
+
 
     async loadUrl(url) {
         const response = await fetch(url, {
@@ -42,9 +42,10 @@ export default class Filter{
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        if (response.status >= 200 && response.status > 300){
-            const data = await response.Json()
+        if (response.status >= 200 && response.status < 300){
+            const data = await response.json()
             this.content.innerHTML = data.content
+            this.sorting.innerHTML = data.sorting
         }
         else {
             console.error(response)

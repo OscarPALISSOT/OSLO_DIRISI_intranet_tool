@@ -35,7 +35,7 @@
             <tbody>
             <tr class="js-filter-content">
                 {% for Feb in Febs %}
-                    {% include 'gestion/feb/content.html.twig' with {Feb: Feb, Pdcs: Pdcs} only%}
+                    {% include 'gestion/feb/card.html.twig' with {Feb: Feb, Pdcs: Pdcs} only%}
                 {% endfor %}
             </tr>
         </table>

@@ -17,17 +17,12 @@
 
 
     <div class="js-filter-sorting sorting">
-        {{ knp_pagination_sortable(Bnrs, 'Montant', 'a.montantAffaire') }}
-        {{ knp_pagination_sortable(Bnrs, 'Date de modification', 'a.updateAt') }}
+        {% include 'gestion/bnr/_sorting.html.twig' %}
     </div>
 
     <div class="row">
         <div class="js-filter-content">
-            <div class="row">
-                {% for Bnr in Bnrs %}
-                    {% include 'gestion/bnr/content.html.twig' with {Bnr: Bnr, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios} only%}
-                {% endfor %}
-            </div>
+            {% include 'gestion/bnr/_content.html.twig' %}
         </div>
     </div>
 

@@ -21,6 +21,7 @@ use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,7 +60,8 @@ class BNRController extends AbstractController {
      * @param Request $request
      * @return Response
      */
-    public function index(PaginatorInterface $paginator, Request $request) : Response{
+    public function index(PaginatorInterface $paginator, Request $request): JsonResponse|Response
+    {
 
         $Data = new SearchDataBnr();
         $Data->page =$request->get('page', 1);
@@ -74,11 +76,21 @@ class BNRController extends AbstractController {
 
         }
         $sigles = $this->sigleRepository->findSigles();
-        /*if ($request->isXmlHttpRequest()){
+        if ($request->isXmlHttpRequest()){
             return new JsonResponse([
-                'content' => $this->renderView('')
-            ])
-        }*/
+                'content' => $this->renderView('gestion/bnr/_content.html.twig', [
+                    'Bnrs' => $Bnrs,
+                    'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+                    'Febs' => $this->febRepository->findAll(),
+                    'GrandComptes' => $this->grandsComptesRepository->findAll(),
+                    'Quartiers' => $this->quartiersRepository->findAll(),
+                    'Prios' => $this->priorisationRepository->findAll(),
+                ]),
+                'sorting' => $this->renderView('gestion/bnr/_sorting.html.twig', [
+                    'Bnrs' => $Bnrs,
+                ])
+            ]);
+        }
         return $this->render('gestion/bnr/Bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
