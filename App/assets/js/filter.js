@@ -46,6 +46,7 @@ export default class Filter{
             const data = await response.json()
             this.content.innerHTML = data.content
             this.sorting.innerHTML = data.sorting
+            history.replaceState({}, '', url)
         }
         else {
             console.error(response)
