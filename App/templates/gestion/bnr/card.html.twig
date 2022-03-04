@@ -2,63 +2,65 @@
 <div class="col-4">
     <div class="card">
         <div class="card-body Entity-card">
-            <h3 class="card-title">
-                {{ Bnr.idAffaire.nomAffaire }}
-                <div class="form-check" style="font-size: larger">
-                    <label for="checkbox{{ Bnr.idInfoBnr }}"></label>
-                    <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idInfoBnr }}" type="checkbox" value="{{ Bnr.idInfoBnr }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
-                </div>
-            </h3>
-            <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(0, '.', ' ') }} €</h4>
-            <p class="card-text">
-                <span class="label">Échéances :</span>
-                {{ Bnr.idAffaire.echeanceAffaire|date('d/m/Y')}}
-                <br>
-                <span class="label">Organisme(s) :</span>
-                <br>
-                {% for Orga in Bnr.idAffaire.idOrganisme %}
-                    {{ Orga.Organisme }} - {{ Orga.idQuartier.trigramme }};
-                {% endfor %}
-                <br>
-                <span class="label">Objectif :</span>
-                <br>
-                {{ Bnr.idAffaire.objectifAffaire }}
-                <br>
-            </p>
-            <div class="collapse" id="collapseCard{{ Bnr.idAffaire.idAffaire }}">
-                <p class="info">
-                    <span class="label">Priorisation :</span>
-                    {{ Bnr.idAffaire.idPriorisation.priorisation }}
+            <div class="card-content">
+                <h3 class="card-title">
+                    {{ Bnr.idAffaire.nomAffaire }}
+                    <div class="form-check" style="font-size: larger">
+                        <label for="checkbox{{ Bnr.idInfoBnr }}"></label>
+                        <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idInfoBnr }}" type="checkbox" value="{{ Bnr.idInfoBnr }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
+                    </div>
+                </h3>
+                <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(0, '.', ' ') }} €</h4>
+                <p class="card-text">
+                    <span class="label">Échéances :</span>
+                    {{ Bnr.idAffaire.echeanceAffaire|date('d/m/Y')}}
                     <br>
-                    <span class="label">Grand compte :</span>
-                    {{ Bnr.idAffaire.idGrandsComptes.grandsComptes }}
+                    <span class="label">Organisme(s) :</span>
                     <br>
-                    <span class="label">FEB :</span>
-                    {{ Bnr.idAffaire.idFeb.numFeb }}
+                    {% for Orga in Bnr.idAffaire.idOrganisme %}
+                        {{ Orga.Organisme }} - {{ Orga.idQuartier.trigramme }};
+                    {% endfor %}
                     <br>
-                    <span class="label">Info sur le montant : </span>
-                    {{ Bnr.montantInfo }}
+                    <span class="label">Objectif :</span>
                     <br>
-                    <span class="label">Date de demande :</span>
-                    {{ Bnr.dateDemande|date('d/m/Y') }}
+                    {{ Bnr.idAffaire.objectifAffaire }}
                     <br>
-                    <span class="label">Impact de non-réalisation :</span>
-                    <br>
-                    {{ Bnr.impact }}
-                    <br>
-                    <span class="label">État :</span>
-                    {% if Bnr.idAffaire.etatAffaire == '1' %}
-                        Prévu
-                    {% else %}
-                        Traité
-                    {% endif %}
-                    <br>
-                    <span class="label">Commentaire :</span>
-                    <br>
-                    {{ Bnr.idAffaire.commentaire|nl2br }}
                 </p>
+                <div class="collapse" id="collapseCard{{ Bnr.idAffaire.idAffaire }}">
+                    <p class="info">
+                        <span class="label">Priorisation :</span>
+                        {{ Bnr.idAffaire.idPriorisation.priorisation }}
+                        <br>
+                        <span class="label">Grand compte :</span>
+                        {{ Bnr.idAffaire.idGrandsComptes.grandsComptes }}
+                        <br>
+                        <span class="label">FEB :</span>
+                        {{ Bnr.idAffaire.idFeb.numFeb }}
+                        <br>
+                        <span class="label">Info sur le montant : </span>
+                        {{ Bnr.montantInfo }}
+                        <br>
+                        <span class="label">Date de demande :</span>
+                        {{ Bnr.dateDemande|date('d/m/Y') }}
+                        <br>
+                        <span class="label">Impact de non-réalisation :</span>
+                        <br>
+                        {{ Bnr.impact }}
+                        <br>
+                        <span class="label">État :</span>
+                        {% if Bnr.idAffaire.etatAffaire == '1' %}
+                            Prévu
+                        {% else %}
+                            Traité
+                        {% endif %}
+                        <br>
+                        <span class="label">Commentaire :</span>
+                        <br>
+                        {{ Bnr.idAffaire.commentaire|nl2br }}
+                    </p>
+                </div>
             </div>
-            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Bnr.idAffaire.idAffaire }}" aria-expanded="false" aria-controls="collapseCard">
+            <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Bnr.idAffaire.idAffaire }}" aria-expanded="false" aria-controls="collapseCard">
                 Voir plus <i class="far fa-eye"></i>
             </button>
             <!-- Button trigger modal edit -->
