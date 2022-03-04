@@ -13,7 +13,6 @@ var navItem = document.querySelectorAll('.sideNavItem');
 
 function activeSideNavitem(){
 
-    let loc = window.location.href;
     let url = location.protocol + '//' + location.host + location.pathname;
 
     navItem.forEach( function (item){

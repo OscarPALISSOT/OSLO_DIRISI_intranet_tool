@@ -1,6 +1,6 @@
 {% extends 'gestion.html.twig' %}
 
-{% block titleSidenav %}OSLO | BNR{% endblock %}
+{% block titleSidenav %}OSLO | {{ title }}{% endblock %}
 
 {% block styleSheetsGestion %}
     {{ encore_entry_link_tags('sidenav') }}
@@ -45,10 +45,10 @@
             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Filtrer <i class="fas fa-filter"></i>
             </button>
-            <a href="{{ path ('Bnr', {role: role})}}" class="btn btn-outline-secondary">Réinitialiser les filtres <i class="fas fa-redo-alt"></i></a>
+            <button class="btn btn-outline-secondary js-filter-reset">Réinitialiser les filtres <i class="fas fa-redo-alt"></i></button>
         </div>
 
-        <div class="collapse row js-filter-form" id="collapseExample" style="padding-left: 0">
+        <div class="collapse row" id="collapseExample" style="padding-left: 0">
             {% block FormFilterGestionEntity %}
 
             {% endblock %}

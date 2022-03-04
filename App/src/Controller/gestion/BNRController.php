@@ -58,7 +58,7 @@ class BNRController extends AbstractController {
      * @Route ("/{role}/BNR", name="Bnr")
      * @param Paginator $paginator
      * @param Request $request
-     * @return Response
+     * @return JsonResponse|Response
      */
     public function index(PaginatorInterface $paginator, Request $request): JsonResponse|Response
     {
@@ -76,7 +76,7 @@ class BNRController extends AbstractController {
 
         }
         $sigles = $this->sigleRepository->findSigles();
-        if ($request->isXmlHttpRequest()){
+        if ($request->get('Ajax')){
             return new JsonResponse([
                 'content' => $this->renderView('gestion/bnr/_content.html.twig', [
                     'Bnrs' => $Bnrs,
@@ -88,7 +88,10 @@ class BNRController extends AbstractController {
                 ]),
                 'sorting' => $this->renderView('gestion/bnr/_sorting.html.twig', [
                     'Bnrs' => $Bnrs,
-                ])
+                ]),
+                'pagination' => $this->renderView('gestion/bnr/_pagination.html.twig', [
+                    'Bnrs' => $Bnrs,
+                ]),
             ]);
         }
         return $this->render('gestion/bnr/Bnr.html.twig', [
