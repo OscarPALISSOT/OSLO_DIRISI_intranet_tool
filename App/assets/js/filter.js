@@ -1,3 +1,7 @@
+import {Flipper, spring} from "flip-toolkit";
+import {indexOf} from "core-js/internals/array-includes";
+
+
 /**
  * @property {HTMLElement} pagination
  * @property {HTMLElement} content
@@ -67,7 +71,7 @@ export default class Filter{
         })
         if (response.status >= 200 && response.status < 300){
             const data = await response.json()
-            this.content.innerHTML = data.content
+            this.flipContent(data.content)
             this.sorting.innerHTML = data.sorting
             this.pagination.innerHTML = data.pagination
             history.replaceState({}, '', url)
@@ -75,6 +79,52 @@ export default class Filter{
         else {
             console.error(response)
         }
+    }
+
+
+    /**
+     * anime les grilles de content avec un effet flip
+     * @param {string} content
+     */
+    flipContent(content){
+        const springConfig = 'veryGentle';
+        const exitSpring  = function (element, index,  onComplete) {
+            spring({
+                config: 'stiff',
+                values: {
+                    translateY: [0, -20],
+                    opacity: [1, 0]
+                },
+                onUpdate: ({ translateY, opacity }) => {
+                    element.style.opacity = opacity;
+                    element.style.transform = `translateY(${translateY}px)`;
+                },
+                onComplete
+            });
+        }
+        const flipper = new Flipper({
+            element: this.content
+        })
+        for (const element of this.content.children) {
+            flipper.addFlipped({
+                element,
+                spring: springConfig,
+                flipId: element.id,
+                shouldFlip: false,
+                onExit: exitSpring
+
+            })
+        }
+        flipper.recordBeforeUpdate()
+        this.content.innerHTML = content
+        for (const element of this.content.children) {
+            flipper.addFlipped({
+                element,
+                spring: springConfig,
+                flipId: element.id
+            })
+        }
+        flipper.update()
     }
 
 

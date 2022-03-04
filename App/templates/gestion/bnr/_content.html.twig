@@ -1,5 +1,3 @@
-<div class="row">
-    {% for Bnr in Bnrs %}
-        {% include 'gestion/bnr/card.html.twig' with {Bnr: Bnr, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios} only%}
-    {% endfor %}
-</div>
+{% for Bnr in Bnrs %}
+    {% include 'gestion/bnr/card.html.twig' with {Bnr: Bnr, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios} only%}
+{% endfor %}
