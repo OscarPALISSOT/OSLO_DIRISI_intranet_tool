@@ -170,11 +170,9 @@
                 </div>
                     <div class="modal-footer">
                         <!-- send request-->
-                        <div class="modal-footer">
-                            <input form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
-                            <input form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="hidden" name="idEdit" value="{{ Bnr.idInfoBnr }}">
-                            <button form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit{{ Bnr.idInfoBnr }}">Enregistrer</button>
-                        </div>
+                        <input form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditBnr')}}>
+                        <input form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="hidden" name="idEdit" value="{{ Bnr.idInfoBnr }}">
+                        <button form="bnrFormEdit{{ Bnr.idInfoBnr }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit{{ Bnr.idInfoBnr }}">Enregistrer</button>
                     </div>
             </div>
         </div>
