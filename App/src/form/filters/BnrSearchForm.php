@@ -4,6 +4,7 @@ namespace App\form\filters;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Organisme;
+use App\Entity\Priorisation;
 use App\Repository\AffaireRepository;
 use App\Repository\InfoBnrRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -54,8 +55,17 @@ class BnrSearchForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'class' => Organisme::class,
-                'placeholder' => 'Organisme',
+                'expanded' => true,
+                'multiple' => true
 
+            ])
+
+            ->add('Priority', EntityType::class, [
+                'label' => false,
+                'required' => false,
+                'class' => Priorisation::class,
+                'expanded' => true,
+                'multiple' => true
             ])
 
             ->add('before', ChoiceType::class, [

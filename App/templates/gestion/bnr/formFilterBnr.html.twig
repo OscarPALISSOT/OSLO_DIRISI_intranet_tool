@@ -4,7 +4,14 @@
     <div class="col-4">{{ form_row(form.Bnr) }}</div>
 
     <h4 class="mt-3">Organismes</h4>
-    <div class="col-4">{{ form_row(form.idOrganisme) }}</div>
+    <div class="col-4 scrollEntity">
+        {{ form_row(form.idOrganisme) }}
+    </div>
+
+    <h4 class="mt-3">Priorité</h4>
+    <div class="col-4 scrollEntity">
+        {{ form_row(form.Priority) }}
+    </div>
 
     <h4 class="mt-3">Echéance</h4>
     <div class="row">

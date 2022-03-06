@@ -33,9 +33,10 @@ class InfoBnrRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('i')
-            ->select('i','o', 'a')
+            ->select('i','o', 'a', 'p')
             ->join('i.idAffaire', 'a')
             ->join('a.idOrganisme', 'o')
+            ->join('a.idPriorisation', 'p')
             ->orderBy('a.updateAt', 'DESC');
 
 
@@ -44,10 +45,15 @@ class InfoBnrRepository extends ServiceEntityRepository
                 ->andWhere('a.nomAffaire LIKE :Bnr')
                 ->setParameter('Bnr', "%{$data->Bnr}%");
         }
-        if (!empty($data->idOrganisme)){
+        if (!empty($data->idOrganisme) && count($data->idOrganisme) > 0){
             $query = $query
-                ->andWhere('i.idOrganisme IN (:Organisme)')
-                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
+                ->andWhere('o.idOrganisme IN (:Organisme)')
+                ->setParameter('Organisme', $data->idOrganisme);
+        }
+        if (!empty($data->Priority) && count($data->Priority) > 0){
+            $query = $query
+                ->andWhere('p.idPriorisation IN (:Priorisation)')
+                ->setParameter('Priorisation', $data->Priority);
         }
 
         if (!empty($data->Montant)){

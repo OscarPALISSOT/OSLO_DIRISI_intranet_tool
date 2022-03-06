@@ -3,6 +3,7 @@
 namespace App\Data;
 
 use App\Entity\Organisme;
+use App\Entity\Priorisation;
 use App\Entity\Quartiers;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -20,19 +21,10 @@ class SearchDataBnr{
 
 
     /**
-     * @var bool
+     * @var Priorisation[]
      */
-    public bool $PriorityP1;
+    public $Priority;
 
-    /**
-     * @var bool
-     */
-    public bool $PriorityP2;
-
-    /**
-     * @var bool
-     */
-    public bool $PriorityP3;
 
     /**
      * @var bool
