@@ -36,7 +36,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title" id="modalLabel">Nouveau BNR :</h1>
+                    <h1 class="modal-title" id="modalLabel">Nouveau Modip :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <form id="modipFormDelete" action="{{ path ('Admin_Modip_Delete')}}" method="post" class="js-Ajax-form">
+                    <form id="bnrFormDelete" action="{{ path ('Admin_Modip_Delete')}}" method="post" class="js-Ajax-form">
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteModip')}}>
                         <button class="btn btn-danger" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
                             Confirmer <i class="fas fa-trash"></i>
