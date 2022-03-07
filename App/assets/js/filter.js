@@ -5,6 +5,8 @@ import {Flipper, spring} from "flip-toolkit";
  * @property {HTMLElement} content
  * @property {HTMLElement} sorting
  * @property {HTMLElement} reset
+ * @property {HTMLElement} modalReset
+ * @property {HTMLElement} secondModal
  * @property {HTMLFormElement} form
  */
 
@@ -23,6 +25,8 @@ export default class Filter{
         this.sorting = element.querySelector('.js-filter-sorting')
         this.form = element.querySelector('.js-filter-form')
         this.reset = element.querySelector('.js-filter-reset')
+        this.modalReset = element.querySelector('.js-modal-reset')
+        this.secondModal = element.querySelector('.js-secondModal')
         this.bindEvents()
     }
 
@@ -44,11 +48,20 @@ export default class Filter{
             this.loadForm(this)
         })
         this.reset.addEventListener( 'click', e => {
+            debugger
             e.preventDefault()
             let url = location.protocol + '//' + location.host + location.pathname;
             this.form.reset()
-            debugger
             this.loadUrl(url)
+
+        })
+        this.modalReset.addEventListener( 'click', e => {
+            debugger
+            e.preventDefault()
+            let url = location.protocol + '//' + location.host + location.pathname;
+            this.form.reset()
+            this.loadUrl(url)
+
         })
     }
 
@@ -76,6 +89,7 @@ export default class Filter{
             this.flipContent(data.content)
             this.sorting.innerHTML = data.sorting
             this.pagination.innerHTML = data.pagination
+            this.secondModal.innerHTML = data.secondModal
             params.delete('Ajax')
             history.replaceState({}, '', url.split('?')[0] + '?' + params.toString())
         }
