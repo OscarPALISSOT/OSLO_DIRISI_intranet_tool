@@ -5,7 +5,6 @@ namespace App\Data;
 use App\Entity\Organisme;
 use App\Entity\Priorisation;
 use App\Entity\Quartiers;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class SearchDataBnr{
 

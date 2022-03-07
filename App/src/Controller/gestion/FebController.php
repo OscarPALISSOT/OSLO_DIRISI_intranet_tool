@@ -41,10 +41,10 @@ class FebController extends AbstractController {
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response{
 
-        //$Data = new SearchDataFeb();
-        //$Data->page =$request->get('page', 12);
-        //$form = $this->createForm(FebSearchForm::class, $Data);
-        //$form->handleRequest($request);
+        $Data = new SearchDataFeb();
+        $Data->page =$request->get('page', 1);
+        $form = $this->createForm(FebSearchForm::class, $Data);
+        $form->handleRequest($request);
 
         $Febs = $this->febRepository->findAll();
 
@@ -65,7 +65,7 @@ class FebController extends AbstractController {
             'Pdcs' => $Pdcs,
             'role' => $role[0],
             'title' => "Fiche d'expression de besoin",
-            //'form' => $form->createView(),
+            'form' => $form->createView(),
             'sigles' => $sigles,
         ]);
     }

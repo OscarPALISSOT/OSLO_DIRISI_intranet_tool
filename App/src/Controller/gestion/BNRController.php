@@ -92,6 +92,7 @@ class BNRController extends AbstractController {
                 'pagination' => $this->renderView('gestion/bnr/_pagination.html.twig', [
                     'Bnrs' => $Bnrs,
                 ]),
+                'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
             ]);
         }
         return $this->render('gestion/bnr/Bnr.html.twig', [

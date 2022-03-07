@@ -19,6 +19,34 @@ class FebRepository extends ServiceEntityRepository
         parent::__construct($registry, Feb::class);
     }
 
+    /**
+     * @return Feb[] Returns an array of Feb objects
+     */
+    public function findMaxMontant(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.idFeb', 'f.montantFeb')
+            ->orderBy('f.montantFeb', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Feb[] Returns an array of Feb objects
+     */
+    public function findMinMontant(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.idFeb', 'f.montantFeb')
+            ->orderBy('f.montantFeb', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Feb[] Returns an array of Feb objects
     //  */
