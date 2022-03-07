@@ -47,7 +47,7 @@ export default class Filter{
         })
         this.reset.addEventListener( 'click', e => {
             e.preventDefault()
-            let url = location.protocol + '//' + location.host + location.pathname;
+            let url = location.protocol + '//' + location.host + location.pathname + '?&Ajax=1';
             this.loadUrl(url)
         })
     }
