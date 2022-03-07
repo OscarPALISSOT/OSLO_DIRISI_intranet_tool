@@ -45,3 +45,24 @@
   border: 1px solid #ced4da;
   overflow-y: scroll;
 }
+
+
+.is-loading::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #FFFFFF;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.is-loading{
+  .spinner-border{
+    position: absolute;
+    left: calc(50% - 1rem);
+    top: calc(50% - 1rem);
+  }
+}
