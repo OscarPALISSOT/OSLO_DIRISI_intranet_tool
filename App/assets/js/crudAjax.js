@@ -14,6 +14,7 @@ export default class CrudAjax{
         }
         this.form = element.getElementsByClassName('js-Ajax-form')
         this.bindEvents()
+        debugger
     }
 
 

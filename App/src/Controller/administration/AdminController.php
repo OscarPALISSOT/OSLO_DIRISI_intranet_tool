@@ -2,6 +2,11 @@
 
 namespace App\Controller\administration;
 
+use App\Entity\BasesDeDefense;
+use App\Entity\Cirisi;
+use App\Entity\Organisme;
+use App\Entity\Quartiers;
+use App\Entity\Rfz;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactRepository;
@@ -14,6 +19,8 @@ use App\Repository\RfzRepository;
 use App\Repository\SigleRepository;
 use App\Repository\StatutPdcRepository;
 use App\Repository\UsersRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,5 +75,37 @@ class AdminController extends AbstractController {
             'nbNatureAffaire' => count($this->natureAffaireRepository->findAll()),
             'nbStatutPdc' => count($this->statutPdcRepository->findAll()),
         ]);
+    }
+
+    /**
+     * @Route ("/Admin/ImportDataBase", name="importDatabase")
+     * @return JsonResponse
+     */
+    public function import(Request $request) : JsonResponse
+    {
+
+        $file = $request->files->get('CsvDatabaseImport');
+
+        $rfz = new Rfz();
+        $rfz->setRfz('testRfz');
+
+        $bdd = new BasesDeDefense();
+        $bdd->setBaseDefense('testbdd');
+
+        $cirisi = new Cirisi();
+        $cirisi->setCirisi('testCirisi');
+
+        $quartier = new Quartiers();
+        $quartier->setQuartier('testQuartier');
+
+        $organisme = new Organisme();
+        $organisme->setOrganisme('testOrga');
+
+
+        $jsonData = array(
+            'message' => "Importation terminée" . $file->getClientOriginalName(),
+        );
+
+        return $this->json($jsonData, 200);
     }
 }
