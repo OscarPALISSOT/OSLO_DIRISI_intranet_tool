@@ -164,23 +164,18 @@
                         <h2 class="modal-title">Attention ! <i class="fas fa-exclamation-triangle"></i></h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <h4>Vous vous apprêtez à modifier la base de données.
-                            Assurez vous d'avoir un fichier CSV conforme.
-                        </h4>
-                        <form id="importDatabase" action="{{ path ('importDatabase')}}" method="post" class="js-Ajax-form">
-                            <form>
-                                <div class="form-group">
-                                    <label for="file">Fichier</label>
-                                    <input type="file" class="form-control-file" id="file" name="CsvDatabaseImport" style="font-size: medium" accept=".csv">
-                                </div>
-                            </form>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- close first modal -->
-                        <button form="importDatabase" type="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalImport1"><i class="fas fa-check"></i> Ok</button>
-                    </div>
+                    <form id="importDatabase" action="{{ path ('importDatabase')}}" method="post" class="js-Ajax-form" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <h4>Vous vous apprêtez à modifier la base de données.
+                                Assurez vous d'avoir un fichier CSV conforme.
+                            </h4>
+                            <input type="file"  id="file" name="file" style="font-size: medium" accept=".csv">
+                        </div>
+                        <div class="modal-footer">
+                            <!-- close first modal -->
+                            <button type="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalImport1"><i class="fas fa-check"></i> Ok</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

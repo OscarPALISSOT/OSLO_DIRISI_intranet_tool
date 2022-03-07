@@ -79,12 +79,13 @@ class AdminController extends AbstractController {
 
     /**
      * @Route ("/Admin/ImportDataBase", name="importDatabase")
+     * @param Request $request
      * @return JsonResponse
      */
     public function import(Request $request) : JsonResponse
     {
 
-        $file = $request->files->get('CsvDatabaseImport');
+        $file = $request->files->get('file');
 
         $rfz = new Rfz();
         $rfz->setRfz('testRfz');
@@ -101,10 +102,18 @@ class AdminController extends AbstractController {
         $organisme = new Organisme();
         $organisme->setOrganisme('testOrga');
 
+        if ($file == null){
+            $jsonData = array(
+                'message' => "Erreur",
+            );
+        }
+        else{
+            $jsonData = array(
+                'message' => "Importation terminée",
+            );
+        }
 
-        $jsonData = array(
-            'message' => "Importation terminée" . $file->getClientOriginalName(),
-        );
+
 
         return $this->json($jsonData, 200);
     }
