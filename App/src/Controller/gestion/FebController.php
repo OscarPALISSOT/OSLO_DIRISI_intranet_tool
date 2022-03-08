@@ -13,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,7 +47,7 @@ class FebController extends AbstractController {
         $form = $this->createForm(FebSearchForm::class, $Data);
         $form->handleRequest($request);
 
-        $Febs = $this->febRepository->findAll();
+        $Febs = $this->febRepository->findFebSearch($Data);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
@@ -55,11 +56,21 @@ class FebController extends AbstractController {
         }
         $sigles = $this->sigleRepository->findSigles();
         $Pdcs = $this->planDeChargeRepository->findAll();
-        /*if ($request->isXmlHttpRequest()){
+        if ($request->get('Ajax')){
             return new JsonResponse([
-                'content' => $this->renderView('')
-            ])
-        }*/
+                'content' => $this->renderView('gestion/feb/_content.html.twig', [
+                    'Febs' => $Febs,
+                    'Pdcs' => $Pdcs,
+                ]),
+                'sorting' => $this->renderView('gestion/feb/_sorting.html.twig', [
+                    'Febs' => $Febs,
+                ]),
+                'pagination' => $this->renderView('gestion/feb/_pagination.html.twig', [
+                    'Febs' => $Febs,
+                ]),
+                'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
+            ]);
+        }
         return $this->render('gestion/feb/Feb.html.twig', [
             'Febs' => $Febs,
             'Pdcs' => $Pdcs,

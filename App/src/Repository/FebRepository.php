@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataFeb;
 use App\Entity\Feb;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -52,6 +53,51 @@ class FebRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param SearchDataFeb $data
+     * @return PaginationInterface
+     */
+    public function findFebSearch(SearchDataFeb $data): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('f')
+            ->select('f','p')
+            ->join('f.idPdc', 'p')
+            ->orderBy('f.updateAt', 'DESC');
+
+
+        if (!empty($data->Feb)){
+            $query = $query
+                ->andWhere('f.numFeb LIKE :Feb')
+                ->setParameter('Feb', "%{$data->Feb}%");
+        }
+        if (!empty($data->Pdc) && count($data->Pdc) > 0){
+            $query = $query
+                ->andWhere('f.idPdc IN (:idPdc)')
+                ->setParameter('idPdc', $data->Pdc);
+        }
+
+        if (!empty($data->Montant)){
+            if ($data->supMontant == false){
+                $query = $query
+                    ->andWhere('f.montantFeb <= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+            else{
+                $query = $query
+                    ->andWhere('f.montantFeb >= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
+    }
 
 
     // /**

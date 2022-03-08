@@ -16,7 +16,7 @@
 
 
     <div class="js-filter-sorting sorting">
-
+        {% include 'gestion/feb/_sorting.html.twig' %}
     </div>
 
     <div class="row tableContent">
@@ -32,18 +32,15 @@
                 <th scope="col">Modifier</th>
             </tr>
             </thead>
-            <tbody>
-            <tr class="js-filter-content">
-                {% for Feb in Febs %}
-                    {% include 'gestion/feb/tableRow.html.twig' with {Feb: Feb, Pdcs: Pdcs} only%}
-                {% endfor %}
-            </tr>
+            <tbody class="js-filter-content">
+                {% include 'gestion/feb/_content.html.twig' %}
+            </tbody>
         </table>
     </div>
 
     {# display navigation #}
     <div class="navigation js-filter-pagination">
-
+        {% include 'gestion/feb/_pagination.html.twig' %}
     </div>
 
     <!-- Modals new feb-->
@@ -110,23 +107,6 @@
         </div>
     </div>
 
-    <!-- Second modal message -->
-    <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="loading">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                    <div id="ajax-modal"></div>
-                </div>
-                <div class="modal-footer">
-                    <!-- close second modal -->
-                    <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'gestion/_secondModal.html.twig' %}
+
 {% endblock %}
