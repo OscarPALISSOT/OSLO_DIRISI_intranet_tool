@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,13 @@ class Feb
     private $montantFeb;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_at", type="date", nullable=false)
+     */
+    private $updateAt;
+
+    /**
      * @var \PlanDeCharge
      *
      * @ORM\ManyToOne(targetEntity="PlanDeCharge")
@@ -44,6 +52,13 @@ class Feb
      * })
      */
     private $idPdc;
+
+    public function __construct()
+    {
+        $date = new DateTime();
+        $date->format('Y-m-d-H:i:s');
+        $this->setUpdateAt($date);
+    }
 
     public function getIdFeb(): ?int
     {
@@ -89,6 +104,22 @@ class Feb
     public function __toString(): string
     {
         return $this->getNumFeb();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateAt(): \DateTime
+    {
+        return $this->updateAt;
+    }
+
+    /**
+     * @param \DateTime $updateAt
+     */
+    public function setUpdateAt(\DateTime $updateAt): void
+    {
+        $this->updateAt = $updateAt;
     }
 
 

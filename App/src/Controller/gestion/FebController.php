@@ -8,6 +8,7 @@ use App\form\filters\FebSearchForm;
 use App\Repository\FebRepository;
 use App\Repository\PlanDeChargeRepository;
 use App\Repository\SigleRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
@@ -156,6 +157,9 @@ class FebController extends AbstractController {
         $Feb->setNumFeb($FebName);
         $Feb->setMontantFeb($montant);
         $Feb->setIdPdc($Pdc);
+        $update = new DateTime();
+        $update->format('Y-m-d\H:i:s');
+        $Feb->setUpdateAt($update);
 
         if ($this->isCsrfTokenValid("EditFeb", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();
