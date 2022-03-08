@@ -32,10 +32,13 @@ export default class CrudAjax{
 
 
     AjaxUrl(form) {
+        let formData = new FormData(form[0])
         $.ajax({
             url: form.attr('action'),
             type: form.attr('method'),
-            data:form.serialize(),
+            processData: false,
+            contentType: false,
+            data: formData,
             success: function(data, status)
             {
                 let html = '<h2>' + data.message + '</h2>';

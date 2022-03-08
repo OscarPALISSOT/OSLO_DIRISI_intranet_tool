@@ -19,6 +19,9 @@ use App\Repository\RfzRepository;
 use App\Repository\SigleRepository;
 use App\Repository\StatutPdcRepository;
 use App\Repository\UsersRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use League\Csv\Reader;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,8 +42,9 @@ class AdminController extends AbstractController {
     private PriorisationRepository $priorisationRepository;
     private NatureAffaireRepository $natureAffaireRepository;
     private StatutPdcRepository $statutPdcRepository;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -54,6 +58,7 @@ class AdminController extends AbstractController {
         $this->priorisationRepository = $priorisationRepository;
         $this->natureAffaireRepository = $natureAffaireRepository;
         $this->statutPdcRepository = $statutPdcRepository;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -84,36 +89,83 @@ class AdminController extends AbstractController {
      */
     public function import(Request $request) : JsonResponse
     {
-
-        $file = $request->files->get('file');
-
-        $rfz = new Rfz();
-        $rfz->setRfz('testRfz');
-
-        $bdd = new BasesDeDefense();
-        $bdd->setBaseDefense('testbdd');
-
-        $cirisi = new Cirisi();
-        $cirisi->setCirisi('testCirisi');
-
-        $quartier = new Quartiers();
-        $quartier->setQuartier('testQuartier');
-
-        $organisme = new Organisme();
-        $organisme->setOrganisme('testOrga');
+        $file = $request->files->get('file', 'r');
 
         if ($file == null){
             $jsonData = array(
-                'message' => "Erreur",
+                'message' => "Erreur, veuillez renseignez un fichier.",
             );
         }
         else{
+            $em = $this->doctrine->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+            foreach ( $result as $row){
+
+                $rfz = $this->RfzRepository->findOneBy([
+                    'rfz' => $row['Rfz'],
+                ]);
+                if ( $rfz == null){
+                    $rfz = (new Rfz())
+                        ->setRfz($row['Rfz'])
+                    ;
+                    $em->persist($rfz);
+                    $em->flush();
+                }
+
+                $bdd = $this->BasesDeDefenseRepository->findOneBy([
+                    'baseDefense' => $row['Bdd'],
+                ]);
+
+                if ($bdd == null){
+                    $bdd = (new BasesDeDefense())
+                        ->setBaseDefense($row['Bdd'])
+                        ->setIdRfz($rfz)
+                    ;
+                    $em->persist($bdd);
+                    $em->flush();
+                }
+
+                $cirisi = $this->cirisiRepository->findOneBy([
+                    'cirisi' => $row['Cirisi'],
+                ]);
+                if ($cirisi == null){
+                    $cirisi = (new Cirisi())
+                        ->setCirisi($row['Cirisi'])
+                        ->setIdBaseDefense($bdd)
+                    ;
+                    $em->persist($cirisi);
+                    $em->flush();
+                }
+
+                $quartier = $this->quartiersRepository->findOneBy([
+                    'trigramme' => $row['Trigramme'],
+                ]);
+                if ($quartier == null){
+                    $quartier = (new Quartiers())
+                        ->setQuartier($row['Quartier'])
+                        ->setTrigramme($row['Trigramme'])
+                        ->setAdresseQuartier($row['adresse'])
+                        ->setIdBaseDefense($bdd)
+                    ;
+                    $em->persist($quartier);
+                    $em->flush();
+                }
+
+                $organisme = (new Organisme())
+                    ->setOrganisme($row['Organisme'])
+                    ->setIdQuartier($quartier)
+                ;
+                $em->persist($organisme);
+                $em->flush();
+            }
+
             $jsonData = array(
                 'message' => "Importation terminée",
             );
         }
-
-
 
         return $this->json($jsonData, 200);
     }
