@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Feb;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method Feb|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +16,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FebRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Feb::class);
+        $this->paginator = $paginator;
     }
 
     /**
@@ -46,6 +51,8 @@ class FebRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+
 
     // /**
     //  * @return Feb[] Returns an array of Feb objects

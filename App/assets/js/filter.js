@@ -47,22 +47,24 @@ export default class Filter{
             e.preventDefault()
             this.loadForm(this)
         })
+
         this.reset.addEventListener( 'click', e => {
-            debugger
             e.preventDefault()
             let url = location.protocol + '//' + location.host + location.pathname;
             this.form.reset()
             this.loadUrl(url)
 
         })
-        this.modalReset.addEventListener( 'click', e => {
-            debugger
-            e.preventDefault()
-            let url = location.protocol + '//' + location.host + location.pathname;
-            this.form.reset()
-            this.loadUrl(url)
+        if (this.modalReset){
+            this.modalReset.addEventListener( 'click', e => {
+                e.preventDefault()
+                let url = location.protocol + '//' + location.host + location.pathname;
+                this.form.reset()
+                this.loadUrl(url)
 
-        })
+            })
+        }
+
     }
 
     async loadForm(){
@@ -86,7 +88,8 @@ export default class Filter{
         })
         if (response.status >= 200 && response.status < 300){
             const data = await response.json()
-            this.flipContent(data.content)
+            //this.flipContent(data.content)
+            this.content.innerHTML = data.content
             this.sorting.innerHTML = data.sorting
             this.pagination.innerHTML = data.pagination
             this.secondModal.innerHTML = data.secondModal

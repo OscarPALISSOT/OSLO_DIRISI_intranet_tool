@@ -14,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,12 +43,12 @@ class PdcController extends AbstractController {
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response{
 
-        //$Data = new SearchDataPdc();
-        //$Data->page =$request->get('page', 12);
-        //$form = $this->createForm(PdcSearchForm::class, $Data);
-        //$form->handleRequest($request);
+        $Data = new SearchDataPdc();
+        $Data->page =$request->get('page', 1);
+        $form = $this->createForm(PdcSearchForm::class, $Data);
+        $form->handleRequest($request);
 
-        $Pdcs = $this->planDeChargeRepository->findAll();
+        $Pdcs = $this->planDeChargeRepository->findPdcSearch($Data);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
@@ -55,18 +56,27 @@ class PdcController extends AbstractController {
 
         }
         $sigles = $this->sigleRepository->findSigles();
-        /*if ($request->isXmlHttpRequest()){
+        if ($request->get('Ajax')){
             return new JsonResponse([
-                'content' => $this->renderView('')
-            ])
-        }*/
-
+                'content' => $this->renderView('gestion/pdc/_content.html.twig', [
+                    'Pdcs' => $Pdcs,
+                    'Statuts' => $this->statutPdcRepository->findAll(),
+                ]),
+                'sorting' => $this->renderView('gestion/pdc/_sorting.html.twig', [
+                    'Pdcs' => $Pdcs,
+                ]),
+                'pagination' => $this->renderView('gestion/pdc/_pagination.html.twig', [
+                    'Pdcs' => $Pdcs,
+                ]),
+                'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
+            ]);
+        }
         return $this->render('gestion/pdc/Pdc.html.twig', [
             'Pdcs' => $Pdcs,
             'Statuts' => $this->statutPdcRepository->findAll(),
             'role' => $role[0],
             'title' => 'Plan de charge',
-            //'form' => $form->createView(),
+            'form' => $form->createView(),
             'sigles' => $sigles,
         ]);
     }
@@ -158,6 +168,9 @@ class PdcController extends AbstractController {
         $Pdc->setNumPdc($PdcName);
         $Pdc->setMontantPdc($montant);
         $Pdc->setIdStatutPdc($statut);
+        $update = new DateTime();
+        $update->format('Y-m-d\H:i:s');
+        $Pdc->setUpdateAt($update);
 
         if ($this->isCsrfTokenValid("EditPdc", $request->get('_token'))) {
             $em = $this->ManagerRegistry->getManager();

@@ -2,9 +2,9 @@
 
 namespace App\form\filters;
 
-use App\Data\SearchDataFeb;
-use App\Entity\PlanDeCharge;
-use App\Repository\FebRepository;
+use App\Data\SearchDataPdc;
+use App\Entity\StatutPdc;
+use App\Repository\PlanDeChargeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,30 +13,31 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FebSearchForm extends AbstractType
+class PdcSearchForm extends AbstractType
 {
 
-    private FebRepository $febRepository;
+    private PlanDeChargeRepository $planDeChargeRepository;
 
-    public function __construct(FebRepository $febRepository)
+    public function __construct(PlanDeChargeRepository $planDeChargeRepository)
     {
-        $this->febRepository = $febRepository;
+        $this->planDeChargeRepository = $planDeChargeRepository;
     }
+
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ( count($this->febRepository->findAll()) > 0){
-            $maxMontant = $this->febRepository->findMaxMontant();
-            $minMontant = $this->febRepository->findMinMontant();
-            $min = $minMontant[0]['montantFeb'];
-            $max = $maxMontant[0]['montantFeb'];
+        if ( count($this->planDeChargeRepository->findAll()) > 0){
+            $maxMontant = $this->planDeChargeRepository->findMaxMontant();
+            $minMontant = $this->planDeChargeRepository->findMinMontant();
+            $min = $minMontant[0]['montantPdc'];
+            $max = $maxMontant[0]['montantPdc'];
         }
         else{
             $min = 0;
             $max = 50000;
         }
         $builder
-            ->add('Feb', TextType::class, [
+            ->add('Pdc', TextType::class, [
                 'label' => false,
                 'required' => false,
                 'empty_data' => '',
@@ -45,10 +46,10 @@ class FebSearchForm extends AbstractType
                 ],
 
             ])
-            ->add('Pdc', EntityType::class, [
+            ->add('StatutPdc', EntityType::class, [
                 'label' => false,
                 'required' => false,
-                'class' => PlanDeCharge::class,
+                'class' => StatutPdc::class,
                 'expanded' => true,
                 'multiple' => true
 
@@ -79,7 +80,7 @@ class FebSearchForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => SearchDataFeb::class,
+            'data_class' => SearchDataPdc::class,
             'method' => 'GET',
             'csrf_protection' => false,
         ]);

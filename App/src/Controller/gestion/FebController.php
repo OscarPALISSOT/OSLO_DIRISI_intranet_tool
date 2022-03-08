@@ -4,7 +4,6 @@ namespace App\Controller\gestion;
 
 use App\Data\SearchDataFeb;
 use App\Entity\Feb;
-use App\Entity\PlanDeCharge;
 use App\form\filters\FebSearchForm;
 use App\Repository\FebRepository;
 use App\Repository\PlanDeChargeRepository;
