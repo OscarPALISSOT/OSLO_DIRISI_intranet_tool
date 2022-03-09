@@ -56,11 +56,12 @@ class SigleRepository extends ServiceEntityRepository
     public function findNatureSigles()
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.intituleSigle = :bnr OR s.intituleSigle =:modip OR s.intituleSigle =:febcom')
+            ->andWhere('s.intituleSigle = :bnr OR s.intituleSigle =:modip OR s.intituleSigle =:febcom OR s.intituleSigle =:mim3')
             ->setParameters([
                 'bnr'=> 'besoinNouveauReseau',
-                'modip' => 'internet_militaire',
-                'febcom' => 'ficheExpressionBesoinCOM'
+                'modip' => 'modifLan',
+                'febcom' => 'ficheExpressionBesoinCOM',
+                'mim3' => 'internet_militaire',
             ])
             ->getQuery()
             ->getResult()
