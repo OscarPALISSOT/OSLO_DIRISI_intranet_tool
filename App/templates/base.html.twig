@@ -10,11 +10,13 @@
         {{ encore_entry_link_tags('multiselect') }}
         {{ encore_entry_link_tags('multiselect') }}
 
-        <div class="app-script">{{ encore_entry_script_tags('App') }} {# import Jquery #}</div>
-        {{ encore_entry_script_tags('App') }} {# import Jquery #}
-        {{ encore_entry_script_tags('bootstrap.bundle.min.js') }} {# import bootstrap javascript#}
+        <div class="app-script">
+            {{ encore_entry_script_tags('App') }} {# import Jquery #}
+            {{ encore_entry_script_tags('bootstrap.bundle.min.js') }} {# import bootstrap javascript#}
+            {{ encore_entry_script_tags('multiselectJS') }}
+        </div>
         {{ encore_entry_script_tags('fontawesome') }} {# import icons #}
-        {{ encore_entry_script_tags('multiselectJS') }}
+
 
 
         {% block stylesheets %}

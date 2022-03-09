@@ -70,10 +70,6 @@
                         <div class="form mb-3">
                             <input type="number" class="form-control" id="montant" name="montant" placeholder="Montant">
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="modip" name="montantInfo" placeholder="name@example.com">
-                            <label for="modip">Info sur le montant</label>
-                        </div>
                         <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]" autocomplete="off">
                             {% for Organisme in Organismes %}
                                 <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
@@ -103,16 +99,7 @@
                                     <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="input-group mb-3 date datepicker">
-                                    <input type="text" class="form-control" placeholder="Date de la demande" aria-label="datepicker" aria-describedby="basic-addon1" name="dateDemande" autocomplete="off"><span class="input-group-addon"></span>
-                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="impact" style="height: 100px"></textarea>
-                            <label for="floatingTextarea2">Impact de non réalisation</label>
+
                         </div>
                         <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>
