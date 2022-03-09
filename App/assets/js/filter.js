@@ -98,9 +98,17 @@ export default class Filter{
         else {
             console.error(response)
         }
+        /*$(".app-script script").each(function(){
+            var oldScript = this.getAttribute("src");
+            $(this).remove();
+            var newScript;
+            newScript = document.createElement('script');
+            newScript.type = 'text/javascript';
+            newScript.src = oldScript;
+            document.getElementsByClassName("app-script")[0].appendChild(newScript);
+        });*/
         this.hideLoader()
     }
-
 
     /**
      * anime les grilles de content avec un effet flip

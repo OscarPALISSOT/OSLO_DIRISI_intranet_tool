@@ -24,10 +24,10 @@ Encore
     .addEntry('bootstrap.bundle.min.js', './assets/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js')
     .addEntry('App', './assets/js/app.js')
     .addEntry('sideNav', './assets/js/sideNav.js')
-    .addEntry('contactJS', './assets/js/pages/contactJS.js')
     .addEntry('datepickerJS', './assets/js/datepicker.js')
     .addEntry('datepickerMIN', './assets/js/bootstrap-datepicker.min.js')
     .addEntry('multiselectJS', './assets/js/multiselect.min.js')
+    .addEntry('contactJS', './assets/js/pages/contactJS.js')
 
     .addStyleEntry('bootstrap', './assets/bootstrap-5.1.3-dist/css/bootstrap.css')
     .addStyleEntry('style', './assets/styles/style.scss')

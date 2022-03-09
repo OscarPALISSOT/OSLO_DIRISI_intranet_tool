@@ -10,6 +10,10 @@ import CrudAjax from './crudAjax.js'
 
 new CrudAjax(document.querySelector('.js-Ajax'))
 
+import CardEntity from './pages/cardEntity.js'
+
+new CardEntity(document.querySelector('.js-Ajax'))
+
 
 $(function(){
     $(".chosen-select").chosen({
