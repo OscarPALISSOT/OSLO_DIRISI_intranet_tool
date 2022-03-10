@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +23,13 @@ class Feb
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idFeb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intitule_feb", type="string", length=255, nullable=false)
+     */
+    private $intituleFeb;
 
     /**
      * @var string
@@ -75,6 +83,9 @@ class Feb
     public function __construct()
     {
         $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
+        $date = new DateTime();
+        $date->format('Y-m-d-H:i:s');
+        $this->setUpdateAt($date);
     }
 
     public function getIdFeb(): ?int
@@ -150,6 +161,18 @@ class Feb
     public function removeIdOrganisme(Organisme $idOrganisme): self
     {
         $this->idOrganisme->removeElement($idOrganisme);
+
+        return $this;
+    }
+
+    public function getIntituleFeb(): ?string
+    {
+        return $this->intituleFeb;
+    }
+
+    public function setIntituleFeb(string $intituleFeb): self
+    {
+        $this->intituleFeb = $intituleFeb;
 
         return $this;
     }

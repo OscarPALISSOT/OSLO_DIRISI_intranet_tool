@@ -79,7 +79,6 @@ class BNRController extends AbstractController {
             return new JsonResponse([
                 'content' => $this->renderView('gestion/bnr/_content.html.twig', [
                     'Bnrs' => $Bnrs,
-                    'Organismes' => $this->organismeRepository->findAllWithQuartier(),
                     'Febs' => $this->febRepository->findAll(),
                     'GrandComptes' => $this->grandsComptesRepository->findAll(),
                     'Quartiers' => $this->quartiersRepository->findAll(),
@@ -125,10 +124,6 @@ class BNRController extends AbstractController {
         $BnrName = $request->request->get('bnr');
         $Objectif = $request->request->get('objectif');
         $montant = $request->request->get('montant');
-        $idOrganismes = $request->request->all('organisme', []);
-        foreach ($idOrganismes as $item){
-            $NewBnr->addIdOrganisme($this->organismeRepository->find($item));
-        }
         $idPrio = $request->request->get('priority');
         $Prio = $this->priorisationRepository->find($idPrio);
         $Date = $request->request->get('date');
@@ -244,10 +239,6 @@ class BNRController extends AbstractController {
             $BnrName = $request->request->get('bnrEdit');
             $Objectif = $request->request->get('objectifEdit');
             $montant = $request->request->get('montantEdit');
-            $idOrganismes = $request->request->all('organismeEdit', []);
-            foreach ($idOrganismes as $item){
-                $Bnr->addIdOrganisme($this->organismeRepository->find($item));
-            }
             $idPrio = $request->request->get('priorityEdit');
             $Prio = $this->priorisationRepository->find($idPrio);
             $Date = $request->request->get('dateEdit');

@@ -24,11 +24,11 @@
             <thead>
             <tr>
                 <th scope="col"><i class="fas fa-check"></i></th>
+                <th scope="col">Intitulé</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Montant</th>
                 <th scope="col">Plan de Charge</th>
-                <th scope="col">Nombre d'affaires</th>
-                <th scope="col">Nature des affaires</th>
+                <th scope="col">Organisme(s)</th>
                 <th scope="col">Modifier</th>
             </tr>
             </thead>
@@ -55,6 +55,10 @@
                 <form id="febFormCreate" action="{{ path ('Admin_Feb_New')}}" method="post" class="js-Ajax-form">
                     <div class="modal-body">
                         <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="Intitule" name="intitule" placeholder="name@example.com">
+                            <label for="Intitule">Intitulé</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="feb" name="feb" placeholder="name@example.com">
                             <label for="feb">Numéro de la FEB</label>
                         </div>
@@ -62,6 +66,11 @@
                             <input type="number" class="form-control" id="montant" name="montant" placeholder="name@example.com">
                             <label for="montant">Montant</label>
                         </div>
+                        <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]" autocomplete="off">
+                            {% for Organisme in Organismes %}
+                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
+                            {% endfor %}
+                        </select>
                         <select class="form-select mb-3" aria-label="Default select example" name="Pdc">
                             <option selected>PDC associé</option>
                             {% for Pdc in Pdcs %}

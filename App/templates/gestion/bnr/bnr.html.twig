@@ -74,11 +74,6 @@
                             <input type="text" class="form-control" id="bnr" name="montantInfo" placeholder="name@example.com">
                             <label for="bnr">Info sur le montant</label>
                         </div>
-                        <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]" autocomplete="off">
-                            {% for Organisme in Organismes %}
-                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.Quartier }}</option>
-                            {% endfor %}
-                        </select>
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="priority" autocomplete="off">

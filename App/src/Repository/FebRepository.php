@@ -63,7 +63,7 @@ class FebRepository extends ServiceEntityRepository
             ->createQueryBuilder('f')
             ->select('f','p')
             ->join('f.idPdc', 'p')
-            ->orderBy('f.updateAt', 'DESC');
+            ->orderBy('f.updateat', 'DESC');
 
 
         if (!empty($data->Feb)){

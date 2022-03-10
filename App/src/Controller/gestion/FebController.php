@@ -6,6 +6,7 @@ use App\Data\SearchDataFeb;
 use App\Entity\Feb;
 use App\form\filters\FebSearchForm;
 use App\Repository\FebRepository;
+use App\Repository\OrganismeRepository;
 use App\Repository\PlanDeChargeRepository;
 use App\Repository\SigleRepository;
 use DateTime;
@@ -24,13 +25,15 @@ class FebController extends AbstractController {
     private SigleRepository $sigleRepository;
     private FebRepository $febRepository;
     private PlanDeChargeRepository $planDeChargeRepository;
+    private OrganismeRepository $organismeRepository;
 
-    public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, FebRepository $febRepository, PlanDeChargeRepository $planDeChargeRepository)
+    public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, FebRepository $febRepository, PlanDeChargeRepository $planDeChargeRepository, OrganismeRepository $organismeRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->sigleRepository = $sigleRepository;
         $this->febRepository = $febRepository;
         $this->planDeChargeRepository = $planDeChargeRepository;
+        $this->organismeRepository = $organismeRepository;
     }
 
 
@@ -61,6 +64,7 @@ class FebController extends AbstractController {
                 'content' => $this->renderView('gestion/feb/_content.html.twig', [
                     'Febs' => $Febs,
                     'Pdcs' => $Pdcs,
+                    'Organismes' => $this->organismeRepository->findAllWithQuartier(),
                 ]),
                 'sorting' => $this->renderView('gestion/feb/_sorting.html.twig', [
                     'Febs' => $Febs,
@@ -74,6 +78,7 @@ class FebController extends AbstractController {
         return $this->render('gestion/feb/Feb.html.twig', [
             'Febs' => $Febs,
             'Pdcs' => $Pdcs,
+            'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'role' => $role[0],
             'title' => "Fiche d'expression de besoin",
             'form' => $form->createView(),
@@ -91,9 +96,15 @@ class FebController extends AbstractController {
     public function newFeb(Request $request) : Response{
         $NewFeb = new Feb();
         $FebName = $request->request->get('feb');
+        $intitule = $request->request->get('intitule');
         $montant = $request->request->get('montant');
         $idPdc = $request->request->get('Pdc');
         $Pdc = $this->planDeChargeRepository->find($idPdc);
+        $idOrganismes = $request->request->all('organisme', []);
+        foreach ($idOrganismes as $item){
+            $NewFeb->addIdOrganisme($this->organismeRepository->find($item));
+        }
+        $NewFeb->setIntituleFeb($intitule);
         $NewFeb->setNumFeb($FebName);
         $NewFeb->setMontantFeb($montant);
         $NewFeb->setIdPdc($Pdc);
@@ -162,9 +173,15 @@ class FebController extends AbstractController {
         $id = $request->request->get('idEdit');
         $Feb = $this->febRepository->find($id);
         $FebName = $request->request->get('febEdit');
+        $intitule = $request->request->get('intituleEdit');
         $montant = $request->request->get('montantEdit');
         $idPdc = $request->request->get('PdcEdit');
         $Pdc = $this->planDeChargeRepository->find($idPdc);
+        $idOrganismes = $request->request->all('organismeEdit', []);
+        foreach ($idOrganismes as $item){
+            $Feb->addIdOrganisme($this->organismeRepository->find($item));
+        }
+        $Feb->setIntituleFeb($intitule);
         $Feb->setNumFeb($FebName);
         $Feb->setMontantFeb($montant);
         $Feb->setIdPdc($Pdc);
