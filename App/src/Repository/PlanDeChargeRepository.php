@@ -64,7 +64,7 @@ class PlanDeChargeRepository extends ServiceEntityRepository
             ->createQueryBuilder('p')
             ->select('p','s')
             ->join('p.idStatutPdc', 's')
-            ->orderBy('p.updateAt', 'DESC');
+            ->orderBy('p.updateat', 'DESC');
 
 
         if (!empty($data->Pdc)){

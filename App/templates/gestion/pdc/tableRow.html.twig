@@ -5,9 +5,11 @@
             <input form="pdcFormDelete" class="form-check-input checkboxPdc" name="idChecked{{ Pdc.idPdc }}" type="checkbox" value="{{ Pdc.idPdc }}" id="checkbox{{ Pdc.idPdc }}">
         </div>
     </th>
+    <td>{{ Pdc.intitulePdc }}</td>
     <td>{{ Pdc.NumPdc }}</td>
     <td>{{ Pdc.montantPdc|number_format(0, '.', ' ') }} €</td>
     <td>{{ Pdc.IdStatutPdc.statutPdc }}</td>
+    <td>{{ Pdc.IdEtatPdc.etatPdc }}</td>
     <td> nb feb</td>
     <td>
         <!-- Button trigger modal edit -->
@@ -26,6 +28,10 @@
                     <form id="pdcFormEdit{{ Pdc.idPdc }}" class="pdcFormEdit js-Ajax-form" action="{{ path ('Admin_Pdc_Edit', {id: Pdc.idPdc })}}" method="post">
                         <div class="modal-body">
                             <div class="form-floating mb-3">
+                                <input value="{{ Pdc.intitulePdc }}" type="text" class="form-control" id="Intitule" name="intituleEdit" placeholder="name@example.com">
+                                <label for="Intitule">Intitulé</label>
+                            </div>
+                            <div class="form-floating mb-3">
                                 <input value="{{ Pdc.NumPdc }}" type="text" class="form-control" id="bnr" name="pdcEdit" placeholder="name@example.com">
                                 <label for="bnr">Numéro de la ligne de PDC</label>
                             </div>
@@ -37,6 +43,13 @@
                                 <option selected value="{{ Pdc.IdStatutPdc.IdStatutPdc }}">{{ Pdc.IdStatutPdc.statutPdc }}</option>
                                 {% for Statut in Statuts %}
                                     <option value="{{ Statut.idStatutPdc }}">{{ Statut.StatutPdc }}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="form-select mb-3" aria-label="Default select example" name="etatEdit">
+                                <option selected>État de la ligne de PDC</option>
+                                <option selected value="{{ Pdc.idEtatPdc.idEtatPdc }}">{{ Pdc.idEtatPdc.EtatPdc }}</option>
+                                {% for Etat in Etats %}
+                                    <option value="{{ Etat.idEtatPdc }}">{{ Etat.EtatPdc }}</option>
                                 {% endfor %}
                             </select>
                         </div>

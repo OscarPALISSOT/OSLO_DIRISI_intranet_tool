@@ -6,6 +6,7 @@ use App\Data\SearchDataPdc;
 use App\Entity\Affaire;
 use App\Entity\PlanDeCharge;
 use App\form\filters\PdcSearchForm;
+use App\Repository\EtatPdcRepository;
 use App\Repository\PlanDeChargeRepository;
 use App\Repository\SigleRepository;
 use App\Repository\StatutPdcRepository;
@@ -25,13 +26,15 @@ class PdcController extends AbstractController {
     private SigleRepository $sigleRepository;
     private StatutPdcRepository $statutPdcRepository;
     private PlanDeChargeRepository $planDeChargeRepository;
+    private EtatPdcRepository $etatPdcRepository;
 
-    public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, StatutPdcRepository $statutPdcRepository, PlanDeChargeRepository $planDeChargeRepository)
+    public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, StatutPdcRepository $statutPdcRepository, PlanDeChargeRepository $planDeChargeRepository, EtatPdcRepository $etatPdcRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->sigleRepository = $sigleRepository;
         $this->statutPdcRepository = $statutPdcRepository;
         $this->planDeChargeRepository = $planDeChargeRepository;
+        $this->etatPdcRepository = $etatPdcRepository;
     }
 
 
@@ -61,6 +64,7 @@ class PdcController extends AbstractController {
                 'content' => $this->renderView('gestion/pdc/_content.html.twig', [
                     'Pdcs' => $Pdcs,
                     'Statuts' => $this->statutPdcRepository->findAll(),
+                    'Etats' => $this->etatPdcRepository->findAll(),
                 ]),
                 'sorting' => $this->renderView('gestion/pdc/_sorting.html.twig', [
                     'Pdcs' => $Pdcs,
@@ -74,6 +78,7 @@ class PdcController extends AbstractController {
         return $this->render('gestion/pdc/Pdc.html.twig', [
             'Pdcs' => $Pdcs,
             'Statuts' => $this->statutPdcRepository->findAll(),
+            'Etats' => $this->etatPdcRepository->findAll(),
             'role' => $role[0],
             'title' => 'Plan de charge',
             'form' => $form->createView(),
@@ -90,10 +95,15 @@ class PdcController extends AbstractController {
      */
     public function newPdc(Request $request) : Response{
         $NewPdc = new PlanDeCharge();
+        $intitule = $request->request->get('intitule');
         $PdcName = $request->request->get('pdc');
         $montant = $request->request->get('montant');
         $idStatut = $request->request->get('statut');
         $statut = $this->statutPdcRepository->find($idStatut);
+        $idEtat = $request->request->get('etat');
+        $etat = $this->etatPdcRepository->find($idEtat);
+        $NewPdc->setIdEtatPdc($etat);
+        $NewPdc->setIntitulePdc($intitule);
         $NewPdc->setNumPdc($PdcName);
         $NewPdc->setMontantPdc($montant);
         $NewPdc->setIdStatutPdc($statut);
@@ -161,13 +171,18 @@ class PdcController extends AbstractController {
     public function EditPdc(Request $request) : Response{
         $id = $request->request->get('idEdit');
         $Pdc = $this->planDeChargeRepository->find($id);
+        $intitule = $request->request->get('intituleEdit');
         $PdcName = $request->request->get('pdcEdit');
         $montant = $request->request->get('montantEdit');
         $idStatut = $request->request->get('statutEdit');
         $statut = $this->statutPdcRepository->find($idStatut);
+        $idEtat = $request->request->get('etatEdit');
+        $etat = $this->etatPdcRepository->find($idEtat);
+        $Pdc->setIntitulePdc($intitule);
         $Pdc->setNumPdc($PdcName);
         $Pdc->setMontantPdc($montant);
         $Pdc->setIdStatutPdc($statut);
+        $Pdc->setIdEtatPdc($etat);
         $update = new DateTime();
         $update->format('Y-m-d\H:i:s');
         $Pdc->setUpdateAt($update);

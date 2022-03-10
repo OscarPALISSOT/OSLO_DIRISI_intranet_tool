@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,13 @@ class PlanDeCharge
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idPdc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intitule_pdc", type="string", length=255, nullable=false)
+     */
+    private $intitulePdc;
 
     /**
      * @var string
@@ -61,6 +69,13 @@ class PlanDeCharge
      * })
      */
     private $idEtatPdc;
+
+    public function __construct()
+    {
+        $date = new DateTime();
+        $date->format('Y-m-d-H:i:s');
+        $this->setUpdateAt($date);
+    }
 
     public function getIdPdc(): ?int
     {
@@ -123,6 +138,18 @@ class PlanDeCharge
     public function setIdEtatPdc(?EtatPdc $idEtatPdc): self
     {
         $this->idEtatPdc = $idEtatPdc;
+
+        return $this;
+    }
+
+    public function getIntitulePdc(): ?string
+    {
+        return $this->intitulePdc;
+    }
+
+    public function setIntitulePdc(string $intitulePdc): self
+    {
+        $this->intitulePdc = $intitulePdc;
 
         return $this;
     }

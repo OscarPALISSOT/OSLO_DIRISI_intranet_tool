@@ -24,9 +24,11 @@
             <thead>
             <tr>
                 <th scope="col"><i class="fas fa-check"></i></th>
+                <th scope="col">Intitulé</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Montant</th>
                 <th scope="col">Statut de la ligne</th>
+                <th scope="col">État de la ligne</th>
                 <th scope="col">Nombre de FEB</th>
                 <th scope="col">Modifier</th>
             </tr>
@@ -54,6 +56,10 @@
                 <form id="pdcFormCreate" action="{{ path ('Admin_Pdc_New')}}" method="post" class="js-Ajax-form">
                     <div class="modal-body">
                         <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="Intitule" name="intitule" placeholder="name@example.com">
+                            <label for="Intitule">Intitulé</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="pdc" name="pdc" placeholder="name@example.com">
                             <label for="pdc">Numéro de la ligne de PDC</label>
                         </div>
@@ -65,6 +71,12 @@
                             <option selected>Statut de la ligne de PDC</option>
                             {% for Statut in Statuts %}
                                 <option value="{{ Statut.idStatutPdc }}">{{ Statut.StatutPdc }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select mb-3" aria-label="Default select example" name="etat">
+                            <option selected>État de la ligne de PDC</option>
+                            {% for Etat in Etats %}
+                                <option value="{{ Etat.idEtatPdc }}">{{ Etat.EtatPdc }}</option>
                             {% endfor %}
                         </select>
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreatePdc')}}>
