@@ -2,9 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,7 +31,7 @@ class Affaire
     /**
      * @var string
      *
-     * @ORM\Column(name="objectif_Affaire", type="text", length=0, nullable=false)
+     * @ORM\Column(name="objectif_Affaire", type="string", length=50, nullable=false)
      */
     private $objectifAffaire;
 
@@ -74,26 +71,6 @@ class Affaire
     private $updateAt;
 
     /**
-     * @var \Feb
-     *
-     * @ORM\ManyToOne(targetEntity="Feb")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_feb", referencedColumnName="id_feb")
-     * })
-     */
-    private $idFeb;
-
-    /**
-     * @var \NatureAffaire
-     *
-     * @ORM\ManyToOne(targetEntity="NatureAffaire")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_nature_Affaire", referencedColumnName="id_nature_Affaire")
-     * })
-     */
-    private $idNatureAffaire;
-
-    /**
      * @var \GrandsComptes
      *
      * @ORM\ManyToOne(targetEntity="GrandsComptes")
@@ -114,27 +91,40 @@ class Affaire
     private $idPriorisation;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Feb
      *
-     * @ORM\ManyToMany(targetEntity="Organisme", mappedBy="idAffaire")
+     * @ORM\ManyToOne(targetEntity="Feb")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_feb", referencedColumnName="id_feb")
+     * })
      */
-    private $idOrganisme;
+    private $idFeb;
 
     /**
-     * Constructor
-     * @throws \Exception
+     * @var \NatureAffaire
+     *
+     * @ORM\ManyToOne(targetEntity="NatureAffaire")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_nature_Affaire", referencedColumnName="id_nature_Affaire")
+     * })
      */
-    public function __construct()
-    {
-        $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
-        $date = new DateTime();
-        $date->format('Y-m-d-H:i:s');
-        $this->setUpdateAt($date);
-    }
+    private $idNatureAffaire;
 
     public function getIdAffaire(): ?int
     {
         return $this->idAffaire;
+    }
+
+    public function getNomAffaire(): ?string
+    {
+        return $this->nomAffaire;
+    }
+
+    public function setNomAffaire(string $nomAffaire): self
+    {
+        $this->nomAffaire = $nomAffaire;
+
+        return $this;
     }
 
     public function getObjectifAffaire(): ?string
@@ -209,30 +199,6 @@ class Affaire
         return $this;
     }
 
-    public function getIdFeb(): ?Feb
-    {
-        return $this->idFeb;
-    }
-
-    public function setIdFeb(?Feb $idFeb): self
-    {
-        $this->idFeb = $idFeb;
-
-        return $this;
-    }
-
-    public function getIdNatureAffaire(): ?NatureAffaire
-    {
-        return $this->idNatureAffaire;
-    }
-
-    public function setIdNatureAffaire(?NatureAffaire $idNatureAffaire): self
-    {
-        $this->idNatureAffaire = $idNatureAffaire;
-
-        return $this;
-    }
-
     public function getIdGrandsComptes(): ?GrandsComptes
     {
         return $this->idGrandsComptes;
@@ -257,47 +223,29 @@ class Affaire
         return $this;
     }
 
-    /**
-     * @return Collection|Organisme[]
-     */
-    public function getIdOrganisme(): Collection
+    public function getIdFeb(): ?Feb
     {
-        return $this->idOrganisme;
+        return $this->idFeb;
     }
 
-    public function addIdOrganisme(Organisme $idOrganisme): self
+    public function setIdFeb(?Feb $idFeb): self
     {
-        if (!$this->idOrganisme->contains($idOrganisme)) {
-            $this->idOrganisme[] = $idOrganisme;
-            $idOrganisme->addIdAffaire($this);
-        }
+        $this->idFeb = $idFeb;
 
         return $this;
     }
 
-    public function removeIdOrganisme(Organisme $idOrganisme): self
+    public function getIdNatureAffaire(): ?NatureAffaire
     {
-        if ($this->idOrganisme->removeElement($idOrganisme)) {
-            $idOrganisme->removeIdAffaire($this);
-        }
+        return $this->idNatureAffaire;
+    }
+
+    public function setIdNatureAffaire(?NatureAffaire $idNatureAffaire): self
+    {
+        $this->idNatureAffaire = $idNatureAffaire;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNomAffaire(): string
-    {
-        return $this->nomAffaire;
-    }
-
-    /**
-     * @param string $nomAffaire
-     */
-    public function setNomAffaire(string $nomAffaire): void
-    {
-        $this->nomAffaire = $nomAffaire;
-    }
 
 }

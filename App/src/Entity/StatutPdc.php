@@ -45,9 +45,5 @@ class StatutPdc
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getStatutPdc();
-    }
 
 }

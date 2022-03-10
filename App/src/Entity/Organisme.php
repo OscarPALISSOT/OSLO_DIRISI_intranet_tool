@@ -43,24 +43,16 @@ class Organisme
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Affaire", inversedBy="idOrganisme")
-     * @ORM\JoinTable(name="beneficier",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_organisme", referencedColumnName="id_organisme")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_Affaire", referencedColumnName="id_Affaire")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Feb", mappedBy="idOrganisme")
      */
-    private $idAffaire;
+    private $idFeb;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idAffaire = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idFeb = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getIdOrganisme(): ?int
@@ -93,32 +85,30 @@ class Organisme
     }
 
     /**
-     * @return Collection|Affaire[]
+     * @return Collection<int, Feb>
      */
-    public function getIdAffaire(): Collection
+    public function getIdFeb(): Collection
     {
-        return $this->idAffaire;
+        return $this->idFeb;
     }
 
-    public function addIdAffaire(Affaire $idAffaire): self
+    public function addIdFeb(Feb $idFeb): self
     {
-        if (!$this->idAffaire->contains($idAffaire)) {
-            $this->idAffaire[] = $idAffaire;
+        if (!$this->idFeb->contains($idFeb)) {
+            $this->idFeb[] = $idFeb;
+            $idFeb->addIdOrganisme($this);
         }
 
         return $this;
     }
 
-    public function removeIdAffaire(Affaire $idAffaire): self
+    public function removeIdFeb(Feb $idFeb): self
     {
-        $this->idAffaire->removeElement($idAffaire);
+        if ($this->idFeb->removeElement($idFeb)) {
+            $idFeb->removeIdOrganisme($this);
+        }
 
         return $this;
     }
 
-
-    public function __toString(): string
-    {
-        return $this->getOrganisme();
-    }
 }

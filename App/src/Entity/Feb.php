@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,9 +40,9 @@ class Feb
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="update_at", type="date", nullable=false)
+     * @ORM\Column(name="updateAt", type="date", nullable=false)
      */
-    private $updateAt;
+    private $updateat;
 
     /**
      * @var \PlanDeCharge
@@ -53,11 +54,27 @@ class Feb
      */
     private $idPdc;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Organisme", inversedBy="idFeb")
+     * @ORM\JoinTable(name="beneficier",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="id_feb", referencedColumnName="id_feb")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="id_organisme", referencedColumnName="id_organisme")
+     *   }
+     * )
+     */
+    private $idOrganisme;
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $date = new DateTime();
-        $date->format('Y-m-d-H:i:s');
-        $this->setUpdateAt($date);
+        $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getIdFeb(): ?int
@@ -89,6 +106,18 @@ class Feb
         return $this;
     }
 
+    public function getUpdateat(): ?\DateTimeInterface
+    {
+        return $this->updateat;
+    }
+
+    public function setUpdateat(\DateTimeInterface $updateat): self
+    {
+        $this->updateat = $updateat;
+
+        return $this;
+    }
+
     public function getIdPdc(): ?PlanDeCharge
     {
         return $this->idPdc;
@@ -101,26 +130,28 @@ class Feb
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getNumFeb();
-    }
-
     /**
-     * @return \DateTime
+     * @return Collection<int, Organisme>
      */
-    public function getUpdateAt(): \DateTime
+    public function getIdOrganisme(): Collection
     {
-        return $this->updateAt;
+        return $this->idOrganisme;
     }
 
-    /**
-     * @param \DateTime $updateAt
-     */
-    public function setUpdateAt(\DateTime $updateAt): void
+    public function addIdOrganisme(Organisme $idOrganisme): self
     {
-        $this->updateAt = $updateAt;
+        if (!$this->idOrganisme->contains($idOrganisme)) {
+            $this->idOrganisme[] = $idOrganisme;
+        }
+
+        return $this;
     }
 
+    public function removeIdOrganisme(Organisme $idOrganisme): self
+    {
+        $this->idOrganisme->removeElement($idOrganisme);
+
+        return $this;
+    }
 
 }

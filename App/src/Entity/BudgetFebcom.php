@@ -38,14 +38,14 @@ class BudgetFebcom
     /**
      * @var int
      *
-     * @ORM\Column(name="Premier_versement", type="integer", nullable=false)
+     * @ORM\Column(name="1er_versement", type="integer", nullable=false)
      */
     private $premierVersement;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="Second_versement", type="integer", nullable=false)
+     * @ORM\Column(name="2eme_versement", type="integer", nullable=false)
      */
     private $secondVersement;
 

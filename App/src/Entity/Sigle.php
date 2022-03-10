@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Sigle
  *
  * @ORM\Table(name="sigle")
- * @ORM\Entity(repositoryClass="App\Repository\RfzRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SigleRepository")
  */
 class Sigle
 {
@@ -24,20 +24,32 @@ class Sigle
     /**
      * @var string
      *
-     * @ORM\Column(name="sigle", type="string", length=50, nullable=false)
-     */
-    private $sigle;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="intitule_sigle", type="string", length=50, nullable=false)
      */
     private $intituleSigle;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sigle", type="string", length=50, nullable=false)
+     */
+    private $sigle;
+
     public function getIdSigle(): ?int
     {
         return $this->idSigle;
+    }
+
+    public function getIntituleSigle(): ?string
+    {
+        return $this->intituleSigle;
+    }
+
+    public function setIntituleSigle(string $intituleSigle): self
+    {
+        $this->intituleSigle = $intituleSigle;
+
+        return $this;
     }
 
     public function getSigle(): ?string
@@ -50,30 +62,6 @@ class Sigle
         $this->sigle = $sigle;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIntituleSigle(): string
-    {
-        return $this->intituleSigle;
-    }
-
-    /**
-     * @param string $intituleSigle
-     */
-    public function setIntituleSigle(string $intituleSigle): void
-    {
-        $this->intituleSigle = $intituleSigle;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->getSigle();
     }
 
 

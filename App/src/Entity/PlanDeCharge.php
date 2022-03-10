@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,9 +38,9 @@ class PlanDeCharge
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="update_at", type="date", nullable=false)
+     * @ORM\Column(name="updateAt", type="date", nullable=false)
      */
-    private $updateAt;
+    private $updateat;
 
     /**
      * @var \StatutPdc
@@ -52,13 +51,6 @@ class PlanDeCharge
      * })
      */
     private $idStatutPdc;
-
-    public function __construct()
-    {
-        $date = new DateTime();
-        $date->format('Y-m-d-H:i:s');
-        $this->setUpdateAt($date);
-    }
 
     public function getIdPdc(): ?int
     {
@@ -89,6 +81,18 @@ class PlanDeCharge
         return $this;
     }
 
+    public function getUpdateat(): ?\DateTimeInterface
+    {
+        return $this->updateat;
+    }
+
+    public function setUpdateat(\DateTimeInterface $updateat): self
+    {
+        $this->updateat = $updateat;
+
+        return $this;
+    }
+
     public function getIdStatutPdc(): ?StatutPdc
     {
         return $this->idStatutPdc;
@@ -101,25 +105,5 @@ class PlanDeCharge
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getNumPdc();
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdateAt(): \DateTime
-    {
-        return $this->updateAt;
-    }
-
-    /**
-     * @param \DateTime $updateAt
-     */
-    public function setUpdateAt(\DateTime $updateAt): void
-    {
-        $this->updateAt = $updateAt;
-    }
 
 }

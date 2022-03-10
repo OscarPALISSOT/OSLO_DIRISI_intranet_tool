@@ -47,8 +47,9 @@ CREATE TABLE Contact(
 #------------------------------------------------------------
 
 CREATE TABLE Sigle(
-        id_sigle Int  Auto_increment  NOT NULL ,
-        sigle    Varchar (50) NOT NULL
+        id_sigle       Int  Auto_increment  NOT NULL ,
+        intitule_sigle Varchar (50) NOT NULL ,
+        sigle          Varchar (50) NOT NULL
 	,CONSTRAINT Sigle_PK PRIMARY KEY (id_sigle)
 )ENGINE=InnoDB;
 
@@ -94,6 +95,7 @@ CREATE TABLE Plan_de_Charge(
         id_pdc        Int  Auto_increment  NOT NULL ,
         num_pdc       Varchar (50) NOT NULL ,
         montant_pdc   Int NOT NULL ,
+        updateAt      Date NOT NULL ,
         id_statut_pdc Int NOT NULL
 	,CONSTRAINT Plan_de_Charge_PK PRIMARY KEY (id_pdc)
 
@@ -109,8 +111,8 @@ CREATE TABLE Budget_FebCOm(
         id_budget_FebCom        Int  Auto_increment  NOT NULL ,
         annee_FebCom            Varchar (50) NOT NULL ,
         enveloppe               Int NOT NULL ,
-        Premier_versement       Int NOT NULL ,
-        Second_versement        Int NOT NULL ,
+        1er_versement           Int NOT NULL ,
+        2eme_versement          Int NOT NULL ,
         FebCom_consomme         Int NOT NULL ,
         reliquat_1er_versement  Int NOT NULL ,
         reliquat_2eme_versement Int NOT NULL ,
@@ -284,6 +286,7 @@ CREATE TABLE Feb(
         id_feb      Int  Auto_increment  NOT NULL ,
         num_feb     Varchar (50) NOT NULL ,
         montant_feb Int NOT NULL ,
+        updateAt    Date NOT NULL ,
         id_pdc      Int NOT NULL
 	,CONSTRAINT Feb_PK PRIMARY KEY (id_feb)
 
@@ -308,6 +311,7 @@ CREATE TABLE Nature_Affaire(
 
 CREATE TABLE Affaire(
         id_Affaire        Int  Auto_increment  NOT NULL ,
+        nom_Affaire       Varchar (255) NOT NULL ,
         objectif_Affaire  Varchar (50) NOT NULL ,
         montant_Affaire   Int NOT NULL ,
         echeance_Affaire  Date NOT NULL ,
@@ -317,7 +321,7 @@ CREATE TABLE Affaire(
         id_priorisation   Int NOT NULL ,
         id_Grands_Comptes Int NOT NULL ,
         id_nature_Affaire Int NOT NULL ,
-        id_feb            Int NOT NULL
+        id_feb            Int
 	,CONSTRAINT Affaire_PK PRIMARY KEY (id_Affaire)
 
 	,CONSTRAINT Affaire_Priorisation_FK FOREIGN KEY (id_priorisation) REFERENCES Priorisation(id_priorisation)
@@ -369,11 +373,11 @@ CREATE TABLE info_Bnr(
 #------------------------------------------------------------
 
 CREATE TABLE beneficier(
-        id_organisme Int NOT NULL ,
-        id_Affaire   Int NOT NULL
-	,CONSTRAINT beneficier_PK PRIMARY KEY (id_organisme,id_Affaire)
+        id_feb       Int NOT NULL ,
+        id_organisme Int NOT NULL
+	,CONSTRAINT beneficier_PK PRIMARY KEY (id_feb,id_organisme)
 
-	,CONSTRAINT beneficier_Organisme_FK FOREIGN KEY (id_organisme) REFERENCES Organisme(id_organisme)
-	,CONSTRAINT beneficier_Affaire0_FK FOREIGN KEY (id_Affaire) REFERENCES Affaire(id_Affaire)
+	,CONSTRAINT beneficier_Feb_FK FOREIGN KEY (id_feb) REFERENCES Feb(id_feb)
+	,CONSTRAINT beneficier_Organisme0_FK FOREIGN KEY (id_organisme) REFERENCES Organisme(id_organisme)
 )ENGINE=InnoDB;
 

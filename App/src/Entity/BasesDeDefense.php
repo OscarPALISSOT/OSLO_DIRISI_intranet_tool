@@ -29,16 +29,6 @@ class BasesDeDefense
     private $baseDefense;
 
     /**
-     * @var \BudgetFebcom
-     *
-     * @ORM\ManyToOne(targetEntity="BudgetFebcom")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_budget_FebCom", referencedColumnName="id_budget_FebCom")
-     * })
-     */
-    private $idBudgetFebcom;
-
-    /**
      * @var \Rfz
      *
      * @ORM\ManyToOne(targetEntity="Rfz")
@@ -47,6 +37,16 @@ class BasesDeDefense
      * })
      */
     private $idRfz;
+
+    /**
+     * @var \BudgetFebcom
+     *
+     * @ORM\ManyToOne(targetEntity="BudgetFebcom")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_budget_FebCom", referencedColumnName="id_budget_FebCom")
+     * })
+     */
+    private $idBudgetFebcom;
 
     public function getIdBaseDefense(): ?int
     {
@@ -65,18 +65,6 @@ class BasesDeDefense
         return $this;
     }
 
-    public function getIdBudgetFebcom(): ?BudgetFebcom
-    {
-        return $this->idBudgetFebcom;
-    }
-
-    public function setIdBudgetFebcom(?BudgetFebcom $idBudgetFebcom): self
-    {
-        $this->idBudgetFebcom = $idBudgetFebcom;
-
-        return $this;
-    }
-
     public function getIdRfz(): ?Rfz
     {
         return $this->idRfz;
@@ -85,6 +73,18 @@ class BasesDeDefense
     public function setIdRfz(?Rfz $idRfz): self
     {
         $this->idRfz = $idRfz;
+
+        return $this;
+    }
+
+    public function getIdBudgetFebcom(): ?BudgetFebcom
+    {
+        return $this->idBudgetFebcom;
+    }
+
+    public function setIdBudgetFebcom(?BudgetFebcom $idBudgetFebcom): self
+    {
+        $this->idBudgetFebcom = $idBudgetFebcom;
 
         return $this;
     }
