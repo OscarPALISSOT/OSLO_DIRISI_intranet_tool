@@ -52,6 +52,16 @@ class PlanDeCharge
      */
     private $idStatutPdc;
 
+    /**
+     * @var \EtatPdc
+     *
+     * @ORM\ManyToOne(targetEntity="EtatPdc")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_etat_pdc", referencedColumnName="id_etat_pdc")
+     * })
+     */
+    private $idEtatPdc;
+
     public function getIdPdc(): ?int
     {
         return $this->idPdc;
@@ -101,6 +111,18 @@ class PlanDeCharge
     public function setIdStatutPdc(?StatutPdc $idStatutPdc): self
     {
         $this->idStatutPdc = $idStatutPdc;
+
+        return $this;
+    }
+
+    public function getIdEtatPdc(): ?EtatPdc
+    {
+        return $this->idEtatPdc;
+    }
+
+    public function setIdEtatPdc(?EtatPdc $idEtatPdc): self
+    {
+        $this->idEtatPdc = $idEtatPdc;
 
         return $this;
     }

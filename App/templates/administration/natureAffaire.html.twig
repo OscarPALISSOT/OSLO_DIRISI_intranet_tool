@@ -49,6 +49,18 @@
                     <td>
                         {% if  natureAffaire.natureAffaire == 'RDIP' %}
                             RDIP
+                        {% elseif  natureAffaire.natureAffaire == 'SECPRO' %}
+                            SECPRO
+                        {% elseif  natureAffaire.natureAffaire == 'Antennes - Sémaphores' %}
+                            Antennes - Sémaphores
+                        {% elseif  natureAffaire.natureAffaire == 'Faire - faire' %}
+                            Faire - faire
+                        {% elseif  natureAffaire.natureAffaire == 'RAT' %}
+                            RAT
+                        {% elseif  natureAffaire.natureAffaire == 'Lignes urgences' %}
+                            Lignes urgences
+                        {% elseif  natureAffaire.natureAffaire == 'Lignes réseaux CD' %}
+                            Lignes réseaux CD
                         {% else %}
                             {{ Sigles[natureAffaire.natureAffaire] }}
                         {% endif %}
@@ -80,6 +92,12 @@
                                     <option value="{{ SigleNature.intituleSigle }}">{{ SigleNature.Sigle }}</option>
                                 {% endfor %}
                                 <option value="RDIP">RDIP</option>
+                                <option value="SECPRO">SECPRO</option>
+                                <option value="Antennes - Sémaphores">Antennes - Sémaphores</option>
+                                <option value="Faire - faire">Faire - faire</option>
+                                <option value="RAT">RAT</option>
+                                <option value="Lignes urgences">Lignes urgences</option>
+                                <option value="Lignes réseaux CD">Lignes réseaux CD</option>
                             </select>
                             <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateNatureAffaire')}}>
                         </div>

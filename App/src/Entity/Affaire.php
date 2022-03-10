@@ -52,13 +52,6 @@ class Affaire
     /**
      * @var string
      *
-     * @ORM\Column(name="etat_Affaire", type="string", length=50, nullable=false)
-     */
-    private $etatAffaire;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="commentaire", type="text", length=0, nullable=false)
      */
     private $commentaire;
@@ -159,18 +152,6 @@ class Affaire
     public function setEcheanceAffaire(\DateTimeInterface $echeanceAffaire): self
     {
         $this->echeanceAffaire = $echeanceAffaire;
-
-        return $this;
-    }
-
-    public function getEtatAffaire(): ?string
-    {
-        return $this->etatAffaire;
-    }
-
-    public function setEtatAffaire(string $etatAffaire): self
-    {
-        $this->etatAffaire = $etatAffaire;
 
         return $this;
     }
