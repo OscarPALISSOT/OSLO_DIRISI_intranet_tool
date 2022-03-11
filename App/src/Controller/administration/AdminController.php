@@ -4,9 +4,12 @@ namespace App\Controller\administration;
 
 use App\Entity\BasesDeDefense;
 use App\Entity\Cirisi;
+use App\Entity\GrandsComptes;
 use App\Entity\Organisme;
+use App\Entity\Priorisation;
 use App\Entity\Quartiers;
 use App\Entity\Rfz;
+use App\Entity\Sigle;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactRepository;
@@ -164,6 +167,57 @@ class AdminController extends AbstractController {
                 ;
                 $em->persist($organisme);
                 $em->flush();
+            }
+
+            $jsonData = array(
+                'message' => "Importation terminée",
+            );
+        }
+
+        return $this->json($jsonData, 200);
+    }
+
+    /**
+     * @Route ("/Admin/ImportInfo", name="importInfo")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function importInfo(Request $request) : JsonResponse
+    {
+        $file = $request->files->get('file', 'r');
+
+        if ($file == null){
+            $jsonData = array(
+                'message' => "Erreur, veuillez renseignez un fichier.",
+            );
+        }
+        else{
+            $em = $this->doctrine->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+            foreach ( $result as $row){
+
+                if ($row['sigle'] != ''){
+                    $sigle = (new Sigle())
+                        ->setSigle($row['sigle'])
+                        ->setIntituleSigle($row['intituleSigle'])
+                    ;
+                }
+
+                if ($row['grandComptes'] != ''){
+                    $grandCompte = (new GrandsComptes())
+                        ->setGrandsComptes($row['grandComptes'])
+                    ;
+                }
+
+                if ($row['priorisation'] != ''){
+                    $prio = (new Priorisation())
+                        ->setPriorisation($row['priorisation'])
+                    ;
+                }
+
             }
 
             $jsonData = array(
