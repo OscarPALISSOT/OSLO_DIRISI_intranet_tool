@@ -81,8 +81,18 @@ class AdminContactController extends AbstractController
 
             foreach ( $result as $row){
 
+                $contact = (new Contact())
+                    ->setIntituleContact($row['Intitule'])
+                    ->setEmailContact($row['Email'])
+                    ->setNomContact($row['Nom'])
+                    ->setPrenomContact($row['Prenom'])
+                    ->setTelContact($row['TPH'])
+                ;
+                $em->persist($contact);
+                $em->flush();
+
                 if ($row['Cirisi'] != ''){
-                    $contact = (new ContactCirisi())
+                    $contactCirisi = (new ContactCirisi())
                         ->setIntituleContact($row['Intitule'])
                         ->setEmailContact($row['Email'])
                         ->setNomContact($row['Nom'])
@@ -93,11 +103,14 @@ class AdminContactController extends AbstractController
                                 'cirisi' => $row['Cirisi']
                             ])
                         )
+                        ->setIdContact($contact);
                     ;
+                    $em->persist($contactCirisi);
+                    $em->flush();
                 }
 
                 if ($row['Bdd'] != ''){
-                    $contact = (new Contactbdd())
+                    $contactBdd = (new Contactbdd())
                         ->setIntituleContact($row['Intitule'])
                         ->setEmailContact($row['Email'])
                         ->setNomContact($row['Nom'])
@@ -105,20 +118,13 @@ class AdminContactController extends AbstractController
                         ->setTelContact($row['TPH'])
                         ->setIdBaseDefense(
                             $this->basesDeDefenseRepository->findOneBy([
-                                'baseDefense' => $row['Cirisi']
+                                'baseDefense' => $row['Bdd']
                             ])
                         )
+                        ->setIdContact($contact);
                     ;
-                }
-
-                if ($row['Bdd'] == '' and $row['Cirisi'] == ''){
-                    $contact = (new Contact())
-                        ->setIntituleContact($row['Intitule'])
-                        ->setEmailContact($row['Email'])
-                        ->setNomContact($row['Nom'])
-                        ->setPrenomContact($row['Prenom'])
-                        ->setTelContact($row['TPH'])
-                    ;
+                    $em->persist($contactBdd);
+                    $em->flush();
                 }
 
             }

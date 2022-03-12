@@ -41,6 +41,7 @@ class ContactBddController extends AbstractController {
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
+        dump($this->ContactBddRepository->findAllWithBdd());
         return $this->render('administration/Contact/contactBdd.html.twig', [
             'ContactBdds' => $ContactBdds,
             'Bdds' => $this->bddRepository->findAll(),
