@@ -4,12 +4,16 @@ namespace App\Controller\administration;
 
 use App\Entity\BasesDeDefense;
 use App\Entity\Cirisi;
+use App\Entity\EtatPdc;
 use App\Entity\GrandsComptes;
+use App\Entity\NatureAffaire;
 use App\Entity\Organisme;
 use App\Entity\Priorisation;
 use App\Entity\Quartiers;
 use App\Entity\Rfz;
 use App\Entity\Sigle;
+use App\Entity\StatutPdc;
+use App\Entity\Users;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactRepository;
@@ -25,11 +29,13 @@ use App\Repository\StatutPdcRepository;
 use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Csv\Reader;
+use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController {
@@ -48,8 +54,9 @@ class AdminController extends AbstractController {
     private StatutPdcRepository $statutPdcRepository;
     private ManagerRegistry $doctrine;
     private EtatPdcRepository $etatPdcRepository;
+    private UserPasswordHasherInterface $hasher;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordHasherInterface $hasher)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -65,6 +72,7 @@ class AdminController extends AbstractController {
         $this->statutPdcRepository = $statutPdcRepository;
         $this->doctrine = $doctrine;
         $this->etatPdcRepository = $etatPdcRepository;
+        $this->hasher = $hasher;
     }
 
     /**
@@ -204,20 +212,59 @@ class AdminController extends AbstractController {
                         ->setSigle($row['sigle'])
                         ->setIntituleSigle($row['intituleSigle'])
                     ;
+                    $em->persist($sigle);
+                    $em->flush();
                 }
 
                 if ($row['grandComptes'] != ''){
                     $grandCompte = (new GrandsComptes())
                         ->setGrandsComptes($row['grandComptes'])
                     ;
+                    $em->persist($grandCompte);
+                    $em->flush();
                 }
 
                 if ($row['priorisation'] != ''){
                     $prio = (new Priorisation())
                         ->setPriorisation($row['priorisation'])
                     ;
+                    $em->persist($prio);
+                    $em->flush();
                 }
 
+                if ($row['natureAffaire'] != ''){
+                    $nature = (new NatureAffaire())
+                        ->setNatureAffaire($row['natureAffaire'])
+                    ;
+                    $em->persist($nature);
+                    $em->flush();
+                }
+
+                if ($row['statutPdc'] != ''){
+                    $statut = (new StatutPdc())
+                        ->setStatutPdc($row['statutPdc'])
+                    ;
+                    $em->persist($statut);
+                    $em->flush();
+                }
+
+                if ($row['etatPdc'] != ''){
+                    $etat = (new EtatPdc())
+                        ->setEtatPdc($row['etatPdc'])
+                    ;
+                    $em->persist($etat);
+                    $em->flush();
+                }
+
+                if ($row['users'] != ''){
+                    $user = new Users();
+                    $user->setUser($row['users']);
+                    $user->setPassword($this->hasher->hashPassword($user, $row['mdp']));
+                    $role = [$row['role']];
+                    $user->setRoles($role);
+                    $em->persist($user);
+                    $em->flush();
+                }
             }
 
             $jsonData = array(
