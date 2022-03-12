@@ -36,9 +36,9 @@ class Affaire
     private $objectifAffaire;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="montant_Affaire", type="integer", nullable=false)
+     * @ORM\Column(name="montant_Affaire", type="float", nullable=false)
      */
     private $montantAffaire;
 
@@ -132,7 +132,7 @@ class Affaire
         return $this;
     }
 
-    public function getMontantAffaire(): ?int
+    public function getMontantAffaire(): ?float
     {
         return $this->montantAffaire;
     }

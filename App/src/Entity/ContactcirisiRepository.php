@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Entity;
 
 use App\Entity\ContactCirisi;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -12,27 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ContactCirisi[]    findAll()
  * @method ContactCirisi[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContactCirisiRepository extends ServiceEntityRepository
+class ContactcirisiRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ContactCirisi::class);
-    }
-
-     /**
-      * @return ContactCirisi[] Returns an array of ContactCirisi objects
-      */
-    public function findAllWithCirisi(): array
-    {
-        return $this->createQueryBuilder('cC')
-            ->innerJoin('cC.idContact', 'c')
-            ->addSelect('c')
-            ->innerJoin('cC.idCirisi', 'Cirisi')
-            ->addSelect('Cirisi')
-            ->orderBy('cC.idCirisi', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
     }
 
     // /**

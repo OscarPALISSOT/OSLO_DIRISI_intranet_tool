@@ -37,9 +37,9 @@ class PlanDeCharge
     private $numPdc;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="montant_pdc", type="integer", nullable=false)
+     * @ORM\Column(name="montant_pdc", type="float", nullable=false)
      */
     private $montantPdc;
 
@@ -94,7 +94,7 @@ class PlanDeCharge
         return $this;
     }
 
-    public function getMontantPdc(): ?int
+    public function getMontantPdc(): ?float
     {
         return $this->montantPdc;
     }

@@ -8,7 +8,7 @@ use App\Entity\ContactCirisi;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
 use App\Repository\ContactbddRepository;
-use App\Repository\ContactCirisiRepository;
+use App\Repository\ContactcirisiRepository;
 use App\Repository\ContactRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Csv\Reader;
@@ -22,13 +22,13 @@ class AdminContactController extends AbstractController
 {
 
     private ContactRepository $ContactRepository;
-    private ContactCirisiRepository $ContactCirisiRepository;
+    private ContactcirisiRepository $ContactCirisiRepository;
     private ContactbddRepository $contactbddRepository;
     private ManagerRegistry $doctrine;
     private CirisiRepository $cirisiRepository;
     private BasesDeDefenseRepository $basesDeDefenseRepository;
 
-    public function __construct(ContactRepository $ContactRepository, ContactCirisiRepository $ContactCirisiRepository, ContactbddRepository $contactbddRepository, ManagerRegistry $doctrine, CirisiRepository $cirisiRepository, BasesDeDefenseRepository $basesDeDefenseRepository)
+    public function __construct(ContactRepository $ContactRepository, ContactcirisiRepository $ContactCirisiRepository, ContactbddRepository $contactbddRepository, ManagerRegistry $doctrine, CirisiRepository $cirisiRepository, BasesDeDefenseRepository $basesDeDefenseRepository)
     {
         $this->ContactRepository = $ContactRepository;
         $this->ContactCirisiRepository = $ContactCirisiRepository;

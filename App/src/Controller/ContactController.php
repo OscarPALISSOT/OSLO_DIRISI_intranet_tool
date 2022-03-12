@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ContactbddRepository;
-use App\Repository\ContactCirisiRepository;
+use App\Repository\ContactcirisiRepository;
 use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController {
 
     private ContactRepository $contactRepository;
-    private ContactCirisiRepository $contactCirisiRepository;
+    private ContactcirisiRepository $contactCirisiRepository;
     private ContactbddRepository $contactbddRepository;
 
-    public function __construct(ContactRepository $contactRepository, ContactCirisiRepository $contactCirisiRepository, ContactbddRepository $contactbddRepository)
+    public function __construct(ContactRepository $contactRepository, ContactcirisiRepository $contactCirisiRepository, ContactbddRepository $contactbddRepository)
     {
         $this->contactRepository = $contactRepository;
         $this->contactCirisiRepository = $contactCirisiRepository;

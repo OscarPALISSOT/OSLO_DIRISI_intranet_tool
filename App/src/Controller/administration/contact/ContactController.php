@@ -4,7 +4,7 @@ namespace App\Controller\administration\contact;
 
 use App\Entity\Contact;
 use App\Repository\ContactbddRepository;
-use App\Repository\ContactCirisiRepository;
+use App\Repository\ContactcirisiRepository;
 use App\Repository\ContactRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -18,10 +18,10 @@ class ContactController extends AbstractController {
     private ContactRepository $ContactRepository;
     private ManagerRegistry $ManagerRegistry;
     private ContactRepository $contactRepository;
-    private ContactCirisiRepository $contactCirisiRepository;
+    private ContactcirisiRepository $contactCirisiRepository;
     private ContactbddRepository $contactbddRepository;
 
-    public function __construct(ContactRepository $ContactRepository, ManagerRegistry $doctrine, ContactRepository $contactRepository, ContactCirisiRepository $contactCirisiRepository, ContactbddRepository $contactbddRepository)
+    public function __construct(ContactRepository $ContactRepository, ManagerRegistry $doctrine, ContactRepository $contactRepository, ContactcirisiRepository $contactCirisiRepository, ContactbddRepository $contactbddRepository)
     {
         $this->ContactRepository = $ContactRepository;
         $this->ManagerRegistry = $doctrine;

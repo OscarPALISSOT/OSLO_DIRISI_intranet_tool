@@ -39,9 +39,9 @@ class Feb
     private $numFeb;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="montant_feb", type="integer", nullable=false)
+     * @ORM\Column(name="montant_feb", type="float", nullable=false)
      */
     private $montantFeb;
 
@@ -105,7 +105,7 @@ class Feb
         return $this;
     }
 
-    public function getMontantFeb(): ?int
+    public function getMontantFeb(): ?float
     {
         return $this->montantFeb;
     }

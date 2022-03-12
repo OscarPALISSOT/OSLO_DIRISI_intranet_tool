@@ -5,7 +5,7 @@ namespace App\Controller\administration\contact;
 use App\Entity\ContactCirisi;
 use App\Entity\Contact;
 use App\Repository\CirisiRepository;
-use App\Repository\ContactCirisiRepository;
+use App\Repository\ContactcirisiRepository;
 use App\Repository\ContactRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -16,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactCirisiController extends AbstractController {
 
-    private ContactCirisiRepository $ContactCirisiRepository;
+    private ContactcirisiRepository $ContactCirisiRepository;
     private ManagerRegistry $ManagerRegistry;
     private CirisiRepository $cirisiRepository;
     private ContactRepository $contactRepository;
 
-    public function __construct(ContactCirisiRepository $ContactCirisiRepository, ManagerRegistry $doctrine, CirisiRepository $cirisiRepository, ContactRepository $contactRepository)
+    public function __construct(ContactcirisiRepository $ContactCirisiRepository, ManagerRegistry $doctrine, CirisiRepository $cirisiRepository, ContactRepository $contactRepository)
     {
         $this->ContactCirisiRepository = $ContactCirisiRepository;
         $this->ManagerRegistry = $doctrine;
