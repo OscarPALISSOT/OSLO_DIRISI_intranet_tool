@@ -97,14 +97,6 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-6">
-                                <select class="form-select mb-3" aria-label="Default select example" name="grandCompteEdit" autocomplete="off">
-                                    <option value="{{ Bnr.idAffaire.idGrandsComptes.idGrandsComptes}}" selected>{{ Bnr.idAffaire.idGrandsComptes.GrandsComptes}}</option>
-                                    {% for GrandCompte in GrandComptes %}
-                                        <option value="{{ GrandCompte.idGrandsComptes }}">{{ GrandCompte.GrandsComptes }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
                         </div>
                         <div class="form mb-3">
                             <input value="{{ Bnr.idAffaire.montantAffaire }}" type="number" class="form-control" id="montant" name="montantEdit" placeholder="Montant">

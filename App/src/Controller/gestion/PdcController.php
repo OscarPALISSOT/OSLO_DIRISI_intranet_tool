@@ -7,6 +7,7 @@ use App\Entity\Affaire;
 use App\Entity\PlanDeCharge;
 use App\form\filters\PdcSearchForm;
 use App\Repository\EtatPdcRepository;
+use App\Repository\GrandsComptesRepository;
 use App\Repository\PlanDeChargeRepository;
 use App\Repository\SigleRepository;
 use App\Repository\StatutPdcRepository;
@@ -14,6 +15,7 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,19 +24,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PdcController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
+    private ManagerRegistry $doctrine;
     private SigleRepository $sigleRepository;
     private StatutPdcRepository $statutPdcRepository;
     private PlanDeChargeRepository $planDeChargeRepository;
     private EtatPdcRepository $etatPdcRepository;
+    private GrandsComptesRepository $grandsComptesRepository;
 
-    public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, StatutPdcRepository $statutPdcRepository, PlanDeChargeRepository $planDeChargeRepository, EtatPdcRepository $etatPdcRepository)
+    public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, StatutPdcRepository $statutPdcRepository, PlanDeChargeRepository $planDeChargeRepository, EtatPdcRepository $etatPdcRepository, GrandsComptesRepository $grandsComptesRepository)
     {
-        $this->ManagerRegistry = $doctrine;
+        $this->doctrine = $doctrine;
         $this->sigleRepository = $sigleRepository;
         $this->statutPdcRepository = $statutPdcRepository;
         $this->planDeChargeRepository = $planDeChargeRepository;
         $this->etatPdcRepository = $etatPdcRepository;
+        $this->grandsComptesRepository = $grandsComptesRepository;
     }
 
 
@@ -65,6 +69,7 @@ class PdcController extends AbstractController {
                     'Pdcs' => $Pdcs,
                     'Statuts' => $this->statutPdcRepository->findAll(),
                     'Etats' => $this->etatPdcRepository->findAll(),
+                    'GrandComptes' => $this->grandsComptesRepository->findAll(),
                 ]),
                 'sorting' => $this->renderView('gestion/pdc/_sorting.html.twig', [
                     'Pdcs' => $Pdcs,
@@ -79,6 +84,7 @@ class PdcController extends AbstractController {
             'Pdcs' => $Pdcs,
             'Statuts' => $this->statutPdcRepository->findAll(),
             'Etats' => $this->etatPdcRepository->findAll(),
+            'GrandComptes' => $this->grandsComptesRepository->findAll(),
             'role' => $role[0],
             'title' => 'Plan de charge',
             'form' => $form->createView(),
@@ -102,11 +108,14 @@ class PdcController extends AbstractController {
         $statut = $this->statutPdcRepository->find($idStatut);
         $idEtat = $request->request->get('etat');
         $etat = $this->etatPdcRepository->find($idEtat);
+        $idGrandCompte = $request->request->get('grandCompte');
+        $grandcompte = $this->grandsComptesRepository->find($idGrandCompte);
         $NewPdc->setIdEtatPdc($etat);
         $NewPdc->setIntitulePdc($intitule);
         $NewPdc->setNumPdc($PdcName);
         $NewPdc->setMontantPdc($montant);
         $NewPdc->setIdStatutPdc($statut);
+        $NewPdc->setIdGrandsComptes($grandcompte);
         if (!$idStatut){
             $jsonData = array(
                 'message' => 'Veuillez entrer un statut',
@@ -114,7 +123,7 @@ class PdcController extends AbstractController {
         }
         else{
             if ($this->isCsrfTokenValid("CreatePdc", $request->get('_token'))){
-                $em = $this->ManagerRegistry->getManager();
+                $em = $this->doctrine->getManager();
                 $em->persist($NewPdc);
                 $em->flush();
             }
@@ -149,7 +158,7 @@ class PdcController extends AbstractController {
                 $pdcToDelete = $this->planDeChargeRepository->find($item);
 
                 if ($this->isCsrfTokenValid("DeletePdc", $request->get('_token'))){
-                    $em = $this->ManagerRegistry->getManager();
+                    $em = $this->doctrine->getManager();
                     $em->remove($pdcToDelete);
                     $em->flush();
                 }
@@ -178,17 +187,20 @@ class PdcController extends AbstractController {
         $statut = $this->statutPdcRepository->find($idStatut);
         $idEtat = $request->request->get('etatEdit');
         $etat = $this->etatPdcRepository->find($idEtat);
+        $idGrandComptes = $request->request->get('grandCompteEdit');
+        $GrandCompte = $this->grandsComptesRepository->find($idGrandComptes);
         $Pdc->setIntitulePdc($intitule);
         $Pdc->setNumPdc($PdcName);
         $Pdc->setMontantPdc($montant);
         $Pdc->setIdStatutPdc($statut);
         $Pdc->setIdEtatPdc($etat);
+        $Pdc->setIdGrandsComptes($GrandCompte);
         $update = new DateTime();
         $update->format('Y-m-d\H:i:s');
         $Pdc->setUpdateAt($update);
 
         if ($this->isCsrfTokenValid("EditPdc", $request->get('_token'))) {
-            $em = $this->ManagerRegistry->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($Pdc);
             $em->flush();
         }
@@ -196,6 +208,57 @@ class PdcController extends AbstractController {
         $jsonData = array(
             'message' => 'Ligne de plan de charge modifiée',
         );
+
+        return $this->json($jsonData, 200);
+    }
+
+    /**
+     * @Route ("/Admin/ImportPdc", name="importPdc")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function import(Request $request) : JsonResponse
+    {
+        $file = $request->files->get('file', 'r');
+
+        if ($file == null){
+            $jsonData = array(
+                'message' => "Erreur, veuillez renseignez un fichier.",
+            );
+        }
+        else{
+            $em = $this->doctrine->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+            foreach ( $result as $row){
+                $pdc = (new PlanDeCharge())
+                    ->setNumPdc($row['Nom'])
+                    ->setIntitulePdc($row['Intitulé de la ligne'])
+                    ->setIdStatutPdc(
+                        $this->statutPdcRepository->findOneBy([
+                            'statutPdc' => $row['État']
+                        ])
+                    )
+                    ->setIdEtatPdc(
+                        $this->etatPdcRepository->findOneBy([
+                            'etatPdc' => $row['Statut de programmation']
+                        ])
+                    )
+                    ->setMontantPdc($row['Montant total (TTC)'])
+                    ->setIdGrandsComptes(
+                        $this->grandsComptesRepository->findOneBy([
+                            'grandsComptes' => $row['Bénéficiaire - Entité (Client)']
+                        ])
+                    )
+                ;
+            }
+
+            $jsonData = array(
+                'message' => "Importation terminée",
+            );
+        }
 
         return $this->json($jsonData, 200);
     }

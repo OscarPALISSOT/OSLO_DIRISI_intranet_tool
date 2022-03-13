@@ -35,10 +35,9 @@ class BNRController extends AbstractController {
     private NatureAffaireRepository $natureAffaireRepository;
     private PriorisationRepository $priorisationRepository;
     private FebRepository $febRepository;
-    private GrandsComptesRepository $grandsComptesRepository;
     private InfoBnrRepository $infoBnrRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository, InfoBnrRepository $infoBnrRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, InfoBnrRepository $infoBnrRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -48,7 +47,6 @@ class BNRController extends AbstractController {
         $this->natureAffaireRepository = $natureAffaireRepository;
         $this->priorisationRepository = $priorisationRepository;
         $this->febRepository = $febRepository;
-        $this->grandsComptesRepository = $grandsComptesRepository;
         $this->infoBnrRepository = $infoBnrRepository;
     }
 
@@ -80,7 +78,6 @@ class BNRController extends AbstractController {
                 'content' => $this->renderView('gestion/bnr/_content.html.twig', [
                     'Bnrs' => $Bnrs,
                     'Febs' => $this->febRepository->findAll(),
-                    'GrandComptes' => $this->grandsComptesRepository->findAll(),
                     'Quartiers' => $this->quartiersRepository->findAll(),
                     'Prios' => $this->priorisationRepository->findAll(),
                 ]),
@@ -97,7 +94,6 @@ class BNRController extends AbstractController {
             'Bnrs' => $Bnrs,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'Febs' => $this->febRepository->findAll(),
-            'GrandComptes' => $this->grandsComptesRepository->findAll(),
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
@@ -129,11 +125,8 @@ class BNRController extends AbstractController {
         $Date = $request->request->get('date');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $State = $request->request->get('state');
         $Comment = $request->request->get('comment');
         $idFeb = $request->request->get('feb');
-        $idGrandsComptes = $request->request->get('grandCompte');
-        $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
         $Feb = $this->febRepository->find($idFeb);
         $NewBnr->setIdNatureAffaire($nature);
         $NewBnr->setNomAffaire($BnrName);
@@ -141,10 +134,8 @@ class BNRController extends AbstractController {
         $NewBnr->setMontantAffaire($montant);
         $NewBnr->setIdPriorisation($Prio);
         $NewBnr->setEcheanceAffaire($date);
-        $NewBnr->setEtatAffaire($State);
         $NewBnr->setCommentaire($Comment);
         $NewBnr->setIdFeb($Feb);
-        $NewBnr->setIdGrandsComptes($GrandCompte);
         if ($this->isCsrfTokenValid("CreateBnr", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewBnr);
@@ -238,23 +229,18 @@ class BNRController extends AbstractController {
             $Bnr = $this->affaireRepository->find($BnrInfos->getIdAffaire());
             $BnrName = $request->request->get('bnrEdit');
             $Objectif = $request->request->get('objectifEdit');
-            $montant = $request->request->get('montantEdit');
+            $montant = $request->request->get('montantEdit')->;
             $idPrio = $request->request->get('priorityEdit');
             $Prio = $this->priorisationRepository->find($idPrio);
             $Date = $request->request->get('dateEdit');
             $date = new DateTime($Date);
             $date->format('Y-m-d');
-            $State = $request->request->get('stateEdit');
             $Comment = $request->request->get('commentEdit');
             $idFeb = $request->request->get('febEdit');
-            $idGrandsComptes = $request->request->get('grandCompteEdit');
-            $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
             $Feb = $this->febRepository->find($idFeb);
             $Bnr->setNomAffaire($BnrName);
             $Bnr->setObjectifAffaire($Objectif);
             $Bnr->setMontantAffaire($montant);
-            $Bnr->setEtatAffaire($State);
-            $Bnr->setIdGrandsComptes($GrandCompte);
             $Bnr->setIdPriorisation($Prio);
             $Bnr->setEcheanceAffaire($date);
             $Bnr->setCommentaire($Comment);

@@ -14,6 +14,33 @@
 
 {% block ContentGestionEntity %}
 
+    {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+        <button class="btn btn-outline-success mb-4" data-bs-target="#modalPdc1" data-bs-toggle="modal">Importer les plans de charge depuis un csv <i class="fas fa-file-import"></i></button>
+
+        <!-- first modal import database -->
+        <div class="modal fade" id="modalPdc1" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Attention ! <i class="fas fa-exclamation-triangle"></i></h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="modalPdc1" action="{{ path ('importPdc')}}" method="post" class="js-Ajax-form" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <h4>Vous vous apprêtez à modifier la base de données.
+                                Assurez vous d'avoir un fichier CSV conforme.
+                            </h4>
+                            <input type="file"  id="file" name="file" style="font-size: medium" accept=".csv">
+                        </div>
+                        <div class="modal-footer">
+                            <!-- close first modal -->
+                            <button type="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalPdc1"><i class="fas fa-check"></i> Ok</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="js-filter-sorting sorting">
         {% include 'gestion/pdc/_sorting.html.twig' %}
@@ -27,6 +54,7 @@
                 <th scope="col">Intitulé</th>
                 <th scope="col">Numéro</th>
                 <th scope="col">Montant</th>
+                <th scope="col">Grand compte</th>
                 <th scope="col">Statut de la ligne</th>
                 <th scope="col">État de la ligne</th>
                 <th scope="col">Nombre de FEB</th>
@@ -53,8 +81,8 @@
                     <h1 class="modal-title" id="modalLabel">Nouveau plan de charge :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="pdcFormCreate" action="{{ path ('Admin_Pdc_New')}}" method="post" class="js-Ajax-form">
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form id="pdcFormCreate" action="{{ path ('Admin_Pdc_New')}}" method="post" class="js-Ajax-form">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="Intitule" name="intitule" placeholder="name@example.com">
                             <label for="Intitule">Intitulé</label>
@@ -64,7 +92,7 @@
                             <label for="pdc">Numéro de la ligne de PDC</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="montant" name="montant" placeholder="name@example.com">
+                            <input type="number" step="0.01"  min="0" class="form-control" id="montant" name="montant" placeholder="name@example.com">
                             <label for="montant">Montant</label>
                         </div>
                         <select class="form-select mb-3" aria-label="Default select example" name="statut">
@@ -79,13 +107,19 @@
                                 <option value="{{ Etat.idEtatPdc }}">{{ Etat.EtatPdc }}</option>
                             {% endfor %}
                         </select>
+                        <select class="form-select mb-3" aria-label="Default select example" name="grandCompte" autocomplete="off">
+                            <option selected>Grand compte</option>
+                            {% for GrandCompte in GrandComptes %}
+                                <option value="{{ GrandCompte.idGrandsComptes }}">{{ GrandCompte.GrandsComptes }}</option>
+                            {% endfor %}
+                        </select>
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreatePdc')}}>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- send request-->
-                        <button id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- send request-->
+                    <button form="pdcFormCreate" id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
+                </div>
             </div>
         </div>
     </div>

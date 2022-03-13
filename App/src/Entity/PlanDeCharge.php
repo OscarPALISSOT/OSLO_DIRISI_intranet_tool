@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PlanDeCharge
  *
- * @ORM\Table(name="plan_de_charge", indexes={@ORM\Index(name="Plan_de_Charge_Statut_Pdc_FK", columns={"id_statut_pdc"})})
+ * @ORM\Table(name="plan_de_charge", indexes={@ORM\Index(name="Plan_de_Charge_Grands_Comptes0_FK", columns={"id_Grands_Comptes"}),@ORM\Index(name="Plan_de_Charge_Statut_Pdc_FK", columns={"id_statut_pdc"})})
  * @ORM\Entity(repositoryClass="App\Repository\PlanDeChargeRepository")
  */
 class PlanDeCharge
@@ -37,9 +37,8 @@ class PlanDeCharge
     private $numPdc;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="montant_pdc", type="float", nullable=false)
+     * @var string
+     * @ORM\Column(name="montant_pdc", type="string", length=255, nullable=false)
      */
     private $montantPdc;
 
@@ -69,6 +68,16 @@ class PlanDeCharge
      * })
      */
     private $idEtatPdc;
+    
+    /**
+     * @var \GrandsComptes
+     *
+     * @ORM\ManyToOne(targetEntity="GrandsComptes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_Grands_Comptes", referencedColumnName="id_Grands_Comptes")
+     * })
+     */
+    private $idGrandsComptes;
 
     public function __construct()
     {
@@ -157,6 +166,18 @@ class PlanDeCharge
     public function __toString(): string
     {
         return $this->getIntitulePdc();
+    }
+
+    public function getIdGrandsComptes(): ?GrandsComptes
+    {
+        return $this->idGrandsComptes;
+    }
+
+    public function setIdGrandsComptes(?GrandsComptes $idGrandsComptes): self
+    {
+        $this->idGrandsComptes = $idGrandsComptes;
+
+        return $this;
     }
 
 }

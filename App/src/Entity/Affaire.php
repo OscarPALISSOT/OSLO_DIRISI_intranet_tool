@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Affaire
  *
- * @ORM\Table(name="affaire", indexes={@ORM\Index(name="Affaire_Grands_Comptes0_FK", columns={"id_Grands_Comptes"}), @ORM\Index(name="Affaire_Nature_Affaire1_FK", columns={"id_nature_Affaire"}), @ORM\Index(name="Affaire_Feb2_FK", columns={"id_feb"}), @ORM\Index(name="Affaire_Priorisation_FK", columns={"id_priorisation"})})
+ * @ORM\Table(name="affaire", indexes={@ORM\Index(name="Affaire_Nature_Affaire1_FK", columns={"id_nature_Affaire"}), @ORM\Index(name="Affaire_Feb2_FK", columns={"id_feb"}), @ORM\Index(name="Affaire_Priorisation_FK", columns={"id_priorisation"})})
  * @ORM\Entity(repositoryClass="App\Repository\AffaireRepository")
  */
 class Affaire
@@ -62,16 +62,6 @@ class Affaire
      * @ORM\Column(name="update_at", type="date", nullable=false)
      */
     private $updateAt;
-
-    /**
-     * @var \GrandsComptes
-     *
-     * @ORM\ManyToOne(targetEntity="GrandsComptes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_Grands_Comptes", referencedColumnName="id_Grands_Comptes")
-     * })
-     */
-    private $idGrandsComptes;
 
     /**
      * @var \Priorisation
@@ -176,18 +166,6 @@ class Affaire
     public function setUpdateAt(\DateTimeInterface $updateAt): self
     {
         $this->updateAt = $updateAt;
-
-        return $this;
-    }
-
-    public function getIdGrandsComptes(): ?GrandsComptes
-    {
-        return $this->idGrandsComptes;
-    }
-
-    public function setIdGrandsComptes(?GrandsComptes $idGrandsComptes): self
-    {
-        $this->idGrandsComptes = $idGrandsComptes;
 
         return $this;
     }
