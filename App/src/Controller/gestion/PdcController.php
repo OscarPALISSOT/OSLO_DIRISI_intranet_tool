@@ -57,6 +57,8 @@ class PdcController extends AbstractController {
 
         $Pdcs = $this->planDeChargeRepository->findPdcSearch($Data);
 
+        dump($this->planDeChargeRepository->findAll());
+
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
             $role[0] = $request->get('role');
@@ -104,6 +106,7 @@ class PdcController extends AbstractController {
         $intitule = $request->request->get('intitule');
         $PdcName = $request->request->get('pdc');
         $montant = $request->request->get('montant');
+        $montant = number_format($montant,2,'.','');
         $idStatut = $request->request->get('statut');
         $statut = $this->statutPdcRepository->find($idStatut);
         $idEtat = $request->request->get('etat');
@@ -183,6 +186,7 @@ class PdcController extends AbstractController {
         $intitule = $request->request->get('intituleEdit');
         $PdcName = $request->request->get('pdcEdit');
         $montant = $request->request->get('montantEdit');
+        $montant = number_format($montant,2,'.','');
         $idStatut = $request->request->get('statutEdit');
         $statut = $this->statutPdcRepository->find($idStatut);
         $idEtat = $request->request->get('etatEdit');
@@ -253,6 +257,8 @@ class PdcController extends AbstractController {
                         ])
                     )
                 ;
+                $em->persist($pdc);
+                $em->flush();
             }
 
             $jsonData = array(

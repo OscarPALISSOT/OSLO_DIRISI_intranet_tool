@@ -229,7 +229,7 @@ class BNRController extends AbstractController {
             $Bnr = $this->affaireRepository->find($BnrInfos->getIdAffaire());
             $BnrName = $request->request->get('bnrEdit');
             $Objectif = $request->request->get('objectifEdit');
-            $montant = $request->request->get('montantEdit')->;
+            $montant = $request->request->get('montantEdit');
             $idPrio = $request->request->get('priorityEdit');
             $Prio = $this->priorisationRepository->find($idPrio);
             $Date = $request->request->get('dateEdit');

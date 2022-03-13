@@ -105,10 +105,10 @@ class PlanDeCharge
 
     public function getMontantPdc(): ?float
     {
-        return $this->montantPdc;
+        return floatval($this->montantPdc);
     }
 
-    public function setMontantPdc(int $montantPdc): self
+    public function setMontantPdc(string $montantPdc): self
     {
         $this->montantPdc = $montantPdc;
 
