@@ -92,7 +92,7 @@ export default class Filter{
             this.sorting.innerHTML = data.sorting
             this.pagination.innerHTML = data.pagination
             this.secondModal.innerHTML = data.secondModal
-            $(".app-script script").each(function(){
+            /*$(".app-script script").each(function(){
                 var oldScript = this.getAttribute("src");
                 $(this).remove();
                 var newScript;
@@ -100,7 +100,7 @@ export default class Filter{
                 newScript.type = 'text/javascript';
                 newScript.src = oldScript;
                 document.getElementsByClassName("app-script")[0].appendChild(newScript);
-            });
+            });*/
             params.delete('Ajax')
             history.replaceState({}, '', url.split('?')[0] + '?' + params.toString())
         }
