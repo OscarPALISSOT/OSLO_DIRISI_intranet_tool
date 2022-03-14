@@ -98,6 +98,7 @@ class FebController extends AbstractController {
         $FebName = $request->request->get('feb');
         $intitule = $request->request->get('intitule');
         $montant = $request->request->get('montant');
+        $montant = number_format($montant,2,'.','');
         $idPdc = $request->request->get('Pdc');
         $Pdc = $this->planDeChargeRepository->find($idPdc);
         $idOrganismes = $request->request->all('organisme', []);
@@ -175,6 +176,7 @@ class FebController extends AbstractController {
         $FebName = $request->request->get('febEdit');
         $intitule = $request->request->get('intituleEdit');
         $montant = $request->request->get('montantEdit');
+        $montant = number_format($montant,2,'.','');
         $idPdc = $request->request->get('PdcEdit');
         $Pdc = $this->planDeChargeRepository->find($idPdc);
         $idOrganismes = $request->request->all('organismeEdit', []);

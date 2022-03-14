@@ -52,8 +52,8 @@
                     <h1 class="modal-title" id="modalLabel">Nouvelle FEB :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="febFormCreate" action="{{ path ('Admin_Feb_New')}}" method="post" class="js-Ajax-form">
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form id="febFormCreate" action="{{ path ('Admin_Feb_New')}}" method="post" class="js-Ajax-form">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="Intitule" name="intitule" placeholder="name@example.com">
                             <label for="Intitule">Intitulé</label>
@@ -63,7 +63,7 @@
                             <label for="feb">Numéro de la FEB</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="montant" name="montant" placeholder="name@example.com">
+                            <input type="number" min="0" step="0.01" class="form-control" id="montant" name="montant" placeholder="name@example.com">
                             <label for="montant">Montant</label>
                         </div>
                         <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organisme[]" autocomplete="off">
@@ -78,12 +78,12 @@
                             {% endfor %}
                         </select>
                         <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateFeb')}}>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- send request-->
-                        <button id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- send request-->
+                    <button form="febFormCreate" id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
+                </div>
             </div>
         </div>
     </div>

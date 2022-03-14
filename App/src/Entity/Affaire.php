@@ -135,7 +135,7 @@ class Affaire
         return $this->montantAffaire;
     }
 
-    public function setMontantAffaire(int $montantAffaire): self
+    public function setMontantAffaire(float $montantAffaire): self
     {
         $this->montantAffaire = $montantAffaire;
 

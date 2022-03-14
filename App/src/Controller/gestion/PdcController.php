@@ -249,7 +249,7 @@ class PdcController extends AbstractController {
             file_put_contents($file->getRealPath(), $str);
             $em = $this->doctrine->getManager();
             $csv = Reader::createFromPath($file->getRealPath());
-            $csv->setHeaderOffset(1);
+            $csv->setHeaderOffset(0);
             $result = $csv->getRecords();
 
             foreach ( $result as $row){

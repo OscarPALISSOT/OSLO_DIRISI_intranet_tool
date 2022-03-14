@@ -110,7 +110,7 @@ class Feb
         return $this->montantFeb;
     }
 
-    public function setMontantFeb(int $montantFeb): self
+    public function setMontantFeb(float $montantFeb): self
     {
         $this->montantFeb = $montantFeb;
 

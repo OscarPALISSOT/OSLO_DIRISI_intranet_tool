@@ -10,7 +10,7 @@
                         <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Bnr.idInfoBnr }}" type="checkbox" value="{{ Bnr.idInfoBnr }}" id="checkbox{{ Bnr.idAffaire.idAffaire }}">
                     </div>
                 </h3>
-                <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(0, '.', ' ') }} €</h4>
+                <h4 class="card-subtitle mb-2 text-muted">{{ Bnr.idAffaire.montantAffaire|number_format(2, ',', ' ') }} €</h4>
                 <p class="card-text">
                     <span class="label">Échéances :</span>
                     {{ Bnr.idAffaire.echeanceAffaire|date('d/m/Y')}}
@@ -79,8 +79,9 @@
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="febEdit" autocomplete="off">
-                                    {% if Bnr.idAffaire.idFeb != null %}
+                                    {% if Bnr.idAffaire.idFeb %}
                                         <option value="{{ Bnr.idAffaire.idFeb.idFeb}}" selected>{{ Bnr.idAffaire.idFeb.numFeb }}</option>
+                                        <option value="{{ null }}">Pas de FEB</option>
                                     {% else %}
                                         <option value="{{ null }}" selected>Pas encore de FEB</option>
                                     {% endif %}
@@ -100,7 +101,7 @@
                             </div>
                         </div>
                         <div class="form mb-3">
-                            <input value="{{ Bnr.idAffaire.montantAffaire }}" type="number" class="form-control" id="montant" name="montantEdit" placeholder="Montant">
+                            <input value="{{ Bnr.idAffaire.montantAffaire|number_format(2) }}" min="0" step="0.01" type="number" class="form-control" id="montant" name="montantEdit" placeholder="Montant">
                         </div>
                         <div class="form-floating mb-3">
                             <input value="{{ Bnr.montantInfo }}" type="text" class="form-control" id="bnr" name="montantInfoEdit" placeholder="name@example.com">
