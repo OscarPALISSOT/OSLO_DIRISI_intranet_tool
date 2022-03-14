@@ -57,8 +57,6 @@ class PdcController extends AbstractController {
 
         $Pdcs = $this->planDeChargeRepository->findPdcSearch($Data);
 
-        dump($this->planDeChargeRepository->findAll());
-
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
             $role[0] = $request->get('role');
@@ -237,6 +235,7 @@ class PdcController extends AbstractController {
             $result = $csv->getRecords();
 
             foreach ( $result as $row){
+                $montant = floatval($row['Montant total (TTC)']);
                 $pdc = (new PlanDeCharge())
                     ->setNumPdc($row['Nom'])
                     ->setIntitulePdc($row['Intitulé de la ligne'])
@@ -250,7 +249,8 @@ class PdcController extends AbstractController {
                             'etatPdc' => $row['Statut de programmation']
                         ])
                     )
-                    ->setMontantPdc($row['Montant total (TTC)'])
+
+                    ->setMontantPdc($montant)
                     ->setIdGrandsComptes(
                         $this->grandsComptesRepository->findOneBy([
                             'grandsComptes' => $row['Bénéficiaire - Entité (Client)']
