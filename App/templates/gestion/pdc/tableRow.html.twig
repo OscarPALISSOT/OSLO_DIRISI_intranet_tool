@@ -7,7 +7,7 @@
     </th>
     <td>{{ Pdc.intitulePdc }}</td>
     <td>{{ Pdc.NumPdc }}</td>
-    <td>{{ Pdc.montantPdc }} €</td>
+    <td>{{ Pdc.montantPdc|number_format(2,',','') }} €</td>
     <td>{{ Pdc.IdGrandsComptes.grandsComptes}}</td>
     <td>{{ Pdc.IdStatutPdc.statutPdc }}</td>
     <td>{{ Pdc.IdEtatPdc.etatPdc }}</td>

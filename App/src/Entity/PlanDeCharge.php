@@ -37,8 +37,8 @@ class PlanDeCharge
     private $numPdc;
 
     /**
-     * @var string
-     * @ORM\Column(name="montant_pdc", type="string", length=255, nullable=false)
+     * @var float
+     * @ORM\Column(name="montant_pdc", type="decimal", scale=2, length=255, nullable=false)
      */
     private $montantPdc;
 
@@ -105,10 +105,10 @@ class PlanDeCharge
 
     public function getMontantPdc(): ?float
     {
-        return floatval($this->montantPdc);
+        return $this->montantPdc;
     }
 
-    public function setMontantPdc(string $montantPdc): self
+    public function setMontantPdc(float $montantPdc): self
     {
         $this->montantPdc = $montantPdc;
 
