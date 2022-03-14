@@ -7,6 +7,7 @@ use App\Entity\Affaire;
 use App\Entity\InfoModip;
 use App\form\filters\ModipSearchForm;
 use App\Repository\AffaireRepository;
+use App\Repository\ClassementDlRepository;
 use App\Repository\FebRepository;
 use App\Repository\GrandsComptesRepository;
 use App\Repository\InfoModipRepository;
@@ -36,8 +37,9 @@ class ModipController extends AbstractController {
     private FebRepository $febRepository;
     private GrandsComptesRepository $grandsComptesRepository;
     private InfoModipRepository $infoModipRepository;
+    private ClassementDlRepository $classementDlRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository, InfoModipRepository $infoModipRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository, InfoModipRepository $infoModipRepository, ClassementDlRepository $classementDlRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -49,6 +51,7 @@ class ModipController extends AbstractController {
         $this->febRepository = $febRepository;
         $this->grandsComptesRepository = $grandsComptesRepository;
         $this->infoModipRepository = $infoModipRepository;
+        $this->classementDlRepository = $classementDlRepository;
     }
 
 
@@ -82,6 +85,7 @@ class ModipController extends AbstractController {
             'Modips' => $Modips,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'Febs' => $this->febRepository->findAll(),
+            'ClassementDls' =>$this->classementDlRepository->findAll(),
             'GrandComptes' => $this->grandsComptesRepository->findAll(),
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
@@ -105,49 +109,50 @@ class ModipController extends AbstractController {
         $nature = $this->natureAffaireRepository->findOneBy([
             'natureAffaire' => 'besoinNouveauReseau',
         ]);
-        $NewModip = new Affaire();
         $ModipName = $request->request->get('modip');
         $Objectif = $request->request->get('objectif');
         $montant = $request->request->get('montant');
-        $idOrganismes = $request->request->all('organisme', []);
-        foreach ($idOrganismes as $item){
-            $NewModip->addIdOrganisme($this->organismeRepository->find($item));
-        }
         $idPrio = $request->request->get('priority');
         $Prio = $this->priorisationRepository->find($idPrio);
         $Date = $request->request->get('date');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $State = $request->request->get('state');
         $Comment = $request->request->get('comment');
         $idFeb = $request->request->get('feb');
-        $idGrandsComptes = $request->request->get('grandCompte');
-        $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
         $Feb = $this->febRepository->find($idFeb);
-        $NewModip->setIdNatureAffaire($nature);
-        $NewModip->setNomAffaire($ModipName);
-        $NewModip->setObjectifAffaire($Objectif);
-        $NewModip->setMontantAffaire($montant);
-        $NewModip->setIdPriorisation($Prio);
-        $NewModip->setEcheanceAffaire($date);
-        $NewModip->setEtatAffaire($State);
-        $NewModip->setCommentaire($Comment);
-        $NewModip->setIdFeb($Feb);
-        $NewModip->setIdGrandsComptes($GrandCompte);
+        $NewModip = (new Affaire())
+            ->setIdNatureAffaire($nature)
+            ->setNomAffaire($ModipName)
+            ->setObjectifAffaire($Objectif)
+            ->setMontantAffaire($montant)
+            ->setIdPriorisation($Prio)
+            ->setEcheanceAffaire($date)
+            ->setCommentaire($Comment)
+            ->setIdFeb($Feb)
+        ;
         if ($this->isCsrfTokenValid("CreateModip", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewModip);
             $em->flush();
-            $NewModipInfos = new InfoModip();
-            $NewModipInfos->setIdAffaire($NewModip);
-            $DateDemande = $request->request->get('dateDemande');
-            $dateDemande = new DateTime($DateDemande);
-            $dateDemande->format('Y-m-d');
-            $NewModipInfos->setDateDemande($dateDemande);
-            $MontantInfo = $request->request->get('montantInfo');
-            $NewModipInfos->setMontantInfo($MontantInfo);
-            $Impact = $request->request->get('impact');
-            $NewModipInfos->setImpact($Impact);
+            $coeurAvantTvx = $request->request->get('AnneeCoeurAvantTvx');
+            $Annee = $request->request->get('Annee');
+            $AnneeRenoCoeur = $request->request->get('AnneeRenoCoeur');
+            $idclassification = $request->request->get('classification');
+            $classification = $this->classementDlRepository->find($idclassification);
+            $renoApres = $request->request->get('renoApres');
+            $renoAvant = $request->request->get('renoAvant');
+            $semestre = $request->request->get('semestre');
+            $NewModipInfos = (new InfoModip())
+                ->setIdAffaire($NewModip)
+                ->setAnneeCoeurAvTvx($coeurAvantTvx)
+                ->setAnneeModip($Annee)
+                ->setAnneeRenoCoeur($AnneeRenoCoeur)
+                ->setIdClassementDl($classification)
+                ->setRenoApres($renoApres)
+                ->setRenoAvant($renoAvant)
+                ->setSemestreModip($semestre)
+            ;
+
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewModipInfos);
             $em->flush();

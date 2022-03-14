@@ -33,9 +33,8 @@ class InfoModipRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('i')
-            ->select('i','o', 'a')
+            ->select('i', 'a')
             ->join('i.idAffaire', 'a')
-            ->join('a.idOrganisme', 'o')
             ->orderBy('a.updateAt', 'DESC');
 
 

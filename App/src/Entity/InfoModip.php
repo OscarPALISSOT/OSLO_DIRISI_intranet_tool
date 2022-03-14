@@ -22,20 +22,6 @@ class InfoModip
     private $idInfoModip;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="classement_dl", type="integer", nullable=false)
-     */
-    private $classementDl;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="classification_op_modip", type="integer", nullable=false)
-     */
-    private $classificationOpModip;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="reno_avant", type="string", length=50, nullable=false)
@@ -78,6 +64,16 @@ class InfoModip
     private $semestreModip;
 
     /**
+     * @var \ClassementDl
+     *
+     * @ORM\ManyToOne(targetEntity="ClassementDl")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_Classement_Dl", referencedColumnName="id_Classement_Dl")
+     * })
+     */
+    private $idClassementDl;
+
+    /**
      * @var \Affaire
      *
      * @ORM\ManyToOne(targetEntity="Affaire")
@@ -90,30 +86,6 @@ class InfoModip
     public function getIdInfoModip(): ?int
     {
         return $this->idInfoModip;
-    }
-
-    public function getClassementDl(): ?int
-    {
-        return $this->classementDl;
-    }
-
-    public function setClassementDl(int $classementDl): self
-    {
-        $this->classementDl = $classementDl;
-
-        return $this;
-    }
-
-    public function getClassificationOpModip(): ?int
-    {
-        return $this->classificationOpModip;
-    }
-
-    public function setClassificationOpModip(int $classificationOpModip): self
-    {
-        $this->classificationOpModip = $classificationOpModip;
-
-        return $this;
     }
 
     public function getRenoAvant(): ?string
@@ -196,6 +168,18 @@ class InfoModip
     public function setIdAffaire(?Affaire $idAffaire): self
     {
         $this->idAffaire = $idAffaire;
+
+        return $this;
+    }
+
+    public function getIdClassementDl(): ?ClassementDl
+    {
+        return $this->idClassementDl;
+    }
+
+    public function setIdClassementDl(?ClassementDl $idClassementDl): self
+    {
+        $this->idClassementDl = $idClassementDl;
 
         return $this;
     }

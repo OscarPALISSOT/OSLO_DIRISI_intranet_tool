@@ -1,0 +1,98 @@
+
+<div class="col-6" id="entity-{{ Modip.idInfoModip }}">
+    <div class="card">
+        <div class="card-body Entity-card">
+            <div class="card-content">
+                <h3 class="card-title">
+                    {{ Modip.idAffaire.nomAffaire }}
+                    <div class="form-check" style="font-size: larger">
+                        <label for="checkbox{{ Modip.idInfoModip }}"></label>
+                        <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Modip.idInfoModip }}" type="checkbox" value="{{ Modip.idInfoModip }}" id="checkbox{{ Modip.idAffaire.idAffaire }}">
+                    </div>
+                </h3>
+                <h4 class="card-subtitle mb-2 text-muted">{{ Modip.idAffaire.montantAffaire|number_format(2, ',', ' ') }} €</h4>
+                <p class="card-text">
+                    <span class="label">Échéances :</span>
+                    {{ Modip.idAffaire.echeanceAffaire|date('d/m/Y')}}
+                    <br>
+                    <span class="label">Objectif :</span>
+                    <br>
+                    {{ Modip.idAffaire.objectifAffaire }}
+                    <br>
+                </p>
+                <div class="collapse" id="collapseCard{{ Modip.idAffaire.idAffaire }}">
+                    <p class="info">
+                        <span class="label">Priorisation :</span>
+                        {{ Modip.idAffaire.idPriorisation.priorisation }}
+                        <br>
+                        <span class="label">FEB :</span>
+                        {% if Modip.idAffaire.idFeb != null %}
+                            {{ Modip.idAffaire.idFeb.numFeb }}
+                        {% else %}
+                            Pas encore de FEB
+                        {% endif %}
+                        <br>
+                        <span class="label">ClassementDl :</span>
+
+                        <br>
+                        <span class="label">Année :</span>
+                        {{ Modip.AnneeModip }}
+                        <br>
+                        <span class="label">Semestre :</span>
+                        {% if Modip.SemestreModip == 1 %}
+                            S1
+                        {% else %}
+                            S2
+                        {% endif %}
+                        <br>
+                        <span class="label">Année coeur avant tvx :</span>
+                        {{ Modip.AnneeCoeurAvTvx }}
+                        <br>
+                        <span class="label">Année renovation coeur :</span>
+                        {{ Modip.AnneeRenoCoeur }}
+                        <br>
+                        <span class="label">Reno avant :</span>
+                        {{ Modip.renoAvant }}
+                        <br>
+                        <span class="label">Reno aprés :</span>
+                        {{ Modip.renoApres }}
+                        <br>
+                        <span class="label">Commentaire :</span>
+                        <br>
+                        {{ Modip.idAffaire.commentaire|nl2br }}
+                    </p>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Modip.idAffaire.idAffaire }}" aria-expanded="false" aria-controls="collapseCard">
+                Voir plus <i class="far fa-eye"></i>
+            </button>
+            <!-- Button trigger modal edit -->
+            <button type="button" class="btn btn-outline-primary collapseBtn" data-bs-toggle="modal" data-bs-target="#modalEdit{{ Modip.idInfoModip }}">
+                Modifier <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal edit-->
+    <div class="modal fade" id="modalEdit{{ Modip.idInfoModip }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="modalLabel">Modifier</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bnrFormEdit{{ Modip.idInfoModip }}" action="{{ path ('Admin_Modip_Edit', {id: Modip.idInfoModip })}}" method="post" class="js-Ajax-form">
+
+                    </form>
+                </div>
+                    <div class="modal-footer">
+                        <!-- send request-->
+                        <input form="bnrFormEdit{{ Modip.idInfoModip }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditModip')}}>
+                        <input form="bnrFormEdit{{ Modip.idInfoModip }}" type="hidden" name="idEdit" value="{{ Modip.idInfoModip }}">
+                        <button form="bnrFormEdit{{ Modip.idInfoModip }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit{{ Modip.idInfoModip }}">Enregistrer</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

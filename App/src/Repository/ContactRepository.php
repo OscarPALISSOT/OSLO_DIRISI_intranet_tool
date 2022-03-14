@@ -19,6 +19,22 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
+     /**
+      * @return Contact[] Returns an array of Contact objects
+      */
+    public function findContact()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.idCirisi = :val')
+            ->setParameter('val', null)
+            ->andWhere('c.idBaseDefense = :val')
+            ->setParameter('val', null)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */
