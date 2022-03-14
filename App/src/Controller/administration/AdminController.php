@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Entity\BasesDeDefense;
 use App\Entity\Cirisi;
+use App\Entity\ClassementDl;
 use App\Entity\EtatPdc;
 use App\Entity\GrandsComptes;
 use App\Entity\NatureAffaire;
@@ -16,6 +17,7 @@ use App\Entity\StatutPdc;
 use App\Entity\Users;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
+use App\Repository\ClassementDlRepository;
 use App\Repository\ContactRepository;
 use App\Repository\EtatPdcRepository;
 use App\Repository\GrandsComptesRepository;
@@ -55,8 +57,9 @@ class AdminController extends AbstractController {
     private ManagerRegistry $doctrine;
     private EtatPdcRepository $etatPdcRepository;
     private UserPasswordHasherInterface $hasher;
+    private ClassementDlRepository $classementDlRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordHasherInterface $hasher)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordHasherInterface $hasher, ClassementDlRepository $classementDlRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -73,6 +76,7 @@ class AdminController extends AbstractController {
         $this->doctrine = $doctrine;
         $this->etatPdcRepository = $etatPdcRepository;
         $this->hasher = $hasher;
+        $this->classementDlRepository = $classementDlRepository;
     }
 
     /**
@@ -94,6 +98,7 @@ class AdminController extends AbstractController {
             'nbNatureAffaire' => count($this->natureAffaireRepository->findAll()),
             'nbStatutPdc' => count($this->statutPdcRepository->findAll()),
             'nbEtatPdc' => count($this->etatPdcRepository->findAll()),
+            'nbClassementDl' => count($this->classementDlRepository->findAll()),
         ]);
     }
 
@@ -271,6 +276,13 @@ class AdminController extends AbstractController {
                         ->setEtatPdc($row['etatPdc'])
                     ;
                     $em->persist($etat);
+                    $em->flush();
+                }
+                if ($row['ClassementDl'] != ''){
+                    $classement = (new ClassementDl())
+                        ->setClassementDl($row['ClassementDl'])
+                    ;
+                    $em->persist($classement);
                     $em->flush();
                 }
 
