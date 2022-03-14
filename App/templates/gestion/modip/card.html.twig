@@ -83,7 +83,128 @@
                 </div>
                 <div class="modal-body">
                     <form id="bnrFormEdit{{ Modip.idInfoModip }}" action="{{ path ('Admin_Modip_Edit', {id: Modip.idInfoModip })}}" method="post" class="js-Ajax-form">
+                        <div class="form-floating mb-3">
+                            <input value="{{ Modip.idAffaire.NomAffaire }}" type="text" class="form-control" id="modip" name="modip" placeholder="name@example.com">
+                            <label for="modip">Nom du projet</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="objectif" style="height: 100px">{{ Modip.idAffaire.ObjectifAffaire }}</textarea>
+                            <label for="floatingTextarea2">Objectif</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="feb" autocomplete="off">
+                                    <option selected>FEB associée</option>
+                                    {% if Modip.idAffaire.idFeb %}
+                                        <option value="{{ Modip.idAffaire.idFeb.idFeb}}" selected>{{ Modip.idAffaire.idFeb.numFeb }}</option>
+                                        <option value="{{ null }}">Pas de FEB</option>
+                                    {% else %}
+                                        <option value="{{ null }}" selected>Pas encore de FEB</option>
+                                    {% endif %}
 
+                                    {% for Feb in Febs %}
+                                        <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ Modip.idAffaire.MontantAffaire|number_format(2) }}" type="number" min="0" step="0.01" class="form-control" id="montant" name="montant" placeholder="Montant">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="priority" autocomplete="off">
+                                    <option value="{{ Modip.idAffaire.idPriorisation.idPriorisation }}" selected>{{ Modip.idAffaire.idPriorisation.priorisation }}</option>
+                                    {% for Prio in Prios %}
+                                        <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="classement" autocomplete="off">
+                                    <option value="{{ Modip.idClassementDl.idClassementDl }}" selected>{{ Modip.idClassementDl.ClassementDl }}</option>
+                                    {% for ClassementDl in ClassementDls %}
+                                        <option value="{{ ClassementDl.idClassementDl }}">{{ ClassementDl.ClassementDl }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="classification" autocomplete="off">
+                                    <option value="{{ Modip.Classification }}" selected>
+                                        {% if Modip.Classification == 1 %}
+                                            CN
+                                        {% elseif Modip.Classification == 2 %}
+                                            ND
+                                        {% else %}
+                                            UG
+                                        {% endif %}
+                                    </option>
+                                    <option value="1">CN</option>
+                                    <option value="2">ND</option>
+                                    <option value="3">UG</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input value="{{ Modip.IdAffaire.echeanceAffaire|date('m/d/Y') }}" type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ Modip.renoAvant }}" type="text" class="form-control" id="renoAvant" name="renoAvant" placeholder="name@example.com">
+                                    <label for="renoAvant">Reno avant</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ Modip.renoApres }}" type="text" class="form-control" id="renoApres" name="renoApres" placeholder="name@example.com">
+                                    <label for="renoApres">Reno après</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ Modip.AnneeCoeurAvTvx }}" type="number" min="0" step="1" class="form-control" id="AnneeCoeurAvantTvx" name="AnneeCoeurAvantTvx" placeholder="Année coeur avant tvx">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ Modip.AnneeRenoCoeur }}" type="number" min="0" step="1" class="form-control" id="AnneeRenoCoeur" name="AnneeRenoCoeur" placeholder="Année rénovation coeur">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ Modip.AnneeModip }}" type="number" min="0" step="1" class="form-control" id="Annee" name="Annee" placeholder="Année">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="semestre" autocomplete="off">
+                                    <option value="{{ Modip.semestreModip }}" selected>
+                                        {% if Modip.semestreModip == 1 %}
+                                            S1
+                                        {% else %}
+                                            S2
+                                        {% endif %}
+                                    </option>
+                                    <option value="1">S1</option>
+                                    <option value="2">S2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px">{{ Modip.idAffaire.commentaire }}</textarea>
+                            <label for="floatingTextarea2">Commentaire</label>
+                        </div>
                     </form>
                 </div>
                     <div class="modal-footer">

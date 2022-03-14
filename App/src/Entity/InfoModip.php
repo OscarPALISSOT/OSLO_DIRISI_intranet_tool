@@ -24,6 +24,13 @@ class InfoModip
     /**
      * @var string
      *
+     * @ORM\Column(name="classification_modip", type="string", length=50, nullable=false)
+     */
+    private $Classification;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="reno_avant", type="string", length=50, nullable=false)
      */
     private $renoAvant;
@@ -180,6 +187,18 @@ class InfoModip
     public function setIdClassementDl(?ClassementDl $idClassementDl): self
     {
         $this->idClassementDl = $idClassementDl;
+
+        return $this;
+    }
+
+    public function getClassification(): ?string
+    {
+        return $this->Classification;
+    }
+
+    public function setClassification(string $Classification): self
+    {
+        $this->Classification = $Classification;
 
         return $this;
     }
