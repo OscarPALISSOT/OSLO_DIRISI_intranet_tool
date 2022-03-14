@@ -112,6 +112,16 @@ class AdminController extends AbstractController {
             );
         }
         else{
+
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+
             $em = $this->doctrine->getManager();
             $csv = Reader::createFromPath($file->getRealPath());
             $csv->setHeaderOffset(0);
@@ -200,6 +210,14 @@ class AdminController extends AbstractController {
             );
         }
         else{
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
             $em = $this->doctrine->getManager();
             $csv = Reader::createFromPath($file->getRealPath());
             $csv->setHeaderOffset(0);
