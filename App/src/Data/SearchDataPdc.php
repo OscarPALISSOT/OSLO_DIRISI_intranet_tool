@@ -2,7 +2,8 @@
 
 namespace App\Data;
 
-use App\Entity\PlanDeCharge;
+use App\Entity\EtatPdc;
+use App\Entity\GrandsComptes;
 use App\Entity\StatutPdc;
 
 class SearchDataPdc{
@@ -17,11 +18,26 @@ class SearchDataPdc{
      */
     public string $Pdc = '';
 
+    /**
+     * @var string
+     */
+    public string $num = '';
+
 
     /**
      * @var StatutPdc[]
      */
     public $StatutPdc;
+
+    /**
+     * @var EtatPdc[]
+     */
+    public $EtatPdc;
+
+    /**
+     * @var GrandsComptes[]
+     */
+    public $GrandsComptes;
 
 
     /**

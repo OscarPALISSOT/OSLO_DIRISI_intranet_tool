@@ -4,12 +4,25 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 
-    <h4 class="mt-3">Projet</h4>
+    <h4 class="mt-3">Intitulé</h4>
     <div class="col-4">{{ form_row(form.Pdc) }}</div>
+
+    <h4 class="mt-3">Numéro</h4>
+    <div class="col-4">{{ form_row(form.num) }}</div>
 
     <h4 class="mt-3">Statut</h4>
     <div class="col-4 scrollEntity">
         {{ form_row(form.StatutPdc) }}
+    </div>
+
+    <h4 class="mt-3">État</h4>
+    <div class="col-4 scrollEntity">
+        {{ form_row(form.EtatPdc) }}
+    </div>
+
+    <h4 class="mt-3">Grand compte</h4>
+    <div class="col-4 scrollEntity">
+        {{ form_row(form.GrandsComptes) }}
     </div>
 
     <h4 class="mt-3">Montant</h4>

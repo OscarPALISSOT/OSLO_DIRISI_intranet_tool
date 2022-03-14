@@ -62,20 +62,41 @@ class PlanDeChargeRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('p')
-            ->select('p','s')
+            ->select('p', 's', 'e', 'g')
             ->join('p.idStatutPdc', 's')
+            ->join('p.idEtatPdc', 'e')
+            ->join('p.idGrandsComptes', 'g')
             ->orderBy('p.updateat', 'DESC');
 
 
         if (!empty($data->Pdc)){
             $query = $query
-                ->andWhere('p.numPdc LIKE :Pdc')
+                ->andWhere('p.intitulePdc LIKE :Pdc')
                 ->setParameter('Pdc', "%{$data->Pdc}%");
         }
+
+        if (!empty($data->num)){
+            $query = $query
+                ->andWhere('p.numPdc LIKE :Pdc')
+                ->setParameter('Pdc', "%{$data->num}%");
+        }
+
         if (!empty($data->StatutPdc) && count($data->StatutPdc) > 0){
             $query = $query
                 ->andWhere('p.idStatutPdc IN (:idStatutPdc)')
                 ->setParameter('idStatutPdc', $data->StatutPdc);
+        }
+
+        if (!empty($data->EtatPdc) && count($data->EtatPdc) > 0){
+            $query = $query
+                ->andWhere('p.idEtatPdc IN (:idEtatPdc)')
+                ->setParameter('idEtatPdc', $data->EtatPdc);
+        }
+
+        if (!empty($data->GrandsComptes) && count($data->GrandsComptes) > 0){
+            $query = $query
+                ->andWhere('p.idGrandsComptes IN (:idGrandsComptes)')
+                ->setParameter('idGrandsComptes', $data->GrandsComptes);
         }
 
         if (!empty($data->Montant)){

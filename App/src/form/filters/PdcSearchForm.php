@@ -3,6 +3,8 @@
 namespace App\form\filters;
 
 use App\Data\SearchDataPdc;
+use App\Entity\EtatPdc;
+use App\Entity\GrandsComptes;
 use App\Entity\StatutPdc;
 use App\Repository\PlanDeChargeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -46,10 +48,35 @@ class PdcSearchForm extends AbstractType
                 ],
 
             ])
+            ->add('num', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'empty_data' => '',
+                'attr' => [
+                    'placeholder' => 'Rechercher',
+                ],
+
+            ])
             ->add('StatutPdc', EntityType::class, [
                 'label' => false,
                 'required' => false,
                 'class' => StatutPdc::class,
+                'expanded' => true,
+                'multiple' => true
+
+            ])
+            ->add('EtatPdc', EntityType::class, [
+                'label' => false,
+                'required' => false,
+                'class' => EtatPdc::class,
+                'expanded' => true,
+                'multiple' => true
+
+            ])
+            ->add('GrandsComptes', EntityType::class, [
+                'label' => false,
+                'required' => false,
+                'class' => GrandsComptes::class,
                 'expanded' => true,
                 'multiple' => true
 

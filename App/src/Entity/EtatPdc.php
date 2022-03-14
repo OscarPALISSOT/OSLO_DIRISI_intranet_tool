@@ -44,4 +44,9 @@ class EtatPdc
     {
         return $this->idEtatPdc;
     }
+
+    public function __toString(): string
+    {
+        return $this->getEtatPdc();
+    }
 }
