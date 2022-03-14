@@ -184,9 +184,9 @@
             </div>
         </div>
 
-        <!-- Second modal message -->
+        <!-- Second modal -->
         <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="loading">
@@ -194,11 +194,11 @@
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
-                        <div id="ajax-modalEdit"></div>
+                        <div id="ajax-modal"></div>
                     </div>
                     <div class="modal-footer">
-                        <!-- close second edit -->
-                        <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
+                        <!-- close second create -->
+                        <button onclick="window.location.reload()" class="btn btn-primary js-modal-reset" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
                     </div>
                 </div>
             </div>
