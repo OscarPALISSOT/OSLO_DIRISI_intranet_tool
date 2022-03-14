@@ -229,9 +229,27 @@ class PdcController extends AbstractController {
             );
         }
         else{
+
+            $oldMessage = ',';
+
+            $deletedFormat = '.';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
             $em = $this->doctrine->getManager();
             $csv = Reader::createFromPath($file->getRealPath());
-            $csv->setHeaderOffset(0);
+            $csv->setHeaderOffset(1);
             $result = $csv->getRecords();
 
             foreach ( $result as $row){
