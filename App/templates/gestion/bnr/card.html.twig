@@ -15,12 +15,6 @@
                     <span class="label">Échéances :</span>
                     {{ Bnr.idAffaire.echeanceAffaire|date('d/m/Y')}}
                     <br>
-                    <span class="label">Organisme(s) :</span>
-                    <br>
-                    {% for Orga in Bnr.idAffaire.idOrganisme %}
-                        {{ Orga.Organisme }} - {{ Orga.idQuartier.trigramme }};
-                    {% endfor %}
-                    <br>
                     <span class="label">Objectif :</span>
                     <br>
                     {{ Bnr.idAffaire.objectifAffaire }}
@@ -31,11 +25,12 @@
                         <span class="label">Priorisation :</span>
                         {{ Bnr.idAffaire.idPriorisation.priorisation }}
                         <br>
-                        <span class="label">Grand compte :</span>
-                        {{ Bnr.idAffaire.idGrandsComptes.grandsComptes }}
-                        <br>
                         <span class="label">FEB :</span>
-                        {{ Bnr.idAffaire.idFeb.numFeb }}
+                        {% if Bnr.idAffaire.idFeb != null %}
+                            {{ Bnr.idAffaire.idFeb.numFeb }}
+                        {% else %}
+                            Pas encore de FEB
+                        {% endif %}
                         <br>
                         <span class="label">Info sur le montant : </span>
                         {{ Bnr.montantInfo }}
@@ -46,13 +41,6 @@
                         <span class="label">Impact de non-réalisation :</span>
                         <br>
                         {{ Bnr.impact }}
-                        <br>
-                        <span class="label">État :</span>
-                        {% if Bnr.idAffaire.etatAffaire == '1' %}
-                            Prévu
-                        {% else %}
-                            Traité
-                        {% endif %}
                         <br>
                         <span class="label">Commentaire :</span>
                         <br>
@@ -91,9 +79,22 @@
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="febEdit" autocomplete="off">
-                                    <option value="{{ Bnr.idAffaire.idFeb.idFeb}}" selected>{{ Bnr.idAffaire.idFeb.numFeb }}</option>
+                                    {% if Bnr.idAffaire.idFeb != null %}
+                                        <option value="{{ Bnr.idAffaire.idFeb.idFeb}}" selected>{{ Bnr.idAffaire.idFeb.numFeb }}</option>
+                                    {% else %}
+                                        <option value="{{ null }}" selected>Pas encore de FEB</option>
+                                    {% endif %}
+
                                     {% for Feb in Febs %}
                                         <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="priorityEdit" autocomplete="off">
+                                    <option value="{{ Bnr.idAffaire.idPriorisation.idPriorisation }}" selected>{{ Bnr.idAffaire.idPriorisation.priorisation }}</option>
+                                    {% for Prio in Prios %}
+                                        <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -104,29 +105,6 @@
                         <div class="form-floating mb-3">
                             <input value="{{ Bnr.montantInfo }}" type="text" class="form-control" id="bnr" name="montantInfoEdit" placeholder="name@example.com">
                             <label for="bnr">Info sur le montant</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <select class="form-select mb-3" aria-label="Default select example" name="priorityEdit" autocomplete="off">
-                                    <option value="{{ Bnr.idAffaire.idPriorisation.idPriorisation }}" selected>{{ Bnr.idAffaire.idPriorisation.priorisation }}</option>
-                                    {% for Prio in Prios %}
-                                        <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select mb-3" aria-label="Default select example" name="stateEdit">
-                                    <option value="{{ Bnr.idAffaire.etatAffaire }}" selected>
-                                        {% if Bnr.idAffaire.etatAffaire == '1' %}
-                                            Prévu
-                                        {% else %}
-                                            Traité
-                                        {% endif %}
-                                    </option>
-                                    <option value="1">Prévu</option>
-                                    <option value="2">Traité</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">

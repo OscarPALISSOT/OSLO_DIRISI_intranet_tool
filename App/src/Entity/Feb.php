@@ -41,7 +41,7 @@ class Feb
     /**
      * @var float
      *
-     * @ORM\Column(name="montant_feb", type="float", nullable=false)
+     * @ORM\Column(name="montant_feb", type="decimal", scale=2, nullable=false)
      */
     private $montantFeb;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,7 +39,7 @@ class Affaire
     /**
      * @var float
      *
-     * @ORM\Column(name="montant_Affaire", type="float", nullable=false)
+     * @ORM\Column(name="montant_Affaire", type="decimal", scale=2, nullable=false)
      */
     private $montantAffaire;
 
@@ -92,6 +93,13 @@ class Affaire
      * })
      */
     private $idNatureAffaire;
+
+    public function __construct()
+    {
+        $date = new DateTime();
+        $date->format('Y-m-d-H:i:s');
+        $this->setUpdateAt($date);
+    }
 
     public function getIdAffaire(): ?int
     {
