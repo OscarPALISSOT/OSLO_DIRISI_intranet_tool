@@ -3,6 +3,8 @@
 namespace App\Data;
 
 
+use App\Entity\Organisme;
+
 class SearchDataInternetMilitaire{
 
     /**
@@ -11,14 +13,8 @@ class SearchDataInternetMilitaire{
     public $page = 1;
 
     /**
-     * @var bool
+     * @var Organisme[]
      */
-    public bool $supMontant = true;
-
-
-    /**
-     * @var int
-     */
-    public int $Montant;
+    public $idOrganisme;
 
 }

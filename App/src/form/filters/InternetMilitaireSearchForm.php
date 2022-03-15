@@ -3,7 +3,9 @@
 namespace App\form\filters;
 
 use App\Data\SearchDataInternetMilitaire;
+use App\Entity\Organisme;
 use App\Repository\InternetMilitaireRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
@@ -20,37 +22,16 @@ class InternetMilitaireSearchForm extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ( count($this->internetMilitaireRepository->findAll()) > 0){
-            $maxMontant = $this->internetMilitaireRepository->findMaxMontant();
-            $minMontant = $this->internetMilitaireRepository->findMinMontant();
-            $min = $minMontant[0]['montantInternetMilitaire'];
-            $max = $maxMontant[0]['montantInternetMilitaire'];
-        }
-        else{
-            $min = 0;
-            $max = 50000;
-        }
+
         $builder
-            ->add('supMontant', ChoiceType::class, [
+            ->add('idOrganisme', EntityType::class, [
                 'label' => false,
                 'required' => false,
-                'placeholder' => "Supérieur ou inférieur au montant ?",
-                'choices' => [
-                    'Supérieur' => true,
-                    'Inférieur' => false,
-                ],
+                'class' => Organisme::class,
+                'expanded' => true,
+                'multiple' => true
+
             ])
-
-            ->add('Montant', RangeType::class, [
-
-                'label' => false,
-                'required' => false,
-                'attr' => [
-                    'min' => $min,
-                    'max' => $max,
-                    'value' => $min,
-                ],
-            ]);
         ;
     }
 

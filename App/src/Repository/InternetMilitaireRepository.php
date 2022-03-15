@@ -26,35 +26,6 @@ class InternetMilitaireRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
-     */
-    public function findMaxMontant(): array
-    {
-        return $this->createQueryBuilder('i')
-            ->select('i.idInternetMilitaire', 'i.montantInternetMilitaire')
-            ->orderBy('i.montantInternetMilitaire', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-    /**
-     * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
-     */
-    public function findMinMontant(): array
-    {
-        return $this->createQueryBuilder('i')
-            ->select('i.idInternetMilitaire', 'i.montantInternetMilitaire')
-            ->orderBy('i.montantInternetMilitaire', 'ASC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-
-    /**
      * @param SearchDataInternetMilitaire $data
      * @return PaginationInterface
      */
@@ -62,21 +33,15 @@ class InternetMilitaireRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('i')
-            ->select('i')
+            ->select('i', 'o')
+            ->join('i.idOrganisme', 'o')
             ->orderBy('i.updateAt', 'DESC');
 
 
-        if (!empty($data->Montant)){
-            if ($data->supMontant == false){
-                $query = $query
-                    ->andWhere('i.montantAffaire <= :Montant')
-                    ->setParameter('Montant', $data->Montant);
-            }
-            else{
-                $query = $query
-                    ->andWhere('i.montantAffaire >= :Montant')
-                    ->setParameter('Montant', $data->Montant);
-            }
+        if (!empty($data->idOrganisme)){
+            $query = $query
+                ->andWhere('i.idOrganisme IN (:Organisme)')
+                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
         }
 
         $query = $query->getQuery();

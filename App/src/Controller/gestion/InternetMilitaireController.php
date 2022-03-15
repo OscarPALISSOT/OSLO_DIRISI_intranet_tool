@@ -4,6 +4,7 @@ namespace App\Controller\gestion;
 
 use App\Data\SearchDataInternetMilitaire;
 use App\Entity\Affaire;
+use App\Entity\InternetMilitaire;
 use App\form\filters\InternetMilitaireSearchForm;
 use App\Repository\AffaireRepository;
 use App\Repository\ClassementDlRepository;
@@ -102,7 +103,7 @@ class InternetMilitaireController extends AbstractController {
             'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
-                'intituleSigle' => 'modifLan'
+                'intituleSigle' => 'internet_militaire'
             ]),
             'Prios' => $this->priorisationRepository->findAll(),
             'form' => $form->createView(),
@@ -118,60 +119,36 @@ class InternetMilitaireController extends AbstractController {
      * @throws \Exception
      */
     public function newInternetMilitaire(Request $request) : Response{
-        $nature = $this->natureAffaireRepository->findOneBy([
-            'natureAffaire' => 'internet_militaire',
-        ]);
-        $InternetMilitaireName = $request->request->get('internetMilitaire');
-        $Objectif = $request->request->get('objectif');
-        $montant = $request->request->get('montant');
-        $idPrio = $request->request->get('priority');
-        $Prio = $this->priorisationRepository->find($idPrio);
+        $masterId = $request->request->get('masterId');
+        $idoOrga = $request->request->get('orga');
+        $orga = $this->organismeRepository->find($idoOrga);
+        $type = $request->request->get('type');
+        $etat = $request->request->get('etat');
+        $ipPfs = $request->request->get('ipPfs');
+        $ipLanSubnet = $request->request->get('ipLanSubnet');
         $Date = $request->request->get('date');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $Comment = $request->request->get('comment');
-        $idFeb = $request->request->get('feb');
-        $Feb = $this->febRepository->find($idFeb);
-        $NewInternetMilitaire = (new Affaire())
-            ->setIdNatureAffaire($nature)
-            ->setNomAffaire($InternetMilitaireName)
-            ->setObjectifAffaire($Objectif)
-            ->setMontantAffaire($montant)
-            ->setIdPriorisation($Prio)
-            ->setEcheanceAffaire($date)
-            ->setCommentaire($Comment)
-            ->setIdFeb($Feb)
+        $comment = $request->request->get('comment');
+        $NewInternetMilitaire = (new InternetMilitaire())
+            ->setMasterId($masterId)
+            ->setIdOrganisme($orga)
+            ->setTypeInternetMilitaire($type)
+            ->setEtatInternetMilitaire($etat)
+            ->setIpPfs($ipPfs)
+            ->setIpLanSubnet($ipLanSubnet)
+            ->setDateDeValidation($date)
+            ->setCommentaire($comment)
         ;
         if ($this->isCsrfTokenValid("CreateInternetMilitaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewInternetMilitaire);
             $em->flush();
-            $coeurAvantTvx = $request->request->get('AnneeCoeurAvantTvx');
-            $Annee = $request->request->get('Annee');
-            $AnneeRenoCoeur = $request->request->get('AnneeRenoCoeur');
-            $idclassement = $request->request->get('classement');
-            $classement = $this->classementDlRepository->find($idclassement);
-            $renoApres = $request->request->get('renoApres');
-            $renoAvant = $request->request->get('renoAvant');
-            $semestre = $request->request->get('semestre');
-            $classification = $request->request->get('classification');
-            $NewInternetMilitaireInfos = (new InfoInternetMilitaire())
-                ->setIdAffaire($NewInternetMilitaire)
-                ->setAnneeCoeurAvTvx($coeurAvantTvx)
-                ->setAnneeInternetMilitaire($Annee)
-                ->setAnneeRenoCoeur($AnneeRenoCoeur)
-                ->setIdClassementDl($classement)
-                ->setRenoApres($renoApres)
-                ->setRenoAvant($renoAvant)
-                ->setSemestreInternetMilitaire($semestre)
-                ->setClassification($classification);
-            ;
 
-            $em = $this->ManagerRegistry->getManager();
-            $em->persist($NewInternetMilitaireInfos);
-            $em->flush();
             $jsonData = array(
-                'message' => 'MODIP ajouté',
+                'message' => $this->sigleRepository->findOneBy([
+                    'intituleSigle' => 'internet_militaire'
+                ]) . ' ajouté',
             );
         }
         else{
@@ -279,7 +256,9 @@ class InternetMilitaireController extends AbstractController {
             $em->persist($InternetMilitaire);
             $em->flush();
             $jsonData = array(
-                'message' => 'MODIP modifié',
+                'message' => $this->sigleRepository->findOneBy([
+                        'intituleSigle' => 'internet_militaire'
+                    ]) .' modifié',
             );
         }
         else{

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -86,6 +87,13 @@ class InternetMilitaire
      * })
      */
     private $idOrganisme;
+
+    public function __construct()
+    {
+        $date = new DateTime();
+        $date->format('Y-m-d-H:i:s');
+        $this->setUpdateAt($date);
+    }
 
     public function getIdInternetMilitaire(): ?int
     {
