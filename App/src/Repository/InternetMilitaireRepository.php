@@ -41,7 +41,7 @@ class InternetMilitaireRepository extends ServiceEntityRepository
         if (!empty($data->idOrganisme)){
             $query = $query
                 ->andWhere('i.idOrganisme IN (:Organisme)')
-                ->setParameter('Organisme', $data->idOrganisme->getIdOrganisme());
+                ->setParameter('Organisme', $data->idOrganisme);
         }
 
         $query = $query->getQuery();

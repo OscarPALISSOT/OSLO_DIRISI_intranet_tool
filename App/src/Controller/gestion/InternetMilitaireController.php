@@ -207,54 +207,32 @@ class InternetMilitaireController extends AbstractController {
      */
     public function EditInternetMilitaire(Request $request) : Response{
         $id = $request->request->get('idEdit');
-        $coeurAvantTvx = $request->request->get('AnneeCoeurAvantTvxEdit');
-        $Annee = $request->request->get('AnneeEdit');
-        $AnneeRenoCoeur = $request->request->get('AnneeRenoCoeurEdit');
-        $idclassement = $request->request->get('classementEdit');
-        $classement = $this->classementDlRepository->find($idclassement);
-        $renoApres = $request->request->get('renoApresEdit');
-        $renoAvant = $request->request->get('renoAvantEdit');
-        $semestre = $request->request->get('semestreEdit');
-        $classification = $request->request->get('classificationEdit');
-        $InternetMilitaireInfo = $this->infoInternetMilitaireRepository->find($id)
-            ->setAnneeCoeurAvTvx($coeurAvantTvx)
-            ->setAnneeInternetMilitaire($Annee)
-            ->setAnneeRenoCoeur($AnneeRenoCoeur)
-            ->setIdClassementDl($classement)
-            ->setRenoApres($renoApres)
-            ->setRenoAvant($renoAvant)
-            ->setSemestreInternetMilitaire($semestre)
-            ->setClassification($classification);
+        $masterId = $request->request->get('masterId');
+        $idoOrga = $request->request->get('orga');
+        $orga = $this->organismeRepository->find($idoOrga);
+        $type = $request->request->get('type');
+        $etat = $request->request->get('etat');
+        $ipPfs = $request->request->get('ipPfs');
+        $ipLanSubnet = $request->request->get('ipLanSubnet');
+        $Date = $request->request->get('date');
+        $date = new DateTime($Date);
+        $date->format('Y-m-d');
+        $comment = $request->request->get('comment');
+        $InternetMilitaire = $this->internetMilitaireRepository->find($id)
+            ->setMasterId($masterId)
+            ->setIdOrganisme($orga)
+            ->setTypeInternetMilitaire($type)
+            ->setEtatInternetMilitaire($etat)
+            ->setIpPfs($ipPfs)
+            ->setIpLanSubnet($ipLanSubnet)
+            ->setDateDeValidation($date)
+            ->setCommentaire($comment)
         ;
         if ($this->isCsrfTokenValid("EditInternetMilitaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
-            $em->persist($InternetMilitaireInfo);
-            $em->flush();
-            $InternetMilitaireName = $request->request->get('internetMilitaireEdit');
-            $Objectif = $request->request->get('objectifEdit');
-            $montant = $request->request->get('montantEdit');
-            $idPrio = $request->request->get('priorityEdit');
-            $Prio = $this->priorisationRepository->find($idPrio);
-            $Date = $request->request->get('dateEdit');
-            $date = new DateTime($Date);
-            $date->format('Y-m-d');
-            $Comment = $request->request->get('commentEdit');
-            $idFeb = $request->request->get('febEdit');
-            $Feb = $this->febRepository->find($idFeb);
-            $update = new DateTime();
-            $update->format('Y-m-d-H:i:s');
-            $InternetMilitaire = $this->affaireRepository->find($InternetMilitaireInfo->getIdAffaire())
-                ->setNomAffaire($InternetMilitaireName)
-                ->setObjectifAffaire($Objectif)
-                ->setMontantAffaire(floatval($montant))
-                ->setIdPriorisation($Prio)
-                ->setEcheanceAffaire($date)
-                ->setCommentaire($Comment)
-                ->setIdFeb($Feb)
-                ->setUpdateAt($update)
-            ;
             $em->persist($InternetMilitaire);
             $em->flush();
+
             $jsonData = array(
                 'message' => $this->sigleRepository->findOneBy([
                         'intituleSigle' => 'internet_militaire'

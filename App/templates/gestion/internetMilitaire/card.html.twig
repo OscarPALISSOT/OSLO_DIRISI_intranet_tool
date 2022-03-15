@@ -69,7 +69,64 @@
                 </div>
                 <div class="modal-body">
                     <form id="bnrFormEdit{{ InternetMilitaire.idInternetMilitaire }}" action="{{ path ('Admin_InternetMilitaire_Edit', {id: InternetMilitaire.idInternetMilitaire })}}" method="post" class="js-Ajax-form">
-
+                        <div class="form-floating mb-3">
+                            <input value="{{ InternetMilitaire.masterId }}" type="text" class="form-control" id="masterId" name="masterId" placeholder="name@example.com">
+                            <label for="masterId">Master ID</label>
+                        </div>
+                        <select class="form-select mb-3" aria-label="Default select example" name="orga" autocomplete="off">
+                            <option value="{{ InternetMilitaire.idOrganisme.idOrganisme }}" selected>
+                                {{ InternetMilitaire.idOrganisme.Organisme }} - {{ InternetMilitaire.idOrganisme.idQuartier.idbaseDefense.baseDefense }} - {{ InternetMilitaire.idOrganisme.idQuartier.trigramme }}
+                            </option>
+                            {% for Organisme in Organismes %}
+                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idbaseDefense.baseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="type" autocomplete="off">
+                                    {% if InternetMilitaire.etatInternetMilitaire == 1 %}
+                                        <option value="{{ InternetMilitaire.typeInternetMilitaire }}" selected>Cuivre</option>
+                                    {% else %}
+                                        <option value="{{ InternetMilitaire.typeInternetMilitaire }}" selected>Fibre</option>
+                                    {% endif %}
+                                    <option value="1">Cuivre</option>
+                                    <option value="2">Fibre</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="etat" autocomplete="off">
+                                    {% if InternetMilitaire.etatInternetMilitaire == 1 %}
+                                        <option value="{{ InternetMilitaire.etatInternetMilitaire }}" selected>Prévu</option>
+                                    {% else %}
+                                        <option value="{{ InternetMilitaire.etatInternetMilitaire }}" selected>Traité</option>
+                                    {% endif %}
+                                    <option value="1">Prévu</option>
+                                    <option value="2">Traité</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ InternetMilitaire.ipPfs }}" type="text" class="form-control" id="ipPfs" name="ipPfs" placeholder="name@example.com">
+                                    <label for="ipPfs">Ip Pfs</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ InternetMilitaire.ipLanSubnet }}" type="text" class="form-control" id="ipLanSubnet" name="ipLanSubnet" placeholder="name@example.com">
+                                    <label for="ipLanSubnet">Ip lan subnet</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3 date datepicker">
+                            <input value="{{ InternetMilitaire.dateDeValidation|date('m/d/Y') }}" type="text" class="form-control" placeholder="Date de validation" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
+                            <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px">{{ InternetMilitaire.commentaire }}</textarea>
+                            <label for="floatingTextarea2">Commentaire</label>
+                        </div>
                     </form>
                 </div>
                     <div class="modal-footer">
