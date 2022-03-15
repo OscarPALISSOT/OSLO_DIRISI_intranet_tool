@@ -39,12 +39,11 @@
             <a href="{{ path ('InternetMilitaire', {role: role})}}" class="">{{ sigles['internet_militaire'] }}</a>
         </li>
         <li class="sideNavItem">
-            <a href="{{ path ('contactBdd') }}" class="">{{ sigles['accesWan'] }}</a>
+            <a href="{{ path ('AccesWan', {role: role})}}" class="">{{ sigles['accesWan'] }}</a>
         </li>
     {% endif %}
 
 {% endblock %}
-
 
 {% block body %}
 

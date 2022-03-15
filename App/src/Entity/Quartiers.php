@@ -105,5 +105,10 @@ class Quartiers
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->getQuartier() .' - ' . $this->getTrigramme();
+    }
+
 
 }

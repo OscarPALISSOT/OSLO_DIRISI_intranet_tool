@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataAccesWan;
 use App\Entity\AccesWan;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method AccesWan|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,40 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AccesWanRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, AccesWan::class);
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * @param SearchDataAccesWan $data
+     * @return PaginationInterface
+     */
+    public function findAccesWanSearch(SearchDataAccesWan $data): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('a', 'q')
+            ->join('a.idQuartier', 'q')
+            ->orderBy('a.updateAt', 'DESC');
+
+
+        if (!empty($data->idQuartier)){
+            $query = $query
+                ->andWhere('a.idQuartier IN (:Quartier)')
+                ->setParameter('Quartier', $data->idQuartier);
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
     }
 
     // /**
