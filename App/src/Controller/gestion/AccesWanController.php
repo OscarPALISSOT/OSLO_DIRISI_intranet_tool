@@ -68,7 +68,7 @@ class AccesWanController extends AbstractController {
             return new JsonResponse([
                 'content' => $this->renderView('gestion/accesWan/_content.html.twig', [
                     'AccesWans' => $AccesWans,
-                    'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+                    'Quartiers' => $this->quartiersRepository->findAll(),
                 ]),
                 'sorting' => $this->renderView('gestion/accesWan/_sorting.html.twig', [
                     'AccesWans' => $AccesWans,
@@ -81,7 +81,7 @@ class AccesWanController extends AbstractController {
         }
         return $this->render('gestion/accesWan/AccesWan.html.twig', [
             'AccesWans' => $AccesWans,
-            'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+            'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
                 'intituleSigle' => 'AccesWan'

@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block FormFilterGestionEntity %}
-    {% include 'gestion/accesWan/formFilterAccesWan.html.twig' with {Organismes: Organismes, form: form} only %}
+    {% include 'gestion/accesWan/formFilterAccesWan.html.twig' with {Quartiers: Quartiers, form: form} only %}
 {% endblock %}
 
 {% block ContentGestionEntity %}
@@ -42,15 +42,18 @@
                 <div class="modal-body">
                     <form id="accesWanFormCreate" action="{{ path ('Admin_AccesWan_New')}}" method="post" class="js-Ajax-form">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="masterId" name="masterId" placeholder="name@example.com">
-                            <label for="masterId">Master ID</label>
+                            <input type="text" class="form-control" id="IdAccess" name="IdAccess" placeholder="name@example.com">
+                            <label for="IdAccess">ID Access</label>
                         </div>
                         <select class="form-select mb-3" aria-label="Default select example" name="orga" autocomplete="off">
-                            <option selected>Organisme bénéficiaire</option>
-                            {% for Organisme in Organismes %}
-                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idbaseDefense.baseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
+                            <option selected>Quartier bénéficiaire</option>
+                            {% for Quartier in Quartiers %}
+                                <option value="{{ Quartier.idQuartier }}">{{ Quartier.Quartier }} - {{ Quartier.idBaseDefense.baseDefense }} - {{ Quartier.trigramme }}</option>
                             {% endfor %}
                         </select>
+                        <div class="form mb-3">
+                            <input type="number" min="0" step="1" class="form-control" id="Debit" name="Debit" placeholder="Débit (Mb/s)">
+                        </div>
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="type" autocomplete="off">
@@ -66,24 +69,6 @@
                                     <option value="2">Traité</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="ipPfs" name="ipPfs" placeholder="name@example.com">
-                                    <label for="ipPfs">Ip Pfs</label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="ipLanSubnet" name="ipLanSubnet" placeholder="name@example.com">
-                                    <label for="ipLanSubnet">Ip lan subnet</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3 date datepicker">
-                            <input type="text" class="form-control" placeholder="Date de validation" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
-                            <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                         </div>
                         <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>
