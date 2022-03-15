@@ -3,15 +3,10 @@
 namespace App\Controller\gestion;
 
 use App\Data\SearchDataInternetMilitaire;
-use App\Entity\Affaire;
 use App\Entity\InternetMilitaire;
 use App\form\filters\InternetMilitaireSearchForm;
-use App\Repository\AffaireRepository;
-use App\Repository\ClassementDlRepository;
 use App\Repository\FebRepository;
-use App\Repository\GrandsComptesRepository;
 use App\Repository\InternetMilitaireRepository;
-use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
@@ -32,24 +27,18 @@ class InternetMilitaireController extends AbstractController {
     private OrganismeRepository $organismeRepository;
     private QuartiersRepository $quartiersRepository;
     private SigleRepository $sigleRepository;
-    private NatureAffaireRepository $natureAffaireRepository;
     private PriorisationRepository $priorisationRepository;
     private FebRepository $febRepository;
-    private GrandsComptesRepository $grandsComptesRepository;
-    private ClassementDlRepository $classementDlRepository;
     private InternetMilitaireRepository $internetMilitaireRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository, ClassementDlRepository $classementDlRepository, InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, InternetMilitaireRepository $internetMilitaireRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
         $this->quartiersRepository = $quartiersRepository;
         $this->sigleRepository = $sigleRepository;
-        $this->natureAffaireRepository = $natureAffaireRepository;
         $this->priorisationRepository = $priorisationRepository;
         $this->febRepository = $febRepository;
-        $this->grandsComptesRepository = $grandsComptesRepository;
-        $this->classementDlRepository = $classementDlRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
     }
 
@@ -80,10 +69,6 @@ class InternetMilitaireController extends AbstractController {
                 'content' => $this->renderView('gestion/internetMilitaire/_content.html.twig', [
                     'InternetMilitaires' => $InternetMilitaires,
                     'Organismes' => $this->organismeRepository->findAllWithQuartier(),
-                    'Febs' => $this->febRepository->findAll(),
-                    'ClassementDls' =>$this->classementDlRepository->findAll(),
-                    'GrandComptes' => $this->grandsComptesRepository->findAll(),
-                    'Prios' => $this->priorisationRepository->findAll(),
                 ]),
                 'sorting' => $this->renderView('gestion/internetMilitaire/_sorting.html.twig', [
                     'InternetMilitaires' => $InternetMilitaires,
@@ -97,10 +82,6 @@ class InternetMilitaireController extends AbstractController {
         return $this->render('gestion/internetMilitaire/InternetMilitaire.html.twig', [
             'InternetMilitaires' => $InternetMilitaires,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
-            'Febs' => $this->febRepository->findAll(),
-            'ClassementDls' =>$this->classementDlRepository->findAll(),
-            'GrandComptes' => $this->grandsComptesRepository->findAll(),
-            'Quartiers' => $this->quartiersRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
                 'intituleSigle' => 'internet_militaire'
