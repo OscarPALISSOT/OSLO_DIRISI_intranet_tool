@@ -107,7 +107,7 @@ class ModipController extends AbstractController {
      */
     public function newModip(Request $request) : Response{
         $nature = $this->natureAffaireRepository->findOneBy([
-            'natureAffaire' => 'besoinNouveauReseau',
+            'natureAffaire' => 'modifLan',
         ]);
         $ModipName = $request->request->get('modip');
         $Objectif = $request->request->get('objectif');
@@ -137,20 +137,22 @@ class ModipController extends AbstractController {
             $coeurAvantTvx = $request->request->get('AnneeCoeurAvantTvx');
             $Annee = $request->request->get('Annee');
             $AnneeRenoCoeur = $request->request->get('AnneeRenoCoeur');
-            $idclassification = $request->request->get('classification');
-            $classification = $this->classementDlRepository->find($idclassification);
+            $idclassement = $request->request->get('classement');
+            $classement = $this->classementDlRepository->find($idclassement);
             $renoApres = $request->request->get('renoApres');
             $renoAvant = $request->request->get('renoAvant');
             $semestre = $request->request->get('semestre');
+            $classification = $request->request->get('classification');
             $NewModipInfos = (new InfoModip())
                 ->setIdAffaire($NewModip)
                 ->setAnneeCoeurAvTvx($coeurAvantTvx)
                 ->setAnneeModip($Annee)
                 ->setAnneeRenoCoeur($AnneeRenoCoeur)
-                ->setIdClassementDl($classification)
+                ->setIdClassementDl($classement)
                 ->setRenoApres($renoApres)
                 ->setRenoAvant($renoAvant)
                 ->setSemestreModip($semestre)
+                ->setClassification($classification);
             ;
 
             $em = $this->ManagerRegistry->getManager();
@@ -216,52 +218,53 @@ class ModipController extends AbstractController {
      */
     public function EditModip(Request $request) : Response{
         $id = $request->request->get('idEdit');
-        $Modip = $this->affaireRepository->find($id);
-        $ModipName = $request->request->get('modipEdit');
-        $Objectif = $request->request->get('objectifEdit');
-        $montant = $request->request->get('montantEdit');
-        $idOrganismes = $request->request->all('organismeEdit', []);
-        foreach ($idOrganismes as $item){
-            $Modip->addIdOrganisme($this->organismeRepository->find($item));
-        }
-        $idPrio = $request->request->get('priorityEdit');
-        $Prio = $this->priorisationRepository->find($idPrio);
-        $Date = $request->request->get('dateEdit');
-        $date = new DateTime($Date);
-        $date->format('Y-m-d');
-        $State = $request->request->get('stateEdit');
-        $Comment = $request->request->get('commentEdit');
-        $idFeb = $request->request->get('febEdit');
-        $idGrandsComptes = $request->request->get('grandCompteEdit');
-        $GrandCompte = $this->grandsComptesRepository->find($idGrandsComptes);
-        $Feb = $this->febRepository->find($idFeb);
-        $Modip->setNomAffaire($ModipName);
-        $Modip->setObjectifAffaire($Objectif);
-        $Modip->setMontantAffaire($montant);
-        $Modip->setEtatAffaire($State);
-        $Modip->setIdGrandsComptes($GrandCompte);
-        $Modip->setIdPriorisation($Prio);
-        $Modip->setEcheanceAffaire($date);
-        $Modip->setCommentaire($Comment);
-        $Modip->setIdFeb($Feb);
-        $update = new DateTime();
-        $update->format('Y-m-d-H:i:s');
-        $Modip->setUpdateAt($update);
+        $coeurAvantTvx = $request->request->get('AnneeCoeurAvantTvxEdit');
+        $Annee = $request->request->get('AnneeEdit');
+        $AnneeRenoCoeur = $request->request->get('AnneeRenoCoeurEdit');
+        $idclassement = $request->request->get('classementEdit');
+        $classement = $this->classementDlRepository->find($idclassement);
+        $renoApres = $request->request->get('renoApresEdit');
+        $renoAvant = $request->request->get('renoAvantEdit');
+        $semestre = $request->request->get('semestreEdit');
+        $classification = $request->request->get('classificationEdit');
+        $ModipInfo = $this->infoModipRepository->find($id)
+            ->setAnneeCoeurAvTvx($coeurAvantTvx)
+            ->setAnneeModip($Annee)
+            ->setAnneeRenoCoeur($AnneeRenoCoeur)
+            ->setIdClassementDl($classement)
+            ->setRenoApres($renoApres)
+            ->setRenoAvant($renoAvant)
+            ->setSemestreModip($semestre)
+            ->setClassification($classification);
+        ;
         if ($this->isCsrfTokenValid("EditModip", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
-            $em->persist($Modip);
+            $em->persist($ModipInfo);
             $em->flush();
-            $ModipInfos = $this->infoModipRepository->find($Modip->getIdAffaire());
-            $DateDemande = $request->request->get('dateDemandeEdit');
-            $dateDemande = new DateTime($DateDemande);
-            $dateDemande->format('Y-m-d');
-            $ModipInfos->setDateDemande($dateDemande);
-            $MontantInfo = $request->request->get('montantInfoEdit');
-            $ModipInfos->setMontantInfo($MontantInfo);
-            $Impact = $request->request->get('impactEdit');
-            $ModipInfos->setImpact($Impact);
-            $em = $this->ManagerRegistry->getManager();
-            $em->persist($ModipInfos);
+            $ModipName = $request->request->get('modipEdit');
+            $Objectif = $request->request->get('objectifEdit');
+            $montant = $request->request->get('montantEdit');
+            $idPrio = $request->request->get('priorityEdit');
+            $Prio = $this->priorisationRepository->find($idPrio);
+            $Date = $request->request->get('dateEdit');
+            $date = new DateTime($Date);
+            $date->format('Y-m-d');
+            $Comment = $request->request->get('commentEdit');
+            $idFeb = $request->request->get('febEdit');
+            $Feb = $this->febRepository->find($idFeb);
+            $update = new DateTime();
+            $update->format('Y-m-d-H:i:s');
+            $Modip = $this->affaireRepository->find($ModipInfo->getIdAffaire())
+                ->setNomAffaire($ModipName)
+                ->setObjectifAffaire($Objectif)
+                ->setMontantAffaire(floatval($montant))
+                ->setIdPriorisation($Prio)
+                ->setEcheanceAffaire($date)
+                ->setCommentaire($Comment)
+                ->setIdFeb($Feb)
+                ->setUpdateAt($update)
+            ;
+            $em->persist($Modip);
             $em->flush();
             $jsonData = array(
                 'message' => 'MODIP modifié',
