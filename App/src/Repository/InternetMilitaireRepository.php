@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataInternetMilitaire;
 use App\Entity\InternetMilitaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method InternetMilitaire|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,75 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InternetMilitaireRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, InternetMilitaire::class);
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
+     */
+    public function findMaxMontant(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.idInternetMilitaire', 'i.montantInternetMilitaire')
+            ->orderBy('i.montantInternetMilitaire', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
+     */
+    public function findMinMontant(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.idInternetMilitaire', 'i.montantInternetMilitaire')
+            ->orderBy('i.montantInternetMilitaire', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+    /**
+     * @param SearchDataInternetMilitaire $data
+     * @return PaginationInterface
+     */
+    public function findInternetMilitaireSearch(SearchDataInternetMilitaire $data): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('i')
+            ->select('i')
+            ->orderBy('i.updateAt', 'DESC');
+
+
+        if (!empty($data->Montant)){
+            if ($data->supMontant == false){
+                $query = $query
+                    ->andWhere('i.montantAffaire <= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+            else{
+                $query = $query
+                    ->andWhere('i.montantAffaire >= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12,
+        );
     }
 
     // /**
