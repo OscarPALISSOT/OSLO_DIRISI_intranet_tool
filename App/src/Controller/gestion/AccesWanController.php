@@ -138,8 +138,8 @@ class AccesWanController extends AbstractController {
         $nbAccesWan = count($AccesWans);
         $ChekedId = array();
         for ( $i = 0; $i < $nbAccesWan; $i++){
-            if ($request->request->get('idChecked' . $AccesWans[$i]->getIdAccesWan())){
-                $ChekedId[] = $AccesWans[$i]->getIdAccesWan();
+            if ($request->request->get('idChecked' . $AccesWans[$i]->getIdOpera())){
+                $ChekedId[] = $AccesWans[$i]->getIdOpera();
             }
         }
         if (count($ChekedId) == 0){

@@ -20,7 +20,7 @@ class AccesWan
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idAccesWan;
+    private $idOpera;
 
     /**
      * @var string
@@ -81,6 +81,10 @@ class AccesWan
         $this->setUpdateAt($date);
     }
 
+    public function getIdOpera(): ?int
+    {
+        return $this->idOpera;
+    }
 
     public function getIdAccess(): ?string
     {
@@ -164,11 +168,6 @@ class AccesWan
         $this->idQuartier = $idQuartier;
 
         return $this;
-    }
-
-    public function getIdAccesWan(): ?int
-    {
-        return $this->idAccesWan;
     }
 
 
