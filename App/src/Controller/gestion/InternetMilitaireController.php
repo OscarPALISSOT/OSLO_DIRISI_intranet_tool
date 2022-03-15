@@ -165,12 +165,12 @@ class InternetMilitaireController extends AbstractController {
      * @return Response
      */
     public function DeleteInternetMilitaire(Request $request): Response{
-        $InternetMilitaires = $this->infoInternetMilitaireRepository->findAll();
+        $InternetMilitaires = $this->internetMilitaireRepository->findAll();
         $nbInternetMilitaire = count($InternetMilitaires);
         $ChekedId = array();
         for ( $i = 0; $i < $nbInternetMilitaire; $i++){
-            if ($request->request->get('idChecked' . $InternetMilitaires[$i]->getIdInfoInternetMilitaire())){
-                $ChekedId[] = $InternetMilitaires[$i]->getIdInfoInternetMilitaire();
+            if ($request->request->get('idChecked' . $InternetMilitaires[$i]->getIdInternetMilitaire())){
+                $ChekedId[] = $InternetMilitaires[$i]->getIdInternetMilitaire();
             }
         }
         if (count($ChekedId) == 0){
@@ -180,14 +180,11 @@ class InternetMilitaireController extends AbstractController {
         }
         else{
             foreach ($ChekedId as $item){
-                $internetMilitaireToDelete = $this->infoInternetMilitaireRepository->find($item);
-                $affaireToDelete = $this->affaireRepository->find($internetMilitaireToDelete->getIdAffaire());
+                $internetMilitaireToDelete = $this->internetMilitaireRepository->find($item);
 
                 if ($this->isCsrfTokenValid("DeleteInternetMilitaire", $request->get('_token'))){
                     $em = $this->ManagerRegistry->getManager();
                     $em->remove($internetMilitaireToDelete);
-                    $em->flush();
-                    $em->remove($affaireToDelete);
                     $em->flush();
                 }
 
