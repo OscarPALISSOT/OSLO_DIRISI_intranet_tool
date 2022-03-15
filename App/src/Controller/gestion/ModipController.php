@@ -21,6 +21,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,11 +77,25 @@ class ModipController extends AbstractController {
 
         }
         $sigles = $this->sigleRepository->findSigles();
-        /*if ($request->isXmlHttpRequest()){
+        if ($request->get('Ajax')){
             return new JsonResponse([
-                'content' => $this->renderView('')
-            ])
-        }*/
+                'content' => $this->renderView('gestion/modip/_content.html.twig', [
+                    'Modips' => $Modips,
+                    'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+                    'Febs' => $this->febRepository->findAll(),
+                    'ClassementDls' =>$this->classementDlRepository->findAll(),
+                    'GrandComptes' => $this->grandsComptesRepository->findAll(),
+                    'Prios' => $this->priorisationRepository->findAll(),
+                ]),
+                'sorting' => $this->renderView('gestion/modip/_sorting.html.twig', [
+                    'Modips' => $Modips,
+                ]),
+                'pagination' => $this->renderView('gestion/modip/_pagination.html.twig', [
+                    'Modips' => $Modips,
+                ]),
+                'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
+            ]);
+        }
         return $this->render('gestion/modip/Modip.html.twig', [
             'Modips' => $Modips,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
