@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +20,7 @@ class AccesWan
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idOpera;
+    private $idAccesWan;
 
     /**
      * @var string
@@ -73,10 +74,13 @@ class AccesWan
      */
     private $idQuartier;
 
-    public function getIdOpera(): ?int
+    public function __construct()
     {
-        return $this->idOpera;
+        $date = new DateTime();
+        $date->format('Y-m-d-H:i:s');
+        $this->setUpdateAt($date);
     }
+
 
     public function getIdAccess(): ?string
     {
@@ -160,6 +164,11 @@ class AccesWan
         $this->idQuartier = $idQuartier;
 
         return $this;
+    }
+
+    public function getIdAccesWan(): ?int
+    {
+        return $this->idAccesWan;
     }
 
 

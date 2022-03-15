@@ -1,0 +1,77 @@
+
+<div class="col-6" id="entity-{{ AccesWan.idAccesWan }}">
+    <div class="card">
+        <div class="card-body Entity-card">
+            <div class="card-content">
+                <h3 class="card-title">
+                    {{ AccesWan.IdAccess }}
+                    <div class="form-check" style="font-size: larger">
+                        <label for="checkbox{{ AccesWan.idAccesWan }}"></label>
+                        <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ AccesWan.idAccesWan }}" type="checkbox" value="{{ AccesWan.idAccesWan }}" id="checkbox{{ AccesWan.idAccesWan }}">
+                    </div>
+                </h3>
+                <h4 class="card-subtitle mb-2 text-muted">
+                    {{ AccesWan.debitOpera }} Mb/s
+                </h4>
+                <p class="card-text">
+                    <span class="label">Quartier :</span>
+                    {{ AccesWan.idQuartier.Quartier }} - {{ AccesWan.idQuartier.idbaseDefense.baseDefense }} - {{ AccesWan.idQuartier.trigramme }}
+                    <br>
+                    <span class="label">Type :</span>
+                    {% if AccesWan.typeOpera == 1 %}
+                        Cuivre
+                    {% else %}
+                        Fibre
+                    {% endif %}
+                    <br>
+                </p>
+                <div class="collapse" id="collapseCard{{ AccesWan.idAccesWan }}">
+                    <p class="info">
+                        <span class="label">État :</span>
+                        {% if AccesWan.etatOpera == 1 %}
+                            Prévu
+                        {% else %}
+                            Traité
+                        {% endif %}
+                        <br>
+                        <span class="label">Commentaire :</span>
+                        <br>
+                        {{ AccesWan.commentaire }}
+                        <br>
+
+                    </p>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ AccesWan.idAccesWan }}" aria-expanded="false" aria-controls="collapseCard">
+                Voir plus <i class="far fa-eye"></i>
+            </button>
+            <!-- Button trigger modal edit -->
+            <button type="button" class="btn btn-outline-primary collapseBtn" data-bs-toggle="modal" data-bs-target="#modalEdit{{ AccesWan.idAccesWan }}">
+                Modifier <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal edit-->
+    <div class="modal fade" id="modalEdit{{ AccesWan.idAccesWan }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="modalLabel">Modifier</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bnrFormEdit{{ AccesWan.idAccesWan }}" action="{{ path ('Admin_AccesWan_Edit', {id: AccesWan.idAccesWan })}}" method="post" class="js-Ajax-form">
+
+                    </form>
+                </div>
+                    <div class="modal-footer">
+                        <!-- send request-->
+                        <input form="bnrFormEdit{{ AccesWan.idAccesWan }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditAccesWan')}}>
+                        <input form="bnrFormEdit{{ AccesWan.idAccesWan }}" type="hidden" name="idEdit" value="{{ AccesWan.idAccesWan }}">
+                        <button form="bnrFormEdit{{ AccesWan.idAccesWan }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit{{ AccesWan.idAccesWan }}">Enregistrer</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

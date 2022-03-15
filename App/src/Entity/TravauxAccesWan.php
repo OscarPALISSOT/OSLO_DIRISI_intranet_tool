@@ -50,7 +50,7 @@ class TravauxAccesWan
      *   @ORM\JoinColumn(name="id_opera", referencedColumnName="id_opera")
      * })
      */
-    private $idOpera;
+    private $idAccesWan;
 
     public function getIdTravauxOpera(): ?int
     {
@@ -93,14 +93,14 @@ class TravauxAccesWan
         return $this;
     }
 
-    public function getIdOpera(): ?AccesWan
+    public function getIdAccesWan(): ?AccesWan
     {
-        return $this->idOpera;
+        return $this->idAccesWan;
     }
 
-    public function setIdOpera(?AccesWan $idOpera): self
+    public function setIdAccesWan(?AccesWan $idAccesWan): self
     {
-        $this->idOpera = $idOpera;
+        $this->idAccesWan = $idAccesWan;
 
         return $this;
     }

@@ -5,9 +5,7 @@ namespace App\Controller\gestion;
 use App\Data\SearchDataAccesWan;
 use App\Entity\AccesWan;
 use App\form\filters\AccesWanSearchForm;
-use App\Repository\FebRepository;
 use App\Repository\AccesWanRepository;
-use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\SigleRepository;
@@ -24,21 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccesWanController extends AbstractController {
 
     private ManagerRegistry $ManagerRegistry;
-    private OrganismeRepository $organismeRepository;
     private QuartiersRepository $quartiersRepository;
     private SigleRepository $sigleRepository;
     private PriorisationRepository $priorisationRepository;
-    private FebRepository $febRepository;
     private AccesWanRepository $accesWanRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, AccesWanRepository $accesWanRepository)
+    public function __construct(ManagerRegistry $doctrine, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, AccesWanRepository $accesWanRepository)
     {
         $this->ManagerRegistry = $doctrine;
-        $this->organismeRepository = $organismeRepository;
         $this->quartiersRepository = $quartiersRepository;
         $this->sigleRepository = $sigleRepository;
         $this->priorisationRepository = $priorisationRepository;
-        $this->febRepository = $febRepository;
         $this->accesWanRepository = $accesWanRepository;
     }
 
@@ -100,25 +94,19 @@ class AccesWanController extends AbstractController {
      * @throws \Exception
      */
     public function newAccesWan(Request $request) : Response{
-        $masterId = $request->request->get('masterId');
-        $idoOrga = $request->request->get('orga');
-        $orga = $this->organismeRepository->find($idoOrga);
+        $IdAccess = $request->request->get('IdAccess');
+        $idQuartier = $request->request->get('quartier');
+        $Quartier = $this->quartiersRepository->find($idQuartier);
         $type = $request->request->get('type');
         $etat = $request->request->get('etat');
-        $ipPfs = $request->request->get('ipPfs');
-        $ipLanSubnet = $request->request->get('ipLanSubnet');
-        $Date = $request->request->get('date');
-        $date = new DateTime($Date);
-        $date->format('Y-m-d');
+        $debit = $request->request->get('Debit');
         $comment = $request->request->get('comment');
         $NewAccesWan = (new AccesWan())
-            ->setMasterId($masterId)
-            ->setIdOrganisme($orga)
-            ->setTypeAccesWan($type)
-            ->setEtatAccesWan($etat)
-            ->setIpPfs($ipPfs)
-            ->setIpLanSubnet($ipLanSubnet)
-            ->setDateDeValidation($date)
+            ->setIdAccess($IdAccess)
+            ->setIdQuartier($Quartier)
+            ->setDebitOpera($debit)
+            ->setTypeOpera($type)
+            ->setEtatOpera($etat)
             ->setCommentaire($comment)
         ;
         if ($this->isCsrfTokenValid("CreateAccesWan", $request->get('_token'))){
