@@ -24,6 +24,13 @@
                     <span class="label">Organisme :</span>
                     {{ InternetMilitaire.idOrganisme.Organisme }} - {{ InternetMilitaire.idOrganisme.idQuartier.idbaseDefense.baseDefense }} - {{ InternetMilitaire.idOrganisme.idQuartier.trigramme }}
                     <br>
+                    <span class="label">Type :</span>
+                    {% if InternetMilitaire.typeInternetMilitaire == 1 %}
+                        Cuivre
+                    {% else %}
+                        Fibre
+                    {% endif %}
+                    <br>
                 </p>
                 <div class="collapse" id="collapseCard{{ InternetMilitaire.idInternetMilitaire }}">
                     <p class="info">
