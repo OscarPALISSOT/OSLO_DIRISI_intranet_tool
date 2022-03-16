@@ -276,6 +276,9 @@ class InternetMilitaireController extends AbstractController {
             $csv->setHeaderOffset(0);
             $result = $csv->getRecords();
 
+            $date = new DateTime();
+            $date->format('Y-m-d');
+
             foreach ( $result as $row){
                 $InternetMilitaire = (new InternetMilitaire())
                     ->setMasterId($row['Master ID'])
@@ -287,9 +290,16 @@ class InternetMilitaireController extends AbstractController {
                             'organisme' => $row['Entité'],
                             'idQuartier' => $this->quartiersRepository->findOneBy([
                                 'trigramme' => $row['TRI']
-                            ])->getIdQuartier(),
+                            ]),
                         ])
                     )
+                    ->setIdSupport(
+                        $this->supportInternetMilitaireRepository->findOneBy([
+                            'support' => $row['support']
+                        ])
+                    )
+                    ->setDateDeValidation($date)
+                    ->setEtatInternetMilitaire(1)
                 ;
                 $em->persist($InternetMilitaire);
                 $em->flush();
