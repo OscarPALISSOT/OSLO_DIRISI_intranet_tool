@@ -14,6 +14,7 @@ use App\Entity\Quartiers;
 use App\Entity\Rfz;
 use App\Entity\Sigle;
 use App\Entity\StatutPdc;
+use App\Entity\SupportInternetMilitaire;
 use App\Entity\Users;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\CirisiRepository;
@@ -28,6 +29,7 @@ use App\Repository\QuartiersRepository;
 use App\Repository\RfzRepository;
 use App\Repository\SigleRepository;
 use App\Repository\StatutPdcRepository;
+use App\Repository\SupportInternetMilitaireRepository;
 use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Csv\Reader;
@@ -58,8 +60,9 @@ class AdminController extends AbstractController {
     private EtatPdcRepository $etatPdcRepository;
     private UserPasswordHasherInterface $hasher;
     private ClassementDlRepository $classementDlRepository;
+    private SupportInternetMilitaireRepository $supportInternetMilitaireRepository;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordHasherInterface $hasher, ClassementDlRepository $classementDlRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordHasherInterface $hasher, ClassementDlRepository $classementDlRepository, SupportInternetMilitaireRepository $supportInternetMilitaireRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -77,6 +80,7 @@ class AdminController extends AbstractController {
         $this->etatPdcRepository = $etatPdcRepository;
         $this->hasher = $hasher;
         $this->classementDlRepository = $classementDlRepository;
+        $this->supportInternetMilitaireRepository = $supportInternetMilitaireRepository;
     }
 
     /**
@@ -84,6 +88,7 @@ class AdminController extends AbstractController {
      * @return Response
      */
     public function index() : Response{
+        $sigles = $this->sigleRepository->findSigles();
         return $this->render('administration/admin.html.twig', [
             'nbBdd' => count($this->BasesDeDefenseRepository->findAll()),
             'nbRfz' => count($this->RfzRepository->findAll()),
@@ -99,6 +104,8 @@ class AdminController extends AbstractController {
             'nbStatutPdc' => count($this->statutPdcRepository->findAll()),
             'nbEtatPdc' => count($this->etatPdcRepository->findAll()),
             'nbClassementDl' => count($this->classementDlRepository->findAll()),
+            'nbSupportInternetMilitaire' => count($this->supportInternetMilitaireRepository->findAll()),
+            'sigles' => $sigles,
         ]);
     }
 
@@ -283,6 +290,14 @@ class AdminController extends AbstractController {
                         ->setClassementDl($row['ClassementDl'])
                     ;
                     $em->persist($classement);
+                    $em->flush();
+                }
+
+                if ($row['support'] != ''){
+                    $Support = (new SupportInternetMilitaire())
+                        ->setSupport($row['support'])
+                    ;
+                    $em->persist($Support);
                     $em->flush();
                 }
 
