@@ -11,19 +11,15 @@
                     </div>
                 </h3>
                 <h4 class="card-subtitle mb-2 text-muted">
-                    {% if InternetMilitaire.debitInternetMilitaire %}
-                        {{ InternetMilitaire.debitInternetMilitaire }} Mb/s
+                    {% if InternetMilitaire.debitInternetMilitaire != '' %}
+                        {{ InternetMilitaire.debitInternetMilitaire }}
                     {% else %}
                         Pas de débit renseigné
                     {% endif %}
                 </h4>
                 <p class="card-text">
-                    <span class="label">Type :</span>
-                    {% if InternetMilitaire.typeInternetMilitaire == 1 %}
-                        Cuivre
-                    {% else %}
-                        Fibre
-                    {% endif %}
+                    <span class="label">Support :</span>
+                    {{ InternetMilitaire.idSupport.support }}
                     <br>
                     <span class="label">Date de validation :</span>
                     {{ InternetMilitaire.dateDeValidation|date('d/m/Y')}}
@@ -90,8 +86,9 @@
                         </select>
                         <div class="row">
                             <div class="col-6">
-                                <div class="form mb-3">
-                                    <input value="{{ InternetMilitaire.debitInternetMilitaire }}" type="number" min="0" step="1" class="form-control" id="Debit" name="DebitEdit" placeholder="Débit (Mb/s)">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ InternetMilitaire.debitInternetMilitaire }}" type="text" class="form-control" id="debit" name="DebitEdit" placeholder="name@example.com">
+                                    <label for="debit">Débit</label>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -103,14 +100,11 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <select class="form-select mb-3" aria-label="Default select example" name="typeEdit" autocomplete="off">
-                                    {% if InternetMilitaire.typeInternetMilitaire == 1 %}
-                                        <option value="{{ InternetMilitaire.typeInternetMilitaire }}" selected>Cuivre</option>
-                                    {% else %}
-                                        <option value="{{ InternetMilitaire.typeInternetMilitaire }}" selected>Fibre</option>
-                                    {% endif %}
-                                    <option value="1">Cuivre</option>
-                                    <option value="2">Fibre</option>
+                                <select class="form-select mb-3" aria-label="Default select example" name="supportEdit" autocomplete="off">
+                                    <option value="{{ InternetMilitaire.idSupport.idSupportInternetMilitaire }}" selected>{{ InternetMilitaire.idSupport.support }}</option>
+                                    {% for Support in Supports %}
+                                        <option value="{{ Support.idSupportInternetMilitaire }}">{{ Support.support }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col-6">

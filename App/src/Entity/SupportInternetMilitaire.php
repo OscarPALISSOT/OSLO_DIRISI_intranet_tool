@@ -40,4 +40,9 @@ class SupportInternetMilitaire
     {
         return $this->idSupportInternetMilitaire;
     }
+
+    public function __toString(): string
+    {
+        return $this->getSupport();
+    }
 }

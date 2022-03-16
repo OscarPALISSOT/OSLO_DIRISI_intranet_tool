@@ -19,6 +19,7 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -258,6 +259,54 @@ class BNRController extends AbstractController {
         else{
             $jsonData = array(
                 'message' => "Erreur lors de la modification",
+            );
+        }
+
+        return $this->json($jsonData, 200);
+    }
+
+
+    /**
+     * @Route ("/Admin/ImportBnr", name="importBnr")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function import(Request $request) : JsonResponse
+    {
+        $file = $request->files->get('file', 'r');
+
+        if ($file == null){
+            $jsonData = array(
+                'message' => "Erreur, veuillez renseignez un fichier.",
+            );
+        }
+        else{
+
+            $oldMessage = ',';
+
+            $deletedFormat = '.';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+            $em = $this->ManagerRegistry->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+
+            $jsonData = array(
+                'message' => "Importation terminée",
             );
         }
 

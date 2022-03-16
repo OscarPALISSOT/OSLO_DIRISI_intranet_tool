@@ -11,10 +11,12 @@ use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\SigleRepository;
+use App\Repository\SupportInternetMilitaireRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,14 +30,18 @@ class InternetMilitaireController extends AbstractController {
     private SigleRepository $sigleRepository;
     private PriorisationRepository $priorisationRepository;
     private InternetMilitaireRepository $internetMilitaireRepository;
+    private QuartiersRepository $quartiersRepository;
+    private SupportInternetMilitaireRepository $supportInternetMilitaireRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, InternetMilitaireRepository $internetMilitaireRepository, QuartiersRepository $quartiersRepository, SupportInternetMilitaireRepository $supportInternetMilitaireRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
         $this->sigleRepository = $sigleRepository;
         $this->priorisationRepository = $priorisationRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
+        $this->quartiersRepository = $quartiersRepository;
+        $this->supportInternetMilitaireRepository = $supportInternetMilitaireRepository;
     }
 
 
@@ -65,6 +71,7 @@ class InternetMilitaireController extends AbstractController {
                 'content' => $this->renderView('gestion/internetMilitaire/_content.html.twig', [
                     'InternetMilitaires' => $InternetMilitaires,
                     'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+                    'Supports' =>$this->supportInternetMilitaireRepository->findAll(),
                 ]),
                 'sorting' => $this->renderView('gestion/internetMilitaire/_sorting.html.twig', [
                     'InternetMilitaires' => $InternetMilitaires,
@@ -78,6 +85,7 @@ class InternetMilitaireController extends AbstractController {
         return $this->render('gestion/internetMilitaire/InternetMilitaire.html.twig', [
             'InternetMilitaires' => $InternetMilitaires,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+            'Supports' =>$this->supportInternetMilitaireRepository->findAll(),
             'role' => $role[0],
             'title' => $this->sigleRepository->findOneBy([
                 'intituleSigle' => 'internet_militaire'
@@ -99,7 +107,8 @@ class InternetMilitaireController extends AbstractController {
         $masterId = $request->request->get('masterId');
         $idoOrga = $request->request->get('orga');
         $orga = $this->organismeRepository->find($idoOrga);
-        $type = $request->request->get('type');
+        $idSupport = $request->request->get('support');
+        $support = $this->supportInternetMilitaireRepository->find($idSupport);
         $debit = $request->request->get('Debit');
         $etat = $request->request->get('etat');
         $ipPfs = $request->request->get('ipPfs');
@@ -111,16 +120,14 @@ class InternetMilitaireController extends AbstractController {
         $NewInternetMilitaire = (new InternetMilitaire())
             ->setMasterId($masterId)
             ->setIdOrganisme($orga)
-            ->setTypeInternetMilitaire($type)
+            ->setIdSupport($support)
+            ->setDebitInternetMilitaire($debit)
             ->setEtatInternetMilitaire($etat)
             ->setIpPfs($ipPfs)
             ->setIpLanSubnet($ipLanSubnet)
             ->setDateDeValidation($date)
             ->setCommentaire($comment)
         ;
-        if ($debit != ''){
-            $NewInternetMilitaire->setDebitInternetMilitaire($debit);
-        }
         if ($this->isCsrfTokenValid("CreateInternetMilitaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewInternetMilitaire);
@@ -188,7 +195,8 @@ class InternetMilitaireController extends AbstractController {
         $masterId = $request->request->get('masterIdEdit');
         $idoOrga = $request->request->get('orgaEdit');
         $orga = $this->organismeRepository->find($idoOrga);
-        $type = $request->request->get('typeEdit');
+        $idSupport = $request->request->get('supportEdit');
+        $support = $this->supportInternetMilitaireRepository->find($idSupport);
         $debit = $request->request->get('DebitEdit');
         $etat = $request->request->get('etatEdit');
         $ipPfs = $request->request->get('ipPfsEdit');
@@ -200,20 +208,14 @@ class InternetMilitaireController extends AbstractController {
         $InternetMilitaire = $this->internetMilitaireRepository->find($id)
             ->setMasterId($masterId)
             ->setIdOrganisme($orga)
-            ->setTypeInternetMilitaire($type)
+            ->setIdSupport($support)
+            ->setDebitInternetMilitaire($debit)
             ->setEtatInternetMilitaire($etat)
             ->setIpPfs($ipPfs)
             ->setIpLanSubnet($ipLanSubnet)
             ->setDateDeValidation($date)
             ->setCommentaire($comment)
         ;
-
-        if ($debit == ''){
-            $InternetMilitaire->setDebitInternetMilitaireToNull();
-        }
-        else{
-            $InternetMilitaire->setDebitInternetMilitaire($debit);
-        }
 
         if ($this->isCsrfTokenValid("EditInternetMilitaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
@@ -229,6 +231,72 @@ class InternetMilitaireController extends AbstractController {
         else{
             $jsonData = array(
                 'message' => "Erreur lors de la modification",
+            );
+        }
+
+        return $this->json($jsonData, 200);
+    }
+
+
+    /**
+     * @Route ("/Admin/ImportInternetMilitaire", name="importInternetMilitaire")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function import(Request $request) : JsonResponse
+    {
+        $file = $request->files->get('file', 'r');
+
+        if ($file == null){
+            $jsonData = array(
+                'message' => "Erreur, veuillez renseignez un fichier.",
+            );
+        }
+        else{
+
+            $oldMessage = ',';
+
+            $deletedFormat = '.';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+            $em = $this->ManagerRegistry->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+            foreach ( $result as $row){
+                $InternetMilitaire = (new InternetMilitaire())
+                    ->setMasterId($row['Master ID'])
+                    ->setDebitInternetMilitaire($row['debit'])
+                    ->setIpLanSubnet($row['IP LAN subnet'])
+                    ->setIpPfs($row['adresse IP PFS'])
+                    ->setIdOrganisme(
+                        $this->organismeRepository->findOneBy([
+                            'organisme' => $row['Entité'],
+                            'idQuartier' => $this->quartiersRepository->findOneBy([
+                                'trigramme' => $row['TRI']
+                            ])->getIdQuartier(),
+                        ])
+                    )
+                ;
+                $em->persist($InternetMilitaire);
+                $em->flush();
+            }
+
+            $jsonData = array(
+                'message' => "Importation terminée",
             );
         }
 
