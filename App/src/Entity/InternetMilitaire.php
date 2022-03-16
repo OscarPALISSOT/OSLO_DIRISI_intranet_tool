@@ -37,6 +37,13 @@ class InternetMilitaire
     private $typeInternetMilitaire;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="debit_internet_militaire", type="integer", nullable=true)
+     */
+    private $debitInternetMilitaire;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="ip_pfs", type="string", length=50, nullable=false)
@@ -204,6 +211,24 @@ class InternetMilitaire
     public function setIdOrganisme(?Organisme $idOrganisme): self
     {
         $this->idOrganisme = $idOrganisme;
+
+        return $this;
+    }
+
+    public function getDebitInternetMilitaire(): ?int
+    {
+        return $this->debitInternetMilitaire;
+    }
+
+    public function setDebitInternetMilitaire(?int $debitInternetMilitaire): self
+    {
+        $this->debitInternetMilitaire = $debitInternetMilitaire;
+
+        return $this;
+    }
+    public function setDebitInternetMilitaireToNull()
+    {
+        $this->debitInternetMilitaire = null;
 
         return $this;
     }

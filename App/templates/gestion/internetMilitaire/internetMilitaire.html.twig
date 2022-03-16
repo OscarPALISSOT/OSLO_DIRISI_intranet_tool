@@ -53,6 +53,19 @@
                         </select>
                         <div class="row">
                             <div class="col-6">
+                                <div class="form mb-3">
+                                    <input type="number" min="0" step="1" class="form-control" id="Debit" name="Debit" placeholder="Débit (Mb/s)">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input type="text" class="form-control" placeholder="Date de validation" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="type" autocomplete="off">
                                     <option selected>Type</option>
                                     <option value="1">Cuivre</option>
@@ -80,10 +93,6 @@
                                     <label for="ipLanSubnet">Ip lan subnet</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="input-group mb-3 date datepicker">
-                            <input type="text" class="form-control" placeholder="Date de validation" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
-                            <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                         </div>
                         <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>

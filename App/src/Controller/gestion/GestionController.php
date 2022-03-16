@@ -2,6 +2,7 @@
 
 namespace App\Controller\gestion;
 
+use App\Repository\AccesWanRepository;
 use App\Repository\AffaireRepository;
 use App\Repository\InfoBnrRepository;
 use App\Repository\InfoModipRepository;
@@ -16,17 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class GestionController extends AbstractController {
     private InternetMilitaireRepository $internetMilitaireRepository;
     private SigleRepository $sigleRepository;
-    private AffaireRepository $affaireRepository;
     private InfoBnrRepository $infoBnrRepository;
     private InfoModipRepository $infoModipRepository;
+    private AccesWanRepository $accesWanRepository;
 
-    public function __construct(InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository, InfoModipRepository $infoModipRepository)
+    public function __construct(InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, InfoBnrRepository $infoBnrRepository, InfoModipRepository $infoModipRepository, AccesWanRepository $accesWanRepository)
     {
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->sigleRepository = $sigleRepository;
-        $this->affaireRepository = $affaireRepository;
         $this->infoBnrRepository = $infoBnrRepository;
         $this->infoModipRepository = $infoModipRepository;
+        $this->accesWanRepository = $accesWanRepository;
     }
 
 
@@ -46,7 +47,7 @@ class GestionController extends AbstractController {
             'nbBNR' => count($this->infoBnrRepository->findAll()),
             'nbMODIP' => count($this->infoModipRepository->findAll()),
             'nbMIM3' => count($this->internetMilitaireRepository->findAll()),
-            'nbOPERA' => 'test',
+            'nbOPERA' => count($this->accesWanRepository->findAll()),
             'sigles' => $sigles,
             'role' => $role[0],
         ]);

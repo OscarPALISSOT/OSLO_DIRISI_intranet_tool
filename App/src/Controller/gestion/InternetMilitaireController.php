@@ -25,20 +25,16 @@ class InternetMilitaireController extends AbstractController {
 
     private ManagerRegistry $ManagerRegistry;
     private OrganismeRepository $organismeRepository;
-    private QuartiersRepository $quartiersRepository;
     private SigleRepository $sigleRepository;
     private PriorisationRepository $priorisationRepository;
-    private FebRepository $febRepository;
     private InternetMilitaireRepository $internetMilitaireRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, InternetMilitaireRepository $internetMilitaireRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
-        $this->quartiersRepository = $quartiersRepository;
         $this->sigleRepository = $sigleRepository;
         $this->priorisationRepository = $priorisationRepository;
-        $this->febRepository = $febRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
     }
 
@@ -104,6 +100,7 @@ class InternetMilitaireController extends AbstractController {
         $idoOrga = $request->request->get('orga');
         $orga = $this->organismeRepository->find($idoOrga);
         $type = $request->request->get('type');
+        $debit = $request->request->get('Debit');
         $etat = $request->request->get('etat');
         $ipPfs = $request->request->get('ipPfs');
         $ipLanSubnet = $request->request->get('ipLanSubnet');
@@ -121,6 +118,9 @@ class InternetMilitaireController extends AbstractController {
             ->setDateDeValidation($date)
             ->setCommentaire($comment)
         ;
+        if ($debit != ''){
+            $NewInternetMilitaire->setDebitInternetMilitaire($debit);
+        }
         if ($this->isCsrfTokenValid("CreateInternetMilitaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewInternetMilitaire);
@@ -185,17 +185,18 @@ class InternetMilitaireController extends AbstractController {
      */
     public function EditInternetMilitaire(Request $request) : Response{
         $id = $request->request->get('idEdit');
-        $masterId = $request->request->get('masterId');
-        $idoOrga = $request->request->get('orga');
+        $masterId = $request->request->get('masterIdEdit');
+        $idoOrga = $request->request->get('orgaEdit');
         $orga = $this->organismeRepository->find($idoOrga);
-        $type = $request->request->get('type');
-        $etat = $request->request->get('etat');
-        $ipPfs = $request->request->get('ipPfs');
-        $ipLanSubnet = $request->request->get('ipLanSubnet');
-        $Date = $request->request->get('date');
+        $type = $request->request->get('typeEdit');
+        $debit = $request->request->get('DebitEdit');
+        $etat = $request->request->get('etatEdit');
+        $ipPfs = $request->request->get('ipPfsEdit');
+        $ipLanSubnet = $request->request->get('ipLanSubnetEdit');
+        $Date = $request->request->get('dateEdit');
         $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $comment = $request->request->get('comment');
+        $comment = $request->request->get('commentEdit');
         $InternetMilitaire = $this->internetMilitaireRepository->find($id)
             ->setMasterId($masterId)
             ->setIdOrganisme($orga)
@@ -206,16 +207,24 @@ class InternetMilitaireController extends AbstractController {
             ->setDateDeValidation($date)
             ->setCommentaire($comment)
         ;
+
+        if ($debit == ''){
+            $InternetMilitaire->setDebitInternetMilitaireToNull();
+        }
+        else{
+            $InternetMilitaire->setDebitInternetMilitaire($debit);
+        }
+
         if ($this->isCsrfTokenValid("EditInternetMilitaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($InternetMilitaire);
             $em->flush();
-
             $jsonData = array(
                 'message' => $this->sigleRepository->findOneBy([
                         'intituleSigle' => 'internet_militaire'
                     ]) .' modifié',
             );
+
         }
         else{
             $jsonData = array(
