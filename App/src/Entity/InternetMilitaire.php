@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * InternetMilitaire
  *
- * @ORM\Table(name="internet_militaire", indexes={@ORM\Index(name="internet_militaire_Organisme_FK", columns={"id_organisme"})})
+ * @ORM\Table(name="internet_militaire", indexes={@ORM\Index(name="internet_militaire_Support_FK", columns={"id_support_internet_militaire"})})
  * @ORM\Entity(repositoryClass="App\Repository\InternetMilitaireRepository")
  */
 class InternetMilitaire
@@ -30,11 +30,11 @@ class InternetMilitaire
     private $masterId;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="type_internet_militaire", type="string", length=50, nullable=false)
+     * @ORM\Column(name="debit_internet_militaire", type="string", length=255 )
      */
-    private $typeInternetMilitaire;
+    private $debitInternetMilitaire;
 
     /**
      * @var string
@@ -67,7 +67,7 @@ class InternetMilitaire
     /**
      * @var string
      *
-     * @ORM\Column(name="commentaire", type="text", length=0, nullable=false)
+     * @ORM\Column(name="commentaire", type="text", length=0, nullable=true)
      */
     private $commentaire;
 
@@ -87,6 +87,16 @@ class InternetMilitaire
      * })
      */
     private $idOrganisme;
+
+    /**
+     * @var \SupportInternetMilitaire
+     *
+     * @ORM\ManyToOne(targetEntity="SupportInternetMilitaire")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_support_internet_militaire", referencedColumnName="id_support_internet_militaire")
+     * })
+     */
+    private $idSupport;
 
     public function __construct()
     {
@@ -108,18 +118,6 @@ class InternetMilitaire
     public function setMasterId(string $masterId): self
     {
         $this->masterId = $masterId;
-
-        return $this;
-    }
-
-    public function getTypeInternetMilitaire(): ?string
-    {
-        return $this->typeInternetMilitaire;
-    }
-
-    public function setTypeInternetMilitaire(string $typeInternetMilitaire): self
-    {
-        $this->typeInternetMilitaire = $typeInternetMilitaire;
 
         return $this;
     }
@@ -208,5 +206,28 @@ class InternetMilitaire
         return $this;
     }
 
+    public function getDebitInternetMilitaire(): ?string
+    {
+        return $this->debitInternetMilitaire;
+    }
+
+    public function setDebitInternetMilitaire(string $debitInternetMilitaire): self
+    {
+        $this->debitInternetMilitaire = $debitInternetMilitaire;
+
+        return $this;
+    }
+
+    public function getIdSupport(): ?SupportInternetMilitaire
+    {
+        return $this->idSupport;
+    }
+
+    public function setIdSupport(?SupportInternetMilitaire $idSupport): self
+    {
+        $this->idSupport = $idSupport;
+
+        return $this;
+    }
 
 }

@@ -132,6 +132,17 @@
                 </div>
             </div>
             {# /card ClassementDl #}
+            {# card SupportInternetMilitaire#}
+            <div class="col-lg-3 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="fas fa-step-forward"></i> Support {{ sigles['internet_militaire'] }}</h3>
+                        <p class="card-text">Il y a actuellement {{ nbSupportInternetMilitaire }} support {{ sigles['internet_militaire'] }} enregistrés</p>
+                        <a href="{{ path ('Admin_SupportInternetMilitaire') }}" class="btn btn-outline-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {# /card SupportInternetMilitaire #}
             {# card users#}
             <div class="col-lg-3 col-6">
                 <div class="card">

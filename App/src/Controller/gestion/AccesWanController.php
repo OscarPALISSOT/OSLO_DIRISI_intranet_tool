@@ -173,25 +173,19 @@ class AccesWanController extends AbstractController {
      */
     public function EditAccesWan(Request $request) : Response{
         $id = $request->request->get('idEdit');
-        $masterId = $request->request->get('masterId');
-        $idoOrga = $request->request->get('orga');
-        $orga = $this->organismeRepository->find($idoOrga);
-        $type = $request->request->get('type');
-        $etat = $request->request->get('etat');
-        $ipPfs = $request->request->get('ipPfs');
-        $ipLanSubnet = $request->request->get('ipLanSubnet');
-        $Date = $request->request->get('date');
-        $date = new DateTime($Date);
-        $date->format('Y-m-d');
-        $comment = $request->request->get('comment');
+        $IdAccess = $request->request->get('IdAccessEdit');
+        $idQuartier = $request->request->get('quartierEdit');
+        $Quartier = $this->quartiersRepository->find($idQuartier);
+        $type = $request->request->get('typeEdit');
+        $etat = $request->request->get('etatEdit');
+        $debit = $request->request->get('DebitEdit');
+        $comment = $request->request->get('commentEdit');
         $AccesWan = $this->accesWanRepository->find($id)
-            ->setMasterId($masterId)
-            ->setIdOrganisme($orga)
-            ->setTypeAccesWan($type)
-            ->setEtatAccesWan($etat)
-            ->setIpPfs($ipPfs)
-            ->setIpLanSubnet($ipLanSubnet)
-            ->setDateDeValidation($date)
+            ->setIdAccess($IdAccess)
+            ->setIdQuartier($Quartier)
+            ->setDebitOpera($debit)
+            ->setTypeOpera($type)
+            ->setEtatOpera($etat)
             ->setCommentaire($comment)
         ;
         if ($this->isCsrfTokenValid("EditAccesWan", $request->get('_token'))){
