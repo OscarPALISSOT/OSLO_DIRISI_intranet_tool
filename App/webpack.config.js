@@ -28,6 +28,7 @@ Encore
     .addEntry('datepickerMIN', './assets/js/bootstrap-datepicker.min.js')
     .addEntry('multiselectJS', './assets/js/multiselect.min.js')
     .addEntry('contactJS', './assets/js/pages/contactJS.js')
+    .addEntry('cardEntity', './assets/js/pages/cardEntity.js')
 
     .addStyleEntry('bootstrap', './assets/bootstrap-5.1.3-dist/css/bootstrap.css')
     .addStyleEntry('style', './assets/styles/style.scss')
