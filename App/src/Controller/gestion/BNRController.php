@@ -58,7 +58,7 @@ class BNRController extends AbstractController {
      * @param Request $request
      * @return JsonResponse|Response
      */
-    public function index(PaginatorInterface $paginator, Request $request): JsonResponse|Response
+    public function index(PaginatorInterface $paginator, Request $request)
     {
 
         $Data = new SearchDataBnr();

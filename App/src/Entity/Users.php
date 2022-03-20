@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * Users
@@ -12,7 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * @ORM\Table(name="users")
  */
-class Users implements PasswordAuthenticatedUserInterface, UserInterface, \Serializable
+class Users implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -28,7 +27,7 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface, \Seria
      *
      * @ORM\Column(name="user", type="string", length=50, nullable=false)
      */
-    private string $user;
+    private string $username;
 
     /**
      * @var string
@@ -49,14 +48,14 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface, \Seria
         return $this->idUser;
     }
 
-    public function getUser(): ?string
+    public function getUsername(): ?string
     {
-        return $this->user;
+        return $this->username;
     }
 
-    public function setUser(string $user): self
+    public function setUsername(string $username): self
     {
-        $this->user = $user;
+        $this->username = $username;
 
         return $this;
     }
@@ -87,7 +86,7 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface, \Seria
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->user;
+        return (string) $this->username;
     }
 
     public function getSalt()
@@ -105,7 +104,7 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface, \Seria
     {
         return serialize([
             $this->idUser,
-            $this->user,
+            $this->username,
             $this->password
         ]);
     }
@@ -115,7 +114,7 @@ class Users implements PasswordAuthenticatedUserInterface, UserInterface, \Seria
     {
         list(
             $this->idUser,
-            $this->user,
+            $this->username,
             $this->password
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
