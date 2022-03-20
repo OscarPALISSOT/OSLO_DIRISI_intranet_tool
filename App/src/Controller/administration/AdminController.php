@@ -33,14 +33,12 @@ use App\Repository\SupportInternetMilitaireRepository;
 use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Csv\Reader;
-use phpDocumentor\Reflection\DocBlock\Tags\Uses;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController {
 
@@ -58,11 +56,14 @@ class AdminController extends AbstractController {
     private StatutPdcRepository $statutPdcRepository;
     private ManagerRegistry $doctrine;
     private EtatPdcRepository $etatPdcRepository;
-    private UserPasswordHasherInterface $hasher;
     private ClassementDlRepository $classementDlRepository;
     private SupportInternetMilitaireRepository $supportInternetMilitaireRepository;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $hasher;
 
-    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordHasherInterface $hasher, ClassementDlRepository $classementDlRepository, SupportInternetMilitaireRepository $supportInternetMilitaireRepository)
+    public function __construct(BasesDeDefenseRepository $basesDeDefenseRepository, RfzRepository $RfzRepository, ContactRepository $contactRepository, CirisiRepository $cirisiRepository, QuartiersRepository $quartiersRepository, OrganismeRepository $organismeRepository, UsersRepository $usersRepository, SigleRepository $sigleRepository, GrandsComptesRepository $grandsComptesRepository, PriorisationRepository $priorisationRepository, NatureAffaireRepository $natureAffaireRepository, StatutPdcRepository $statutPdcRepository, ManagerRegistry $doctrine, EtatPdcRepository $etatPdcRepository, UserPasswordEncoderInterface $hasher, ClassementDlRepository $classementDlRepository, SupportInternetMilitaireRepository $supportInternetMilitaireRepository)
     {
         $this->RfzRepository = $RfzRepository;
         $this->BasesDeDefenseRepository = $basesDeDefenseRepository;
@@ -78,9 +79,9 @@ class AdminController extends AbstractController {
         $this->statutPdcRepository = $statutPdcRepository;
         $this->doctrine = $doctrine;
         $this->etatPdcRepository = $etatPdcRepository;
-        $this->hasher = $hasher;
         $this->classementDlRepository = $classementDlRepository;
         $this->supportInternetMilitaireRepository = $supportInternetMilitaireRepository;
+        $this->hasher = $hasher;
     }
 
     /**

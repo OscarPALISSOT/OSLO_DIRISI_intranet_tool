@@ -9,16 +9,19 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UsersController extends AbstractController {
 
     private ManagerRegistry $ManagerRegistry;
     private UsersRepository $usersRepository;
-    private UserPasswordHasherInterface $hasher;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $hasher;
 
-    public function __construct(UsersRepository $usersRepository, ManagerRegistry $doctrine, UserPasswordHasherInterface $hasher)
+    public function __construct(UsersRepository $usersRepository, ManagerRegistry $doctrine, UserPasswordEncoderInterface $hasher)
     {
         $this->ManagerRegistry = $doctrine;
         $this->usersRepository = $usersRepository;
