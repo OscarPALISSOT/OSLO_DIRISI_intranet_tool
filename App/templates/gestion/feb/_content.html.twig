@@ -1,0 +1,3 @@
+{% for Feb in Febs %}
+    {% include 'gestion/feb/tableRow.html.twig' with {Feb: Feb, Pdcs: Pdcs, Organismes: Organismes} only%}
+{% endfor %}

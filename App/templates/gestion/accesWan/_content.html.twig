@@ -1,0 +1,3 @@
+{% for AccesWan in AccesWans %}
+    {% include 'gestion/AccesWan/card.html.twig' with {AccesWan: AccesWan, Quartiers: Quartiers } only%}
+{% endfor %}

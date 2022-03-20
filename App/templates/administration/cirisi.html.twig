@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OSLO | Administration des bases de défense{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="mainTitle">CIRISI</h1>
+    <div class="container js-Ajax">
+
+        <div class="col">
+            <a href="{{ path ('Admin') }}" class="btn btn-outline-secondary">Retour <i class="fas fa-chevron-left"></i></a>
+        </div>
+
+        <!-- Button trigger modal new cirisi -->
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">
+            Nouveau CIRISI <i class="fas fa-plus-square"></i>
+        </button>
+
+        <!-- Button trigger modal delete -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete1">
+            Supprimer la sélection <i class="fas fa-trash"></i>
+        </button>
+
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col"><i class="fas fa-check"></i></th>
+                <th scope="col">CIRISI</th>
+                <th scope="col">Bases de défense</th>
+                <th scope="col">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Cirisi in Cirisis %}
+                <tr>
+                    <th scope="row">
+                        <div class="form-check">
+                            <label for="checkbox{{ Cirisi.idCirisi }}"></label>
+                            <input form="cirisiFormDelete" class="form-check-input checkboxCirisi" name="idChecked{{ Cirisi.idCirisi }}" type="checkbox" value="{{ Cirisi.idCirisi }}" id="checkbox{{ Cirisi.idCirisi }}">
+                        </div>
+                    </th>
+                    <td>{{ Cirisi.cirisi }}</td>
+                    <td>{{ Cirisi.idBaseDefense.BaseDefense }}</td>
+                    <td>
+                        <!-- Button trigger modal edit -->
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Cirisi.idCirisi }}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+
+                        <!-- Modal edit-->
+                        <div class="modal fade" id="modalEdit1{{ Cirisi.idCirisi }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form id="cirisiFormEdit{{ Cirisi.idCirisi }}" class="cirisiFormEdit js-Ajax-form" action="{{ path ('Admin_Cirisi_Edit', {id: Cirisi.idCirisi })}}" method="post">
+                                        <div class="modal-body">
+                                            <div class="container mt-4">
+                                                <h2>Modifier les informations du CIRISI :</h2>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Nom</span>
+                                                    <input value="{{ Cirisi.Cirisi }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="cirisiEdit" name="cirisiEdit">
+                                                </div>
+                                                <select name="bddEdit" class="form-select" aria-label="Default select example">
+                                                    <option selected value="{{ Cirisi.idBaseDefense.idBaseDefense }}">{{ Cirisi.idBaseDefense.BaseDefense }}</option>
+                                                    {% for Bdd in Bdds %}
+                                                        <option value="{{ Bdd.idBaseDefense }}">{{ Bdd.BaseDefense }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('EditCirisi')}}>
+                                            <input type="hidden" name="idEdit" value="{{ Cirisi.idCirisi }}">
+                                            <button type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit1{{ Cirisi.idCirisi }}">Enregistrer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(Cirisis) }}
+        </div>
+
+
+        <!-- First modal dialog create-->
+        <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="modalLabel">Nouveau CIRISI :</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="cirisiFormCreate" action="{{ path ('Admin_Cirisi_New')}}" method="post" class="js-Ajax-form">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Nom</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="cirisi" name="cirisi">
+                            </div>
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateCirisi')}}>
+                            <select name="bdd" class="form-select" aria-label="Default select example">
+                                <option selected>Base de défense</option>
+                                {% for Bdd in Bdds %}
+                                    <option value="{{ Bdd.idBaseDefense}}">{{ Bdd.BaseDefense}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- send request-->
+                            <button id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {#modal delete Cirisi#}
+        <!-- Modal delete-->
+        <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container mt-4">
+                            <div class="input-group mb-3">
+                                <h2>Attention ! Cette action est irréversible.</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <form id="cirisiFormDelete" action="{{ path ('Admin_Cirisi_Delete')}}" method="post" class="js-Ajax-form">
+                            <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteCirisi')}}>
+                            <button class="btn btn-danger" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
+                                Confirmer <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second modal message -->
+        <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="loading">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div id="ajax-modal"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- close second edit -->
+                        <button onClick="window.location.reload();" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal2"><i class="fas fa-check"></i> Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

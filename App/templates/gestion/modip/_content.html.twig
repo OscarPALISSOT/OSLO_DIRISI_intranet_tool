@@ -1,0 +1,3 @@
+{% for Modip in Modips %}
+    {% include 'gestion/modip/card.html.twig' with {Modip: Modip, Organismes: Organismes, Febs: Febs, GrandComptes: GrandComptes, Prios: Prios, ClassementDls: ClassementDls } only%}
+{% endfor %}
