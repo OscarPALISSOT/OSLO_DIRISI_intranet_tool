@@ -88,22 +88,6 @@ CREATE TABLE Statut_Pdc(
 
 
 #------------------------------------------------------------
-# Table: Plan_de_Charge
-#------------------------------------------------------------
-
-CREATE TABLE Plan_de_Charge(
-        id_pdc        Int  Auto_increment  NOT NULL ,
-        num_pdc       Varchar (50) NOT NULL ,
-        montant_pdc   Int NOT NULL ,
-        updateAt      Date NOT NULL ,
-        id_statut_pdc Int NOT NULL
-	,CONSTRAINT Plan_de_Charge_PK PRIMARY KEY (id_pdc)
-
-	,CONSTRAINT Plan_de_Charge_Statut_Pdc_FK FOREIGN KEY (id_statut_pdc) REFERENCES Statut_Pdc(id_statut_pdc)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
 # Table: Budget_FebCOm
 #------------------------------------------------------------
 
@@ -165,27 +149,6 @@ CREATE TABLE Organisme(
 	,CONSTRAINT Organisme_PK PRIMARY KEY (id_organisme)
 
 	,CONSTRAINT Organisme_quartiers_FK FOREIGN KEY (id_quartier) REFERENCES quartiers(id_quartier)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: internet_militaire
-#------------------------------------------------------------
-
-CREATE TABLE internet_militaire(
-        id_internet_militaire   Int  Auto_increment  NOT NULL ,
-        master_id               Varchar (50) NOT NULL ,
-        type_internet_militaire Varchar (50) NOT NULL ,
-        ip_pfs                  Varchar (50) NOT NULL ,
-        ip_lan_subnet           Varchar (50) NOT NULL ,
-        date_de_validation      Date NOT NULL ,
-        etat_internet_militaire Varchar (50) NOT NULL ,
-        commentaire             Longtext NOT NULL ,
-        update_at               Date NOT NULL ,
-        id_organisme            Int NOT NULL
-	,CONSTRAINT internet_militaire_PK PRIMARY KEY (id_internet_militaire)
-
-	,CONSTRAINT internet_militaire_Organisme_FK FOREIGN KEY (id_organisme) REFERENCES Organisme(id_organisme)
 )ENGINE=InnoDB;
 
 
@@ -279,22 +242,6 @@ CREATE TABLE ContactCirisi(
 
 
 #------------------------------------------------------------
-# Table: Feb
-#------------------------------------------------------------
-
-CREATE TABLE Feb(
-        id_feb      Int  Auto_increment  NOT NULL ,
-        num_feb     Varchar (50) NOT NULL ,
-        montant_feb Int NOT NULL ,
-        updateAt    Date NOT NULL ,
-        id_pdc      Int NOT NULL
-	,CONSTRAINT Feb_PK PRIMARY KEY (id_feb)
-
-	,CONSTRAINT Feb_Plan_de_Charge_FK FOREIGN KEY (id_pdc) REFERENCES Plan_de_Charge(id_pdc)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
 # Table: Nature_Affaire
 #------------------------------------------------------------
 
@@ -302,6 +249,55 @@ CREATE TABLE Nature_Affaire(
         id_nature_Affaire Int  Auto_increment  NOT NULL ,
         nature_Affaire    Varchar (50) NOT NULL
 	,CONSTRAINT Nature_Affaire_PK PRIMARY KEY (id_nature_Affaire)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Etat_pdc
+#------------------------------------------------------------
+
+CREATE TABLE Etat_pdc(
+        id_etat_pdc Int  Auto_increment  NOT NULL ,
+        etat_pdc    Varchar (50) NOT NULL
+	,CONSTRAINT Etat_pdc_PK PRIMARY KEY (id_etat_pdc)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Plan_de_Charge
+#------------------------------------------------------------
+
+CREATE TABLE Plan_de_Charge(
+        id_pdc            Int  Auto_increment  NOT NULL ,
+        intitulePdc       Varchar (50) NOT NULL ,
+        num_pdc           Varchar (50) NOT NULL ,
+        montant_pdc       Int NOT NULL ,
+        updateAt          Date NOT NULL ,
+        id_statut_pdc     Int NOT NULL ,
+        id_Grands_Comptes Int NOT NULL ,
+        id_etat_pdc       Int NOT NULL
+	,CONSTRAINT Plan_de_Charge_PK PRIMARY KEY (id_pdc)
+
+	,CONSTRAINT Plan_de_Charge_Statut_Pdc_FK FOREIGN KEY (id_statut_pdc) REFERENCES Statut_Pdc(id_statut_pdc)
+	,CONSTRAINT Plan_de_Charge_Grands_Comptes0_FK FOREIGN KEY (id_Grands_Comptes) REFERENCES Grands_Comptes(id_Grands_Comptes)
+	,CONSTRAINT Plan_de_Charge_Etat_pdc1_FK FOREIGN KEY (id_etat_pdc) REFERENCES Etat_pdc(id_etat_pdc)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Feb
+#------------------------------------------------------------
+
+CREATE TABLE Feb(
+        id_feb      Int  Auto_increment  NOT NULL ,
+        intituleFeb Varchar (50) NOT NULL ,
+        num_feb     Varchar (50) NOT NULL ,
+        montant_feb Int NOT NULL ,
+        updateAt    Date NOT NULL ,
+        id_pdc      Int NOT NULL
+	,CONSTRAINT Feb_PK PRIMARY KEY (id_feb)
+
+	,CONSTRAINT Feb_Plan_de_Charge_FK FOREIGN KEY (id_pdc) REFERENCES Plan_de_Charge(id_pdc)
 )ENGINE=InnoDB;
 
 
@@ -315,40 +311,16 @@ CREATE TABLE Affaire(
         objectif_Affaire  Varchar (50) NOT NULL ,
         montant_Affaire   Int NOT NULL ,
         echeance_Affaire  Date NOT NULL ,
-        etat_Affaire      Varchar (50) NOT NULL ,
         commentaire       Longtext NOT NULL ,
         update_at         Date NOT NULL ,
         id_priorisation   Int NOT NULL ,
-        id_Grands_Comptes Int NOT NULL ,
         id_nature_Affaire Int NOT NULL ,
         id_feb            Int
 	,CONSTRAINT Affaire_PK PRIMARY KEY (id_Affaire)
 
 	,CONSTRAINT Affaire_Priorisation_FK FOREIGN KEY (id_priorisation) REFERENCES Priorisation(id_priorisation)
-	,CONSTRAINT Affaire_Grands_Comptes0_FK FOREIGN KEY (id_Grands_Comptes) REFERENCES Grands_Comptes(id_Grands_Comptes)
-	,CONSTRAINT Affaire_Nature_Affaire1_FK FOREIGN KEY (id_nature_Affaire) REFERENCES Nature_Affaire(id_nature_Affaire)
-	,CONSTRAINT Affaire_Feb2_FK FOREIGN KEY (id_feb) REFERENCES Feb(id_feb)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: Info_modip
-#------------------------------------------------------------
-
-CREATE TABLE Info_modip(
-        id_info_modip           Int  Auto_increment  NOT NULL ,
-        classement_dl           Int NOT NULL ,
-        classification_op_modip Int NOT NULL ,
-        reno_avant              Varchar (50) NOT NULL ,
-        reno_apres              Varchar (50) NOT NULL ,
-        annee_coeur_av_tvx      Int NOT NULL ,
-        annee_reno_coeur        Int NOT NULL ,
-        annee_modip             Int NOT NULL ,
-        semestre_modip          Int NOT NULL ,
-        id_Affaire              Int NOT NULL
-	,CONSTRAINT Info_modip_PK PRIMARY KEY (id_info_modip)
-
-	,CONSTRAINT Info_modip_Affaire_FK FOREIGN KEY (id_Affaire) REFERENCES Affaire(id_Affaire)
+	,CONSTRAINT Affaire_Nature_Affaire0_FK FOREIGN KEY (id_nature_Affaire) REFERENCES Nature_Affaire(id_nature_Affaire)
+	,CONSTRAINT Affaire_Feb1_FK FOREIGN KEY (id_feb) REFERENCES Feb(id_feb)
 )ENGINE=InnoDB;
 
 
@@ -365,6 +337,73 @@ CREATE TABLE info_Bnr(
 	,CONSTRAINT info_Bnr_PK PRIMARY KEY (id_info_bnr)
 
 	,CONSTRAINT info_Bnr_Affaire_FK FOREIGN KEY (id_Affaire) REFERENCES Affaire(id_Affaire)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Support_Internet_Militaire
+#------------------------------------------------------------
+
+CREATE TABLE Support_Internet_Militaire(
+        id_support_internet_militaire Int  Auto_increment  NOT NULL ,
+        support                       Varchar (50) NOT NULL
+	,CONSTRAINT Support_Internet_Militaire_PK PRIMARY KEY (id_support_internet_militaire)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: internet_militaire
+#------------------------------------------------------------
+
+CREATE TABLE internet_militaire(
+        id_internet_militaire         Int  Auto_increment  NOT NULL ,
+        master_id                     Varchar (50) NOT NULL ,
+        ip_pfs                        Varchar (50) NOT NULL ,
+        ip_lan_subnet                 Varchar (50) NOT NULL ,
+        date_de_validation            Date NOT NULL ,
+        etat_internet_militaire       Varchar (50) NOT NULL ,
+        commentaire                   Longtext NOT NULL ,
+        update_at                     Date NOT NULL ,
+        id_organisme                  Int NOT NULL ,
+        id_support_internet_militaire Int NOT NULL
+	,CONSTRAINT internet_militaire_PK PRIMARY KEY (id_internet_militaire)
+
+	,CONSTRAINT internet_militaire_Organisme_FK FOREIGN KEY (id_organisme) REFERENCES Organisme(id_organisme)
+	,CONSTRAINT internet_militaire_Support_Internet_Militaire0_FK FOREIGN KEY (id_support_internet_militaire) REFERENCES Support_Internet_Militaire(id_support_internet_militaire)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Classement_dl
+#------------------------------------------------------------
+
+CREATE TABLE Classement_dl(
+        id_classement_dl Int  Auto_increment  NOT NULL ,
+        Classement_dl    Varchar (50) NOT NULL
+	,CONSTRAINT Classement_dl_PK PRIMARY KEY (id_classement_dl)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: Info_modip
+#------------------------------------------------------------
+
+CREATE TABLE Info_modip(
+        id_info_modip        Int  Auto_increment  NOT NULL ,
+        classement_dl        Int NOT NULL ,
+        classification_modip Int NOT NULL ,
+        reno_avant           Varchar (50) NOT NULL ,
+        reno_apres           Varchar (50) NOT NULL ,
+        annee_coeur_av_tvx   Int NOT NULL ,
+        annee_reno_coeur     Int NOT NULL ,
+        annee_modip          Int NOT NULL ,
+        semestre_modip       Int NOT NULL ,
+        id_Affaire           Int NOT NULL ,
+        id_classement_dl     Int NOT NULL
+	,CONSTRAINT Info_modip_PK PRIMARY KEY (id_info_modip)
+
+	,CONSTRAINT Info_modip_Affaire_FK FOREIGN KEY (id_Affaire) REFERENCES Affaire(id_Affaire)
+	,CONSTRAINT Info_modip_Classement_dl0_FK FOREIGN KEY (id_classement_dl) REFERENCES Classement_dl(id_classement_dl)
 )ENGINE=InnoDB;
 
 
