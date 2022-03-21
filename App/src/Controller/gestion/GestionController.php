@@ -15,11 +15,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GestionController extends AbstractController {
-    private InternetMilitaireRepository $internetMilitaireRepository;
-    private SigleRepository $sigleRepository;
-    private InfoBnrRepository $infoBnrRepository;
-    private InfoModipRepository $infoModipRepository;
-    private AccesWanRepository $accesWanRepository;
+    private $internetMilitaireRepository;
+    private $sigleRepository;
+    private $infoBnrRepository;
+    private $infoModipRepository;
+    private $accesWanRepository;
 
     public function __construct(InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, InfoBnrRepository $infoBnrRepository, InfoModipRepository $infoModipRepository, AccesWanRepository $accesWanRepository)
     {

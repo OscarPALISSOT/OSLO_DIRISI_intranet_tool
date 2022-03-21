@@ -25,13 +25,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class InternetMilitaireController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
-    private OrganismeRepository $organismeRepository;
-    private SigleRepository $sigleRepository;
-    private PriorisationRepository $priorisationRepository;
-    private InternetMilitaireRepository $internetMilitaireRepository;
-    private QuartiersRepository $quartiersRepository;
-    private SupportInternetMilitaireRepository $supportInternetMilitaireRepository;
+    private $ManagerRegistry;
+    private $organismeRepository;
+    private $sigleRepository;
+    private $priorisationRepository;
+    private $internetMilitaireRepository;
+    private $quartiersRepository;
+    private $supportInternetMilitaireRepository;
 
     public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, InternetMilitaireRepository $internetMilitaireRepository, QuartiersRepository $quartiersRepository, SupportInternetMilitaireRepository $supportInternetMilitaireRepository)
     {

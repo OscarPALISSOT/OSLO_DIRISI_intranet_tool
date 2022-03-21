@@ -28,17 +28,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ModipController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
-    private OrganismeRepository $organismeRepository;
-    private QuartiersRepository $quartiersRepository;
-    private AffaireRepository $affaireRepository;
-    private SigleRepository $sigleRepository;
-    private NatureAffaireRepository $natureAffaireRepository;
-    private PriorisationRepository $priorisationRepository;
-    private FebRepository $febRepository;
-    private GrandsComptesRepository $grandsComptesRepository;
-    private InfoModipRepository $infoModipRepository;
-    private ClassementDlRepository $classementDlRepository;
+    private $ManagerRegistry;
+    private $organismeRepository;
+    private $quartiersRepository;
+    private $affaireRepository;
+    private $sigleRepository;
+    private $natureAffaireRepository;
+    private $priorisationRepository;
+    private $febRepository;
+    private $grandsComptesRepository;
+    private $infoModipRepository;
+    private $classementDlRepository;
 
     public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, GrandsComptesRepository $grandsComptesRepository, InfoModipRepository $infoModipRepository, ClassementDlRepository $classementDlRepository)
     {

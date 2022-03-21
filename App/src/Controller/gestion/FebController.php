@@ -21,11 +21,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FebController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
-    private SigleRepository $sigleRepository;
-    private FebRepository $febRepository;
-    private PlanDeChargeRepository $planDeChargeRepository;
-    private OrganismeRepository $organismeRepository;
+    private $ManagerRegistry;
+    private $sigleRepository;
+    private $febRepository;
+    private $planDeChargeRepository;
+    private $organismeRepository;
 
     public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, FebRepository $febRepository, PlanDeChargeRepository $planDeChargeRepository, OrganismeRepository $organismeRepository)
     {

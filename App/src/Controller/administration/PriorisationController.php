@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PriorisationController extends AbstractController {
 
-    private PriorisationRepository $PriorisationRepository;
-    private ManagerRegistry $ManagerRegistry;
+    private $PriorisationRepository;
+    private $ManagerRegistry;
 
     public function __construct(PriorisationRepository $PriorisationRepository, ManagerRegistry $doctrine)
     {

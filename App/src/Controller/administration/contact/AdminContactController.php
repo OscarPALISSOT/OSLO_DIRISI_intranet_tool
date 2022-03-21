@@ -21,12 +21,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminContactController extends AbstractController
 {
 
-    private ContactRepository $ContactRepository;
-    private ContactcirisiRepository $ContactCirisiRepository;
-    private ContactbddRepository $contactbddRepository;
-    private ManagerRegistry $doctrine;
-    private CirisiRepository $cirisiRepository;
-    private BasesDeDefenseRepository $basesDeDefenseRepository;
+    private $ContactRepository;
+    private $ContactCirisiRepository;
+    private $contactbddRepository;
+    private $doctrine;
+    private $cirisiRepository;
+    private $basesDeDefenseRepository;
 
     public function __construct(ContactRepository $ContactRepository, ContactcirisiRepository $ContactCirisiRepository, ContactbddRepository $contactbddRepository, ManagerRegistry $doctrine, CirisiRepository $cirisiRepository, BasesDeDefenseRepository $basesDeDefenseRepository)
     {

@@ -14,10 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NatureAffaireController extends AbstractController {
 
-    private NatureAffaireRepository $NatureAffaireRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private SigleRepository $sigleRepository;
-    private NatureAffaireRepository $natureAffaireRepository;
+    private $NatureAffaireRepository;
+    private $ManagerRegistry;
+    private $sigleRepository;
+    private $natureAffaireRepository;
 
     public function __construct(NatureAffaireRepository $NatureAffaireRepository, ManagerRegistry $doctrine, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository)
     {

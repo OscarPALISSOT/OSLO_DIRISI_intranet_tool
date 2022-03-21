@@ -21,11 +21,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccesWanController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
-    private QuartiersRepository $quartiersRepository;
-    private SigleRepository $sigleRepository;
-    private PriorisationRepository $priorisationRepository;
-    private AccesWanRepository $accesWanRepository;
+    private $ManagerRegistry;
+    private $quartiersRepository;
+    private $sigleRepository;
+    private $priorisationRepository;
+    private $accesWanRepository;
 
     public function __construct(ManagerRegistry $doctrine, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, AccesWanRepository $accesWanRepository)
     {

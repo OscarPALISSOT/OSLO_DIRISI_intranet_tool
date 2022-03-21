@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrganismeController extends AbstractController {
 
-    private OrganismeRepository $OrganismeRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private QuartiersRepository $quartiersRepository;
+    private $OrganismeRepository;
+    private $ManagerRegistry;
+    private $quartiersRepository;
 
     public function __construct(OrganismeRepository $OrganismeRepository, ManagerRegistry $doctrine, QuartiersRepository $quartiersRepository)
     {

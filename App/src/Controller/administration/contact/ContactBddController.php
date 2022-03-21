@@ -16,10 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactBddController extends AbstractController {
 
-    private ContactbddRepository $ContactBddRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private ContactRepository $contactRepository;
-    private BasesDeDefenseRepository $bddRepository;
+    private $ContactBddRepository;
+    private $ManagerRegistry;
+    private $contactRepository;
+    private $bddRepository;
 
     public function __construct(ContactbddRepository $ContactBddRepository, ManagerRegistry $doctrine, BasesDeDefenseRepository $bddRepository, ContactRepository $contactRepository)
     {

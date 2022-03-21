@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ClassementDlController extends AbstractController {
 
-    private ClassementDlRepository $ClassementDlRepository;
-    private ManagerRegistry $ManagerRegistry;
+    private $ClassementDlRepository;
+    private $ManagerRegistry;
 
     public function __construct(ClassementDlRepository $ClassementDlRepository, ManagerRegistry $doctrine)
     {

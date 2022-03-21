@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GrandsComptesController extends AbstractController {
 
-    private GrandsComptesRepository $GrandsComptesRepository;
-    private ManagerRegistry $ManagerRegistry;
+    private $GrandsComptesRepository;
+    private $ManagerRegistry;
 
     public function __construct(GrandsComptesRepository $GrandsComptesRepository, ManagerRegistry $doctrine)
     {

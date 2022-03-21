@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BddController extends AbstractController {
 
-    private BasesDeDefenseRepository $BddRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private RfzRepository $rfzRepository;
+    private $BddRepository;
+    private $ManagerRegistry;
+    private $rfzRepository;
 
     public function __construct(BasesDeDefenseRepository $BddRepository, ManagerRegistry $doctrine, RfzRepository $rfzRepository)
     {

@@ -15,11 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController {
 
-    private ContactRepository $ContactRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private ContactRepository $contactRepository;
-    private ContactcirisiRepository $contactCirisiRepository;
-    private ContactbddRepository $contactbddRepository;
+    private $ContactRepository;
+    private $ManagerRegistry;
+    private $contactRepository;
+    private $contactCirisiRepository;
+    private $contactbddRepository;
 
     public function __construct(ContactRepository $ContactRepository, ManagerRegistry $doctrine, ContactRepository $contactRepository, ContactcirisiRepository $contactCirisiRepository, ContactbddRepository $contactbddRepository)
     {

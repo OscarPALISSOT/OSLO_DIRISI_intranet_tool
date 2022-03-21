@@ -24,12 +24,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PdcController extends AbstractController {
 
-    private ManagerRegistry $doctrine;
-    private SigleRepository $sigleRepository;
-    private StatutPdcRepository $statutPdcRepository;
-    private PlanDeChargeRepository $planDeChargeRepository;
-    private EtatPdcRepository $etatPdcRepository;
-    private GrandsComptesRepository $grandsComptesRepository;
+    private $doctrine;
+    private $sigleRepository;
+    private $statutPdcRepository;
+    private $planDeChargeRepository;
+    private $etatPdcRepository;
+    private $grandsComptesRepository;
 
     public function __construct(ManagerRegistry $doctrine, SigleRepository $sigleRepository, StatutPdcRepository $statutPdcRepository, PlanDeChargeRepository $planDeChargeRepository, EtatPdcRepository $etatPdcRepository, GrandsComptesRepository $grandsComptesRepository)
     {

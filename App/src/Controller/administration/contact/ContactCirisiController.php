@@ -16,10 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactCirisiController extends AbstractController {
 
-    private ContactcirisiRepository $ContactCirisiRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private CirisiRepository $cirisiRepository;
-    private ContactRepository $contactRepository;
+    private $ContactCirisiRepository;
+    private $ManagerRegistry;
+    private $cirisiRepository;
+    private $contactRepository;
 
     public function __construct(ContactcirisiRepository $ContactCirisiRepository, ManagerRegistry $doctrine, CirisiRepository $cirisiRepository, ContactRepository $contactRepository)
     {

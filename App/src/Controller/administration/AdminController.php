@@ -42,22 +42,22 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController {
 
-    private RfzRepository $RfzRepository;
-    private BasesDeDefenseRepository $BasesDeDefenseRepository;
-    private ContactRepository $ContactRepository;
-    private CirisiRepository $cirisiRepository;
-    private QuartiersRepository $quartiersRepository;
-    private OrganismeRepository $organismeRepository;
-    private UsersRepository $usersRepository;
-    private SigleRepository $sigleRepository;
-    private GrandsComptesRepository $grandsComptesRepository;
-    private PriorisationRepository $priorisationRepository;
-    private NatureAffaireRepository $natureAffaireRepository;
-    private StatutPdcRepository $statutPdcRepository;
-    private ManagerRegistry $doctrine;
-    private EtatPdcRepository $etatPdcRepository;
-    private ClassementDlRepository $classementDlRepository;
-    private SupportInternetMilitaireRepository $supportInternetMilitaireRepository;
+    private $RfzRepository;
+    private $BasesDeDefenseRepository;
+    private $ContactRepository;
+    private $cirisiRepository;
+    private $quartiersRepository;
+    private $organismeRepository;
+    private $usersRepository;
+    private $sigleRepository;
+    private $grandsComptesRepository;
+    private $priorisationRepository;
+    private $natureAffaireRepository;
+    private $statutPdcRepository;
+    private $doctrine;
+    private $etatPdcRepository;
+    private $classementDlRepository;
+    private $supportInternetMilitaireRepository;
     /**
      * @var UserPasswordEncoderInterface
      */

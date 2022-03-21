@@ -14,8 +14,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UsersController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
-    private UsersRepository $usersRepository;
+    private $ManagerRegistry;
+    private $usersRepository;
     /**
      * @var UserPasswordEncoderInterface
      */

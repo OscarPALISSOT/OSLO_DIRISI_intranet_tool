@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatutPdcController extends AbstractController {
 
-    private StatutPdcRepository $StatutPdcRepository;
-    private ManagerRegistry $ManagerRegistry;
+    private $StatutPdcRepository;
+    private $ManagerRegistry;
 
     public function __construct(StatutPdcRepository $StatutPdcRepository, ManagerRegistry $doctrine)
     {

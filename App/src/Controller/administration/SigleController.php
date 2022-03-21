@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SigleController extends AbstractController {
 
-    private SigleRepository $SigleRepository;
-    private ManagerRegistry $ManagerRegistry;
+    private $SigleRepository;
+    private $ManagerRegistry;
 
     public function __construct(SigleRepository $SigleRepository, ManagerRegistry $doctrine)
     {

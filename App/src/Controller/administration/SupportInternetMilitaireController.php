@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SupportInternetMilitaireController extends AbstractController {
 
-    private SupportInternetMilitaireRepository $SupportInternetMilitaireRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private SigleRepository $sigleRepository;
+    private $SupportInternetMilitaireRepository;
+    private $ManagerRegistry;
+    private $sigleRepository;
 
     public function __construct(SupportInternetMilitaireRepository $SupportInternetMilitaireRepository, ManagerRegistry $doctrine, SigleRepository $sigleRepository)
     {

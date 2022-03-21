@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuartiersController extends AbstractController {
 
-    private QuartiersRepository $QuartiersRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private BasesDeDefenseRepository $basesDeDefenseRepository;
+    private $QuartiersRepository;
+    private $ManagerRegistry;
+    private $basesDeDefenseRepository;
 
     public function __construct(QuartiersRepository $QuartiersRepository, ManagerRegistry $doctrine, BasesDeDefenseRepository $basesDeDefenseRepository)
     {

@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CirisiController extends AbstractController {
 
-    private CirisiRepository $CirisiRepository;
-    private ManagerRegistry $ManagerRegistry;
-    private BasesDeDefenseRepository $basesDeDefenseRepository;
+    private $CirisiRepository;
+    private $ManagerRegistry;
+    private $basesDeDefenseRepository;
 
     public function __construct(CirisiRepository $CirisiRepository, ManagerRegistry $doctrine, BasesDeDefenseRepository $basesDeDefenseRepository)
     {

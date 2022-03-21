@@ -28,15 +28,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BNRController extends AbstractController {
 
-    private ManagerRegistry $ManagerRegistry;
-    private OrganismeRepository $organismeRepository;
-    private QuartiersRepository $quartiersRepository;
-    private AffaireRepository $affaireRepository;
-    private SigleRepository $sigleRepository;
-    private NatureAffaireRepository $natureAffaireRepository;
-    private PriorisationRepository $priorisationRepository;
-    private FebRepository $febRepository;
-    private InfoBnrRepository $infoBnrRepository;
+    private $ManagerRegistry;
+    private $organismeRepository;
+    private $quartiersRepository;
+    private $affaireRepository;
+    private $sigleRepository;
+    private $natureAffaireRepository;
+    private $priorisationRepository;
+    private $febRepository;
+    private $infoBnrRepository;
 
     public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, InfoBnrRepository $infoBnrRepository)
     {
@@ -58,7 +58,7 @@ class BNRController extends AbstractController {
      * @param Request $request
      * @return JsonResponse|Response
      */
-    public function index(PaginatorInterface $paginator, Request $request): JsonResponse|Response
+    public function index(PaginatorInterface $paginator, Request $request)
     {
 
         $Data = new SearchDataBnr();

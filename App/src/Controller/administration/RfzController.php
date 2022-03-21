@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RfzController extends AbstractController {
 
-    private RfzRepository $RfzRepository;
-    private ManagerRegistry $ManagerRegistry;
+    private $RfzRepository;
+    private $ManagerRegistry;
 
     public function __construct(RfzRepository $RfzRepository, ManagerRegistry $doctrine)
     {
