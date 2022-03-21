@@ -6,6 +6,7 @@ use App\Data\SearchDataBnr;
 use App\Entity\Affaire;
 use App\Entity\Feb;
 use App\Entity\InfoBnr;
+use App\Entity\PlanDeCharge;
 use App\form\filters\BnrSearchForm;
 use App\Repository\AffaireRepository;
 use App\Repository\FebRepository;
@@ -13,6 +14,7 @@ use App\Repository\GrandsComptesRepository;
 use App\Repository\InfoBnrRepository;
 use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
+use App\Repository\PlanDeChargeRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\SigleRepository;
@@ -38,8 +40,9 @@ class BNRController extends AbstractController {
     private $priorisationRepository;
     private $febRepository;
     private $infoBnrRepository;
+    private $planDeChargeRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, InfoBnrRepository $infoBnrRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, QuartiersRepository $quartiersRepository, AffaireRepository $affaireRepository, SigleRepository $sigleRepository, NatureAffaireRepository $natureAffaireRepository, PriorisationRepository $priorisationRepository, FebRepository $febRepository, InfoBnrRepository $infoBnrRepository, PlanDeChargeRepository $planDeChargeRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -50,6 +53,7 @@ class BNRController extends AbstractController {
         $this->priorisationRepository = $priorisationRepository;
         $this->febRepository = $febRepository;
         $this->infoBnrRepository = $infoBnrRepository;
+        $this->planDeChargeRepository = $planDeChargeRepository;
     }
 
 
@@ -68,6 +72,7 @@ class BNRController extends AbstractController {
         $form->handleRequest($request);
 
         $Bnrs = $this->infoBnrRepository->findBnrSearch($Data);
+        dump($Bnrs);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
@@ -306,34 +311,70 @@ class BNRController extends AbstractController {
             $csv->setHeaderOffset(0);
             $result = $csv->getRecords();
 
+            $date = new DateTime();
+            $date->format('Y-m-d');
+
+            $nature = $this->natureAffaireRepository->findOneBy([
+                'natureAffaire' => 'besoinNouveauReseau',
+            ]);
+
             foreach ( $result as $row){
                 $montant = floatval($row['Montant']);
 
-
                 $bnr = (new Affaire())
                     ->setNomAffaire($row['Description Opération'])
+                    ->setObjectifAffaire($row['Description Opération'])
                     ->setMontantAffaire($montant)
+                    ->setEcheanceAffaire($date)
+                    ->setIdNatureAffaire($nature)
+                    ->setIdPriorisation($this->priorisationRepository->findOneBy([
+                        'priorisation' => 'P1'
+                    ]));
                 ;
                 if ($row['FEB'] !=''){
                     $feb = $this->febRepository->findOneBy([
                         'numFeb' => $row['FEB']
                     ]);
                     if ($feb != null){
+
+                        $organisme = $this->organismeRepository->findOneBy([
+                            'organisme' => $row['ENTITE'],
+                        ]);
+                        if ($organisme != null){
+                            $feb->addIdOrganisme($organisme);
+                        }
+                    }
+                    else{
+                        $pdc = $this->planDeChargeRepository->findOneBy([
+                            'numPdc' => $row['PDC']
+                        ]);
+                        if ($pdc == null){
+                            $pdc = (new PlanDeCharge())
+                                ->setNumPdc($row['PDC'])
+                            ;
+                            $em->persist($pdc);
+                            $em->flush();
+                        }
                         $feb = (new Feb())
                             ->setNumFeb($row['FEB'])
+                            ->setIntituleFeb($row['Description Opération'])
+                            ->setMontantFeb($montant)
+                            ->setIdPdc($pdc)
+
                         ;
                         $em->persist($feb);
                         $em->flush();
-                        $bnr->setIdFeb($feb);
                     }
+                    $bnr->setIdFeb($feb);
                 }
 
                 $em->persist($bnr);
                 $em->flush();
                 $infoBnr = (new InfoBnr())
                     ->setIdAffaire($bnr)
+                    ->setDateDemande($date)
                 ;
-                $em->persist($pdc);
+                $em->persist($infoBnr);
                 $em->flush();
             }
 

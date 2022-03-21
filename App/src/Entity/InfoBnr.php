@@ -31,14 +31,14 @@ class InfoBnr
     /**
      * @var string
      *
-     * @ORM\Column(name="montant_info", type="text", length=0, nullable=false)
+     * @ORM\Column(name="montant_info", type="text", length=0, nullable=true)
      */
     private $montantInfo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="impact", type="text", length=0, nullable=false)
+     * @ORM\Column(name="impact", type="text", length=0, nullable=true)
      */
     private $impact;
 

@@ -53,7 +53,7 @@ class Affaire
     /**
      * @var string
      *
-     * @ORM\Column(name="commentaire", type="text", length=0, nullable=false)
+     * @ORM\Column(name="commentaire", type="text", length=0, nullable=true)
      */
     private $commentaire;
 
