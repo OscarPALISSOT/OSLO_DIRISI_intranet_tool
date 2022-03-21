@@ -16,7 +16,7 @@ class SearchDataBnr{
     /**
      * @var string
      */
-    public string $Bnr = '';
+    public $Bnr = '';
 
 
     /**
@@ -28,13 +28,13 @@ class SearchDataBnr{
     /**
      * @var bool
      */
-    public bool $supMontant = true;
+    public $supMontant = true;
 
 
     /**
      * @var int
      */
-    public int $Montant;
+    public $Montant;
 
     /**
      * @var Organisme[]
@@ -44,27 +44,27 @@ class SearchDataBnr{
     /**
      * @var Quartiers[]
      */
-    public array $idQuartier;
+    public $idQuartier;
 
 
     /**
      * @var bool | null
      */
-    public bool $before;
+    public  $before;
 
     /**
      * @var \DateTime | null
      */
-    public ?\DateTime $Echeance;
+    public $Echeance;
 
 
     /**
      * @var bool | null
      */
-    public bool $state;
+    public $state;
 
     /**
      * @var string
      */
-    public string $comment = '';
+    public $comment = '';
 }

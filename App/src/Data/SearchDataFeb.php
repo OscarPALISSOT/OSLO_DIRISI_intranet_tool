@@ -14,7 +14,7 @@ class SearchDataFeb{
     /**
      * @var string
      */
-    public string $Feb = '';
+    public $Feb = '';
 
 
     /**
@@ -26,11 +26,11 @@ class SearchDataFeb{
     /**
      * @var bool
      */
-    public bool $supMontant = true;
+    public $supMontant = true;
 
 
     /**
      * @var int
      */
-    public int $Montant;
+    public $Montant;
 }

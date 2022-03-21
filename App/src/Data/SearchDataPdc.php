@@ -16,12 +16,12 @@ class SearchDataPdc{
     /**
      * @var string
      */
-    public string $Pdc = '';
+    public $Pdc = '';
 
     /**
      * @var string
      */
-    public string $num = '';
+    public $num = '';
 
 
     /**
@@ -43,11 +43,11 @@ class SearchDataPdc{
     /**
      * @var bool
      */
-    public bool $supMontant = true;
+    public $supMontant = true;
 
 
     /**
      * @var int
      */
-    public int $Montant;
+    public $Montant;
 }

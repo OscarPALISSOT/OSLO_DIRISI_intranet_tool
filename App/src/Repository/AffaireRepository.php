@@ -18,7 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class AffaireRepository extends ServiceEntityRepository
 {
-    private PaginatorInterface $paginator;
+    private $paginator;
 
     public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {

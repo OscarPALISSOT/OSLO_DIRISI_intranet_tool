@@ -50,7 +50,7 @@
                         <div class="card-body">
                             <h3 class="card-title"><i class="fas fa-id-card"></i> {{ sigles['internet_militaire'] }}</h3>
                             <p class="card-text">Il y a actuellement {{ nbMIM3 }} {{ sigles['internet_militaire'] }} enregistrés</p>
-                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('InternetMilitaire', {role: role})}}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <div class="card-body">
                             <h3 class="card-title"><i class="fas fa-id-card"></i> {{ sigles['accesWan'] }}</h3>
                             <p class="card-text">Il y a actuellement {{ nbOPERA }} {{ sigles['accesWan'] }} enregistrés</p>
-                            <a href="{{ path ('Admin_contacts') }}" class="btn btn-outline-primary">Voir plus</a>
+                            <a href="{{ path ('AccesWan', {role: role})}}" class="btn btn-outline-primary">Voir plus</a>
                         </div>
                     </div>
                 </div>

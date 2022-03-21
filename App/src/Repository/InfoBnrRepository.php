@@ -17,7 +17,7 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class InfoBnrRepository extends ServiceEntityRepository
 {
-    private PaginatorInterface $paginator;
+    private $paginator;
 
     public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
@@ -69,7 +69,7 @@ class InfoBnrRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query,
             $data->page,
-            12,
+            12
         );
     }
 

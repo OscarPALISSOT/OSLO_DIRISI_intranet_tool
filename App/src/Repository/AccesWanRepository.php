@@ -17,7 +17,7 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class AccesWanRepository extends ServiceEntityRepository
 {
-    private PaginatorInterface $paginator;
+    private $paginator;
 
     public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
@@ -49,7 +49,7 @@ class AccesWanRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query,
             $data->page,
-            12,
+            12
         );
     }
 

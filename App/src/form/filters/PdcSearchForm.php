@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PdcSearchForm extends AbstractType
 {
 
-    private PlanDeChargeRepository $planDeChargeRepository;
+    private $planDeChargeRepository;
 
     public function __construct(PlanDeChargeRepository $planDeChargeRepository)
     {

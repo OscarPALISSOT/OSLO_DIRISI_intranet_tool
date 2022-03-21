@@ -18,8 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BnrSearchForm extends AbstractType
 {
-    private InfoBnrRepository $infoBnrRepository;
-    private AffaireRepository $affaireRepository;
+    private $infoBnrRepository;
+    private $affaireRepository;
 
     public function __construct(InfoBnrRepository $infoBnrRepository, AffaireRepository $affaireRepository)
     {

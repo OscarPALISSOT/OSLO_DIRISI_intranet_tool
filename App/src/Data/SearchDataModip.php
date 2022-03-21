@@ -16,34 +16,34 @@ class SearchDataModip{
     /**
      * @var string
      */
-    public string $Bnr = '';
+    public $Bnr = '';
 
 
     /**
      * @var bool
      */
-    public bool $PriorityP1;
+    public $PriorityP1;
 
     /**
      * @var bool
      */
-    public bool $PriorityP2;
+    public $PriorityP2;
 
     /**
      * @var bool
      */
-    public bool $PriorityP3;
+    public $PriorityP3;
 
     /**
      * @var bool
      */
-    public bool $supMontant = true;
+    public $supMontant = true;
 
 
     /**
      * @var int
      */
-    public int $Montant;
+    public $Montant;
 
     /**
      * @var Organisme[]
@@ -53,27 +53,27 @@ class SearchDataModip{
     /**
      * @var Quartiers[]
      */
-    public array $idQuartier;
+    public $idQuartier;
 
 
     /**
      * @var bool | null
      */
-    public bool $before;
+    public $before;
 
     /**
      * @var \DateTime | null
      */
-    public ?\DateTime $Echeance;
+    public $Echeance;
 
 
     /**
      * @var bool | null
      */
-    public bool $state;
+    public $state;
 
     /**
      * @var string
      */
-    public string $comment = '';
+    public $comment = '';
 }

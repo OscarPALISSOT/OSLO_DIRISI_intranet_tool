@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FebSearchForm extends AbstractType
 {
 
-    private FebRepository $febRepository;
+    private $febRepository;
 
     public function __construct(FebRepository $febRepository)
     {

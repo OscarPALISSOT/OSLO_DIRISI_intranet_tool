@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InternetMilitaireSearchForm extends AbstractType
 {
-    private InternetMilitaireRepository $internetMilitaireRepository;
+    private $internetMilitaireRepository;
 
     public function __construct(InternetMilitaireRepository $internetMilitaireRepository)
     {
