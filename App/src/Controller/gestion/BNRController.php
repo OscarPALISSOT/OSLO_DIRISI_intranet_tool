@@ -79,6 +79,7 @@ class BNRController extends AbstractController {
                 'content' => $this->renderView('gestion/bnr/_content.html.twig', [
                     'Bnrs' => $Bnrs,
                     'Febs' => $this->febRepository->findAll(),
+                    'Organismes' => $this->organismeRepository->findAllWithQuartier(),
                     'Quartiers' => $this->quartiersRepository->findAll(),
                     'Prios' => $this->priorisationRepository->findAll(),
                 ]),
