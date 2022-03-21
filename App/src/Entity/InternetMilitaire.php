@@ -51,13 +51,6 @@ class InternetMilitaire
     private $ipLanSubnet;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_de_validation", type="date", nullable=false)
-     */
-    private $dateDeValidation;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="etat_internet_militaire", type="string", length=50, nullable=false)
@@ -142,18 +135,6 @@ class InternetMilitaire
     public function setIpLanSubnet(string $ipLanSubnet): self
     {
         $this->ipLanSubnet = $ipLanSubnet;
-
-        return $this;
-    }
-
-    public function getDateDeValidation(): ?\DateTimeInterface
-    {
-        return $this->dateDeValidation;
-    }
-
-    public function setDateDeValidation(\DateTimeInterface $dateDeValidation): self
-    {
-        $this->dateDeValidation = $dateDeValidation;
 
         return $this;
     }

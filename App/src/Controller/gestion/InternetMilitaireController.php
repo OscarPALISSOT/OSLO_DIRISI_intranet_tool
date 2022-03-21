@@ -113,9 +113,6 @@ class InternetMilitaireController extends AbstractController {
         $etat = $request->request->get('etat');
         $ipPfs = $request->request->get('ipPfs');
         $ipLanSubnet = $request->request->get('ipLanSubnet');
-        $Date = $request->request->get('date');
-        $date = new DateTime($Date);
-        $date->format('Y-m-d');
         $comment = $request->request->get('comment');
         $NewInternetMilitaire = (new InternetMilitaire())
             ->setMasterId($masterId)
@@ -125,7 +122,6 @@ class InternetMilitaireController extends AbstractController {
             ->setEtatInternetMilitaire($etat)
             ->setIpPfs($ipPfs)
             ->setIpLanSubnet($ipLanSubnet)
-            ->setDateDeValidation($date)
             ->setCommentaire($comment)
         ;
         if ($this->isCsrfTokenValid("CreateInternetMilitaire", $request->get('_token'))){
@@ -201,8 +197,7 @@ class InternetMilitaireController extends AbstractController {
         $etat = $request->request->get('etatEdit');
         $ipPfs = $request->request->get('ipPfsEdit');
         $ipLanSubnet = $request->request->get('ipLanSubnetEdit');
-        $Date = $request->request->get('dateEdit');
-        $date = new DateTime($Date);
+        $date = new DateTime();
         $date->format('Y-m-d');
         $comment = $request->request->get('commentEdit');
         $InternetMilitaire = $this->internetMilitaireRepository->find($id)
@@ -213,8 +208,8 @@ class InternetMilitaireController extends AbstractController {
             ->setEtatInternetMilitaire($etat)
             ->setIpPfs($ipPfs)
             ->setIpLanSubnet($ipLanSubnet)
-            ->setDateDeValidation($date)
             ->setCommentaire($comment)
+            ->setUpdateAt($date)
         ;
 
         if ($this->isCsrfTokenValid("EditInternetMilitaire", $request->get('_token'))){
@@ -276,8 +271,6 @@ class InternetMilitaireController extends AbstractController {
             $csv->setHeaderOffset(0);
             $result = $csv->getRecords();
 
-            $date = new DateTime();
-            $date->format('Y-m-d');
 
             foreach ( $result as $row){
                 $InternetMilitaire = (new InternetMilitaire())
@@ -298,7 +291,6 @@ class InternetMilitaireController extends AbstractController {
                             'support' => $row['support']
                         ])
                     )
-                    ->setDateDeValidation($date)
                     ->setEtatInternetMilitaire(1)
                 ;
                 $em->persist($InternetMilitaire);

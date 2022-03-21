@@ -70,9 +70,19 @@
                 </div>
                 <div class="modal-body">
                     <form id="internetMilitaireFormCreate" action="{{ path ('Admin_InternetMilitaire_New')}}" method="post" class="js-Ajax-form">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="masterId" name="masterId" placeholder="name@example.com">
-                            <label for="masterId">Master ID</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="masterId" name="masterId" placeholder="name@example.com">
+                                    <label for="masterId">Master ID</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="debit" name="Debit" placeholder="name@example.com">
+                                    <label for="debit">Débit</label>
+                                </div>
+                            </div>
                         </div>
                         <select class="form-select mb-3" aria-label="Default select example" name="orga" autocomplete="off">
                             <option selected>Organisme bénéficiaire</option>
@@ -80,20 +90,6 @@
                                 <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idbaseDefense.baseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
                             {% endfor %}
                         </select>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="debit" name="Debit" placeholder="name@example.com">
-                                    <label for="debit">Débit</label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-group mb-3 date datepicker">
-                                    <input type="text" class="form-control" placeholder="Date de validation" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
-                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="support" autocomplete="off">

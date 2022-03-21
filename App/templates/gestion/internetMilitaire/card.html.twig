@@ -21,8 +21,8 @@
                     <span class="label">Support :</span>
                     {{ InternetMilitaire.idSupport.support }}
                     <br>
-                    <span class="label">Date de validation :</span>
-                    {{ InternetMilitaire.dateDeValidation|date('d/m/Y')}}
+                    <span class="label">Ip lan subnet :</span>
+                    {{ InternetMilitaire.ipLanSubnet }}
                     <br>
                     <span class="label">Organisme :</span>
                     {{ InternetMilitaire.idOrganisme.Organisme }} - {{ InternetMilitaire.idOrganisme.idQuartier.idbaseDefense.baseDefense }} - {{ InternetMilitaire.idOrganisme.idQuartier.trigramme }}
@@ -34,9 +34,7 @@
                 <div class="collapse" id="collapseCard{{ InternetMilitaire.idInternetMilitaire }}">
                     <p class="info">
 
-                        <span class="label">Ip lan subnet :</span>
-                        {{ InternetMilitaire.ipLanSubnet }}
-                        <br>
+
                         <span class="label">État :</span>
                         {% if InternetMilitaire.etatInternetMilitaire == 1 %}
                             Prévu
@@ -72,9 +70,19 @@
                 </div>
                 <div class="modal-body">
                     <form id="bnrFormEdit{{ InternetMilitaire.idInternetMilitaire }}" action="{{ path ('Admin_InternetMilitaire_Edit', {id: InternetMilitaire.idInternetMilitaire })}}" method="post" class="js-Ajax-form">
-                        <div class="form-floating mb-3">
-                            <input value="{{ InternetMilitaire.masterId }}" type="text" class="form-control" id="masterId" name="masterIdEdit" placeholder="name@example.com">
-                            <label for="masterId">Master ID</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ InternetMilitaire.masterId }}" type="text" class="form-control" id="masterId" name="masterIdEdit" placeholder="name@example.com">
+                                    <label for="masterId">Master ID</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ InternetMilitaire.debitInternetMilitaire }}" type="text" class="form-control" id="debit" name="DebitEdit" placeholder="name@example.com">
+                                    <label for="debit">Débit</label>
+                                </div>
+                            </div>
                         </div>
                         <select class="form-select mb-3" aria-label="Default select example" name="orgaEdit" autocomplete="off">
                             <option value="{{ InternetMilitaire.idOrganisme.idOrganisme }}" selected>
@@ -84,20 +92,6 @@
                                 <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idbaseDefense.baseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
                             {% endfor %}
                         </select>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input value="{{ InternetMilitaire.debitInternetMilitaire }}" type="text" class="form-control" id="debit" name="DebitEdit" placeholder="name@example.com">
-                                    <label for="debit">Débit</label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-group mb-3 date datepicker">
-                                    <input value="{{ InternetMilitaire.dateDeValidation|date('m/d/Y') }}" type="text" class="form-control" placeholder="Date de validation" aria-label="datepicker" aria-describedby="basic-addon1" name="dateEdit" autocomplete="off"><span class="input-group-addon"></span>
-                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="supportEdit" autocomplete="off">

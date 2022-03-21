@@ -4,6 +4,7 @@ namespace App\Data;
 
 
 use App\Entity\Organisme;
+use App\Entity\SupportInternetMilitaire;
 
 class SearchDataInternetMilitaire{
 
@@ -16,5 +17,10 @@ class SearchDataInternetMilitaire{
      * @var Organisme[]
      */
     public $idOrganisme;
+
+    /**
+     * @var SupportInternetMilitaire[]
+     */
+    public $idSupport;
 
 }
