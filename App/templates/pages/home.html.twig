@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OSLO | Accueil{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="homeContent">
+        <div class="Background">
+            <p class="maj">Outil de</p>
+            <p class="maj">Suivi</p>
+            <p>des Réseaux</p>
+            <p class="maj">L<strong>O</strong>caux</p>
+        </div>
+        <div id="map"><img src="{{ asset('images/map.svg') }}" alt=""/></div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,3 @@
+{% for Bnr in Bnrs %}
+    {% include 'gestion/bnr/card.html.twig' with {Bnr: Bnr, Organismes: Organismes, Febs: Febs, Prios: Prios} only%}
+{% endfor %}
