@@ -20,28 +20,28 @@ class Users implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private int $idUser;
+    private $idUser;
 
     /**
      * @var string
      *
      * @ORM\Column(name="user", type="string", length=50, nullable=false)
      */
-    private string $username;
+    private $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pwd", type="string", length=255, nullable=false)
      */
-    private string $password;
+    private $password;
 
     /**
      * @var array
      *
      * @ORM\Column(name="roles", type="json", nullable=false)
      */
-    private array $roles;
+    private $roles;
 
     public function getIdUser(): ?int
     {
