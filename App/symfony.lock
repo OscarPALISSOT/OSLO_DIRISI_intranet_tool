@@ -94,12 +94,6 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
-    "laminas/laminas-eventmanager": {
-        "version": "3.2.1"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.1.1"
-    },
     "league/csv": {
         "version": "9.0.0"
     },
@@ -424,9 +418,6 @@
             "./tests/bootstrap.php"
         ]
     },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.25.0"
-    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.25.0"
     },
@@ -509,9 +500,6 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.38"
-    },
-    "symfony/string": {
-        "version": "v5.4.3"
     },
     "symfony/translation": {
         "version": "4.4",
