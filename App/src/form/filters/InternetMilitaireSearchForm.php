@@ -4,6 +4,7 @@ namespace App\form\filters;
 
 use App\Data\SearchDataInternetMilitaire;
 use App\Entity\Organisme;
+use App\Entity\SupportInternetMilitaire;
 use App\Repository\InternetMilitaireRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -31,6 +32,13 @@ class InternetMilitaireSearchForm extends AbstractType
                 'expanded' => true,
                 'multiple' => true
 
+            ])
+            ->add('idSupport', EntityType::class, [
+                'label' => false,
+                'required' => false,
+                'class' => SupportInternetMilitaire::class,
+                'expanded' => true,
+                'multiple' => true
             ])
         ;
     }
