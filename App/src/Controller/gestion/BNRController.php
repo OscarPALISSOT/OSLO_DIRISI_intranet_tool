@@ -4,6 +4,7 @@ namespace App\Controller\gestion;
 
 use App\Data\SearchDataBnr;
 use App\Entity\Affaire;
+use App\Entity\Feb;
 use App\Entity\InfoBnr;
 use App\form\filters\BnrSearchForm;
 use App\Repository\AffaireRepository;
@@ -305,6 +306,36 @@ class BNRController extends AbstractController {
             $csv->setHeaderOffset(0);
             $result = $csv->getRecords();
 
+            foreach ( $result as $row){
+                $montant = floatval($row['Montant']);
+
+
+                $bnr = (new Affaire())
+                    ->setNomAffaire($row['Description Opération'])
+                    ->setMontantAffaire($montant)
+                ;
+                if ($row['FEB'] !=''){
+                    $feb = $this->febRepository->findOneBy([
+                        'numFeb' => $row['FEB']
+                    ]);
+                    if ($feb != null){
+                        $feb = (new Feb())
+                            ->setNumFeb($row['FEB'])
+                        ;
+                        $em->persist($feb);
+                        $em->flush();
+                        $bnr->setIdFeb($feb);
+                    }
+                }
+
+                $em->persist($bnr);
+                $em->flush();
+                $infoBnr = (new InfoBnr())
+                    ->setIdAffaire($bnr)
+                ;
+                $em->persist($pdc);
+                $em->flush();
+            }
 
             $jsonData = array(
                 'message' => "Importation terminée",
