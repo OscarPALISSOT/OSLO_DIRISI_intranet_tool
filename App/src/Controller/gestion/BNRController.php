@@ -98,7 +98,7 @@ class BNRController extends AbstractController {
                 'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
             ]);
         }
-        return $this->render('gestion/bnr/Bnr.html.twig', [
+        return $this->render('gestion/bnr/bnr.html.twig', [
             'Bnrs' => $Bnrs,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'Febs' => $this->febRepository->findAll(),

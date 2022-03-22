@@ -75,7 +75,7 @@ class FebController extends AbstractController {
                 'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
             ]);
         }
-        return $this->render('gestion/feb/Feb.html.twig', [
+        return $this->render('gestion/feb/feb.html.twig', [
             'Febs' => $Febs,
             'Pdcs' => $Pdcs,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),

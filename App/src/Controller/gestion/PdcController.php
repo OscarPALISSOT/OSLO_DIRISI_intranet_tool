@@ -80,7 +80,7 @@ class PdcController extends AbstractController {
                 'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
             ]);
         }
-        return $this->render('gestion/pdc/Pdc.html.twig', [
+        return $this->render('gestion/pdc/pdc.html.twig', [
             'Pdcs' => $Pdcs,
             'Statuts' => $this->statutPdcRepository->findAll(),
             'Etats' => $this->etatPdcRepository->findAll(),

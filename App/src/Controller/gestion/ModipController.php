@@ -96,7 +96,7 @@ class ModipController extends AbstractController {
                 'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
             ]);
         }
-        return $this->render('gestion/modip/Modip.html.twig', [
+        return $this->render('gestion/modip/modip.html.twig', [
             'Modips' => $Modips,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'Febs' => $this->febRepository->findAll(),
