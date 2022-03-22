@@ -305,7 +305,7 @@ class AdminController extends AbstractController {
                 if ($row['users'] != ''){
                     $user = new Users();
                     $user->setUsername($row['users']);
-                    $user->setPassword($this->hasher->hashPassword($user, $row['mdp']));
+                    $user->setPassword($this->hasher->encodePassword($user, $row['mdp']));
                     $role = [$row['role']];
                     $user->setRoles($role);
                     $em->persist($user);

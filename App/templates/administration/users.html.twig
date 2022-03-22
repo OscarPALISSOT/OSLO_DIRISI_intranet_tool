@@ -48,7 +48,7 @@
                             <input form="UserFormDelete" class="form-check-input checkboxUser" name="idChecked{{ User.idUser }}" type="checkbox" value="{{ User.idUser }}" id="checkbox{{ User.idUser }}">
                         </div>
                     </th>
-                    <td>{{ User.User }}</td>
+                    <td>{{ User.Username }}</td>
                     <td>
                         {% if User.roles[0] == 'ROLE_ADMIN' %}
                             Administrateur
@@ -76,7 +76,7 @@
                                                 <h2>Modifier les informations de l'utilisateur :</h2>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Nom</span>
-                                                    <input value="{{ User.User }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="UserEdit" name="UserEdit">
+                                                    <input value="{{ User.Username }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="UserEdit" name="UserEdit">
                                                 </div>
                                                 <select name="roleEdit" class="form-select" aria-label="Default select example">
                                                     <option selected>

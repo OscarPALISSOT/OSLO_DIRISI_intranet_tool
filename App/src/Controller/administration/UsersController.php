@@ -69,8 +69,8 @@ class UsersController extends AbstractController {
                 $role = ['BCS'];
                 break;
         }
-        $NewUsers->setUser($UserName);
-        $NewUsers->setPassword($this->hasher->hashPassword($NewUsers, $pwd));
+        $NewUsers->setUsername($UserName);
+        $NewUsers->setPassword($this->hasher->encodePassword($NewUsers, $pwd));
         $NewUsers->setRoles($role);
         if ($this->isCsrfTokenValid("CreateUser", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
