@@ -72,7 +72,6 @@ class BNRController extends AbstractController {
         $form->handleRequest($request);
 
         $Bnrs = $this->infoBnrRepository->findBnrSearch($Data);
-        dump($Bnrs);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
