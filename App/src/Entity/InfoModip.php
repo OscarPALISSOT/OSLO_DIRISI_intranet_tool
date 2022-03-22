@@ -66,7 +66,7 @@ class InfoModip
     /**
      * @var int
      *
-     * @ORM\Column(name="semestre_modip", type="integer", nullable=false)
+     * @ORM\Column(name="semestre_modip", type="integer", nullable=true)
      */
     private $semestreModip;
 

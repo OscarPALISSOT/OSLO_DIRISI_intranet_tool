@@ -20,6 +20,7 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -288,6 +289,97 @@ class ModipController extends AbstractController {
         else{
             $jsonData = array(
                 'message' => "Erreur lors de la modification",
+            );
+        }
+
+        return $this->json($jsonData, 200);
+    }
+
+
+    /**
+     * @Route ("/Admin/ImportModip", name="importModip")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function import(Request $request) : JsonResponse
+    {
+        $file = $request->files->get('file', 'r');
+
+        if ($file == null){
+            $jsonData = array(
+                'message' => "Erreur, veuillez renseignez un fichier.",
+            );
+        }
+        else{
+
+            $oldMessage = ',';
+
+            $deletedFormat = '.';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+            $em = $this->ManagerRegistry->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+            $date = new DateTime();
+            $date->format('Y-m-d');
+
+            $nature = $this->natureAffaireRepository->findOneBy([
+                'natureAffaire' => 'modifLan',
+            ]);
+
+            foreach ( $result as $row){
+                $montant = floatval($row['Cout']);
+
+                $priorisation = $this->priorisationRepository->findOneBy([
+                    'priorisation' => $row['Priorité DECLIC']
+                ]);
+                if ($row['Semestre'] == 'S1'){
+                    $semestre = 1;
+                }elseif ($row['Semestre'] == 'S2'){
+                    $semestre = 2;
+                }
+                $bnr = (new Affaire())
+                    ->setNomAffaire('Modip ' . $row['Trigramme'])
+                    ->setObjectifAffaire($row['Description détaillée'])
+                    ->setMontantAffaire($montant)
+                    ->setEcheanceAffaire($date)
+                    ->setIdNatureAffaire($nature)
+                    ->setIdPriorisation($priorisation)
+                ;
+                $em->persist($bnr);
+                $em->flush();
+                $infoBnr = (new InfoModip())
+                    ->setIdAffaire($bnr)
+                    ->setClassification($row['CS/ND/UG'])
+                    ->setRenoAvant($row['% réno avant'])
+                    ->setRenoApres($row['% réno après'])
+                    ->setAnneeRenoCoeur(intval($row['Année réno cœur']))
+                    ->setAnneeCoeurAvTvx(intval($row['Année Cœur av tvx']))
+                    ->setAnneeModip(intval($row['Année']))
+                ;
+                if ($semestre){
+                    $infoBnr->setSemestreModip($semestre);
+                }
+                $em->persist($infoBnr);
+                $em->flush();
+            }
+
+            $jsonData = array(
+                'message' => "Importation terminée",
             );
         }
 

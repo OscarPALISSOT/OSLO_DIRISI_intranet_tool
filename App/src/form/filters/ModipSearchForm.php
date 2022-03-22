@@ -49,6 +49,8 @@ class ModipSearchForm extends AbstractType
                 'required' => false,
                 'class' => Organisme::class,
                 'placeholder' => 'Organisme',
+                'expanded' => true,
+                'multiple' => true
 
             ])
 

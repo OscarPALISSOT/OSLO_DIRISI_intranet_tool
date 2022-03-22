@@ -22,9 +22,11 @@
                 </p>
                 <div class="collapse" id="collapseCard{{ Modip.idAffaire.idAffaire }}">
                     <p class="info">
-                        <span class="label">Priorisation :</span>
-                        {{ Modip.idAffaire.idPriorisation.priorisation }}
-                        <br>
+                        {% if Modip.idAffaire.idPriorisation %}
+                            <span class="label">Priorisation :</span>
+                            {{ Modip.idAffaire.idPriorisation.priorisation }}
+                            <br>
+                        {% endif %}
                         <span class="label">FEB :</span>
                         {% if Modip.idAffaire.idFeb != null %}
                             {{ Modip.idAffaire.idFeb.numFeb }}
@@ -32,9 +34,11 @@
                             Pas encore de FEB
                         {% endif %}
                         <br>
-                        <span class="label">ClassementDl :</span>
-                        {{ Modip.idClassementDl.ClassementDl }}
-                        <br>
+                        {% if Modip.idClassementDl %}
+                            <span class="label">ClassementDl :</span>
+                            {{ Modip.idClassementDl.ClassementDl }}
+                            <br>
+                        {% endif %}
                         <span class="label">Classification :</span>
                         {% if Modip.Classification == 1 %}
                             CN
@@ -125,7 +129,11 @@
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="priorityEdit" autocomplete="off">
-                                    <option value="{{ Modip.idAffaire.idPriorisation.idPriorisation }}" selected>{{ Modip.idAffaire.idPriorisation.priorisation }}</option>
+                                    {% if Modip.idAffaire.idPriorisation %}
+                                        <option value="{{ Modip.idAffaire.idPriorisation.idPriorisation }}" selected>{{ Modip.idAffaire.idPriorisation.priorisation }}</option>
+                                    {% else %}
+                                        <option value="{{ null }}" selected>Pas de priorisation</option>
+                                    {% endif %}
                                     {% for Prio in Prios %}
                                         <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
                                     {% endfor %}
@@ -133,7 +141,11 @@
                             </div>
                             <div class="col-6">
                                 <select class="form-select mb-3" aria-label="Default select example" name="classementEdit" autocomplete="off">
-                                    <option value="{{ Modip.idClassementDl.idClassementDl }}" selected>{{ Modip.idClassementDl.ClassementDl }}</option>
+                                    {% if Modip.idClassementDl %}
+                                        <option value="{{ Modip.idClassementDl.idClassementDl }}" selected>{{ Modip.idClassementDl.ClassementDl }}</option>
+                                    {% else %}
+                                        <option value="{{ null }}" selected>Pas de classement DL</option>
+                                    {% endif %}
                                     {% for ClassementDl in ClassementDls %}
                                         <option value="{{ ClassementDl.idClassementDl }}">{{ ClassementDl.ClassementDl }}</option>
                                     {% endfor %}
