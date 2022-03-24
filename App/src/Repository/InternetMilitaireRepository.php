@@ -33,9 +33,11 @@ class InternetMilitaireRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('i')
-            ->select('i', 'o', 's')
+            ->select('i', 'o', 's', 'q', 'b')
             ->join('i.idOrganisme', 'o')
             ->join('i.idSupport', 's')
+            ->join('o.idQuartier', 'q')
+            ->join('q.idBaseDefense', 'b')
             ->orderBy('i.updateAt', 'DESC');
 
 
@@ -48,6 +50,11 @@ class InternetMilitaireRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('i.idSupport IN (:Support)')
                 ->setParameter('Support', $data->idSupport);
+        }
+        if (!empty($data->idBaseDeDefense) && count($data->idBaseDeDefense) > 0){
+            $query = $query
+                ->andWhere('b.idBaseDefense IN (:BaseDeDefense)')
+                ->setParameter('BaseDeDefense', $data->idBaseDeDefense);
         }
 
         $query = $query->getQuery();

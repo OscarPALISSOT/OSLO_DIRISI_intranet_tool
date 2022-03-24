@@ -3,6 +3,7 @@
 namespace App\form\filters;
 
 use App\Data\SearchDataModip;
+use App\Entity\BasesDeDefense;
 use App\Entity\Organisme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -49,6 +50,16 @@ class ModipSearchForm extends AbstractType
                 'required' => false,
                 'class' => Organisme::class,
                 'placeholder' => 'Organisme',
+                'expanded' => true,
+                'multiple' => true
+
+            ])
+
+            ->add('idBaseDeDefense', EntityType::class, [
+                'label' => false,
+                'required' => false,
+                'class' => BasesDeDefense::class,
+                'placeholder' => 'Base de défense',
                 'expanded' => true,
                 'multiple' => true
 

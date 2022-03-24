@@ -3,6 +3,7 @@
 namespace App\form\filters;
 
 use App\Data\SearchDataInternetMilitaire;
+use App\Entity\BasesDeDefense;
 use App\Entity\Organisme;
 use App\Entity\SupportInternetMilitaire;
 use App\Repository\InternetMilitaireRepository;
@@ -39,6 +40,16 @@ class InternetMilitaireSearchForm extends AbstractType
                 'class' => SupportInternetMilitaire::class,
                 'expanded' => true,
                 'multiple' => true
+            ])
+
+            ->add('idBaseDeDefense', EntityType::class, [
+                'label' => false,
+                'required' => false,
+                'class' => BasesDeDefense::class,
+                'placeholder' => 'Base de défense',
+                'expanded' => true,
+                'multiple' => true
+
             ])
         ;
     }

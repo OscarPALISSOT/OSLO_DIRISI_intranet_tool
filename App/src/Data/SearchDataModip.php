@@ -2,6 +2,7 @@
 
 namespace App\Data;
 
+use App\Entity\BasesDeDefense;
 use App\Entity\Organisme;
 use App\Entity\Quartiers;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -54,6 +55,11 @@ class SearchDataModip{
      * @var Quartiers[]
      */
     public $idQuartier;
+
+    /**
+     * @var BasesDeDefense[]
+     */
+    public $idBaseDeDefense;
 
 
     /**
