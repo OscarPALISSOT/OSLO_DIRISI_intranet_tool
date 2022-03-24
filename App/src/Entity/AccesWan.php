@@ -39,7 +39,7 @@ class AccesWan
     /**
      * @var string
      *
-     * @ORM\Column(name="type_opera", type="string", length=50, nullable=false)
+     * @ORM\Column(name="type_opera", type="string", length=50, nullable=true)
      */
     private $typeOpera;
 
@@ -81,7 +81,7 @@ class AccesWan
     /**
      * @var string
      *
-     * @ORM\Column(name="commentaire", type="text", length=0, nullable=false)
+     * @ORM\Column(name="commentaire", type="text", length=0, nullable=true)
      */
     private $commentaire;
 

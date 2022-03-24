@@ -237,7 +237,7 @@ class AccesWanController extends AbstractController {
     }
 
     /**
-     * @Route ("/Admin/ImportModip", name="importModip")
+     * @Route ("/Admin/ImportAccesWan", name="importAccesWan")
      * @param Request $request
      * @return JsonResponse
      */
@@ -283,9 +283,38 @@ class AccesWanController extends AbstractController {
 
             foreach ( $result as $row){
 
+
+                $quartier = $this->quartiersRepository->findOneBy([
+                    'trigramme' => $row['Trigramme']
+                ]);
+                if ($row['Date début facturation OPERA'] != ''){
+                    $dateDebut = new DateTime($row['Date début facturation OPERA']);
+                    $dateDebut->format('Y-m-d');
+                }else{
+                    $dateDebut = null;
+                }
+
+                if ($row['Date fin facturation OPERA'] != ''){
+                    $dateFin = new DateTime($row['Date fin facturation OPERA']);
+                    $dateFin->format('Y-m-d');
+                }else{
+                    $dateFin = null;
+                }
                 $opera = (new AccesWan())
-                    ->setIdAccess($row[''])
+                    ->setIdAccess($row['Id. accès OPERA'])
+                    ->setDebitOpera($row["Débit de  l'accès (Mbs)"])
+                    ->setCoutMensuel($row["Coût mensuel HT"])
+                    ->setOrigine($row['Origine'])
+                    ->setDateDebut($dateDebut)
+                    ->setDateFin($dateFin)
+                    ->setIdQuartier($quartier)
+                    ->setEtatOpera(1)
                 ;
+                if ($row['Type Racc'] == 'Cuivre'){
+                    $opera->setTypeOpera(1);
+                }elseif ($row['Type Racc'] == 'Fibre'){
+                    $opera->setTypeOpera(2);
+                }
                 $em->persist($opera);
                 $em->flush();
             }

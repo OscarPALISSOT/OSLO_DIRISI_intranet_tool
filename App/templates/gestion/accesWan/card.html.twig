@@ -17,20 +17,24 @@
                     <span class="label">Quartier :</span>
                     {{ AccesWan.idQuartier.Quartier }} - {{ AccesWan.idQuartier.idbaseDefense.baseDefense }} - {{ AccesWan.idQuartier.trigramme }}
                     <br>
-                    <span class="label">Coût mesuel :</span>
+                    <span class="label">Coût mensuel :</span>
                     {{ AccesWan.coutMensuel|number_format(2, ',', ' ') }} €
+                    <br>
+                    <span class="label">Origine :</span>
+                    {{ AccesWan.origine }}
                     <br>
                     <span class="label">Date début :</span>
                     {{ AccesWan.dateDebut|date('m/d/Y') }}
                     <br>
-                    <span class="label">Date fin :</span>
-                    {% if AccesWan.dateFin %}
-                        {{ AccesWan.dateFin|date('m/d/Y') }}
-                    {% endif %}
-                    <br>
+
                 </p>
                 <div class="collapse" id="collapseCard{{ AccesWan.idOpera }}">
                     <p class="info">
+                        {% if AccesWan.dateFin %}
+                            <span class="label">Date fin :</span>
+                                {{ AccesWan.dateFin|date('m/d/Y') }}
+                            <br>
+                        {% endif %}
                         <span class="label">Type :</span>
                         {% if AccesWan.typeOpera == 1 %}
                             Cuivre
