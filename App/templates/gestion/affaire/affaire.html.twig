@@ -1,0 +1,170 @@
+{% extends 'gestion/gestionEntity.html.twig' %}
+
+{% block styleGestionEntity %}
+    {{ encore_entry_link_tags('gestionEntity') }}
+    {{ encore_entry_link_tags('cards') }}
+{% endblock %}
+
+{% block javascriptGestionEntity %}
+
+{% endblock %}
+
+{% block FormFilterGestionEntity %}
+    {% include 'gestion/affaire/formFilterAffaire.html.twig' with {Organismes: Organismes, form: form} only %}
+{% endblock %}
+
+{% block ContentGestionEntity %}
+
+
+    {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+        <button class="btn btn-outline-success mb-4" data-bs-target="#modalPdc1" data-bs-toggle="modal">Importer les {{ title }} depuis un csv <i class="fas fa-file-import"></i></button>
+
+        <!-- first modal import database -->
+        <div class="modal fade" id="modalPdc1" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Attention ! <i class="fas fa-exclamation-triangle"></i></h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="modalPdc1" action="{{ path ('importAffaire')}}" method="post" class="js-Ajax-form" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <h4>Vous vous apprêtez à modifier la base de données.
+                                Assurez vous d'avoir un fichier CSV conforme.
+                            </h4>
+                            <input type="file"  id="file" name="file" style="font-size: medium" accept=".csv">
+                        </div>
+                        <div class="modal-footer">
+                            <!-- close first modal -->
+                            <button type="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalPdc1"><i class="fas fa-check"></i> Ok</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="js-filter-sorting sorting">
+        {% include 'gestion/affaire/_sorting.html.twig' %}
+    </div>
+
+    <div class="row">
+        <div class="js-filter-content row">
+            {% include 'gestion/affaire/_content.html.twig' %}
+        </div>
+    </div>
+
+    {# display navigation #}
+    <div class="navigation js-filter-pagination">
+        {% include 'gestion/affaire/_pagination.html.twig'%}
+    </div>
+
+    <!-- Modals new affaire-->
+    <!-- First modal dialog create-->
+    <div class="modal fade" id="modal" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="modalLabel">Nouveau {{ title }} :</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="affaireFormCreate" action="{{ path ('Admin_Affaire_New')}}" method="post" class="js-Ajax-form">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="masterId" name="masterId" placeholder="name@example.com">
+                                    <label for="masterId">Master ID</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="debit" name="Debit" placeholder="name@example.com">
+                                    <label for="debit">Débit</label>
+                                </div>
+                            </div>
+                        </div>
+                        <select class="form-select mb-3" aria-label="Default select example" name="orga" autocomplete="off">
+                            <option selected>Organisme bénéficiaire</option>
+                            {% for Organisme in Organismes %}
+                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idbaseDefense.baseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="support" autocomplete="off">
+                                    <option selected>Support</option>
+                                    {% for Support in Supports %}
+                                        <option value="{{ Support.idSupportAffaire }}">{{ Support.support }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="etat" autocomplete="off">
+                                    <option selected>État</option>
+                                    <option value="1">Prévu</option>
+                                    <option value="2">Traité</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="ipPfs" name="ipPfs" placeholder="name@example.com">
+                                    <label for="ipPfs">Ip Pfs</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="ipLanSubnet" name="ipLanSubnet" placeholder="name@example.com">
+                                    <label for="ipLanSubnet">Ip lan subnet</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="comment" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Commentaire</label>
+                        </div>
+
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('CreateAffaire')}}>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- send request-->
+                    <button form="affaireFormCreate" type="submit" id="submit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modal">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#modal delete Affaire#}
+    <!-- Modal delete-->
+    <div class="modal fade" id="modalDelete1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">Modifier</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-4">
+                        <div class="input-group mb-3">
+                            <h2>Attention ! Cette action est irréversible.</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form id="bnrFormDelete" action="{{ path ('Admin_Affaire_Delete')}}" method="post" class="js-Ajax-form">
+                        <input type="hidden" id="_token" name="_token" value={{ csrf_token ('DeleteAffaire')}}>
+                        <button class="btn btn-danger" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalDelete1">
+                            Confirmer <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'gestion/_secondModal.html.twig' %}
+
+{% endblock %}

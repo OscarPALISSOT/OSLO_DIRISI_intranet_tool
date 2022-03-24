@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchDataAffaire;
 use App\Data\SearchDataBnr;
 use App\Entity\Affaire;
 use App\Entity\NatureAffaire;
@@ -54,6 +55,52 @@ class AffaireRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param SearchDataAffaire $data
+     * @return PaginationInterface
+     */
+    public function findAffaireSearch(SearchDataAffaire $data): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('a', 'p')
+            ->join('a.idPriorisation', 'p')
+            ->orderBy('a.updateAt', 'DESC');
+
+
+        if (!empty($data->Bnr)){
+            $query = $query
+                ->andWhere('a.nomAffaire LIKE :Bnr')
+                ->setParameter('Bnr', "%{$data->Bnr}%");
+        }
+
+        if (!empty($data->Priority) && count($data->Priority) > 0){
+            $query = $query
+                ->andWhere('p.idPriorisation IN (:Priorisation)')
+                ->setParameter('Priorisation', $data->Priority);
+        }
+
+        if (!empty($data->Montant)){
+            if ($data->supMontant == false){
+                $query = $query
+                    ->andWhere('a.montantAffaire <= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+            else{
+                $query = $query
+                    ->andWhere('a.montantAffaire >= :Montant')
+                    ->setParameter('Montant', $data->Montant);
+            }
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $data->page,
+            12
+        );
+    }
 
 
     // /**

@@ -1,0 +1,76 @@
+
+<div class="col-6" id="entity-{{ Affaire.idAffaire }}">
+    <div class="card">
+        <div class="card-body Entity-card">
+            <div class="card-content">
+                <h3 class="card-title">
+                    {{ Affaire.nomAffaire }}
+                    <div class="form-check" style="font-size: larger">
+                        <label for="checkbox{{ Affaire.idAffaire }}"></label>
+                        <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Affaire.idAffaire }}" type="checkbox" value="{{ Affaire.idAffaire }}" id="checkbox{{ Affaire.idAffaire }}">
+                    </div>
+                </h3>
+                <h4 class="card-subtitle mb-2 text-muted">{{ Affaire.montantAffaire|number_format(2, ',', ' ') }} € }}</h4>
+                <p class="card-text">
+                    <span class="label">Ip lan subnet :</span>
+                    {{ Affaire.ipLanSubnet }}
+                    <br>
+                    <span class="label">Organisme :</span>
+                    {{ Affaire.idOrganisme.Organisme }} - {{ Affaire.idOrganisme.idQuartier.idbaseDefense.baseDefense }} - {{ Affaire.idOrganisme.idQuartier.trigramme }}
+                    <br>
+                    <span class="label">Ip Pfs :</span>
+                    {{ Affaire.ipPfs }}
+                    <br>
+                </p>
+                <div class="collapse" id="collapseCard{{ Affaire.idAffaire }}">
+                    <p class="info">
+
+
+                        <span class="label">État :</span>
+                        {% if Affaire.etatAffaire == 1 %}
+                            Prévu
+                        {% else %}
+                            Traité
+                        {% endif %}
+                        <br>
+                        <span class="label">Commentaire :</span>
+                        <br>
+                        {{ Affaire.commentaire }}
+                        <br>
+
+                    </p>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Affaire.idAffaire }}" aria-expanded="false" aria-controls="collapseCard">
+                Voir plus <i class="far fa-eye"></i>
+            </button>
+            <!-- Button trigger modal edit -->
+            <button type="button" class="btn btn-outline-primary collapseBtn" data-bs-toggle="modal" data-bs-target="#modalEdit{{ Affaire.idAffaire }}">
+                Modifier <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal edit-->
+    <div class="modal fade" id="modalEdit{{ Affaire.idAffaire }}" data-bs-focus="true" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="modalLabel">Modifier</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bnrFormEdit{{ Affaire.idAffaire }}" action="{{ path ('Admin_Affaire_Edit', {id: Affaire.idAffaire })}}" method="post" class="js-Ajax-form">
+
+                    </form>
+                </div>
+                    <div class="modal-footer">
+                        <!-- send request-->
+                        <input form="bnrFormEdit{{ Affaire.idAffaire }}" type="hidden" id="_token" name="_token" value={{ csrf_token ('EditAffaire')}}>
+                        <input form="bnrFormEdit{{ Affaire.idAffaire }}" type="hidden" name="idEdit" value="{{ Affaire.idAffaire }}">
+                        <button form="bnrFormEdit{{ Affaire.idAffaire }}" type="submit" id="submitEdit" class="btn btn-primary" data-bs-target="#modal2" data-bs-toggle="modal" data-bs-dismiss="modalEdit{{ Affaire.idAffaire }}">Enregistrer</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

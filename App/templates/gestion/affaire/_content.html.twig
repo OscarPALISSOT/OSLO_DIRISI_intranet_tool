@@ -1,0 +1,3 @@
+{% for Affaire in Affaires %}
+    {% include 'gestion/affaire/card.html.twig' with {Affaire: Affaire, Organismes: Organismes } only%}
+{% endfor %}
