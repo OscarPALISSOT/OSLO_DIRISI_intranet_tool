@@ -102,16 +102,28 @@ class AccesWanController extends AbstractController {
         $idQuartier = $request->request->get('quartier');
         $Quartier = $this->quartiersRepository->find($idQuartier);
         $type = $request->request->get('type');
+        $cout = $request->request->get('cout');
         $etat = $request->request->get('etat');
         $debit = $request->request->get('Debit');
         $comment = $request->request->get('comment');
+        $origine = $request->request->get('origine');
+        $DateDebut = $request->request->get('dateDebut');
+        $DateFin = $request->request->get('dateFin');
+        $dateDebut = new DateTime($DateDebut);
+        $dateDebut->format('Y-m-d');
+        $dateFin = new DateTime($DateFin);
+        $dateFin->format('Y-m-d');
         $NewAccesWan = (new AccesWan())
             ->setIdAccess($IdAccess)
+            ->setOrigine($origine)
             ->setIdQuartier($Quartier)
             ->setDebitOpera($debit)
             ->setTypeOpera($type)
             ->setEtatOpera($etat)
             ->setCommentaire($comment)
+            ->setDateDebut($dateDebut)
+            ->setDateFin($dateFin)
+            ->setCoutMensuel($cout)
         ;
         if ($this->isCsrfTokenValid("CreateAccesWan", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
@@ -178,19 +190,31 @@ class AccesWanController extends AbstractController {
     public function EditAccesWan(Request $request) : Response{
         $id = $request->request->get('idEdit');
         $IdAccess = $request->request->get('IdAccessEdit');
+        $origine = $request->request->get('origineEdit');
+        $cout = $request->request->get('coutEdit');
         $idQuartier = $request->request->get('quartierEdit');
         $Quartier = $this->quartiersRepository->find($idQuartier);
         $type = $request->request->get('typeEdit');
         $etat = $request->request->get('etatEdit');
         $debit = $request->request->get('DebitEdit');
         $comment = $request->request->get('commentEdit');
+        $DateDebut = $request->request->get('dateDebutEdit');
+        $DateFin = $request->request->get('dateFinEdit');
+        $dateDebut = new DateTime($DateDebut);
+        $dateDebut->format('Y-m-d');
+        $dateFin = new DateTime($DateFin);
+        $dateFin->format('Y-m-d');
         $AccesWan = $this->accesWanRepository->find($id)
             ->setIdAccess($IdAccess)
+            ->setOrigine($origine)
             ->setIdQuartier($Quartier)
+            ->setCoutMensuel($cout)
             ->setDebitOpera($debit)
             ->setTypeOpera($type)
             ->setEtatOpera($etat)
             ->setCommentaire($comment)
+            ->setDateDebut($dateDebut)
+            ->setDateFin($dateFin)
         ;
         if ($this->isCsrfTokenValid("EditAccesWan", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();

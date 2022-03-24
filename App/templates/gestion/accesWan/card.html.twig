@@ -17,16 +17,27 @@
                     <span class="label">Quartier :</span>
                     {{ AccesWan.idQuartier.Quartier }} - {{ AccesWan.idQuartier.idbaseDefense.baseDefense }} - {{ AccesWan.idQuartier.trigramme }}
                     <br>
-                    <span class="label">Type :</span>
-                    {% if AccesWan.typeOpera == 1 %}
-                        Cuivre
-                    {% else %}
-                        Fibre
+                    <span class="label">Coût mesuel :</span>
+                    {{ AccesWan.coutMensuel|number_format(2, ',', ' ') }} €
+                    <br>
+                    <span class="label">Date début :</span>
+                    {{ AccesWan.dateDebut|date('m/d/Y') }}
+                    <br>
+                    <span class="label">Date fin :</span>
+                    {% if AccesWan.dateFin %}
+                        {{ AccesWan.dateFin|date('m/d/Y') }}
                     {% endif %}
                     <br>
                 </p>
                 <div class="collapse" id="collapseCard{{ AccesWan.idOpera }}">
                     <p class="info">
+                        <span class="label">Type :</span>
+                        {% if AccesWan.typeOpera == 1 %}
+                            Cuivre
+                        {% else %}
+                            Fibre
+                        {% endif %}
+                        <br>
                         <span class="label">État :</span>
                         {% if AccesWan.etatOpera == 1 %}
                             Prévu
@@ -62,9 +73,19 @@
                 </div>
                 <div class="modal-body">
                     <form id="bnrFormEdit{{ AccesWan.idOpera }}" action="{{ path ('Admin_AccesWan_Edit', {id: AccesWan.idOpera })}}" method="post" class="js-Ajax-form">
-                        <div class="form-floating mb-3">
-                            <input value="{{ AccesWan.idAccess }}" type="text" class="form-control" id="IdAccess" name="IdAccessEdit" placeholder="name@example.com">
-                            <label for="IdAccess">ID Access</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ AccesWan.idAccess }}" type="text" class="form-control" id="IdAccess" name="IdAccessEdit" placeholder="name@example.com">
+                                    <label for="IdAccess">ID Access</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input value="{{ AccesWan.origine }}" type="text" class="form-control" id="origine" name="origineEdit" placeholder="name@example.com">
+                                    <label for="origine">Origine</label>
+                                </div>
+                            </div>
                         </div>
                         <select class="form-select mb-3" aria-label="Default select example" name="quartierEdit" autocomplete="off">
                             <option value="{{ AccesWan.idQuartier.idQuartier }}" selected>{{ AccesWan.idQuartier.Quartier }} - {{ AccesWan.idQuartier.idBaseDefense.baseDefense }} - {{ AccesWan.idQuartier.trigramme }}</option>
@@ -72,8 +93,31 @@
                                 <option value="{{ Quartier.idQuartier }}">{{ Quartier.Quartier }} - {{ Quartier.idBaseDefense.baseDefense }} - {{ Quartier.trigramme }}</option>
                             {% endfor %}
                         </select>
-                        <div class="form mb-3">
-                            <input value="{{ AccesWan.debitOpera }}" type="number" min="0" step="1" class="form-control" id="Debit" name="DebitEdit" placeholder="Débit (Mb/s)">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ AccesWan.debitOpera }}" type="number" min="0" step="1" class="form-control" id="Debit" name="DebitEdit" placeholder="Débit (Mb/s)">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ AccesWan.coutMensuel }}" type="number" min="0" step="0.01" class="form-control" id="cout" name="coutEdit" placeholder="Coût mensuel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input value="{{ AccesWan.dateDebut|date('m/d/Y') }}" type="text" class="form-control" placeholder="Date de Début" aria-label="datepicker" aria-describedby="basic-addon1" name="dateDebutEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input value="{{ AccesWan.dateFin|date('m/d/Y') }}" type="text" class="form-control" placeholder="Date de fin" aria-label="datepicker" aria-describedby="basic-addon1" name="dateFinEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
