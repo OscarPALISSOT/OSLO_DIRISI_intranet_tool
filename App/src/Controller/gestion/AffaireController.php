@@ -118,14 +118,16 @@ class AffaireController extends AbstractController {
         $Comment = $request->request->get('comment');
         $idFeb = $request->request->get('feb');
         $Feb = $this->febRepository->find($idFeb);
-        $NewAffaire->setIdNatureAffaire($nature);
-        $NewAffaire->setNomAffaire($AffaireName);
-        $NewAffaire->setObjectifAffaire($Objectif);
-        $NewAffaire->setMontantAffaire($montant);
-        $NewAffaire->setIdPriorisation($Prio);
-        $NewAffaire->setEcheanceAffaire($date);
-        $NewAffaire->setCommentaire($Comment);
-        $NewAffaire->setIdFeb($Feb);
+        $NewAffaire = (new Affaire())
+            ->setIdNatureAffaire($nature)
+            ->setNomAffaire($AffaireName)
+            ->setObjectifAffaire($Objectif)
+            ->setMontantAffaire($montant)
+            ->setIdPriorisation($Prio)
+            ->setEcheanceAffaire($date)
+            ->setCommentaire($Comment)
+            ->setIdFeb($Feb)
+        ;
         if ($this->isCsrfTokenValid("CreateAffaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewAffaire);
@@ -187,29 +189,29 @@ class AffaireController extends AbstractController {
      * @throws \Exception
      */
     public function EditAffaire(Request $request) : Response{
-        $id = $request->request->get('idEdit');
-        $masterId = $request->request->get('masterIdEdit');
-        $idoOrga = $request->request->get('orgaEdit');
-        $orga = $this->organismeRepository->find($idoOrga);
-        $idSupport = $request->request->get('supportEdit');
-        $support = $this->supportAffaireRepository->find($idSupport);
-        $debit = $request->request->get('DebitEdit');
-        $etat = $request->request->get('etatEdit');
-        $ipPfs = $request->request->get('ipPfsEdit');
-        $ipLanSubnet = $request->request->get('ipLanSubnetEdit');
-        $date = new DateTime();
+        $idAffaire = $request->request->get('idEdit');
+        $idNature = $request->request->get('natureEdit');
+        $nature = $this->natureAffaireRepository->find($idNature);
+        $AffaireName = $request->request->get('affaireEdit');
+        $Objectif = $request->request->get('objectifEdit');
+        $montant = $request->request->get('montantEdit');
+        $idPrio = $request->request->get('priorityEdit');
+        $Prio = $this->priorisationRepository->find($idPrio);
+        $Date = $request->request->get('dateEdit');
+        $date = new DateTime($Date);
         $date->format('Y-m-d');
-        $comment = $request->request->get('commentEdit');
-        $Affaire = $this->affaireRepository->find($id)
-            ->setMasterId($masterId)
-            ->setIdOrganisme($orga)
-            ->setIdSupport($support)
-            ->setDebitAffaire($debit)
-            ->setEtatAffaire($etat)
-            ->setIpPfs($ipPfs)
-            ->setIpLanSubnet($ipLanSubnet)
-            ->setCommentaire($comment)
-            ->setUpdateAt($date)
+        $Comment = $request->request->get('commentEdit');
+        $idFeb = $request->request->get('febEdit');
+        $Feb = $this->febRepository->find($idFeb);
+        $Affaire = $this->affaireRepository->find($idAffaire)
+            ->setIdNatureAffaire($nature)
+            ->setNomAffaire($AffaireName)
+            ->setObjectifAffaire($Objectif)
+            ->setMontantAffaire($montant)
+            ->setIdPriorisation($Prio)
+            ->setEcheanceAffaire($date)
+            ->setCommentaire($Comment)
+            ->setIdFeb($Feb)
         ;
 
         if ($this->isCsrfTokenValid("EditAffaire", $request->get('_token'))){
@@ -217,9 +219,7 @@ class AffaireController extends AbstractController {
             $em->persist($Affaire);
             $em->flush();
             $jsonData = array(
-                'message' => $this->sigleRepository->findOneBy([
-                        'intituleSigle' => 'internet_militaire'
-                    ]) .' modifié',
+                'message' => 'Affaire modifiée',
             );
 
         }

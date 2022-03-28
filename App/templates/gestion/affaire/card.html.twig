@@ -81,7 +81,71 @@
                 </div>
                 <div class="modal-body">
                     <form id="bnrFormEdit{{ Affaire.idAffaire }}" action="{{ path ('Admin_Affaire_Edit', {id: Affaire.idAffaire })}}" method="post" class="js-Ajax-form">
-
+                        <select class="form-select mb-3" aria-label="Default select example" name="natureEdit" autocomplete="off">
+                            <option value="{{ Affaire.idNatureAffaire.idNatureAffaire }}" selected>{{ Affaire.idNatureAffaire.natureAffaire }}</option>
+                            {% for Nature in Natures %}
+                                <option value="{{ Nature.idNatureAffaire }}">
+                                    {% if  Nature.natureAffaire == 'RDIP' %}
+                                        RDIP
+                                    {% elseif  Nature.natureAffaire == 'SECPRO' %}
+                                        SECPRO
+                                    {% elseif  Nature.natureAffaire == 'Antennes - Sémaphores' %}
+                                        Antennes - Sémaphores
+                                    {% elseif  Nature.natureAffaire == 'Faire - faire' %}
+                                        Faire - faire
+                                    {% elseif  Nature.natureAffaire == 'RAT' %}
+                                        RAT
+                                    {% elseif  Nature.natureAffaire == 'Lignes urgences' %}
+                                        Lignes urgences
+                                    {% elseif  Nature.natureAffaire == 'Lignes réseaux CD' %}
+                                        Lignes réseaux CD
+                                    {% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-floating mb-3">
+                            <input value="{{ Affaire.nomAffaire }}" type="text" class="form-control" id="affaire" name="affaireEdit" placeholder="name@example.com">
+                            <label for="bnr">Nom du projet</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="objectifEdit" style="height: 100px">{{ Affaire.objectifAffaire }}</textarea>
+                            <label for="floatingTextarea2">Objectif</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="febEdit" autocomplete="off">
+                                    <option value="{{ Affaire.idFeb.idFeb }}" selected>{{ Affaire.idFeb.numFeb }}</option>
+                                    {% for Feb in Febs %}
+                                        <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select mb-3" aria-label="Default select example" name="priorityEdit" autocomplete="off">
+                                    <option value="{{ Affaire.idPriorisation.idPriorisation }}" selected>{{ Affaire.idPriorisation.priorisation }}</option>
+                                    {% for Prio in Prios %}
+                                        <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form mb-3">
+                                    <input value="{{ Affaire.montantAffaire }}" type="number" class="form-control" min="0" step="0.01" id="montant" name="montantEdit" placeholder="Montant">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3 date datepicker">
+                                    <input value="{{ Affaire.echeanceAffaire|date('m/d/Y') }}" type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="dateEdit" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="commentEdit" style="height: 100px">{{ Affaire.commentaire }}</textarea>
+                            <label for="floatingTextarea2">Commentaire</label>
+                        </div>
                     </form>
                 </div>
                     <div class="modal-footer">

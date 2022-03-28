@@ -1,3 +1,3 @@
 {% for Affaire in Affaires %}
-    {% include 'gestion/affaire/card.html.twig' with {Affaire: Affaire, sigles: sigles } only%}
+    {% include 'gestion/affaire/card.html.twig' with {Affaire: Affaire, sigles: sigles, Natures: Natures,Febs: Febs, Prios: Prios } only%}
 {% endfor %}
