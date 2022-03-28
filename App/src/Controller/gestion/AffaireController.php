@@ -61,6 +61,7 @@ class AffaireController extends AbstractController {
         $form->handleRequest($request);
 
         $Affaires = $this->affaireRepository->findAffaireSearch($Data);
+        dump($Affaires);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
@@ -73,6 +74,10 @@ class AffaireController extends AbstractController {
                 'content' => $this->renderView('gestion/affaire/_content.html.twig', [
                     'Affaires' => $Affaires,
                     'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+                    'Febs' => $this->febRepository->findAll(),
+                    'Natures' => $this->natureAffaireRepository->findAffairesNature(),
+                    'sigles' => $sigles,
+                    'Prios' => $this->priorisationRepository->findAll(),
                 ]),
                 'sorting' => $this->renderView('gestion/affaire/_sorting.html.twig', [
                     'Affaires' => $Affaires,
@@ -232,77 +237,5 @@ class AffaireController extends AbstractController {
         return $this->json($jsonData, 200);
     }
 
-
-    /**
-     * @Route ("/Admin/ImportAffaire", name="importAffaire")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function import(Request $request) : JsonResponse
-    {
-        $file = $request->files->get('file', 'r');
-
-        if ($file == null){
-            $jsonData = array(
-                'message' => "Erreur, veuillez renseignez un fichier.",
-            );
-        }
-        else{
-
-            $oldMessage = ',';
-
-            $deletedFormat = '.';
-
-            $str=file_get_contents($file->getRealPath());
-
-            $str=str_replace($oldMessage, $deletedFormat,$str);
-            file_put_contents($file->getRealPath(), $str);
-
-            $oldMessage = ';';
-
-            $deletedFormat = ',';
-
-            $str=file_get_contents($file->getRealPath());
-
-            $str=str_replace($oldMessage, $deletedFormat,$str);
-            file_put_contents($file->getRealPath(), $str);
-            $em = $this->ManagerRegistry->getManager();
-            $csv = Reader::createFromPath($file->getRealPath());
-            $csv->setHeaderOffset(0);
-            $result = $csv->getRecords();
-
-
-            foreach ( $result as $row){
-                $Affaire = (new Affaire())
-                    ->setMasterId($row['Master ID'])
-                    ->setDebitAffaire($row['debit'])
-                    ->setIpLanSubnet($row['IP LAN subnet'])
-                    ->setIpPfs($row['adresse IP PFS'])
-                    ->setIdOrganisme(
-                        $this->organismeRepository->findOneBy([
-                            'organisme' => $row['Entité'],
-                            'idQuartier' => $this->quartiersRepository->findOneBy([
-                                'trigramme' => $row['TRI']
-                            ]),
-                        ])
-                    )
-                    ->setIdSupport(
-                        $this->supportAffaireRepository->findOneBy([
-                            'support' => $row['support']
-                        ])
-                    )
-                    ->setEtatAffaire(1)
-                ;
-                $em->persist($Affaire);
-                $em->flush();
-            }
-
-            $jsonData = array(
-                'message' => "Importation terminée",
-            );
-        }
-
-        return $this->json($jsonData, 200);
-    }
 
 }
