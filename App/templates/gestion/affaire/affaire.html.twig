@@ -65,59 +65,69 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title" id="modalLabel">Nouveau {{ title }} :</h1>
+                    <h1 class="modal-title" id="modalLabel">Nouvelle {{ title }} :</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="affaireFormCreate" action="{{ path ('Admin_Affaire_New')}}" method="post" class="js-Ajax-form">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="masterId" name="masterId" placeholder="name@example.com">
-                                    <label for="masterId">Master ID</label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="debit" name="Debit" placeholder="name@example.com">
-                                    <label for="debit">Débit</label>
-                                </div>
-                            </div>
-                        </div>
-                        <select class="form-select mb-3" aria-label="Default select example" name="orga" autocomplete="off">
-                            <option selected>Organisme bénéficiaire</option>
-                            {% for Organisme in Organismes %}
-                                <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idbaseDefense.baseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
+                        <select class="form-select mb-3" aria-label="Default select example" name="nature" autocomplete="off">
+                            <option selected>Nature</option>
+                            {% for Nature in Natures %}
+                                <option value="{{ Nature.idNatureAffaire }}">
+                                    {% if  Nature.natureAffaire == 'RDIP' %}
+                                        RDIP
+                                    {% elseif  Nature.natureAffaire == 'SECPRO' %}
+                                        SECPRO
+                                    {% elseif  Nature.natureAffaire == 'Antennes - Sémaphores' %}
+                                        Antennes - Sémaphores
+                                    {% elseif  Nature.natureAffaire == 'Faire - faire' %}
+                                        Faire - faire
+                                    {% elseif  Nature.natureAffaire == 'RAT' %}
+                                        RAT
+                                    {% elseif  Nature.natureAffaire == 'Lignes urgences' %}
+                                        Lignes urgences
+                                    {% elseif  Nature.natureAffaire == 'Lignes réseaux CD' %}
+                                        Lignes réseaux CD
+                                    {% endif %}
+                                </option>
                             {% endfor %}
                         </select>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="bnr" name="affaire" placeholder="name@example.com">
+                            <label for="bnr">Nom du projet</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="objectif" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Objectif</label>
+                        </div>
                         <div class="row">
                             <div class="col-6">
-                                <select class="form-select mb-3" aria-label="Default select example" name="support" autocomplete="off">
-                                    <option selected>Support</option>
-                                    {% for Support in Supports %}
-                                        <option value="{{ Support.idSupportAffaire }}">{{ Support.support }}</option>
+                                <select class="form-select mb-3" aria-label="Default select example" name="feb" autocomplete="off">
+                                    <option selected>FEB associée</option>
+                                    {% for Feb in Febs %}
+                                        <option value="{{ Feb.idFeb }}">{{ Feb.numFeb }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-6">
-                                <select class="form-select mb-3" aria-label="Default select example" name="etat" autocomplete="off">
-                                    <option selected>État</option>
-                                    <option value="1">Prévu</option>
-                                    <option value="2">Traité</option>
+                                <select class="form-select mb-3" aria-label="Default select example" name="priority" autocomplete="off">
+                                    <option selected>Priorité</option>
+                                    {% for Prio in Prios %}
+                                        <option value="{{ Prio.idPriorisation }}">{{ Prio.priorisation }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="ipPfs" name="ipPfs" placeholder="name@example.com">
-                                    <label for="ipPfs">Ip Pfs</label>
+                                <div class="form mb-3">
+                                    <input type="number" class="form-control" min="0" step="0.01" id="montant" name="montant" placeholder="Montant">
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="ipLanSubnet" name="ipLanSubnet" placeholder="name@example.com">
-                                    <label for="ipLanSubnet">Ip lan subnet</label>
+                                <div class="input-group mb-3 date datepicker">
+                                    <input type="text" class="form-control" placeholder="Échéance" aria-label="datepicker" aria-describedby="basic-addon1" name="date" autocomplete="off"><span class="input-group-addon"></span>
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                                 </div>
                             </div>
                         </div>

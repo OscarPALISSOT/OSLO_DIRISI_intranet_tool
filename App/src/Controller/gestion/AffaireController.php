@@ -6,6 +6,8 @@ use App\Data\SearchDataAffaire;
 use App\Entity\Affaire;
 use App\form\filters\AffaireSearchForm;
 use App\Repository\AffaireRepository;
+use App\Repository\FebRepository;
+use App\Repository\NatureAffaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
@@ -29,8 +31,10 @@ class AffaireController extends AbstractController {
     private $priorisationRepository;
     private $affaireRepository;
     private $quartiersRepository;
+    private $febRepository;
+    private $natureAffaireRepository;
 
-    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, AffaireRepository $affaireRepository, QuartiersRepository $quartiersRepository)
+    public function __construct(ManagerRegistry $doctrine, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, AffaireRepository $affaireRepository, QuartiersRepository $quartiersRepository, FebRepository $febRepository, NatureAffaireRepository $natureAffaireRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->organismeRepository = $organismeRepository;
@@ -38,6 +42,8 @@ class AffaireController extends AbstractController {
         $this->priorisationRepository = $priorisationRepository;
         $this->affaireRepository = $affaireRepository;
         $this->quartiersRepository = $quartiersRepository;
+        $this->febRepository = $febRepository;
+        $this->natureAffaireRepository = $natureAffaireRepository;
     }
 
 
@@ -79,11 +85,11 @@ class AffaireController extends AbstractController {
         }
         return $this->render('gestion/affaire/affaire.html.twig', [
             'Affaires' => $Affaires,
+            'Febs' => $this->febRepository->findAll(),
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
+            'Natures' => $this->natureAffaireRepository->findAffairesNature(),
             'role' => $role[0],
-            'title' => $this->sigleRepository->findOneBy([
-                'intituleSigle' => 'internet_militaire'
-            ]),
+            'title' => 'Affaire',
             'Prios' => $this->priorisationRepository->findAll(),
             'form' => $form->createView(),
             'sigles' => $sigles,
@@ -98,35 +104,35 @@ class AffaireController extends AbstractController {
      * @throws \Exception
      */
     public function newAffaire(Request $request) : Response{
-        $masterId = $request->request->get('masterId');
-        $idoOrga = $request->request->get('orga');
-        $orga = $this->organismeRepository->find($idoOrga);
-        $idSupport = $request->request->get('support');
-        $support = $this->supportAffaireRepository->find($idSupport);
-        $debit = $request->request->get('Debit');
-        $etat = $request->request->get('etat');
-        $ipPfs = $request->request->get('ipPfs');
-        $ipLanSubnet = $request->request->get('ipLanSubnet');
-        $comment = $request->request->get('comment');
-        $NewAffaire = (new Affaire())
-            ->setMasterId($masterId)
-            ->setIdOrganisme($orga)
-            ->setIdSupport($support)
-            ->setDebitAffaire($debit)
-            ->setEtatAffaire($etat)
-            ->setIpPfs($ipPfs)
-            ->setIpLanSubnet($ipLanSubnet)
-            ->setCommentaire($comment)
-        ;
+        $NewAffaire = new Affaire();
+        $idNature = $request->request->get('nature');
+        $nature = $this->natureAffaireRepository->find($idNature);
+        $AffaireName = $request->request->get('affaire');
+        $Objectif = $request->request->get('objectif');
+        $montant = $request->request->get('montant');
+        $idPrio = $request->request->get('priority');
+        $Prio = $this->priorisationRepository->find($idPrio);
+        $Date = $request->request->get('date');
+        $date = new DateTime($Date);
+        $date->format('Y-m-d');
+        $Comment = $request->request->get('comment');
+        $idFeb = $request->request->get('feb');
+        $Feb = $this->febRepository->find($idFeb);
+        $NewAffaire->setIdNatureAffaire($nature);
+        $NewAffaire->setNomAffaire($AffaireName);
+        $NewAffaire->setObjectifAffaire($Objectif);
+        $NewAffaire->setMontantAffaire($montant);
+        $NewAffaire->setIdPriorisation($Prio);
+        $NewAffaire->setEcheanceAffaire($date);
+        $NewAffaire->setCommentaire($Comment);
+        $NewAffaire->setIdFeb($Feb);
         if ($this->isCsrfTokenValid("CreateAffaire", $request->get('_token'))){
             $em = $this->ManagerRegistry->getManager();
             $em->persist($NewAffaire);
             $em->flush();
 
             $jsonData = array(
-                'message' => $this->sigleRepository->findOneBy([
-                    'intituleSigle' => 'internet_militaire'
-                ]) . ' ajouté',
+                'message' =>  'Affaire ajoutée',
             );
         }
         else{

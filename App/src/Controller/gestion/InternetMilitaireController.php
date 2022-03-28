@@ -82,7 +82,7 @@ class InternetMilitaireController extends AbstractController {
                 'secondModal' => $this->renderView('gestion/_secondModal.html.twig'),
             ]);
         }
-        return $this->render('gestion/internetMilitaire/affaire.html.twig', [
+        return $this->render('gestion/internetMilitaire/internetMilitaire.html.twig', [
             'InternetMilitaires' => $InternetMilitaires,
             'Organismes' => $this->organismeRepository->findAllWithQuartier(),
             'Supports' =>$this->supportInternetMilitaireRepository->findAll(),

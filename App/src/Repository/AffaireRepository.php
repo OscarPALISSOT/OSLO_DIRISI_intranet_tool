@@ -63,8 +63,16 @@ class AffaireRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('a')
-            ->select('a', 'p')
+            ->select('a', 'p', 'n')
             ->join('a.idPriorisation', 'p')
+            ->join('a.idNatureAffaire', 'n')
+            ->andWhere('n.natureAffaire != :bnr and n.natureAffaire !=:modip and n.natureAffaire !=:febcom and n.natureAffaire !=:mim3')
+            ->setParameters([
+                'bnr'=> 'besoinNouveauReseau',
+                'modip' => 'modifLan',
+                'febcom' => 'ficheExpressionBesoinCOM',
+                'mim3' => 'internet_militaire',
+            ])
             ->orderBy('a.updateAt', 'DESC');
 
 

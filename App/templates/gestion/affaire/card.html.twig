@@ -10,28 +10,48 @@
                         <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Affaire.idAffaire }}" type="checkbox" value="{{ Affaire.idAffaire }}" id="checkbox{{ Affaire.idAffaire }}">
                     </div>
                 </h3>
-                <h4 class="card-subtitle mb-2 text-muted">{{ Affaire.montantAffaire|number_format(2, ',', ' ') }} € }}</h4>
+                <h4 class="card-subtitle mb-2 text-muted">
+                    {% if  Affaire.idNatureAffaire.natureAffaire == 'RDIP' %}
+                        RDIP
+                    {% elseif  Affaire.idNatureAffaire.natureAffaire == 'SECPRO' %}
+                        SECPRO
+                    {% elseif  Affaire.idNatureAffaire.natureAffaire == 'Antennes - Sémaphores' %}
+                        Antennes - Sémaphores
+                    {% elseif  Affaire.idNatureAffaire.natureAffaire == 'Faire - faire' %}
+                        Faire - faire
+                    {% elseif  Affaire.idNatureAffaire.natureAffaire == 'RAT' %}
+                        RAT
+                    {% elseif  Affaire.idNatureAffaire.natureAffaire == 'Lignes urgences' %}
+                        Lignes urgences
+                    {% elseif  Affaire.idNatureAffaire.natureAffaire == 'Lignes réseaux CD' %}
+                        Lignes réseaux CD
+                    {% else %}
+                        {{ sigles[Affaire.idNatureAffaire.natureAffaire] }}
+                    {% endif %}
+                </h4>
                 <p class="card-text">
-                    <span class="label">Ip lan subnet :</span>
-                    {{ Affaire.ipLanSubnet }}
+                    <span class="label">Montant :</span>
+                    {{ Affaire.montantAffaire|number_format(2, ',', ' ') }} €
                     <br>
                     <span class="label">Organisme :</span>
-                    {{ Affaire.idOrganisme.Organisme }} - {{ Affaire.idOrganisme.idQuartier.idbaseDefense.baseDefense }} - {{ Affaire.idOrganisme.idQuartier.trigramme }}
+                    {% if Affaire.idFeb %}
+                        {% for Orga in Affaire.idFeb.idOrganisme %}
+                            {{ Orga.Organisme }} - {{ Orga.idQuartier.idbaseDefense.baseDefense }} - {{ Orga.idQuartier.trigramme }}
+                        {% endfor %}
+                    {% else %}
+                    {% endif %}
+
                     <br>
-                    <span class="label">Ip Pfs :</span>
-                    {{ Affaire.ipPfs }}
+                    <span class="label">Objectif :</span>
+                    <br>
+                    {{ Affaire.objectifAffaire }}
                     <br>
                 </p>
                 <div class="collapse" id="collapseCard{{ Affaire.idAffaire }}">
                     <p class="info">
-
-
-                        <span class="label">État :</span>
-                        {% if Affaire.etatAffaire == 1 %}
-                            Prévu
-                        {% else %}
-                            Traité
-                        {% endif %}
+                        <span class="label">Objectif :</span>
+                        <br>
+                        {{ Affaire.objectifAffaire }}
                         <br>
                         <span class="label">Commentaire :</span>
                         <br>

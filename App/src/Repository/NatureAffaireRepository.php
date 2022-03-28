@@ -19,6 +19,26 @@ class NatureAffaireRepository extends ServiceEntityRepository
         parent::__construct($registry, NatureAffaire::class);
     }
 
+
+    /**
+     * @return NatureAffaire[] Returns an array of Sigle objects
+     */
+
+    public function findAffairesNature()
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.natureAffaire != :bnr and n.natureAffaire !=:modip and n.natureAffaire !=:febcom and n.natureAffaire !=:mim3')
+            ->setParameters([
+                'bnr'=> 'besoinNouveauReseau',
+                'modip' => 'modifLan',
+                'febcom' => 'ficheExpressionBesoinCOM',
+                'mim3' => 'internet_militaire',
+            ])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return NatureAffaire[] Returns an array of NatureAffaire objects
     //  */
