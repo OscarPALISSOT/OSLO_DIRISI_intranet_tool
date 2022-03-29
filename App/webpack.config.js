@@ -27,6 +27,7 @@ Encore
     .addEntry('datepickerJS', './assets/js/datepicker.js')
     .addEntry('datepickerMIN', './assets/js/bootstrap-datepicker.min.js')
     .addEntry('multiselectJS', './assets/js/multiselect.min.js')
+    .addEntry('sliderJS', './assets/js/slider.js')
     .addEntry('contactJS', './assets/js/pages/contactJS.js')
     .addEntry('cardEntity', './assets/js/pages/cardEntity.js')
 
@@ -39,6 +40,7 @@ Encore
     .addStyleEntry('contact', './assets/styles/pages/contact.scss')
     .addStyleEntry('datePicker', './assets/styles/datepicker.css')
     .addStyleEntry('multiselect', './assets/styles/multiselectCSS.css')
+    .addStyleEntry('slider', './assets/styles/slider.scss')
     .addStyleEntry('gestionEntity', './assets/styles/pages/gestionEntity.scss')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

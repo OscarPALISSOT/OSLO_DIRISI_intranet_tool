@@ -70,7 +70,9 @@ class FebSearchForm extends AbstractType
                 'attr' => [
                     'min' => $min,
                     'max' => $max,
+                    'step' => 1000,
                     'value' => $min,
+                    'class' => 'sliderRange'
                 ],
             ]);
         ;

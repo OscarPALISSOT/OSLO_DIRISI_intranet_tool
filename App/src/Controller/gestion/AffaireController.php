@@ -61,12 +61,10 @@ class AffaireController extends AbstractController {
         $form->handleRequest($request);
 
         $Affaires = $this->affaireRepository->findAffaireSearch($Data);
-        dump($Affaires);
 
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
             $role[0] = $request->get('role');
-
         }
         $sigles = $this->sigleRepository->findSigles();
         if ($request->get('Ajax')){

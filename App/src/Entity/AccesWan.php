@@ -103,33 +103,33 @@ class AccesWan
     private $idQuartier;
 
     public function __construct()
-    {
-        $date = new DateTime();
-        $date->format('Y-m-d-H:i:s');
-        $this->setUpdateAt($date);
-    }
+{
+$date = new DateTime();
+$date->format('Y-m-d-H:i:s');
+$this->setUpdateAt($date);
+}
 
-    public function getIdOpera(): ?int
-    {
-        return $this->idOpera;
-    }
+public function getIdOpera(): ?int
+{
+    return $this->idOpera;
+}
 
-    public function getIdAccess(): ?string
-    {
-        return $this->idAccess;
-    }
+public function getIdAccess(): ?string
+{
+    return $this->idAccess;
+}
 
-    public function setIdAccess(string $idAccess): self
-    {
-        $this->idAccess = $idAccess;
+public function setIdAccess(string $idAccess): self
+{
+    $this->idAccess = $idAccess;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function getTypeOpera(): ?string
-    {
-        return $this->typeOpera;
-    }
+public function getTypeOpera(): ?string
+{
+    return $this->typeOpera;
+}
 
     public function setTypeOpera(string $typeOpera): self
     {
