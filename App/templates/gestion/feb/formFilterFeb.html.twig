@@ -4,23 +4,39 @@
     <span class="visually-hidden">Loading...</span>
 </div>
 
-<h4 class="mt-3">Projet</h4>
-<div class="col-4">{{ form_row(form.Feb) }}</div>
+<div class="col-4 mt-3">
+    <select data-placeholder="Filtres" multiple class="chosen-select mb-3 selectFilter" tabindex="8"  autocomplete="off">
 
-<h4 class="mt-3">Plan de charge</h4>
-<div class="col-4 scrollEntity">
-    {{ form_row(form.Pdc) }}
+    </select>
 </div>
 
-<h4 class="mt-3">Montant</h4>
-<div class="row">
-    <div class="col-2">{{ form_row(form.supMontant) }}</div>
-    <div class="col-2 rangeInput">
-        {{ form_row(form.Montant) }}
-        <div class="sliderValue"></div>
+
+
+<div class="inputFilter" id="Projet">
+    <h4 class="mt-3">Projet</h4>
+    <div class="col-4">{{ form_row(form.Feb) }}</div>
+</div>
+
+
+<div class="inputFilter" id="Plan de charge">
+    <h4 class="mt-3">Plan de charge</h4>
+    <div class="col-4 scrollEntity">
+        {{ form_row(form.Pdc) }}
     </div>
-
 </div>
+
+
+<div class="inputFilter" id="Montant">
+    <h4 class="mt-3">Montant</h4>
+    <div class="row">
+        <div class="col-2">{{ form_row(form.supMontant) }}</div>
+        <div class="col-2 rangeInput">
+            {{ form_row(form.Montant) }}
+            <div class="sliderValue"></div>
+        </div>
+    </div>
+</div>
+
 
 <button type="submit" class="btn btn-outline-secondary mt-3">Appliquer les filtres <i class="fas fa-search"></i></button>
 

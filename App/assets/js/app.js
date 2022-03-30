@@ -10,6 +10,10 @@ import CrudAjax from './crudAjax.js'
 
 new CrudAjax(document.querySelector('.js-Ajax'))
 
+import ShowFilter from "./showFilter";
+
+new ShowFilter(document.querySelector('.js-filter'))
+
 
 $(function(){
     $(".chosen-select").chosen({
