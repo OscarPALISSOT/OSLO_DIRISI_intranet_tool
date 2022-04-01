@@ -21,9 +21,8 @@ export default class ShowFilter{
         this.select = element.getElementsByClassName('selectFilter')[0]
         this.filters = element.getElementsByClassName('inputFilter')
         this.feedSelect()
-        this.showInput()
+        this.showInput(this.filters)
     }
-
 
     /**
      * feed the multiselect with the inputs title
@@ -39,18 +38,24 @@ export default class ShowFilter{
     /**
      * show or hide the input
      */
-    showInput(){
-        this.select.oninput = function (){
-            let selectedInput = document.getElementsByClassName('chosen-choices')[0].children
-            let filters = this.filters
-            debugger
-            for (const item of selectedInput){
-                let input = filters.getElementById(item.firstElementChild.innerHTML)
-                input.style.backgroundColor = 'black'
-
+     showInput(filters){
+        let observer = new MutationObserver(function (e) {
+            if (e[0].removedNodes){
+                for (const item of filters){
+                    console.log('test')
+                    item.style.display = 'none';
+                }
             }
-        }
+        });
+        this.select.oninput = function (){
+            observer.observe(document.getElementById('chosen-choices'), { childList: true });
+            let chosen = document.getElementsByClassName('search-choice')
+            for (const item of chosen){
+                let input = document.getElementById(item.firstElementChild.innerHTML)
+                input.style.display = 'block';
+            }
 
+        }
     }
 
 
