@@ -1,8 +1,10 @@
 .encadrement {
   justify-content: space-around;
-  border-width: 2px;
+  border-width: 10px;
   border-color: #5993FD;
-  border-style: inset;
+  border-style: solid;
+  padding: 10px;
+  background-color: white;
 }
 
 .titre {
@@ -10,5 +12,9 @@
 }
 
 .ensemble {
+  justify-content: flex-start;
+}
 
+li {
+  font-weight: bold;
 }
