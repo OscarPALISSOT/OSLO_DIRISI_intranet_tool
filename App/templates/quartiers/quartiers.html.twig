@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+    {{ encore_entry_link_tags('sidenav') }}
     {{ encore_entry_link_tags('quartiers') }}
 {% endblock %}
 
@@ -20,11 +21,13 @@
 {% endblock %}
 
 {% block sideNav %}
-
+    <li class="sideNavItem">
+        <a href="" class="">Accueil </a>
+    </li>
 {% endblock %}
 
 {% block body %}
-<h1 class="titre">BASE DE ...</h1>
+    <h1 class="titre">BASE DE ...</h1>
     <div class="ensemble">
         <div class="encadrement">
             <ul>
