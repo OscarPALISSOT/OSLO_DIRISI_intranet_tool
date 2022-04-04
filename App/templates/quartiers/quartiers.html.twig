@@ -1,0 +1,40 @@
+{% extends 'sidenav.html.twig' %}
+
+{% block titleSidenav %}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('quartiers') }}
+{% endblock %}
+
+{% block stylesheetsSidenav %}
+    {{ encore_entry_link_tags('sidenav') }}
+    {% block styleSheetsGestion %}
+
+    {% endblock %}
+{% endblock %}
+
+{% block javascriptsSidenav %}
+
+{% endblock %}
+
+{% block sideNav %}
+
+{% endblock %}
+
+{% block body %}
+<h1>BASE DE ...</h1>
+    <div>
+        <ul>
+            <li>RFZ :</li>
+            <li>Base de défense</li>
+            <li>Trigramme</li>
+            <li>Nom du quartier</li>
+            <li>Adresse</li>
+        </ul>
+    </div>
+    <div>
+        <a href="">hôpital</a>
+    </div>
+{% endblock %}
