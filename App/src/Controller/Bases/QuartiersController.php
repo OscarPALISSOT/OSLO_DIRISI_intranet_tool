@@ -17,7 +17,7 @@ class QuartiersController extends AbstractController
     }
 
     /**
-     * @Route ("/quartiers/{trigramme}", name="quartiers")
+     * @Route ("/quartier/{trigramme}", name="quartier")
      * @return Response
      */
 
