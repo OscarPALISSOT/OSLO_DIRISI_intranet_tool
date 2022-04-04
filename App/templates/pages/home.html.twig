@@ -39,7 +39,7 @@
                             <div class="modal-body quartierLinkContain">
                                 {% for Quartier in Quartiers %}
                                     {% if Quartier.idBaseDefense.idBaseDefense ==  Bdd.idBaseDefense %}
-                                        <a type="button" class="btn btn-outline-secondary quartierLink mb-2" href="{{ path ('quartier', {trigramme: Quartier.trigramme}) }}">
+                                        <a type="button" class="btn btn-outline-secondary quartierLink mb-2" href="{{ path ('quartier', {trigramme: Quartier.trigramme, BaseDefense: Bdd.idBaseDefense}) }}">
                                             {{ Quartier.trigramme }} - {{ Quartier.quartier }}
                                         </a>
                                     {% endif %}
