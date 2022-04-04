@@ -20,7 +20,35 @@
             <p>des Réseaux</p>
             <p class="maj">L<strong>O</strong>caux</p>
         </div>
-        <div id="map"><img src="{{ asset('images/map.svg') }}" alt=""/></div>
+        <div id="map">
+            <img src="{{ asset('images/map.svg') }}" alt=""/>
+        </div>
+        <div class="basesDefenses">
+            {% for Bdd in Bdds %}
+                <button class="bddLink" data-bs-toggle="modal" data-bs-target="#modalQuartier{{ Bdd.idBaseDefense }}">
+                    {{ Bdd.BaseDefense }}
+                </button>
+                <!-- Modal quartier-->
+                <div class="modal fade" id="modalQuartier{{ Bdd.idBaseDefense }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="exampleModalLabel">Liste des quartiers</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% for Quartier in Quartiers %}
+                                    {% if Quartier.idBaseDefense.idBaseDefense ==  Bdd.idBaseDefense %}
+                                        <a href="">{{ Quartier.trigramme }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
     </div>
 
 
