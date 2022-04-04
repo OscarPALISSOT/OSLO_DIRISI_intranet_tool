@@ -36,10 +36,12 @@
                                 <h1 class="modal-title" id="exampleModalLabel">Liste des quartiers</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body quartierLinkContain">
                                 {% for Quartier in Quartiers %}
                                     {% if Quartier.idBaseDefense.idBaseDefense ==  Bdd.idBaseDefense %}
-                                        <a href="">{{ Quartier.trigramme }}</a>
+                                        <a type="button" class="btn btn-outline-secondary quartierLink mb-2" href="{{ path ('quartier', {trigramme: Quartier.trigramme}) }}">
+                                            {{ Quartier.trigramme }} - {{ Quartier.quartier }}
+                                        </a>
                                     {% endif %}
                                 {% endfor %}
                             </div>
