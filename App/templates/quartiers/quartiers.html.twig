@@ -57,13 +57,11 @@
         </div>
         <h2 class="titre">Organismes</h2>
         <div class="encadrement">
+            <div class="row">
             {% for organisme in Organismes %}
-                <div class="tab">
-                    <div class="raw">
-                        <a href=""> {{ organisme.organisme }} </a>
-                    </div>
-                </div>
+                <div class="col-4"><a href=""> {{ organisme.organisme }} </a></div>
             {% endfor %}
+            </div>
         </div>
 
 {% endblock %}
