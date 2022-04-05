@@ -59,8 +59,6 @@ class QuartiersController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
         $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
-        dump($AccesWan);
-        dump($InternetMilitaire);
         return $this->render('quartiers/quartiers.html.twig', [
             'Quartier' => $quartier,
             'Organismes' => $organisme,
