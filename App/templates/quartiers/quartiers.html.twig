@@ -30,7 +30,7 @@
 {% block body %}
     <div class="container-fluid">
         {% if Quartier.quartier %}
-            <h1 class="titre">QUARTIER DE {{ Quartier.quartier }}</h1>
+            <h1 class="titre">Quartier{{ Quartier.quartier }}</h1>
         {% else %}
             <h1 class="titre">{{ Quartier.trigramme }}</h1>
         {% endif %}
