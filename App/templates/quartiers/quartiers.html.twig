@@ -27,7 +27,12 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="titre">QUARTIER DE ...</h1>
+    {% if Quartier.quartier %}
+        <h1 class="titre">QUARTIER DE {{ Quartier.quartier }}</h1>
+    {% else %}
+        <h1 class="titre">{{ Quartier.trigramme }}</h1>
+    {% endif %}
+
     <div class="ensemble">
         <div class="encadrement">
             <ul>

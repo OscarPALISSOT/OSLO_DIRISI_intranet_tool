@@ -24,7 +24,7 @@ class QuartiersController extends AbstractController
     }
 
     /**
-     * @Route ("/quartier/{trigramme}", name="quartier")
+     * @Route ("/quartier/{BaseDefense}/{trigramme}", name="quartier")
      * @param Request $request
      * @return Response
      */
@@ -32,20 +32,18 @@ class QuartiersController extends AbstractController
     public function index(Request $request): Response
     {
         $trigramme = $request->get('trigramme');
-        $idBaseDefense = $request->request->get('BaseDefense');
+        $idBaseDefense = $request->get('BaseDefense');
         $BaseDefense = $this->basesDeDefenseRepository->findOneBy([
             'idBaseDefense' => $idBaseDefense
         ]);
+
         $quartier = $this->quartiersRepository->findOneBy([
             'trigramme' => $trigramme,
             'idBaseDefense' => $BaseDefense,
         ]);
 
-        dump($BaseDefense);
-
-        dump($quartier);
         return $this->render('quartiers/quartiers.html.twig', [
-
+            'Quartier' => $quartier,
         ]);
     }
 }
