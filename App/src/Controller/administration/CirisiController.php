@@ -31,6 +31,7 @@ class CirisiController extends AbstractController {
      * @param Request $request
      * @return Response
      */
+
     public function index(PaginatorInterface $paginator, Request $request) : Response{
         $Cirisis = $paginator->paginate(
             $this->CirisiRepository->findAllWithBddQuery(),

@@ -1,14 +1,21 @@
 .encadrement {
   justify-content: space-around;
-  border-width: 10px;
-  border-color: #5993FD;
-  border-style: solid;
-  padding: 10px;
+  border-width: 5px;
+  padding: 3%;
   background-color: white;
+  border-top-color: #5993FD;
+  border-top-style: inset;
+  border-top-left-radius: 10px;
+  border-left-color: #5993FD;
+  border-left-style: inset;
+  border-left-right-radius: 10px;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 30%);
+  margin-bottom: 10px;
 }
 
 .titre {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .ensemble {
@@ -17,4 +24,12 @@
 
 li {
   font-weight: bold;
+}
+
+.infoQuartiers{
+  margin: auto;
+}
+
+.tab {
+  flex-direction: column;
 }

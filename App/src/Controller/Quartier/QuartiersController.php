@@ -3,7 +3,9 @@
 
 namespace App\Controller\Quartier;
 
+use App\Entity\Organisme;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +18,13 @@ class QuartiersController extends AbstractController
 
     private $quartiersRepository;
     private $basesDeDefenseRepository;
+    private $organismeRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
+        $this->organismeRepository = $organismeRepository;
     }
 
     /**
@@ -41,9 +45,12 @@ class QuartiersController extends AbstractController
             'trigramme' => $trigramme,
             'idBaseDefense' => $BaseDefense,
         ]);
-
+        $organisme = $this->organismeRepository->findBy([
+            'idQuartier' => $quartier->getIdQuartier(),
+        ]);
         return $this->render('quartiers/quartiers.html.twig', [
             'Quartier' => $quartier,
+            'Organismes' => $organisme
         ]);
     }
 }

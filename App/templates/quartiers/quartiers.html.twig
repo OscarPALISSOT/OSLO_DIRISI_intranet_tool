@@ -35,29 +35,35 @@
             <h1 class="titre">{{ Quartier.trigramme }}</h1>
         {% endif %}
 
-        <div class="col-lg-3 col-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title"><i class="fas fa-id-card"></i></h3>
-                    <p class="card-text">Il y a actuellement  enregistrés</p>
-                    <a href="" class="btn btn-outline-primary">Voir plus</a>
-                </div>
-            </div>
-        </div>
-        <div class="ensemble">
-            <div class="encadrement">
-                <ul>
-                    <li>RFZ :</li>
-                    <li>Base de défense :</li>
-                    <li>Trigramme :</li>
-                    <li>Nom du quartier :</li>
-                    <li>Adresse :</li>
+        <div class="col-6 infoQuartiers">
+        <div class="card ">
+            <div class="card-body">
+                <h3 class="card-title"><i class="fas fa-id-card"></i></h3>
+                <ul class="card-text">
+                    <li>RFZ : {{ Quartier.IdBaseDefense.IdRfz.rfz }}</li>
+                    <li>Base de défense : {{ Quartier.IdBaseDefense.baseDefense }}</li>
+                    <li>Trigramme : {{ Quartier.IdBaseDefense.baseDefense }}</li>
+                    <li>Nom du quartier :
+                        {% if Quartier.quartier %}
+                            {{ Quartier.quartier }}
+                        {% else %}
+                        non renseigné
+                        {% endif %}
+                    </li>
+                    <li>Adresse : {{ Quartier.adresseQuartier }}</li>
                 </ul>
             </div>
-            <h2 class="titre">Organismes</h2>
-            <div class="encadrement">
-                <a href="">hôpital</a>
-            </div>
         </div>
-    </div>
+        </div>
+        <h2 class="titre">Organismes</h2>
+        <div class="encadrement">
+            {% for organisme in Organismes %}
+                <div class="tab">
+                    <div class="raw">
+                        <a href=""> {{ organisme.organisme }} </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
 {% endblock %}
