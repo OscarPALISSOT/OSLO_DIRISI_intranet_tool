@@ -29,16 +29,19 @@
 
 {% block body %}
     <div class="container-fluid">
-        {% if Quartier.quartier %}
-            <h1 class="titre">Quartier{{ Quartier.quartier }}</h1>
-        {% else %}
-            <h1 class="titre">{{ Quartier.trigramme }}</h1>
-        {% endif %}
+
 
         <div class="col-6 infoQuartiers">
         <div class="card ">
             <div class="card-body">
-                <h3 class="card-title"><i class="fas fa-id-card"></i></h3>
+                <h3 class="card-title">
+                    {% if Quartier.quartier %}
+                        Quartier{{ Quartier.quartier }}
+                    {% else %}
+                        {{ Quartier.trigramme }}
+                    {% endif %}
+                    <i class="fas fa-id-card"></i>
+                </h3>
                 <ul class="card-text">
                     <li>RFZ : {{ Quartier.IdBaseDefense.IdRfz.rfz }}</li>
                     <li>Base de défense : {{ Quartier.IdBaseDefense.baseDefense }}</li>

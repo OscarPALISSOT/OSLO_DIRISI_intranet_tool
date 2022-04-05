@@ -4,7 +4,9 @@
 namespace App\Controller\Quartier;
 
 use App\Entity\Organisme;
+use App\Repository\AccesWanRepository;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,12 +21,16 @@ class QuartiersController extends AbstractController
     private $quartiersRepository;
     private $basesDeDefenseRepository;
     private $organismeRepository;
+    private $accesWanRepository;
+    private $internetMilitaireRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->organismeRepository = $organismeRepository;
+        $this->accesWanRepository = $accesWanRepository;
+        $this->internetMilitaireRepository = $internetMilitaireRepository;
     }
 
     /**
@@ -48,9 +54,18 @@ class QuartiersController extends AbstractController
         $organisme = $this->organismeRepository->findBy([
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
+
+        $AccesWan = $this->accesWanRepository->findBy([
+            'idQuartier' => $quartier->getIdQuartier(),
+        ]);
+        $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
+        dump($AccesWan);
+        dump($InternetMilitaire);
         return $this->render('quartiers/quartiers.html.twig', [
             'Quartier' => $quartier,
-            'Organismes' => $organisme
+            'Organismes' => $organisme,
+            'AccesWans' => $AccesWan,
+            'InternetMilitaires' => $InternetMilitaire
         ]);
     }
 }

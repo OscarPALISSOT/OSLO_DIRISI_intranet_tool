@@ -66,6 +66,21 @@ class InternetMilitaireRepository extends ServiceEntityRepository
         );
     }
 
+
+     /**
+      * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
+      */
+    public function findByQuartier($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idOrganisme', 'o')
+            ->andWhere('o.idQuartier = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
     //  */
