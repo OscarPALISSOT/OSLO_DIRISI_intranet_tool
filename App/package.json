@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "bootstrap-slider": "^11.0.2",
-        "flip-toolkit": "^7.0.13"
+        "flip-toolkit": "^7.0.13",
+        "resize-observer": "^1.0.4"
     }
 }

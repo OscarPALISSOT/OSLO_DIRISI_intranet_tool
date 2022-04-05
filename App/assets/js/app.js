@@ -21,5 +21,3 @@ import ShowFilter from "./showFilter";
 
 new ShowFilter(document.querySelector('.js-filter'))
 
-
-

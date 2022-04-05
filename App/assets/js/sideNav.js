@@ -1,4 +1,6 @@
 
+import { ResizeObserver } from 'resize-observer';
+
 let sideNav = document.getElementById('sideNav');
 let main = document.getElementById('main');
 
