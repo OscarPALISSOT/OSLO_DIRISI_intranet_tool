@@ -48,7 +48,6 @@ export default class ShowFilter{
             }
         });
         this.select.oninput = function (){
-            observer.observe(document.getElementById('chosen-choices'), { childList: true });
             let chosen = document.getElementsByClassName('search-choice')
             for (const item of chosen){
                 let input = document.getElementById(item.firstElementChild.innerHTML)
