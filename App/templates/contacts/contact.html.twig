@@ -27,6 +27,7 @@
 
     <div class="container">
         <h1 class="mainTitle">Contacts</h1>
+
         <div class="col-5 mx-auto">
             <ul class="list-group">
                 {% for contact in contacts %}
@@ -35,22 +36,17 @@
                         {{ contact.intituleContact }} <i class="fas fa-chevron-circle-down"></i>
                     </button>
                     <div class="collapse" id="collapse{{ contact.idContact }}">
-                        <div>
-                            <ul class="coordonnees">
-                                <li>Nom : {{ contact.nomContact }}</li>
-                                <li>Prénom : {{ contact.prenomContact }}</li>
-                                <li>Email : {{ contact.emailContact }}</li>
-                                <li>TPH : {{ contact.telContact }}</li>
-                            </ul>
-                        </div>
+                        <ul class="coordonnees">
+                            <li>Nom : {{ contact.nomContact }}</li>
+                            <li>Prénom : {{ contact.prenomContact }}</li>
+                            <li>Email : {{ contact.emailContact }}</li>
+                            <li>TPH : {{ contact.telContact }}</li>
+                        </ul>
                     </div>
                 </li>
                 {% endfor %}
             </ul>
         </div>
-
-
-
     </div>
 
 {% endblock %}
