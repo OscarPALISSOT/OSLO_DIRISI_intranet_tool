@@ -7,6 +7,7 @@
 {% block stylesheets %}
     {{ encore_entry_link_tags('sidenav') }}
     {{ encore_entry_link_tags('quartiers') }}
+    {{ encore_entry_link_tags('cards') }}
 {% endblock %}
 
 {% block stylesheetsSidenav %}
@@ -27,25 +28,36 @@
 {% endblock %}
 
 {% block body %}
-    {% if Quartier.quartier %}
-        <h1 class="titre">QUARTIER DE {{ Quartier.quartier }}</h1>
-    {% else %}
-        <h1 class="titre">{{ Quartier.trigramme }}</h1>
-    {% endif %}
+    <div class="container-fluid">
+        {% if Quartier.quartier %}
+            <h1 class="titre">QUARTIER DE {{ Quartier.quartier }}</h1>
+        {% else %}
+            <h1 class="titre">{{ Quartier.trigramme }}</h1>
+        {% endif %}
 
-    <div class="ensemble">
-        <div class="encadrement">
-            <ul>
-                <li>RFZ :</li>
-                <li>Base de défense :</li>
-                <li>Trigramme :</li>
-                <li>Nom du quartier :</li>
-                <li>Adresse :</li>
-            </ul>
+        <div class="col-lg-3 col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="fas fa-id-card"></i></h3>
+                    <p class="card-text">Il y a actuellement  enregistrés</p>
+                    <a href="" class="btn btn-outline-primary">Voir plus</a>
+                </div>
+            </div>
         </div>
-        <h2 class="titre">Organismes</h2>
-        <div class="encadrement">
-            <a href="">hôpital</a>
+        <div class="ensemble">
+            <div class="encadrement">
+                <ul>
+                    <li>RFZ :</li>
+                    <li>Base de défense :</li>
+                    <li>Trigramme :</li>
+                    <li>Nom du quartier :</li>
+                    <li>Adresse :</li>
+                </ul>
+            </div>
+            <h2 class="titre">Organismes</h2>
+            <div class="encadrement">
+                <a href="">hôpital</a>
+            </div>
         </div>
     </div>
 {% endblock %}
