@@ -15,7 +15,7 @@
 
 .titre {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 }
 
 .ensemble {
@@ -30,6 +30,7 @@ li {
   margin: auto;
 }
 
-.tab {
-  flex-direction: column;
+a {
+  color: black;
+  text-decoration: none;
 }
