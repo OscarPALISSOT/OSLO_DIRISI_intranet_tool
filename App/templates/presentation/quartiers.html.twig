@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block titleBody %}
-    <h1 class="titleBody">Quartiers</h1>
+    <h1 class="titleBody">Quartier</h1>
 {% endblock %}
 
 
@@ -50,7 +50,7 @@
 {% block Child %}
     {% for organisme in Organismes %}
         <div class="col-4">
-            <a href=""> {{ organisme.organisme }} </a>
+            <a href="{{ path ('Organisme', {trigramme: Quartier.trigramme, BaseDefense: Quartier.idBaseDefense.idBaseDefense, Orga: organisme.idOrganisme}) }}"> {{ organisme.organisme }} </a>
         </div>
     {% endfor %}
 {% endblock %}
