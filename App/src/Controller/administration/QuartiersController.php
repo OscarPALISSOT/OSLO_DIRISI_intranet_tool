@@ -71,7 +71,7 @@ class QuartiersController extends AbstractController {
                 $em->flush();
             }
             $jsonData = array(
-                'message' => 'Quartier ajouté',
+                'message' => 'Presentation ajouté',
             );
         }
         return $this->json($jsonData, 200);
@@ -139,7 +139,7 @@ class QuartiersController extends AbstractController {
         }
 
         $jsonData = array(
-            'message' => 'Quartier modifié',
+            'message' => 'Presentation modifié',
         );
 
         return $this->json($jsonData, 200);
