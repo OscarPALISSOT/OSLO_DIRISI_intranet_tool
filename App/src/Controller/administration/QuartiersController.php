@@ -37,7 +37,7 @@ class QuartiersController extends AbstractController {
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
-        return $this->render('administration/quartiers.html.twig', [
+        return $this->render('administration/presentation.html.twig', [
             'Quartierss' => $Quartiers,
             'Bdds' => $this->basesDeDefenseRepository->findAll(),
         ]);
@@ -50,7 +50,7 @@ class QuartiersController extends AbstractController {
      */
     public function newQuartiers(Request $request) : Response{
         $NewQuartiers = new Quartiers();
-        $Quartiers = $request->request->get('quartiers');
+        $Quartiers = $request->request->get('presentation');
         $idQuartiers = $request->request->get('bdd');
         $trigramme = $request->request->get('trigramme');
         $adresseQuartiers = $request->request->get('adresseQuartier');

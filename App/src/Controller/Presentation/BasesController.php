@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\Bases;
+namespace App\Controller\Presentation;
 
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
@@ -28,26 +28,25 @@ class BasesController extends AbstractController
     }
 
     /**
-     * @Route ("/BaseDefense/{BaseDefense}", name="bases")
+     * @Route ("/BaseDefense/{BaseDefense}", name="BaseDefense")
      * @param Request $request
      * @return Response
      */
 
     public function index(Request $request): Response
     {
-        $trigramme = $request->get('trigramme');
         $idBaseDefense = $request->get('BaseDefense');
         $BaseDefense = $this->basesDeDefenseRepository->findOneBy([
             'idBaseDefense' => $idBaseDefense
         ]);
 
-        $quartier = $this->quartiersRepository->findOneBy([
-            'trigramme' => $trigramme,
-            'idBaseDefense' => $BaseDefense,
+        $quartier = $this->quartiersRepository->findBy([
+            'idBaseDefense' => $idBaseDefense,
         ]);
 
-        return $this->render('quartiers/quartiers.html.twig', [
-            'quartier' => $quartier
+        return $this->render('presentation/baseDefense.html.twig', [
+            'BaseDefense' => $BaseDefense,
+            'Quartier' => $quartier,
         ]);
     }
 }

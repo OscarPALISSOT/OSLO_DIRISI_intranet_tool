@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\Quartier;
+namespace App\Controller\Presentation;
 
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;

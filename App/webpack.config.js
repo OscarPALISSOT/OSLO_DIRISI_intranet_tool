@@ -42,7 +42,7 @@ Encore
     .addStyleEntry('multiselect', './assets/styles/multiselectCSS.css')
     .addStyleEntry('slider', './assets/styles/slider.scss')
     .addStyleEntry('gestionEntity', './assets/styles/pages/gestionEntity.scss')
-    .addStyleEntry('quartiers', './assets/styles/pages/quartiers.scss')
+    .addStyleEntry('presentation', './assets/styles/pages/presentation.scss')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

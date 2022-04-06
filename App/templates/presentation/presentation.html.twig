@@ -1,0 +1,35 @@
+{% extends 'sidenav.html.twig' %}
+
+{% block titleSidenav %}
+
+{% endblock %}
+
+{% block stylesheetsSidenav %}
+    {{ encore_entry_link_tags('sidenav') }}
+    {{ encore_entry_link_tags('presentation') }}
+    {{ encore_entry_link_tags('cards') }}
+    {{ encore_entry_link_tags('sidenav') }}
+{% endblock %}
+
+{% block javascriptsSidenav %}
+
+{% endblock %}
+
+{% block sideNav %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="col-6 infoPresentation">
+            <div class="card ">
+                <div class="card-body">
+                    {% block PresentationCardBody %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

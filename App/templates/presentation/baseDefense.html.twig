@@ -1,0 +1,21 @@
+{% extends 'presentation/presentation.html.twig' %}
+
+{% block titleSidenav %}
+        {{ BaseDefense.BaseDefense }}
+{% endblock %}
+
+{% block sideNav %}
+    <li class="sideNavItem">
+        <a href="" class="">Accueil </a>
+    </li>
+{% endblock %}
+
+{% block PresentationCardBody %}
+    <h3 class="card-title">
+        {{ BaseDefense.BaseDefense }}
+        <i class="fas fa-id-card"></i>
+    </h3>
+    <ul class="card-text">
+        <li>RFZ : {{ BaseDefense.IdRfz.rfz }}</li>
+    </ul>
+{% endblock %}
