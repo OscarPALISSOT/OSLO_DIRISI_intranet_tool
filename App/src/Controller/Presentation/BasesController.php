@@ -46,7 +46,7 @@ class BasesController extends AbstractController
 
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
-            'Quartier' => $quartier,
+            'Quartiers' => $quartier,
         ]);
     }
 }

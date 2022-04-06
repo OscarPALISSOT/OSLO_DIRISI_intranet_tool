@@ -10,6 +10,11 @@
     </li>
 {% endblock %}
 
+{% block titleBody %}
+    <h1 class="titleBody">Base de défense</h1>
+{% endblock %}
+
+
 {% block PresentationCardBody %}
     <h3 class="card-title">
         {{ BaseDefense.BaseDefense }}
@@ -19,3 +24,19 @@
         <li>RFZ : {{ BaseDefense.IdRfz.rfz }}</li>
     </ul>
 {% endblock %}
+
+{% block titleChild %}
+    <h1 class="titleChild">Quartiers</h1>
+{% endblock %}
+
+{% block Child %}
+    {% for Quartier in Quartiers %}
+        <div class="col-4">
+            <a href="{{ path ('Quartier', {Trigramme: Quartier.trigramme, BaseDefense: BaseDefense.idBaseDefense}) }}">
+                {{ Quartier.trigramme }} - {{ Quartier.quartier }}
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+

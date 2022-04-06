@@ -34,7 +34,7 @@ class QuartiersController extends AbstractController
     }
 
     /**
-     * @Route ("/quartier/{BaseDefense}/{trigramme}", name="quartier")
+     * @Route ("/Quartier/{BaseDefense}/{trigramme}", name="Quartier")
      * @param Request $request
      * @return Response
      */

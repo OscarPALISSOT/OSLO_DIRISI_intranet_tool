@@ -1,19 +1,20 @@
-.encadrement {
+.encadrementChild {
   justify-content: space-around;
   border-width: 5px;
-  padding: 3%;
+  padding: 2em;
   background-color: white;
   border-top-color: #5993FD;
   border-top-style: inset;
-  border-top-left-radius: 10px;
+  border-top-left-radius: 1em;
   border-left-color: #5993FD;
   border-left-style: inset;
-  border-left-right-radius: 10px;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 30%);
-  margin: 1em;
+  margin: 1em 3em;
+  font-size: large;
+  font-weight: 600;
 }
 
-.titre {
+.titleChild, .titleBody {
   text-align: center;
   margin-bottom: 1em;
 }
@@ -26,7 +27,7 @@ li {
   font-weight: bold;
 }
 
-.infoQuartiers{
+.infoPresentation{
   margin: auto;
 }
 

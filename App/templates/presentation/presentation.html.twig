@@ -20,6 +20,9 @@
 {% endblock %}
 
 {% block body %}
+    {% block titleBody %}
+
+    {% endblock %}
     <div class="container-fluid">
         <div class="col-6 infoPresentation">
             <div class="card ">
@@ -29,6 +32,17 @@
                     {% endblock %}
                 </div>
             </div>
+        </div>
+    </div>
+
+    {% block titleChild %}
+
+    {% endblock %}
+    <div class="encadrementChild">
+        <div class="row">
+            {% block Child %}
+
+            {% endblock %}
         </div>
     </div>
 
