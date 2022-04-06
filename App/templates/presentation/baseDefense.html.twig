@@ -34,6 +34,7 @@
         <div class="col-4">
             <a href="{{ path ('Quartier', {trigramme: Quartier.trigramme, BaseDefense: BaseDefense.idBaseDefense}) }}">
                 {{ Quartier.trigramme }} - {{ Quartier.quartier }}
+                <span><i class="fas fa-caret-square-right"></i></span>
             </a>
         </div>
     {% endfor %}

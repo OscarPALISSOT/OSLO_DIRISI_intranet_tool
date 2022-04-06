@@ -40,8 +40,8 @@ class AccesWanRepository extends ServiceEntityRepository
 
         if (!empty($data->idQuartier)){
             $query = $query
-                ->andWhere('a.idQuartier IN (:Presentation)')
-                ->setParameter('Presentation', $data->idQuartier);
+                ->andWhere('a.idQuartier IN (:quartier)')
+                ->setParameter('quartier', $data->idQuartier);
         }
 
         $query = $query->getQuery();

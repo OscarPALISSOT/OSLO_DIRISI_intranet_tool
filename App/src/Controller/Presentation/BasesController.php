@@ -24,12 +24,17 @@ class BasesController extends AbstractController
      * @var InternetMilitaireRepository
      */
     private $internetMilitaireRepository;
+    /**
+     * @var AccesWanRepository
+     */
+    private $accesWanRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
+        $this->accesWanRepository = $accesWanRepository;
     }
 
     /**
@@ -49,9 +54,6 @@ class BasesController extends AbstractController
             'idBaseDefense' => $idBaseDefense,
         ]);
 
-        $AccesWan = $this->accesWanRepository->findBy([
-            'idQuartier' => $quartier->getIdQuartier(),
-        ]);
 
         $InternetMilitaire = $this->internetMilitaireRepository->findByBase($idBaseDefense);
         return $this->render('presentation/baseDefense.html.twig', [
