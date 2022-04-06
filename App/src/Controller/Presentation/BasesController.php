@@ -9,6 +9,7 @@ use App\Repository\BasesDeDefenseRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
+use App\Repository\SigleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,21 +21,17 @@ class BasesController extends AbstractController
 
     private $quartiersRepository;
     private $basesDeDefenseRepository;
-    /**
-     * @var InternetMilitaireRepository
-     */
     private $internetMilitaireRepository;
-    /**
-     * @var AccesWanRepository
-     */
     private $accesWanRepository;
+    private $sigleRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->accesWanRepository = $accesWanRepository;
+        $this->sigleRepository = $sigleRepository;
     }
 
     /**
@@ -54,10 +51,15 @@ class BasesController extends AbstractController
             'idBaseDefense' => $idBaseDefense,
         ]);
 
+        $sigle = $this->sigleRepository->findSigles();
+
         $InternetMilitaire = $this->internetMilitaireRepository->findByBase($idBaseDefense);
+
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
             'Quartiers' => $quartier,
+            'Sigle' => $sigle,
+            'InternetMilitaires' => $InternetMilitaire,
         ]);
     }
 }
