@@ -58,6 +58,7 @@ class QuartiersController extends AbstractController
         $AccesWan = $this->accesWanRepository->findBy([
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
+
         $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
