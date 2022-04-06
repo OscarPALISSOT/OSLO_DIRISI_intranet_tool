@@ -47,7 +47,7 @@
     <h1 class="titleChild">Organismes</h1>
 {% endblock %}
 
-{% block Child %}
+{% block ChildContent %}
     {% for organisme in Organismes %}
         <div class="col-4">
             <a class="childLink" href="{{ path ('Organisme', {trigramme: Quartier.trigramme, BaseDefense: Quartier.idBaseDefense.idBaseDefense, Orga: organisme.idOrganisme}) }}">
