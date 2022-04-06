@@ -1,24 +1,11 @@
-{% extends 'sidenav.html.twig' %}
+{% extends 'presentation/presentation.html.twig' %}
 
 {% block titleSidenav %}
-
-{% endblock %}
-
-{% block stylesheets %}
-    {{ encore_entry_link_tags('sidenav') }}
-    {{ encore_entry_link_tags('quartiers') }}
-    {{ encore_entry_link_tags('cards') }}
-{% endblock %}
-
-{% block stylesheetsSidenav %}
-    {{ encore_entry_link_tags('sidenav') }}
-    {% block styleSheetsGestion %}
-
-    {% endblock %}
-{% endblock %}
-
-{% block javascriptsSidenav %}
-
+    {% if Quartier.quartier %}
+        Quartier{{ Quartier.quartier }}
+    {% else %}
+        {{ Quartier.trigramme }}
+    {% endif %}
 {% endblock %}
 
 {% block sideNav %}
@@ -27,38 +14,43 @@
     </li>
 {% endblock %}
 
-{% block body %}
-    <div class="container-fluid">
+{% block titleBody %}
+    <h1 class="titleBody">Quartiers</h1>
+{% endblock %}
 
 
-        <div class="col-6 infoQuartiers">
-        <div class="card ">
-            <div class="card-body">
-                <h3 class="card-title">
-                    {% if Quartier.quartier %}
-                        Quartier{{ Quartier.quartier }}
-                    {% else %}
-                        {{ Quartier.trigramme }}
-                    {% endif %}
-                    <i class="fas fa-id-card"></i>
-                </h3>
-                <ul class="card-text">
-                    <li>RFZ : {{ Quartier.IdBaseDefense.IdRfz.rfz }}</li>
-                    <li>Base de défense : {{ Quartier.IdBaseDefense.baseDefense }}</li>
-                    <li>Trigramme : {{ Quartier.IdBaseDefense.baseDefense }}</li>
-                    <li>Nom du quartier :
-                        {% if Quartier.quartier %}
-                            {{ Quartier.quartier }}
-                        {% else %}
-                        non renseigné
-                        {% endif %}
-                    </li>
-                    <li>Adresse : {{ Quartier.adresseQuartier }}</li>
-                </ul>
-            </div>
+{% block PresentationCardBody %}
+    <h3 class="card-title">
+        {% if Quartier.quartier %}
+            Quartier{{ Quartier.quartier }}
+        {% else %}
+            {{ Quartier.trigramme }}
+        {% endif %}
+        <i class="fas fa-id-card"></i>
+    </h3>
+    <ul class="card-text">
+        <li>RFZ : {{ Quartier.IdBaseDefense.IdRfz.rfz }}</li>
+        <li>Base de défense : {{ Quartier.IdBaseDefense.baseDefense }}</li>
+        <li>Trigramme : {{ Quartier.IdBaseDefense.baseDefense }}</li>
+        <li>Nom du quartier :
+            {% if Quartier.quartier %}
+                {{ Quartier.quartier }}
+            {% else %}
+                non renseigné
+            {% endif %}
+        </li>
+        <li>Adresse : {{ Quartier.adresseQuartier }}</li>
+    </ul>
+{% endblock %}
+
+{% block titleChild %}
+    <h1 class="titleChild">Organismes</h1>
+{% endblock %}
+
+{% block Child %}
+    {% for organisme in Organismes %}
+        <div class="col-4">
+            <a href=""> {{ organisme.organisme }} </a>
         </div>
-        </div>
-
-    </div>
-
-    {% endblock %}
+    {% endfor %}
+{% endblock %}

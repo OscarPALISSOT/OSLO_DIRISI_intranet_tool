@@ -32,7 +32,7 @@
 {% block Child %}
     {% for Quartier in Quartiers %}
         <div class="col-4">
-            <a href="{{ path ('Quartier', {Trigramme: Quartier.trigramme, BaseDefense: BaseDefense.idBaseDefense}) }}">
+            <a href="{{ path ('Quartier', {trigramme: Quartier.trigramme, BaseDefense: BaseDefense.idBaseDefense}) }}">
                 {{ Quartier.trigramme }} - {{ Quartier.quartier }}
             </a>
         </div>
