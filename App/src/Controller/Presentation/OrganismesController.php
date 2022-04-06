@@ -51,9 +51,11 @@ class OrganismesController extends AbstractController
         $organisme = $this->organismeRepository->findOneBy([
             'idOrganisme' => $idOrga,
         ]);
-
+        dump($BaseDefense);
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
+            'BaseDefense' => $BaseDefense,
+            'Quartier' => $quartier
         ]);
     }
 }

@@ -11,15 +11,15 @@
 {% endblock %}
 
 {% block titleBody %}
-    <h1 class="titleBody">Organisme</h1>
+    <h1 class="titleBody">Organisme {{ Organisme.organisme }}</h1>
 {% endblock %}
 
 
 {% block PresentationCardBody %}
-    test
-{% endblock %}
-
-{% block ContentPresentation %}
-    test
+    <ul class="card-text">
+        <li>RFZ : {{ BaseDefense.idRfz.rfz }}</li>
+        <li>Base de défense : {{ BaseDefense.baseDefense }}</li>
+        <li>Adresse : {{ Quartier.adresseQuartier }}</li>
+    </ul>
 {% endblock %}
 
