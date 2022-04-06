@@ -50,7 +50,11 @@
 {% block Child %}
     {% for organisme in Organismes %}
         <div class="col-4">
-            <a href="{{ path ('Organisme', {trigramme: Quartier.trigramme, BaseDefense: Quartier.idBaseDefense.idBaseDefense, Orga: organisme.idOrganisme}) }}"> {{ organisme.organisme }} </a>
+            <a class="childLink" href="{{ path ('Organisme', {trigramme: Quartier.trigramme, BaseDefense: Quartier.idBaseDefense.idBaseDefense, Orga: organisme.idOrganisme}) }}">
+                {{ organisme.organisme }}
+                <span><i class="fas fa-caret-square-right"></i></span>
+            </a>
+
         </div>
     {% endfor %}
 {% endblock %}
