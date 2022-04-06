@@ -70,6 +70,7 @@ class InternetMilitaireRepository extends ServiceEntityRepository
      /**
       * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
       */
+
     public function findByQuartier($value)
     {
         return $this->createQueryBuilder('i')
@@ -81,6 +82,17 @@ class InternetMilitaireRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByBase($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idOrganisme', 'o')
+            ->join('o.idQuartier', 'q')
+            ->Where('q.idBaseDefense = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
     //  */
