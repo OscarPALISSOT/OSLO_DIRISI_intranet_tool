@@ -49,9 +49,67 @@
         </div>
     {% endblock %}
 
-    {% block InternetMilitaire %}
+    <h1 class="title">{{ Sigle['internet_militaire'] }}</h1>
+    <div class="row">
+        {% for InternetMilitaire in InternetMilitaires %}
+            <div class="col-6" id="entity-{{ InternetMilitaire.idInternetMilitaire }}">
+                <div class="card">
+                    <div class="card-body Entity-card">
+                        <div class="card-content">
+                            <h3 class="card-title">
+                                {{ InternetMilitaire.MasterId }}
+                                <div class="form-check" style="font-size: larger">
+                                    <label for="checkbox{{ InternetMilitaire.idInternetMilitaire }}"></label>
+                                    <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ InternetMilitaire.idInternetMilitaire }}" type="checkbox" value="{{ InternetMilitaire.idInternetMilitaire }}" id="checkbox{{ InternetMilitaire.idInternetMilitaire }}">
+                                </div>
+                            </h3>
+                            <h4 class="card-subtitle mb-2 text-muted">
+                                {% if InternetMilitaire.debitInternetMilitaire != '' %}
+                                    {{ InternetMilitaire.debitInternetMilitaire }}
+                                {% else %}
+                                    Pas de débit renseigné
+                                {% endif %}
+                            </h4>
+                            <p class="card-text">
+                                <span class="label">Support :</span>
+                                {{ InternetMilitaire.idSupport.support }}
+                                <br>
+                                <span class="label">Ip lan subnet :</span>
+                                {{ InternetMilitaire.ipLanSubnet }}
+                                <br>
+                                <span class="label">Organisme :</span>
+                                {{ InternetMilitaire.idOrganisme.Organisme }} - {{ InternetMilitaire.idOrganisme.idQuartier.idbaseDefense.baseDefense }} - {{ InternetMilitaire.idOrganisme.idQuartier.trigramme }}
+                                <br>
+                                <span class="label">Ip Pfs :</span>
+                                {{ InternetMilitaire.ipPfs }}
+                                <br>
+                            </p>
+                            <div class="collapse" id="collapseCard{{ InternetMilitaire.idInternetMilitaire }}">
+                                <p class="info">
 
-    {% endblock %}
+
+                                    <span class="label">État :</span>
+                                    {% if InternetMilitaire.etatInternetMilitaire == 1 %}
+                                        Prévu
+                                    {% else %}
+                                        Traité
+                                    {% endif %}
+                                    <br>
+                                    <span class="label">Commentaire :</span>
+                                    <br>
+                                    {{ InternetMilitaire.commentaire }}
+                                    <br>
+                                </p>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ InternetMilitaire.idInternetMilitaire }}" aria-expanded="false" aria-controls="collapseCard">
+                            Voir plus <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
 
 {% endblock %}

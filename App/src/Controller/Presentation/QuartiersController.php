@@ -9,6 +9,7 @@ use App\Repository\BasesDeDefenseRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
+use App\Repository\SigleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,14 +24,16 @@ class QuartiersController extends AbstractController
     private $organismeRepository;
     private $accesWanRepository;
     private $internetMilitaireRepository;
+    private $sigleRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->organismeRepository = $organismeRepository;
         $this->accesWanRepository = $accesWanRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
+        $this->sigleRepository = $sigleRepository;
     }
 
     /**
@@ -59,12 +62,15 @@ class QuartiersController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
 
+        $sigle = $this->sigleRepository->findSigles();
+
         $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
             'Organismes' => $organisme,
             'AccesWans' => $AccesWan,
-            'InternetMilitaires' => $InternetMilitaire
+            'InternetMilitaires' => $InternetMilitaire,
+            'Sigle' => $sigle,
         ]);
     }
 }
