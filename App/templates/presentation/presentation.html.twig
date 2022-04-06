@@ -38,12 +38,15 @@
     {% block titleChild %}
 
     {% endblock %}
-    <div class="encadrementChild">
-        <div class="row">
-            {% block Child %}
+    {% block ContentPresentation %}
+        <div class="encadrementChild">
+            <div class="row">
+                {% block Child %}
 
-            {% endblock %}
+                {% endblock %}
+            </div>
         </div>
-    </div>
+    {% endblock %}
+
 
 {% endblock %}
