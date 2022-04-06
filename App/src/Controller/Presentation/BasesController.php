@@ -54,7 +54,6 @@ class BasesController extends AbstractController
             'idBaseDefense' => $idBaseDefense,
         ]);
 
-
         $InternetMilitaire = $this->internetMilitaireRepository->findByBase($idBaseDefense);
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
