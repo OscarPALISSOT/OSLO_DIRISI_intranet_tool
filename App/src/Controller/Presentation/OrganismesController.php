@@ -22,17 +22,16 @@ class OrganismesController extends AbstractController
     private $quartiersRepository;
     private $basesDeDefenseRepository;
     private $organismeRepository;
-    /**
-     * @var SigleRepository
-     */
     private $sigleRepository;
+    private $internetMilitaireRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->organismeRepository = $organismeRepository;
         $this->sigleRepository = $sigleRepository;
+        $this->internetMilitaireRepository = $internetMilitaireRepository;
     }
 
     /**
@@ -60,11 +59,16 @@ class OrganismesController extends AbstractController
 
         $sigle = $this->sigleRepository->findSigles();
 
+        $internetMilitaire = $this->internetMilitaireRepository->findBy([
+            'idOrganisme' => $organisme->getIdOrganisme(),
+        ]);
+
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
             'BaseDefense' => $BaseDefense,
             'Quartier' => $quartier,
             'Sigle' => $sigle,
+            'InternetMilitaires' => $internetMilitaire,
         ]);
     }
 }

@@ -65,6 +65,7 @@ class QuartiersController extends AbstractController
         $sigle = $this->sigleRepository->findSigles();
 
         $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
+
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
             'Organismes' => $organisme,
