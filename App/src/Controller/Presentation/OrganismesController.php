@@ -51,7 +51,7 @@ class OrganismesController extends AbstractController
         $trigramme = $request->get('trigramme');
         $idBaseDefense = $request->get('BaseDefense');
         $idOrga = $request->get('Orga');
-        $idOrga2 = $request->get('Orga');
+
         $BaseDefense = $this->basesDeDefenseRepository->findOneBy([
             'idBaseDefense' => $idBaseDefense
         ]);
@@ -75,9 +75,6 @@ class OrganismesController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
 
-        //$feb = $this->febRepository->findBy([
-         //   'idOrganisme' => $idOrga2,
-        //]);
 
 
 
