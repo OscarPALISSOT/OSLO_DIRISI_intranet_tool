@@ -30,6 +30,7 @@ Encore
     .addEntry('sliderJS', './assets/js/slider.js')
     .addEntry('contactJS', './assets/js/pages/contactJS.js')
     .addEntry('cardEntity', './assets/js/pages/cardEntity.js')
+    .addEntry('homeMap', './assets/js/pages/homeMap.js')
 
     .addStyleEntry('bootstrap', './assets/bootstrap-5.1.3-dist/css/bootstrap.css')
     .addStyleEntry('style', './assets/styles/style.scss')

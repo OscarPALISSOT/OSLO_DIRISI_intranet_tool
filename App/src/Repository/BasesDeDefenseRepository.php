@@ -32,6 +32,21 @@ class BasesDeDefenseRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return array [] Returns an array
+     */
+
+    public function findId():array
+    {
+        $BddEntity = $this->findAll();
+        $BddId = [];
+        foreach ($BddEntity as $item){
+            $BddId[$item->getBaseDefense()] = $item->getIdBaseDefense();
+        }
+        return $BddId;
+    }
+
+
     // /**
     //  * @return BasesDeDefense[] Returns an array of BasesDeDefense objects
     //  */

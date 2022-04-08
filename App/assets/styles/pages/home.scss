@@ -23,11 +23,49 @@
 #map{
     height: calc(85vh - 100px);
     width: auto;
-    img{
-        width: 100%;
-        height: 100%;
+    svg{
+        max-width: 100%;
+        max-height: 100%;
     }
 }
+
+.map__image{
+
+    .cls-1{
+        opacity:0.56;
+    }
+
+    .region{
+        fill:#ccc;
+        stroke:#fff;
+        stroke-width:3px;
+        transition: fill .3s ease-in-out;
+    }
+    .region:hover{
+        fill: #c2c2c2;
+        transition: fill .3s ease-in-out;
+    }
+
+    .link-active{
+        circle{
+            stroke: rgba(89, 147, 253, 0.3);
+            transition: stroke .3s ease-in-out;
+        }
+
+    }
+
+    .bddDot{
+        fill:none;
+        stroke:#5993fd;
+        stroke-width:10px;
+        transition: stroke .3s ease-in-out;
+    }
+    .bddDot:hover{
+        stroke: rgba(89, 147, 253, 0.56);
+        transition: stroke .3s ease-in-out;
+    }
+}
+
 
 .basesDefenses{
     display: flex;
@@ -49,6 +87,12 @@
         font-weight: bold;
         border: none;
         background-color: #f5f5f5;
+        span{
+            display: inline-block;
+            transform: translate(-110%);
+            opacity: 0;
+            transition: all 0.2s ease-in-out;
+        }
     }
     .quartierLinkContain{
         display: flex;
@@ -60,4 +104,24 @@
         }
     }
 
+    .link-active {
+        color: #0a58ca;
+        span{
+            display: inline-block;
+            transform: translate(0);
+            opacity: 1;
+            transition: all 0.2s ease-in-out;
+        }
+    }
+
+    .bddLink:hover{
+        color: #0a58ca;
+        span{
+            display: inline-block;
+            transform: translate(0);
+            opacity: 1;
+            transition: all 0.2s ease-in-out;
+        }
+    }
 }
+

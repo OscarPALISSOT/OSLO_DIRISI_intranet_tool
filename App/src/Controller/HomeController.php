@@ -18,10 +18,15 @@ class HomeController extends AbstractController {
         $this->quartiersRepository = $quartiersRepository;
     }
 
+
     public function index() : Response{
+
+        $BddId = $this->basesDeDefenseRepository->findId();
+
         return $this->render('pages/home.html.twig', [
             'Bdds' => $this->basesDeDefenseRepository->findAll(),
             'Quartiers' => $this->quartiersRepository->findAll(),
+            'BddId' => $BddId,
         ]);
     }
 }
