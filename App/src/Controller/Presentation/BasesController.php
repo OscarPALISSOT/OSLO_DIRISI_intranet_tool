@@ -53,13 +53,16 @@ class BasesController extends AbstractController
 
         $sigle = $this->sigleRepository->findSigles();
 
-        $InternetMilitaire = $this->internetMilitaireRepository->findByBase($idBaseDefense);
+        $internetMilitaire = $this->internetMilitaireRepository->findByBase($idBaseDefense);
+
+        $accesWan = $this->accesWanRepository->findOperaByBase($idBaseDefense);
 
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
             'Quartiers' => $quartier,
             'Sigle' => $sigle,
-            'InternetMilitaires' => $InternetMilitaire,
+            'InternetMilitaires' => $internetMilitaire,
+            'AccesWan' => $accesWan
         ]);
     }
 }

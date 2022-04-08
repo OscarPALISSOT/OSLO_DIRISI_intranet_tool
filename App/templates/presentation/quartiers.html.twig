@@ -22,7 +22,7 @@
 {% block PresentationCardBody %}
     <h3 class="card-title">
         {% if Quartier.quartier %}
-            Quartier{{ Quartier.quartier }}
+            Quartier {{ Quartier.quartier }}
         {% else %}
             {{ Quartier.trigramme }}
         {% endif %}
@@ -54,7 +54,6 @@
                 {{ organisme.organisme }}
                 <span><i class="fas fa-caret-square-right"></i></span>
             </a>
-
         </div>
     {% endfor %}
 {% endblock %}

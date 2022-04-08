@@ -69,7 +69,7 @@ class QuartiersController extends AbstractController
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
             'Organismes' => $organisme,
-            'AccesWans' => $AccesWan,
+            'AccesWan' => $AccesWan,
             'InternetMilitaires' => $InternetMilitaire,
             'Sigle' => $sigle,
         ]);

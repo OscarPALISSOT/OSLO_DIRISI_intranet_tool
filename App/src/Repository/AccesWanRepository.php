@@ -53,6 +53,19 @@ class AccesWanRepository extends ServiceEntityRepository
         );
     }
 
+    public function findOperaByBase($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idQuartier', 'o')
+            ->Where('o.idBaseDefense = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
     // /**
     //  * @return AccesWan[] Returns an array of AccesWan objects
     //  */

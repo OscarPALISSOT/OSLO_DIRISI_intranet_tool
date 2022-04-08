@@ -6,6 +6,7 @@ namespace App\Controller\Presentation;
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\FebRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -17,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 class OrganismesController extends AbstractController
+
 {
 
     private $quartiersRepository;
@@ -24,14 +26,18 @@ class OrganismesController extends AbstractController
     private $organismeRepository;
     private $sigleRepository;
     private $internetMilitaireRepository;
+    private $accesWanRepository;
+    private $febRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->organismeRepository = $organismeRepository;
         $this->sigleRepository = $sigleRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
+        $this->accesWanRepository = $accesWanRepository;
+        $this->febRepository = $febRepository;
     }
 
     /**
@@ -45,6 +51,7 @@ class OrganismesController extends AbstractController
         $trigramme = $request->get('trigramme');
         $idBaseDefense = $request->get('BaseDefense');
         $idOrga = $request->get('Orga');
+        $idOrga2 = $request->get('Orga');
         $BaseDefense = $this->basesDeDefenseRepository->findOneBy([
             'idBaseDefense' => $idBaseDefense
         ]);
@@ -53,6 +60,7 @@ class OrganismesController extends AbstractController
             'trigramme' => $trigramme,
             'idBaseDefense' => $BaseDefense,
         ]);
+
         $organisme = $this->organismeRepository->findOneBy([
             'idOrganisme' => $idOrga,
         ]);
@@ -63,12 +71,23 @@ class OrganismesController extends AbstractController
             'idOrganisme' => $organisme->getIdOrganisme(),
         ]);
 
+        $accesWan = $this->accesWanRepository->findBy([
+            'idQuartier' => $quartier->getIdQuartier(),
+        ]);
+
+        //$feb = $this->febRepository->findBy([
+         //   'idOrganisme' => $idOrga2,
+        //]);
+
+
+
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
             'BaseDefense' => $BaseDefense,
             'Quartier' => $quartier,
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
+            'AccesWan' => $accesWan,
         ]);
     }
 }
