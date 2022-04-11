@@ -20,7 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrganismesController extends AbstractController
 
 {
-
     private $quartiersRepository;
     private $basesDeDefenseRepository;
     private $organismeRepository;
@@ -75,6 +74,9 @@ class OrganismesController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
 
+        $feb = $this->febRepository->findBy([
+            'idOrganisme' => $organisme->getIdOrganisme(),
+        ]);
 
 
 
@@ -85,6 +87,7 @@ class OrganismesController extends AbstractController
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
+            'Feb' => $feb
         ]);
     }
 }

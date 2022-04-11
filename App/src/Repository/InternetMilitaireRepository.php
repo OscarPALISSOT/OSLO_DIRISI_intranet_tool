@@ -56,6 +56,24 @@ class InternetMilitaireRepository extends ServiceEntityRepository
                 ->andWhere('b.idBaseDefense IN (:BaseDeDefense)')
                 ->setParameter('BaseDeDefense', $data->idBaseDeDefense);
         }
+        if (!empty($data->idQuartier) && count($data->idQuartier) > 0){
+            $query = $query
+                ->andWhere('q.idQuartier IN (:Quartier)')
+                ->setParameter('Quartier', $data->idQuartier);
+        }
+
+        if (!empty($data->Debit)){
+            if ($data->supDebit == false){
+                $query = $query
+                    ->andWhere('f.montantFeb <= :Montant')
+                    ->setParameter('Montant', $data->Debit);
+            }
+            else{
+                $query = $query
+                    ->andWhere('f.montantFeb >= :Montant')
+                    ->setParameter('Montant', $data->Debit);
+            }
+        }
 
         $query = $query->getQuery();
 
@@ -93,6 +111,35 @@ class InternetMilitaireRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
+     */
+    public function findMaxDebit(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.idInternetMilitaire', 'i.debitInternetMilitaire')
+            ->orderBy('i.debitInternetMilitaire', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
+     */
+    public function findMinDebit(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.idInternetMilitaire', 'i.debitInternetMilitaire')
+            ->orderBy('i.debitInternetMilitaire', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return InternetMilitaire[] Returns an array of InternetMilitaire objects
     //  */

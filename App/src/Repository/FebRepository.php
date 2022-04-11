@@ -99,6 +99,18 @@ class FebRepository extends ServiceEntityRepository
         );
     }
 
+  /*
+    public function findFebByOrganismes($value) {
+        return $this->createQueryBuilder('o')
+            ->join('o.idQuartier','q')
+            ->join('q.idOrganisme','a')
+            ->where('a.IdBaseDefense = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+*/
 
     // /**
     //  * @return Feb[] Returns an array of Feb objects

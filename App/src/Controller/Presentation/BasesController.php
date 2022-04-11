@@ -6,6 +6,7 @@ namespace App\Controller\Presentation;
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\FebRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -24,14 +25,16 @@ class BasesController extends AbstractController
     private $internetMilitaireRepository;
     private $accesWanRepository;
     private $sigleRepository;
+    private $febRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->accesWanRepository = $accesWanRepository;
         $this->sigleRepository = $sigleRepository;
+        $this->febRepository = $febRepository;
     }
 
     /**
@@ -57,12 +60,15 @@ class BasesController extends AbstractController
 
         $accesWan = $this->accesWanRepository->findOperaByBase($idBaseDefense);
 
+        /* $feb = $this->febRepository->findFebByBases($idBaseDefense); */
+
+
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
             'Quartiers' => $quartier,
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
-            'AccesWan' => $accesWan
+            'AccesWan' => $accesWan,
         ]);
     }
 }

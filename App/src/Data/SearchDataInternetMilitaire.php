@@ -5,6 +5,7 @@ namespace App\Data;
 
 use App\Entity\BasesDeDefense;
 use App\Entity\Organisme;
+use App\Entity\Quartiers;
 use App\Entity\SupportInternetMilitaire;
 
 class SearchDataInternetMilitaire{
@@ -28,5 +29,21 @@ class SearchDataInternetMilitaire{
      * @var BasesDeDefense[]
      */
     public $idBaseDeDefense;
+
+    /**
+     * @var Quartiers[]
+     */
+    public $idQuartier;
+
+    /**
+     * @var bool
+     */
+    public $supDebit = true;
+
+
+    /**
+     * @var int
+     */
+    public $Debit;
 
 }

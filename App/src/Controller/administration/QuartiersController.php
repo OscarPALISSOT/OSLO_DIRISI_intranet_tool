@@ -82,6 +82,7 @@ class QuartiersController extends AbstractController {
      * @param Request $request
      * @return Response
      */
+
     public function DeleteQuartiers(Request $request): Response{
         $Quartierss = $this->QuartiersRepository->findAll();
         $nbQuartiers = count($Quartierss);

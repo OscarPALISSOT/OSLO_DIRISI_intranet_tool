@@ -58,6 +58,7 @@ class InternetMilitaireController extends AbstractController {
         $form = $this->createForm(InternetMilitaireSearchForm::class, $Data);
         $form->handleRequest($request);
 
+        dump($this->internetMilitaireRepository->findMinDebit());
         $InternetMilitaires = $this->internetMilitaireRepository->findInternetMilitaireSearch($Data);
 
         $role = $this->getUser()->getRoles();
@@ -95,7 +96,6 @@ class InternetMilitaireController extends AbstractController {
             'sigles' => $sigles,
         ]);
     }
-
 
     /**
      * @Route ("/NewInternetMilitaire", name="Admin_InternetMilitaire_New")
