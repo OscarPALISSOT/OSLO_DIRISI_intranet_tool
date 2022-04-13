@@ -5,6 +5,7 @@ namespace App\Controller\Presentation;
 
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
+use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
 use App\Repository\InternetMilitaireRepository;
@@ -26,8 +27,9 @@ class BasesController extends AbstractController
     private $accesWanRepository;
     private $sigleRepository;
     private $febRepository;
+    private $affaireRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -35,6 +37,7 @@ class BasesController extends AbstractController
         $this->accesWanRepository = $accesWanRepository;
         $this->sigleRepository = $sigleRepository;
         $this->febRepository = $febRepository;
+        $this->affaireRepository = $affaireRepository;
     }
 
     /**
@@ -60,8 +63,7 @@ class BasesController extends AbstractController
 
         $accesWan = $this->accesWanRepository->findOperaByBase($idBaseDefense);
 
-        /* $feb = $this->febRepository->findFebByBases($idBaseDefense); */
-
+        $feb = $this->febRepository->FindByBase($idBaseDefense);
 
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
@@ -69,6 +71,7 @@ class BasesController extends AbstractController
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
+            'Feb' => $feb,
         ]);
     }
 }

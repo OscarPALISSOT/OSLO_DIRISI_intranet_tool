@@ -6,6 +6,7 @@ namespace App\Controller\Presentation;
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\FebRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -25,8 +26,9 @@ class QuartiersController extends AbstractController
     private $accesWanRepository;
     private $internetMilitaireRepository;
     private $sigleRepository;
+    private $febRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, FebRepository $febRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -34,6 +36,7 @@ class QuartiersController extends AbstractController
         $this->accesWanRepository = $accesWanRepository;
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->sigleRepository = $sigleRepository;
+        $this->febRepository = $febRepository;
     }
 
     /**
@@ -46,6 +49,7 @@ class QuartiersController extends AbstractController
     {
         $trigramme = $request->get('trigramme');
         $idBaseDefense = $request->get('BaseDefense');
+
         $BaseDefense = $this->basesDeDefenseRepository->findOneBy([
             'idBaseDefense' => $idBaseDefense
         ]);
@@ -54,6 +58,7 @@ class QuartiersController extends AbstractController
             'trigramme' => $trigramme,
             'idBaseDefense' => $BaseDefense,
         ]);
+
         $organisme = $this->organismeRepository->findBy([
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
@@ -66,12 +71,16 @@ class QuartiersController extends AbstractController
 
         $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
 
+        $feb = $this->febRepository->FindByQuartier($quartier->getIdQuartier());
+
+
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
             'Organismes' => $organisme,
             'AccesWan' => $AccesWan,
             'InternetMilitaires' => $InternetMilitaire,
             'Sigle' => $sigle,
+            'Feb' => $feb,
         ]);
     }
 }

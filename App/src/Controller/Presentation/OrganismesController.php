@@ -5,6 +5,7 @@ namespace App\Controller\Presentation;
 
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
+use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
 use App\Repository\InternetMilitaireRepository;
@@ -27,8 +28,9 @@ class OrganismesController extends AbstractController
     private $internetMilitaireRepository;
     private $accesWanRepository;
     private $febRepository;
+    private $affaireRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository, AffaireRepository $affaireRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -37,6 +39,7 @@ class OrganismesController extends AbstractController
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->accesWanRepository = $accesWanRepository;
         $this->febRepository = $febRepository;
+        $this->affaireRepository = $affaireRepository;
     }
 
     /**
@@ -74,11 +77,22 @@ class OrganismesController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
 
-        $feb = $this->febRepository->findBy([
-            'idOrganisme' => $organisme->getIdOrganisme(),
-        ]);
+        $feb = $this->febRepository->FindByOrganisme($organisme);
+
+        $affaire = $this->febRepository->getSpecificId($organisme);
+
+        foreach ($affaire as $key => $value) {
+            $test2 = $value['i_idFeb'];
+            $test3 = $this->affaireRepository->FindBy([
+                'idFeb' => $test2,
+            ]);
+            dump($test3);
+        }
 
 
+
+        dump($affaire);
+        dump($feb);
 
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
@@ -87,7 +101,8 @@ class OrganismesController extends AbstractController
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
-            'Feb' => $feb
+            'Feb' => $feb,
+            'Affaire' => $affaire
         ]);
     }
 }

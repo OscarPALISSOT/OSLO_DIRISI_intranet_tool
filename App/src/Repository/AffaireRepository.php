@@ -110,6 +110,18 @@ class AffaireRepository extends ServiceEntityRepository
         );
     }
 
+    public function FindByFeb($value) {
+        return $this->createQueryBuilder('b')
+            ->join('b.idFeb','f')
+            ->where('f.idFeb')
+            ->setParameter('val',$value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
 
     // /**
     //  * @return Affaire[] Returns an array of Affaire objects

@@ -99,6 +99,54 @@ class FebRepository extends ServiceEntityRepository
         );
     }
 
+
+    public function FindByOrganisme($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idOrganisme','o')
+            ->where('o.idOrganisme = :val')
+            ->setParameter('val',$value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getSpecificId($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idOrganisme','o')
+            ->where('o.idOrganisme = :val')
+            ->setParameter('val',$value)
+            ->getQuery()
+            ->getScalarResult()
+            ;
+    }
+
+    public function FindByBase($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idOrganisme','o')
+            ->join('o.idQuartier','q')
+            ->where('q.idBaseDefense = :val')
+            ->setParameter('val',$value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function FindByQuartier($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idOrganisme','o')
+            ->where('o.idQuartier = :val')
+            ->setParameter('val',$value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
   /*
     public function findFebByOrganismes($value) {
         return $this->createQueryBuilder('o')
