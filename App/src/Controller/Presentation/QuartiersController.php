@@ -5,6 +5,7 @@ namespace App\Controller\Presentation;
 
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
+use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
 use App\Repository\InternetMilitaireRepository;
@@ -27,8 +28,9 @@ class QuartiersController extends AbstractController
     private $internetMilitaireRepository;
     private $sigleRepository;
     private $febRepository;
+    private $affaireRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, FebRepository $febRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -37,6 +39,7 @@ class QuartiersController extends AbstractController
         $this->internetMilitaireRepository = $internetMilitaireRepository;
         $this->sigleRepository = $sigleRepository;
         $this->febRepository = $febRepository;
+        $this->affaireRepository = $affaireRepository;
     }
 
     /**
@@ -73,6 +76,12 @@ class QuartiersController extends AbstractController
 
         $feb = $this->febRepository->FindByQuartier($quartier->getIdQuartier());
 
+        dump($organisme);
+        dump($organisme[0]);
+
+        $affaire = $this->affaireRepository->FindByQuartier($quartier->getIdQuartier());
+
+        dump($affaire);
 
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
@@ -81,6 +90,7 @@ class QuartiersController extends AbstractController
             'InternetMilitaires' => $InternetMilitaire,
             'Sigle' => $sigle,
             'Feb' => $feb,
+            'Affaire' => $affaire
         ]);
     }
 }

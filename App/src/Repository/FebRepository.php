@@ -111,16 +111,6 @@ class FebRepository extends ServiceEntityRepository
             ;
     }
 
-    public function getSpecificId($value)
-    {
-        return $this->createQueryBuilder('i')
-            ->join('i.idOrganisme','o')
-            ->where('o.idOrganisme = :val')
-            ->setParameter('val',$value)
-            ->getQuery()
-            ->getScalarResult()
-            ;
-    }
 
     public function FindByBase($value)
     {

@@ -72,37 +72,56 @@
                                 </h3>
                                 <h4 class="card-subtitle mb-2 text-muted">
                                     {% if AccesWan.debitOpera != '' %}
-                                        {{ AccesWan.debitOpera }}
+                                        <p>{{ AccesWan.debitOpera }} Mb/s</p>
                                     {% else %}
                                         Pas de débit renseigné
                                     {% endif %}
                                 </h4>
                                 <p class="card-text">
                                     <span class="label">Coût mensuel :</span>
-                                    {{ AccesWan.coutMensuel }}
+                                        {% if AccesWan.coutMensuel != '' %}
+                                            {{ AccesWan.coutMensuel }} euros
+                                        {% else %}
+                                            pas de coût mensuel renseigné
+                                        {% endif %}
                                     <br>
                                     <span class="label">Origine :</span>
-                                    {{ AccesWan.origine }}
+                                        {% if AccesWan.origine != '' %}
+                                            {{ AccesWan.origine }}
+                                        {% else %}
+                                            pas d'origine renseignée
+                                        {% endif %}
                                     <br>
                                     <span class="label">Organisme :</span>
                                     {{ AccesWan.idQuartier.Quartier }} - {{ AccesWan.idQuartier.idbaseDefense.baseDefense }} - {{  AccesWan.idQuartier.trigramme }}
                                     <br>
                                     <span class="label">type :</span>
-                                    {{ AccesWan.typeOpera }}
+                                        {% if AccesWan.typeOpera != '' %}
+                                            {{ AccesWan.typeOpera }}
+                                        {% else %}
+                                            pas de type renseigné
+                                        {% endif %}
                                     <br>
+                                    <span class="label">date de début :</span>
+                                    {{ AccesWan.dateDebut|date('d/m/Y') }}
+                                    <br>
+                                    <span class="label">date de fin :</span>
+                                    {{ AccesWan.dateFin|date('d/m/Y') }}
                                 </p>
                                 <div class="collapse" id="collapseCard{{ AccesWan.idOpera }}">
                                     <p class="info">
                                         <span class="label">État :</span>
-                                        {% if AccesWan.etatOpera == 1 %}
-                                            Prévu
-                                        {% else %}
-                                            Traité
-                                        {% endif %}
+                                            {% if AccesWan.etatOpera == 1 %}
+                                                Prévu
+                                            {% else %}
+                                                Traité
+                                            {% endif %}
                                         <br>
                                         <span class="label">Commentaire :</span>
                                         <br>
                                         {{ AccesWan.commentaire }}
+                                        <br>
+                                        <span class="label">Commentaire :</span>
                                         <br>
                                     </p>
                                 </div>
@@ -188,7 +207,7 @@
         <h3 class="title">Pas de {{ Sigle['internet_militaire'] }}</h3>
     {% endif %}
 
-    <h1 class="title" id="Feb">{{ Sigle['ficheExpressionBesoinCOM'] }}</h1>
+    <h1 class="title" id="Feb">Fiche Expression Besoin</h1>
 
     {% if Feb %}
         <div class="row">
@@ -223,37 +242,60 @@
                                     {{ Feb.idPdc.intitulePdc }}
                                     <br>
                                     <span class="label">Organisme :</span>
-
                                     <br>
-                                    <span class="label">Montant Pdc:</span>
-                                    {{ Feb.idPdc.montantPdc }}
+                                    <span class="label">Dernière mise à jour :</span>
+                                    {{ Feb.updateAt | date('d/m/Y') }}
                                     <br>
                                 </p>
                                 <div class="collapse" id="collapseCard{{ Feb.idFeb }}">
                                     <p class="info">
-                                        <span class="label">Plan de charge</span>
-
+                                        <span class="label">Intitule Pdc:</span>
+                                        {{ Feb.idPdc.intitulePdc }}
                                         <br>
-                                        <span class="label">Commentaire :</span>
+                                        <span class="label">Montant Pdc:</span>
+                                        {{ Feb.idPdc.montantPdc }}
                                         <br>
-
+                                        <span class="label">Dernière mise à jour :</span>
+                                        {{ Feb.idPdc.updateAt | date('d/m/y')}}
+                                        <br>
+                                        <span class="label">Statut du plan de charge :</span>
+                                        {{ Feb.idPdc.idStatutPdc.statutPdc }}
+                                        <br>
+                                        <span class="label">Grand Compte :</span>
+                                        {{ Feb.idPdc.idGrandsComptes.grandsComptes }}
+                                        <br>
+                                        <span class="label">Etat PDC :</span>
+                                        {{ Feb.idPdc.idEtatPdc.etatPdc }}
                                         <br>
                                     </p>
                                 </div>
+                                <div class="collapse" id="collapseCard{{ Feb.idFeb }}2">
+                                    <span class="label">Nom affaire</span>
+                                    {#
+                                    {% for Affaire in Affaire %}
+                                        {% if Affaire.idFeb == Feb.idFeb %}
+                                            {{ Affaire.nomAffaire }}
+                                            {{ Feb.idFeb }}
+                                            <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                    #}
+                                </div>
                             </div>
                             <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Feb.idFeb }}" aria-expanded="false" aria-controls="collapseCard">
-                                Voir PDCA <i class="far fa-eye"></i>
+                                Voir PDC <i class="far fa-eye"></i>
                             </button>
-                            <a class="btn btn-outline-primary"  href="#acceswan" aria-expanded="false" aria-controls="collapseCard">
-                                Voir les affaires <i class="far fa-eye"></i>
-                            </a>
+                            <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Feb.idFeb }}2" aria-expanded="false" aria-controls="collapseCard">
+                                Voir les Affaires
+                                <i class="far fa-eye"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <h3 class="title">Pas de {{ Sigle['ficheExpressionBesoinCOM'] }}</h3>
+        <h3 class="title">Pas de Fiche Expression Besoin</h3>
     {% endif %}
 
 

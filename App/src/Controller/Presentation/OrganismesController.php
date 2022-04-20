@@ -79,20 +79,9 @@ class OrganismesController extends AbstractController
 
         $feb = $this->febRepository->FindByOrganisme($organisme);
 
-        $affaire = $this->febRepository->getSpecificId($organisme);
-
-        foreach ($affaire as $key => $value) {
-            $test2 = $value['i_idFeb'];
-            $test3 = $this->affaireRepository->FindBy([
-                'idFeb' => $test2,
-            ]);
-            dump($test3);
-        }
+        $affaire = $this->affaireRepository->FindByOrganisme($organisme);
 
 
-
-        dump($affaire);
-        dump($feb);
 
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,

@@ -65,6 +65,8 @@ class BasesController extends AbstractController
 
         $feb = $this->febRepository->FindByBase($idBaseDefense);
 
+        $affaire = $this->affaireRepository->FindByBase($idBaseDefense);
+
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
             'Quartiers' => $quartier,
@@ -72,6 +74,7 @@ class BasesController extends AbstractController
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
             'Feb' => $feb,
+            'Affaire' => $affaire
         ]);
     }
 }

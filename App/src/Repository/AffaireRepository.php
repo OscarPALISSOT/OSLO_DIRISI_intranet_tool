@@ -110,14 +110,52 @@ class AffaireRepository extends ServiceEntityRepository
         );
     }
 
-    public function FindByFeb($value) {
+
+
+    public function FindByOrganisme($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->join('b.idFeb', 'f')
+            ->join('f.idOrganisme', 'o')
+            ->andWhere('o.idOrganisme = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function FindByQuartier($value2)
+    {
         return $this->createQueryBuilder('b')
             ->join('b.idFeb','f')
-            ->where('f.idFeb')
+            ->join('f.idOrganisme','o')
+            ->join('o.idQuartier','q')
+            ->andWhere('q.idQuartier = :val2')
+            ->setParameter('val2', $value2)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function FindByBase($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->join('b.idFeb','f')
+            ->join('f.idOrganisme','o')
+            ->join('o.idQuartier','q')
+            ->join('q.idBaseDefense','a')
+            ->andWhere('a.idBaseDefense = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function FindByFeb($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->join('b.idFeb','f')
+            ->andWhere('f.idFeb = :val')
             ->setParameter('val',$value)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
 
