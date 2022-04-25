@@ -8,6 +8,7 @@ use App\Repository\AccesWanRepository;
 use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
+use App\Repository\InfoBnrRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -29,8 +30,9 @@ class QuartiersController extends AbstractController
     private $sigleRepository;
     private $febRepository;
     private $affaireRepository;
+    private $infoBnrRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, AccesWanRepository $accesWanRepository, InternetMilitaireRepository $internetMilitaireRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -40,6 +42,7 @@ class QuartiersController extends AbstractController
         $this->sigleRepository = $sigleRepository;
         $this->febRepository = $febRepository;
         $this->affaireRepository = $affaireRepository;
+        $this->infoBnrRepository = $infoBnrRepository;
     }
 
     /**
@@ -76,12 +79,9 @@ class QuartiersController extends AbstractController
 
         $feb = $this->febRepository->FindByQuartier($quartier->getIdQuartier());
 
-        dump($organisme);
-        dump($organisme[0]);
-
         $affaire = $this->affaireRepository->FindByQuartier($quartier->getIdQuartier());
 
-        dump($affaire);
+        $bnr = $this->infoBnrRepository->FindByQuartier($quartier->getIdQuartier());
 
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
@@ -90,7 +90,8 @@ class QuartiersController extends AbstractController
             'InternetMilitaires' => $InternetMilitaire,
             'Sigle' => $sigle,
             'Feb' => $feb,
-            'Affaire' => $affaire
+            'Affaire' => $affaire,
+            'Bnr' => $bnr
         ]);
     }
 }

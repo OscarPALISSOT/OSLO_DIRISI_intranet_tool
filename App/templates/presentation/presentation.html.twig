@@ -242,6 +242,9 @@
                                     {{ Feb.idPdc.intitulePdc }}
                                     <br>
                                     <span class="label">Organisme :</span>
+                                    {% for Organisme in Feb.idOrganisme %}
+                                        {{ Organisme.organisme }}
+                                    {% endfor %}
                                     <br>
                                     <span class="label">Dernière mise à jour :</span>
                                     {{ Feb.updateAt | date('d/m/Y') }}
@@ -271,15 +274,13 @@
                                 </div>
                                 <div class="collapse" id="collapseCard{{ Feb.idFeb }}2">
                                     <span class="label">Nom affaire</span>
-                                    {#
                                     {% for Affaire in Affaire %}
-                                        {% if Affaire.idFeb == Feb.idFeb %}
+                                        {% if Affaire.idFeb.idFeb == Feb.idFeb %}
                                             {{ Affaire.nomAffaire }}
                                             {{ Feb.idFeb }}
                                             <br>
                                         {% endif %}
                                     {% endfor %}
-                                    #}
                                 </div>
                             </div>
                             <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Feb.idFeb }}" aria-expanded="false" aria-controls="collapseCard">
@@ -298,6 +299,74 @@
         <h3 class="title">Pas de Fiche Expression Besoin</h3>
     {% endif %}
 
+    <h1 class="title" id="Affaire">Affaires</h1>
 
+    {% if Affaire %}
+        <div class="row">
+            {% for Affaire in Affaire %}
+                <div class="col-6" id="entity-{{ Affaire.idAffaire }}">
+                    <div class="card">
+                        <div class="card-body Entity-card">
+                            <div class="card-content">
+                                <h3 class="card-title">
+                                    {{ Affaire.nomAffaire }}
+                                    <div class="form-check" style="font-size: larger">
+                                        <label for="checkbox{{ Affaire.idAffaire }}"></label>
+                                        <input form="bnrFormDelete" class="form-check-input checkboxAffaire" name="idChecked{{ Affaire.idAffaire }}" type="checkbox" value="{{ Affaire.idAffaire }}" id="checkbox{{ Affaire.idAffaire }}">
+                                    </div>
+                                </h3>
+                                <h4 class="card-subtitle mb-2 text-muted">
+                                    {{ Affaire.objectifAffaire }}
+                                </h4>
+                                <span class="label"> Nature affaire :</span>
+                                {{ Affaire.idNatureAffaire.natureAffaire }}
+                                <br>
+                                <span class="label"> Priorisation :</span>
+                                {{ Affaire.idPriorisation.priorisation }}
+                                <br>
+                                <span class="label">Montant affaire :</span>
+                                {{ Affaire.montantAffaire }} euros
+                                <br>
+                                <span class="label">Echéance affaire :</span>
+                                {{ Affaire.echeanceAffaire | date('d/m/y') }}
+                                <br>
+                                <span class="label">Commentaire :</span>
+                                {{ Affaire.commentaire }}
+                                <br>
+                                <span class="label">Date de mise à jour :</span>
+                                {{ Affaire.updateAt | date('d/m/y') }}
+                                <br>
+                                {% if Affaire.idNatureAffaire.natureAffaire == 'besoinNouveauReseau' or 'BNR' %}
+                                <div class="collapse" id="collapseCard{{ Affaire.idAffaire }}">
+                                    {% for Bnr in Bnr %}
+                                        {% if Bnr.idAffaire.idAffaire == Affaire.idAffaire %}
+                                            <span class="label">montant Info :</span>
+                                            {% if Bnr.montantInfo %}
+                                                {{ Bnr.montantInfo }}
+                                            {% else %}
+                                                pas de montant info renseigné
+                                            {% endif %}
+                                            <br>
+                                            <span class="label">Date Demande :</span>
+                                            {{ Bnr.dateDemande | date('d/m/y') }}
+                                            <br>
+                                            <span class="label">Impact : </span>
+                                            {{ Bnr.impact }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-primary collapseBtn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard{{ Affaire.idAffaire }}" aria-expanded="false" aria-controls="collapseCard">
+                                Voir précisions BNR <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="title">Pas d'affaire en cours</h3>
+    {% endif %}
 
 {% endblock %}

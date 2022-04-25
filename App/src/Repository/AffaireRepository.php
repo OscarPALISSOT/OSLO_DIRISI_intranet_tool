@@ -161,6 +161,7 @@ class AffaireRepository extends ServiceEntityRepository
 
 
 
+
     // /**
     //  * @return Affaire[] Returns an array of Affaire objects
     //  */

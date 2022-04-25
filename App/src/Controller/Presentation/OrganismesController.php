@@ -8,6 +8,7 @@ use App\Repository\AccesWanRepository;
 use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
+use App\Repository\InfoBnrRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -29,8 +30,9 @@ class OrganismesController extends AbstractController
     private $accesWanRepository;
     private $febRepository;
     private $affaireRepository;
+    private $infoBnrRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository, AffaireRepository $affaireRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -40,6 +42,7 @@ class OrganismesController extends AbstractController
         $this->accesWanRepository = $accesWanRepository;
         $this->febRepository = $febRepository;
         $this->affaireRepository = $affaireRepository;
+        $this->infoBnrRepository = $infoBnrRepository;
     }
 
     /**
@@ -81,7 +84,7 @@ class OrganismesController extends AbstractController
 
         $affaire = $this->affaireRepository->FindByOrganisme($organisme);
 
-
+        $bnr = $this->infoBnrRepository->FindByOrganisme($organisme);
 
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
@@ -91,7 +94,8 @@ class OrganismesController extends AbstractController
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
             'Feb' => $feb,
-            'Affaire' => $affaire
+            'Affaire' => $affaire,
+            'Bnr' => $bnr
         ]);
     }
 }

@@ -359,7 +359,6 @@ class BNRController extends AbstractController {
                             ->setIntituleFeb($row['Description Opération'])
                             ->setMontantFeb($montant)
                             ->setIdPdc($pdc)
-
                         ;
                         $em->persist($feb);
                         $em->flush();

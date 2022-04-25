@@ -8,6 +8,7 @@ use App\Repository\AccesWanRepository;
 use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
+use App\Repository\InfoBnrRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -28,8 +29,9 @@ class BasesController extends AbstractController
     private $sigleRepository;
     private $febRepository;
     private $affaireRepository;
+    private $infoBnrRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -38,6 +40,7 @@ class BasesController extends AbstractController
         $this->sigleRepository = $sigleRepository;
         $this->febRepository = $febRepository;
         $this->affaireRepository = $affaireRepository;
+        $this->infoBnrRepository = $infoBnrRepository;
     }
 
     /**
@@ -67,6 +70,10 @@ class BasesController extends AbstractController
 
         $affaire = $this->affaireRepository->FindByBase($idBaseDefense);
 
+        $bnr = $this->infoBnrRepository->FindByBase($idBaseDefense);
+
+        dump($bnr);
+
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
             'Quartiers' => $quartier,
@@ -74,7 +81,8 @@ class BasesController extends AbstractController
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
             'Feb' => $feb,
-            'Affaire' => $affaire
+            'Affaire' => $affaire,
+            'Bnr' => $bnr
         ]);
     }
 }
