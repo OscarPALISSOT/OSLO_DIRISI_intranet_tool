@@ -78,8 +78,6 @@ class BasesController extends AbstractController
             'idBudgetFebcom' => $BaseDefense->getIdBudgetFebcom()
         ]);
 
-        /**
-
         $feb = $this->febRepository->FindByBase($idBaseDefense);
 
         $affaire = $this->affaireRepository->FindByBase($idBaseDefense);
@@ -88,10 +86,6 @@ class BasesController extends AbstractController
 
         $modip = $this->infoModipRepository->FindByBase($idBaseDefense);
 
-        */
-
-
-
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
             'Quartiers' => $quartier,
@@ -99,6 +93,10 @@ class BasesController extends AbstractController
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
             'BudgetFebCom' => $budgetFebCOM,
+            'Feb' => $feb,
+            'Affaire' => $affaire,
+            'Bnr' => $bnr,
+            'Modip' => $modip
         ]);
     }
 }

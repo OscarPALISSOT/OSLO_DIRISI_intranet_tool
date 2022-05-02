@@ -116,7 +116,8 @@ class AffaireRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->join('b.idFeb', 'f')
-            ->join('f.idOrganisme', 'o')
+            ->join('f.idPdc','p')
+            ->join('p.idOrganisme', 'o')
             ->andWhere('o.idOrganisme = :val')
             ->setParameter('val', $value)
             ->getQuery()
@@ -127,7 +128,8 @@ class AffaireRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->join('b.idFeb','f')
-            ->join('f.idOrganisme','o')
+            ->join('f.idPdc','p')
+            ->join('p.idOrganisme','o')
             ->join('o.idQuartier','q')
             ->andWhere('q.idQuartier = :val2')
             ->setParameter('val2', $value2)
@@ -139,7 +141,8 @@ class AffaireRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->join('b.idFeb','f')
-            ->join('f.idOrganisme','o')
+            ->join('f.idPdc','p')
+            ->join('p.idOrganisme','o')
             ->join('o.idQuartier','q')
             ->join('q.idBaseDefense','a')
             ->andWhere('a.idBaseDefense = :val')
@@ -148,15 +151,6 @@ class AffaireRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function FindByFeb($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->join('b.idFeb','f')
-            ->andWhere('f.idFeb = :val')
-            ->setParameter('val',$value)
-            ->getQuery()
-            ->getResult();
-    }
 
 
 

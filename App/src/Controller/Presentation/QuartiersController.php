@@ -80,8 +80,6 @@ class QuartiersController extends AbstractController
 
         $InternetMilitaire = $this->internetMilitaireRepository->findByQuartier($quartier->getIdQuartier());
 
-        /*
-
         $feb = $this->febRepository->FindByQuartier($quartier->getIdQuartier());
 
         $affaire = $this->affaireRepository->FindByQuartier($quartier->getIdQuartier());
@@ -90,14 +88,16 @@ class QuartiersController extends AbstractController
 
         $modip = $this->infoModipRepository->FindByQuartier($quartier->getIdQuartier());
 
-        */
-
         return $this->render('presentation/quartiers.html.twig', [
             'Quartier' => $quartier,
             'Organismes' => $organisme,
             'AccesWan' => $AccesWan,
             'InternetMilitaires' => $InternetMilitaire,
             'Sigle' => $sigle,
+            'Feb' => $feb,
+            'Affaire' => $affaire,
+            'Bnr' => $bnr,
+            'Modip' => $modip
         ]);
     }
 }

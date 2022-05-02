@@ -83,8 +83,6 @@ class OrganismesController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
 
-        /**
-
         $feb = $this->febRepository->FindByOrganisme($organisme);
 
         $affaire = $this->affaireRepository->FindByOrganisme($organisme);
@@ -92,7 +90,7 @@ class OrganismesController extends AbstractController
         $bnr = $this->infoBnrRepository->FindByOrganisme($organisme);
 
         $modip = $this->infoModipRepository->FindByOrganisme($organisme);
-         */
+
 
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
@@ -101,6 +99,10 @@ class OrganismesController extends AbstractController
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
+            'Feb' => $feb,
+            'Affaire' => $affaire,
+            'Bnr' => $bnr,
+            'Modip' => $modip
         ]);
     }
 }
