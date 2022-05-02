@@ -9,6 +9,7 @@ use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
 use App\Repository\FebRepository;
 use App\Repository\InfoBnrRepository;
+use App\Repository\InfoModipRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -31,8 +32,9 @@ class OrganismesController extends AbstractController
     private $febRepository;
     private $affaireRepository;
     private $infoBnrRepository;
+    private $infoModipRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository)
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, OrganismeRepository $organismeRepository, SigleRepository $sigleRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository, InfoModipRepository $infoModipRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -43,6 +45,7 @@ class OrganismesController extends AbstractController
         $this->febRepository = $febRepository;
         $this->affaireRepository = $affaireRepository;
         $this->infoBnrRepository = $infoBnrRepository;
+        $this->infoModipRepository = $infoModipRepository;
     }
 
     /**
@@ -80,11 +83,16 @@ class OrganismesController extends AbstractController
             'idQuartier' => $quartier->getIdQuartier(),
         ]);
 
+        /**
+
         $feb = $this->febRepository->FindByOrganisme($organisme);
 
         $affaire = $this->affaireRepository->FindByOrganisme($organisme);
 
         $bnr = $this->infoBnrRepository->FindByOrganisme($organisme);
+
+        $modip = $this->infoModipRepository->FindByOrganisme($organisme);
+         */
 
         return $this->render('presentation/organisme.html.twig', [
             'Organisme' => $organisme,
@@ -93,9 +101,6 @@ class OrganismesController extends AbstractController
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
-            'Feb' => $feb,
-            'Affaire' => $affaire,
-            'Bnr' => $bnr
         ]);
     }
 }

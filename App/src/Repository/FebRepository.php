@@ -103,7 +103,8 @@ class FebRepository extends ServiceEntityRepository
     public function FindByOrganisme($value)
     {
         return $this->createQueryBuilder('i')
-            ->join('i.idOrganisme','o')
+            ->join('i.idPdc','p')
+            ->join('p.idOrganisme','o')
             ->where('o.idOrganisme = :val')
             ->setParameter('val',$value)
             ->getQuery()
@@ -115,7 +116,8 @@ class FebRepository extends ServiceEntityRepository
     public function FindByBase($value)
     {
         return $this->createQueryBuilder('i')
-            ->join('i.idOrganisme','o')
+            ->join('i.idPdc','p')
+            ->join('p.idOrganisme','o')
             ->join('o.idQuartier','q')
             ->where('q.idBaseDefense = :val')
             ->setParameter('val',$value)
@@ -127,7 +129,8 @@ class FebRepository extends ServiceEntityRepository
     public function FindByQuartier($value)
     {
         return $this->createQueryBuilder('i')
-            ->join('i.idOrganisme','o')
+            ->join('i.idPdc','p')
+            ->join('p.idOrganisme','o')
             ->where('o.idQuartier = :val')
             ->setParameter('val',$value)
             ->getQuery()

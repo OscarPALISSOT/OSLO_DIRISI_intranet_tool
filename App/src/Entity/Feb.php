@@ -62,27 +62,13 @@ class Feb
      */
     private $idPdc;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Organisme", inversedBy="idFeb")
-     * @ORM\JoinTable(name="beneficier",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_feb", referencedColumnName="id_feb")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_organisme", referencedColumnName="id_organisme")
-     *   }
-     * )
-     */
-    private $idOrganisme;
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
         $date = new DateTime();
         $date->format('Y-m-d-H:i:s');
         $this->setUpdateAt($date);
@@ -141,29 +127,6 @@ class Feb
         return $this;
     }
 
-    /**
-     * @return Collection<int, Organisme>
-     */
-    public function getIdOrganisme(): Collection
-    {
-        return $this->idOrganisme;
-    }
-
-    public function addIdOrganisme(Organisme $idOrganisme): self
-    {
-        if (!$this->idOrganisme->contains($idOrganisme)) {
-            $this->idOrganisme[] = $idOrganisme;
-        }
-
-        return $this;
-    }
-
-    public function removeIdOrganisme(Organisme $idOrganisme): self
-    {
-        $this->idOrganisme->removeElement($idOrganisme);
-
-        return $this;
-    }
 
     public function getIntituleFeb(): ?string
     {

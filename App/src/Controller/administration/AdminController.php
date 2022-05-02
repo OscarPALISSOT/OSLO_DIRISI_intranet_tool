@@ -183,7 +183,7 @@ class AdminController extends AbstractController {
                 ]);
                 if ($quartier == null){
                     $quartier = (new Quartiers())
-                        ->setQuartier($row['Presentation'])
+                        ->setQuartier($row['Quartier'])
                         ->setTrigramme($row['Trigramme'])
                         ->setAdresseQuartier($row['adresse'])
                         ->setIdBaseDefense($bdd)

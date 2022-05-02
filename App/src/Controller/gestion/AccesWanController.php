@@ -144,6 +144,8 @@ class AccesWanController extends AbstractController {
         return $this->json($jsonData, 200);
     }
 
+
+
     /**
      * @Route ("/DeleteAccesWan", name="Admin_AccesWan_Delete")
      * @param Request $request

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -79,8 +80,24 @@ class PlanDeCharge
      */
     private $idGrandsComptes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Organisme", inversedBy="idPdc")
+     * @ORM\JoinTable(name="beneficier",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="id_pdc", referencedColumnName="id_pdc")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="id_organisme", referencedColumnName="id_organisme")
+     *   }
+     * )
+     */
+    private $idOrganisme;
+
     public function __construct()
     {
+        $this->idOrganisme = new \Doctrine\Common\Collections\ArrayCollection();
         $date = new DateTime();
         $date->format('Y-m-d-H:i:s');
         $this->setUpdateAt($date);
@@ -176,6 +193,30 @@ class PlanDeCharge
     public function setIdGrandsComptes(?GrandsComptes $idGrandsComptes): self
     {
         $this->idGrandsComptes = $idGrandsComptes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Organisme>
+     */
+    public function getIdOrganisme(): Collection
+    {
+        return $this->idOrganisme;
+    }
+
+    public function addIdOrganisme(Organisme $idOrganisme): self
+    {
+        if (!$this->idOrganisme->contains($idOrganisme)) {
+            $this->idOrganisme[] = $idOrganisme;
+        }
+
+        return $this;
+    }
+
+    public function removeIdOrganisme(Organisme $idOrganisme): self
+    {
+        $this->idOrganisme->removeElement($idOrganisme);
 
         return $this;
     }

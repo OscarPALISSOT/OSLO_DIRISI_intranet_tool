@@ -277,6 +277,7 @@ class BNRController extends AbstractController {
      * @param Request $request
      * @return JsonResponse
      */
+
     public function import(Request $request) : JsonResponse
     {
         $file = $request->files->get('file', 'r');

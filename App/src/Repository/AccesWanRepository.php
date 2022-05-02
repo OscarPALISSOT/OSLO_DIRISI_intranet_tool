@@ -29,6 +29,7 @@ class AccesWanRepository extends ServiceEntityRepository
      * @param SearchDataAccesWan $data
      * @return PaginationInterface
      */
+
     public function findAccesWanSearch(SearchDataAccesWan $data): PaginationInterface
     {
         $query = $this

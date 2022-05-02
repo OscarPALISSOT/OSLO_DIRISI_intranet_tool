@@ -71,6 +71,45 @@ class InfoModipRepository extends ServiceEntityRepository
         );
     }
 
+    public function FindByBase($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idAffaire','a')
+            ->join('a.idFeb','f')
+            ->join('f.idOrganisme','o')
+            ->join('o.idQuartier','q')
+            ->join('q.idBaseDefense','b')
+            ->andWhere('b.idBaseDefense = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function FindByQuartier($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idAffaire','a')
+            ->join('a.idFeb','f')
+            ->join('f.idOrganisme','o')
+            ->join('o.idQuartier','q')
+            ->andWhere('q.idQuartier = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function FindByOrganisme($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.idAffaire','a')
+            ->join('a.idFeb','f')
+            ->join('f.idOrganisme','o')
+            ->andWhere('o.idOrganisme = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return InfoModip[] Returns an array of InfoModip objects
     //  */

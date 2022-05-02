@@ -47,6 +47,7 @@ class BasesDeDefenseRepository extends ServiceEntityRepository
     }
 
 
+
     // /**
     //  * @return BasesDeDefense[] Returns an array of BasesDeDefense objects
     //  */

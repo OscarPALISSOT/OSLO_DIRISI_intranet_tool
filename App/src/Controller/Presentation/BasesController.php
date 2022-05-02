@@ -3,12 +3,15 @@
 
 namespace App\Controller\Presentation;
 
+use App\Entity\BudgetFebcom;
 use App\Entity\Organisme;
 use App\Repository\AccesWanRepository;
 use App\Repository\AffaireRepository;
 use App\Repository\BasesDeDefenseRepository;
+use App\Repository\BudgetFebcomRepository;
 use App\Repository\FebRepository;
 use App\Repository\InfoBnrRepository;
+use App\Repository\InfoModipRepository;
 use App\Repository\InternetMilitaireRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\QuartiersRepository;
@@ -30,8 +33,11 @@ class BasesController extends AbstractController
     private $febRepository;
     private $affaireRepository;
     private $infoBnrRepository;
+    private $budgetFebcomRepository;
+    private $infoModipRepository;
 
-    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository)
+
+    public function __construct(QuartiersRepository $quartiersRepository, BasesDeDefenseRepository $basesDeDefenseRepository, InternetMilitaireRepository $internetMilitaireRepository, AccesWanRepository $accesWanRepository, SigleRepository $sigleRepository, FebRepository $febRepository, AffaireRepository $affaireRepository, InfoBnrRepository $infoBnrRepository, BudgetFebcomRepository $budgetFebcomRepository, InfoModipRepository $infoModipRepository)
     {
         $this->quartiersRepository = $quartiersRepository;
         $this->basesDeDefenseRepository = $basesDeDefenseRepository;
@@ -41,6 +47,8 @@ class BasesController extends AbstractController
         $this->febRepository = $febRepository;
         $this->affaireRepository = $affaireRepository;
         $this->infoBnrRepository = $infoBnrRepository;
+        $this->budgetFebcomRepository = $budgetFebcomRepository;
+        $this->infoModipRepository = $infoModipRepository;
     }
 
     /**
@@ -66,13 +74,23 @@ class BasesController extends AbstractController
 
         $accesWan = $this->accesWanRepository->findOperaByBase($idBaseDefense);
 
+        $budgetFebCOM = $this->budgetFebcomRepository->findBy([
+            'idBudgetFebcom' => $BaseDefense->getIdBudgetFebcom()
+        ]);
+
+        /**
+
         $feb = $this->febRepository->FindByBase($idBaseDefense);
 
         $affaire = $this->affaireRepository->FindByBase($idBaseDefense);
 
         $bnr = $this->infoBnrRepository->FindByBase($idBaseDefense);
 
-        dump($bnr);
+        $modip = $this->infoModipRepository->FindByBase($idBaseDefense);
+
+        */
+
+
 
         return $this->render('presentation/baseDefense.html.twig', [
             'BaseDefense' => $BaseDefense,
@@ -80,9 +98,7 @@ class BasesController extends AbstractController
             'Sigle' => $sigle,
             'InternetMilitaires' => $internetMilitaire,
             'AccesWan' => $accesWan,
-            'Feb' => $feb,
-            'Affaire' => $affaire,
-            'Bnr' => $bnr
+            'BudgetFebCom' => $budgetFebCOM,
         ]);
     }
 }

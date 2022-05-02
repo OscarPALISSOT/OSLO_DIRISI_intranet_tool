@@ -33,6 +33,32 @@
     </ul>
 {% endblock %}
 
+
+
+{% block Budget %}
+    <h1 class="titleBody">Budget Feb Com BDD</h1>
+    {% if BudgetFebCom %}
+        {% for BudgetFebCom in BudgetFebCom %}
+            <div class="encadrementChild">
+                <span class="label">Année FebCom : </span>
+                {{ BudgetFebCom.anneeFebCom }}
+                <br>
+                <span class="label">Budget FebCom :</span>
+                {{ BudgetFebCom.enveloppe }} euros
+                <br>
+                <span class="label">FebCom consommé : </span>
+                {{ BudgetFebCom.febComConsomme }} euros
+                <br>
+                <span class="label">Reliquat :</span>
+                {{ BudgetFebCom.reliquat1erVersement }} euros
+                <br>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3 class="title">Pas de budget Feb Com renseigné</h3>
+    {% endif %}
+{% endblock %}
+
 {% block titleChild %}
     <h1 class="titleChild">Quartiers</h1>
 {% endblock %}
