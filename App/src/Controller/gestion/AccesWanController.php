@@ -91,6 +91,8 @@ class AccesWanController extends AbstractController {
     }
 
 
+
+
     /**
      * @Route ("/NewAccesWan", name="Admin_AccesWan_New")
      * @param Request $request
@@ -243,6 +245,7 @@ class AccesWanController extends AbstractController {
      * @param Request $request
      * @return JsonResponse
      */
+
     public function import(Request $request) : JsonResponse
     {
         $file = $request->files->get('file', 'r');
@@ -279,12 +282,7 @@ class AccesWanController extends AbstractController {
             $date = new DateTime();
             $date->format('Y-m-d');
 
-            $nature = $this->natureAffaireRepository->findOneBy([
-                'natureAffaire' => 'AccesWan',
-            ]);
-
             foreach ( $result as $row){
-
 
                 $quartier = $this->quartiersRepository->findOneBy([
                     'trigramme' => $row['Trigramme']
@@ -328,5 +326,6 @@ class AccesWanController extends AbstractController {
 
         return $this->json($jsonData, 200);
     }
+
 
 }

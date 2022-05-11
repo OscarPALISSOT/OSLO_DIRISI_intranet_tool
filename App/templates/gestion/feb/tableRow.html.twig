@@ -10,7 +10,7 @@
     <td>{{ Feb.montantFeb|number_format(2, ',', ' ') }} €</td>
     <td>{{ Feb.idPdc.numPdc }}</td>
     <td>
-        {% for Orga in Feb.idOrganisme%}
+        {% for Orga in Feb.idOrganisme %}
             {{ Orga.Organisme }};
         {% endfor %}
     </td>
