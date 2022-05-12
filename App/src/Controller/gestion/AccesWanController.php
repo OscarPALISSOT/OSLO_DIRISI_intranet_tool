@@ -4,12 +4,14 @@ namespace App\Controller\gestion;
 
 use App\Data\SearchDataAccesWan;
 use App\Entity\AccesWan;
+use App\Entity\TravauxAccesWan;
 use App\form\filters\AccesWanSearchForm;
 use App\Repository\AccesWanRepository;
 use App\Repository\NatureAffaireRepository;
 use App\Repository\PriorisationRepository;
 use App\Repository\QuartiersRepository;
 use App\Repository\SigleRepository;
+use App\Repository\TravauxAccesWanRepository;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Paginator;
@@ -29,8 +31,9 @@ class AccesWanController extends AbstractController {
     private $priorisationRepository;
     private $accesWanRepository;
     private $natureAffaireRepository;
+    private $travauxAccesWanRepository;
 
-    public function __construct(ManagerRegistry $doctrine, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, AccesWanRepository $accesWanRepository, NatureAffaireRepository $natureAffaireRepository)
+    public function __construct(ManagerRegistry $doctrine, QuartiersRepository $quartiersRepository, SigleRepository $sigleRepository, PriorisationRepository $priorisationRepository, AccesWanRepository $accesWanRepository, NatureAffaireRepository $natureAffaireRepository, TravauxAccesWanRepository $travauxAccesWanRepository)
     {
         $this->ManagerRegistry = $doctrine;
         $this->quartiersRepository = $quartiersRepository;
@@ -38,6 +41,7 @@ class AccesWanController extends AbstractController {
         $this->priorisationRepository = $priorisationRepository;
         $this->accesWanRepository = $accesWanRepository;
         $this->natureAffaireRepository = $natureAffaireRepository;
+        $this->travauxAccesWanRepository = $travauxAccesWanRepository;
     }
 
 
@@ -241,6 +245,81 @@ class AccesWanController extends AbstractController {
     }
 
     /**
+     * @route ("/Admin/ImportTravauxAccesWan", name="importTravauxAccesWan")
+     * @param Request $request
+     * @return JsonResponse
+     */
+
+    public function importTravauxAccesWan(Request $request) : JsonResponse
+    {
+        $file = $request->files->get('file','r');
+
+        if($file == null){
+            $jsonData = array([
+                'message' => "Pas de travaux renseignés"
+            ]);
+        }
+        else{
+
+            $oldMessage = ',';
+
+            $deletedFormat = '.';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+
+            $oldMessage = ';';
+
+            $deletedFormat = ',';
+
+            $str=file_get_contents($file->getRealPath());
+
+            $str=str_replace($oldMessage, $deletedFormat,$str);
+            file_put_contents($file->getRealPath(), $str);
+            $em = $this->ManagerRegistry->getManager();
+            $csv = Reader::createFromPath($file->getRealPath());
+            $csv->setHeaderOffset(0);
+            $result = $csv->getRecords();
+
+
+            foreach ($result as $row){
+
+                $idOpera = $this->accesWanRepository->findOneBy([
+                    'idOpera' => $row['Nom de l accès']
+                ]);
+
+                if($row['Date envoi client'] != ''){
+                    $dateTravaux = new dateTime($row['Date envoi client']);
+                    $dateTravaux->format('Y-m-d');
+                }else{
+                    $dateTravaux = null;
+                }
+
+                $travauxOpera = (new TravauxAccesWan())
+                    ->setDateTravauxOpera($dateTravaux)
+                    ->setEtatTravauxOpera($row['ETAT PRODUCTION'])
+                    ->setDebitFinTravauxOpera($row['Débit cible global'])
+                    ->setIdOpera($idOpera)
+                ;
+
+                $em->persist($travauxOpera);
+                $em->flush();
+            }
+
+
+            $jsonData = array([
+                'message' => 'importation terminée'
+            ]);
+        }
+        return $this->json($jsonData,200);
+    }
+
+
+
+
+    /**
      * @Route ("/Admin/ImportAccesWan", name="importAccesWan")
      * @param Request $request
      * @return JsonResponse
@@ -326,6 +405,7 @@ class AccesWanController extends AbstractController {
 
         return $this->json($jsonData, 200);
     }
+
 
 
 }

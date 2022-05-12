@@ -9,11 +9,7 @@
     <td>{{ Feb.NumFeb }}</td>
     <td>{{ Feb.montantFeb|number_format(2, ',', ' ') }} €</td>
     <td>{{ Feb.idPdc.numPdc }}</td>
-    <td>
-        {% for Orga in Feb.idOrganisme %}
-            {{ Orga.Organisme }};
-        {% endfor %}
-    </td>
+
     <td>
         <!-- Button trigger modal edit -->
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit1{{ Feb.idFeb }}">
@@ -42,14 +38,6 @@
                                 <input value="{{ Feb.montantFeb|number_format(2) }}" min="0" step="0.01" type="number" class="form-control" id="montant" name="montantEdit" placeholder="name@example.com">
                                 <label for="montant">Montant</label>
                             </div>
-                            <select data-placeholder="Organisme" multiple class="chosen-select mb-3" tabindex="8" name="organismeEdit[]" autocomplete="off">
-                                {% for Orga in Feb.idOrganisme %}
-                                    {<option selected value="{{ Orga.idOrganisme }}">{{ Orga.Organisme }}</option>
-                                {% endfor %}
-                                {% for Organisme in Organismes %}
-                                    <option value="{{ Organisme.idOrganisme }}">{{ Organisme.Organisme }} - {{ Organisme.idQuartier.idBaseDefense.BaseDefense }} - {{ Organisme.idQuartier.trigramme }}</option>
-                                {% endfor %}
-                            </select>
                             <select class="form-select mb-3" aria-label="Default select example" name="PdcEdit">
                                 <option selected value="{{ Feb.idPdc.idPdc }}">{{ Feb.idPdc.numPdc }}</option>
                                 {% for Pdc in Pdcs %}
