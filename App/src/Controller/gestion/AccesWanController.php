@@ -287,7 +287,7 @@ class AccesWanController extends AbstractController {
             foreach ($result as $row){
 
                 $idOpera = $this->accesWanRepository->findOneBy([
-                    'idOpera' => $row['Nom de l accès']
+                    'idAccess' => $row['euh']
                 ]);
 
                 if($row['Date envoi client'] != ''){
@@ -298,10 +298,10 @@ class AccesWanController extends AbstractController {
                 }
 
                 $travauxOpera = (new TravauxAccesWan())
+                    ->setIdOpera($idOpera)
                     ->setDateTravauxOpera($dateTravaux)
                     ->setEtatTravauxOpera($row['ETAT PRODUCTION'])
                     ->setDebitFinTravauxOpera($row['Débit cible global'])
-                    ->setIdOpera($idOpera)
                 ;
 
                 $em->persist($travauxOpera);
@@ -313,6 +313,7 @@ class AccesWanController extends AbstractController {
                 'message' => 'importation terminée'
             ]);
         }
+
         return $this->json($jsonData,200);
     }
 
@@ -361,43 +362,65 @@ class AccesWanController extends AbstractController {
             $date = new DateTime();
             $date->format('Y-m-d');
 
-            foreach ( $result as $row){
+            foreach ( $result as $row) {
+
+                $idAccess = $this->accesWanRepository->findOneBy([
+                    'idAccess' => $row['Id. accès OPERA']
+                ]);
 
                 $quartier = $this->quartiersRepository->findOneBy([
                     'trigramme' => $row['Trigramme']
                 ]);
-                if ($row['Date début facturation OPERA'] != ''){
+
+                if ($row['Date début facturation OPERA'] != '') {
                     $dateDebut = new DateTime($row['Date début facturation OPERA']);
                     $dateDebut->format('Y-m-d');
-                }else{
+                } else {
                     $dateDebut = null;
                 }
 
-                if ($row['Date fin facturation OPERA'] != ''){
+                if ($row['Date fin facturation OPERA'] != '') {
                     $dateFin = new DateTime($row['Date fin facturation OPERA']);
                     $dateFin->format('Y-m-d');
-                }else{
+                } else {
                     $dateFin = null;
                 }
-                $opera = (new AccesWan())
-                    ->setIdAccess($row['Id. accès OPERA'])
-                    ->setDebitOpera($row["Débit de  l'accès (Mbs)"])
-                    ->setCoutMensuel($row["Coût mensuel HT"])
-                    ->setOrigine($row['Origine'])
-                    ->setDateDebut($dateDebut)
-                    ->setDateFin($dateFin)
-                    ->setIdQuartier($quartier)
-                    ->setEtatOpera(1)
-                ;
-                if ($row['Type Racc'] == 'Cuivre'){
-                    $opera->setTypeOpera(1);
-                }elseif ($row['Type Racc'] == 'Fibre'){
-                    $opera->setTypeOpera(2);
-                }
-                $em->persist($opera);
-                $em->flush();
-            }
 
+                if ($idAccess == '') {
+                    $opera = (new AccesWan())
+                        ->setIdAccess($row['Id. accès OPERA'])
+                        ->setDebitOpera($row["Débit de  l'accès (Mbs)"])
+                        ->setCoutMensuel($row["Coût mensuel HT"])
+                        ->setOrigine($row['Origine'])
+                        ->setDateDebut($dateDebut)
+                        ->setDateFin($dateFin)
+                        ->setIdQuartier($quartier)
+                        ->setEtatOpera(1);
+                    if ($row['Type Racc'] == 'Cuivre') {
+                        $opera->setTypeOpera(1);
+                    } elseif ($row['Type Racc'] == 'Fibre') {
+                        $opera->setTypeOpera(2);
+                    }
+                    $em->persist($opera);
+                    $em->flush();
+                }
+                else {
+                    $idAccess
+                        ->setDebitOpera($row["Débit de  l'accès (Mbs)"])
+                        ->setCoutMensuel($row["Coût mensuel HT"])
+                        ->setOrigine($row["Origine"])
+                        ->setDateDebut($dateDebut)
+                        ->setDateFin($dateFin)
+                        ->setEtatOpera(1);
+                    if ($row['Type Racc'] == 'Cuivre') {
+                        $idAccess->setTypeOpera(1);
+                    } elseif ($row['Type Racc'] == 'Fibre') {
+                        $idAccess->setTypeOpera(2);
+                    }
+                    $em->persist($idAccess);
+                    $em->flush();
+                }
+            }
             $jsonData = array(
                 'message' => "Importation terminée",
             );
