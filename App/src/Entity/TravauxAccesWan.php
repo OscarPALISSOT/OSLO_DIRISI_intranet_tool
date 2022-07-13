@@ -38,6 +38,13 @@ class TravauxAccesWan
     /**
      * @var string
      *
+     * @ORM\Column(name="numero_demande", type="string", length=50, nullable=false)
+     */
+    private $numeroDemande;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="etat_travaux_opera", type="string", length=50, nullable=false)
      */
     private $etatTravauxOpera;
@@ -77,6 +84,18 @@ class TravauxAccesWan
     public function setDebitFinTravauxOpera(int $debitFinTravauxOpera): self
     {
         $this->debitFinTravauxOpera = $debitFinTravauxOpera;
+
+        return $this;
+    }
+
+    public function getNumeroDemande(): ?string
+    {
+        return $this->numeroDemande;
+    }
+
+    public function setNumeroDemande(string $numeroDemande): self
+    {
+        $this->numeroDemande = $numeroDemande;
 
         return $this;
     }

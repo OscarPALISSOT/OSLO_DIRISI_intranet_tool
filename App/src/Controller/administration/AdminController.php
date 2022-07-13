@@ -145,6 +145,7 @@ class AdminController extends AbstractController {
                 $rfz = $this->RfzRepository->findOneBy([
                     'rfz' => $row['Rfz'],
                 ]);
+
                 if ( $rfz == null){
                     $rfz = (new Rfz())
                         ->setRfz($row['Rfz'])
@@ -181,6 +182,7 @@ class AdminController extends AbstractController {
                 $quartier = $this->quartiersRepository->findOneBy([
                     'trigramme' => $row['Trigramme'],
                 ]);
+
                 if ($quartier == null){
                     $quartier = (new Quartiers())
                         ->setQuartier($row['Quartier'])

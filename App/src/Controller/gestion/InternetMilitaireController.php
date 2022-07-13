@@ -58,7 +58,6 @@ class InternetMilitaireController extends AbstractController {
         $form = $this->createForm(InternetMilitaireSearchForm::class, $Data);
         $form->handleRequest($request);
 
-        dump($this->internetMilitaireRepository->findMinDebit());
         $InternetMilitaires = $this->internetMilitaireRepository->findInternetMilitaireSearch($Data);
 
         $role = $this->getUser()->getRoles();
@@ -273,28 +272,55 @@ class InternetMilitaireController extends AbstractController {
 
 
             foreach ( $result as $row){
-                $InternetMilitaire = (new InternetMilitaire())
-                    ->setMasterId($row['Master ID'])
-                    ->setDebitInternetMilitaire($row['debit'])
-                    ->setIpLanSubnet($row['IP LAN subnet'])
-                    ->setIpPfs($row['adresse IP PFS'])
-                    ->setIdOrganisme(
-                        $this->organismeRepository->findOneBy([
-                            'organisme' => $row['Entité'],
-                            'idQuartier' => $this->quartiersRepository->findOneBy([
-                                'trigramme' => $row['TRI']
-                            ]),
-                        ])
-                    )
-                    ->setIdSupport(
-                        $this->supportInternetMilitaireRepository->findOneBy([
-                            'support' => $row['support']
-                        ])
-                    )
-                    ->setEtatInternetMilitaire(1)
-                ;
-                $em->persist($InternetMilitaire);
-                $em->flush();
+
+                $MasterId = $this->internetMilitaireRepository->findOneBy([
+                   'masterId' => $row['Master ID']
+                ]);
+
+                if($MasterId == '') {
+                    $InternetMilitaire = (new InternetMilitaire())
+                        ->setMasterId($row['Master ID'])
+                        ->setDebitInternetMilitaire($row['debit'])
+                        ->setIpLanSubnet($row['@IP LAN subnet'])
+                        ->setIpPfs($row['adresse IP PFS'])
+                        ->setIdOrganisme(
+                            $this->organismeRepository->findOneBy([
+                                'organisme' => $row['Entité'],
+                                'idQuartier' => $this->quartiersRepository->findOneBy([
+                                    'trigramme' => $row['TRI']
+                                ]),
+                            ])
+                        )
+                        ->setIdSupport(
+                            $this->supportInternetMilitaireRepository->findOneBy([
+                                'support' => $row['support']
+                            ])
+                        )
+                        ->setEtatInternetMilitaire(1);
+                    $em->persist($InternetMilitaire);
+                    $em->flush();
+                }else{
+                    $MasterId
+                        ->setDebitInternetMilitaire($row['debit'])
+                        ->setIpLanSubnet($row['@IP LAN subnet'])
+                        ->setIpPfs($row['adresse IP PFS'])
+                        ->setIdOrganisme(
+                            $this->organismeRepository->findOneBy([
+
+                                'organisme' => $row['Entité'],
+                                'idQuartier' => $this->quartiersRepository->findOneBy([
+                                    'trigramme' => $row['TRI']
+                                ]),
+                            ])
+                        )
+                        ->setIdSupport(
+                            $this->supportInternetMilitaireRepository->findOneBy([
+                                'support' => $row['support']
+                            ])
+                        );
+                        $em->persist($MasterId);
+                        $em->flush();
+                }
             }
 
             $jsonData = array(

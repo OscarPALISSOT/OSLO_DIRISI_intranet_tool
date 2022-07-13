@@ -60,6 +60,8 @@ class AccesWanController extends AbstractController {
 
         $AccesWans = $this->accesWanRepository->findAccesWanSearch($Data);
 
+        $numeroDemande = $this->travauxAccesWanRepository->findAll();
+
         $role = $this->getUser()->getRoles();
         if ($role[0] == 'ROLE_ADMIN'){
             $role[0] = $request->get('role');
@@ -136,6 +138,7 @@ class AccesWanController extends AbstractController {
             $em->persist($NewAccesWan);
             $em->flush();
 
+
             $jsonData = array(
                 'message' => $this->sigleRepository->findOneBy([
                         'intituleSigle' => 'AccesWan'
@@ -180,7 +183,6 @@ class AccesWanController extends AbstractController {
                     $em->remove($accesWanToDelete);
                     $em->flush();
                 }
-
             }
             $jsonData = array(
                 'message' => "Suppression terminée",
@@ -287,7 +289,11 @@ class AccesWanController extends AbstractController {
             foreach ($result as $row){
 
                 $idOpera = $this->accesWanRepository->findOneBy([
-                    'idAccess' => $row['euh']
+                    'idAccess' => $row['Nom de l accès']
+                ]);
+
+                $numeroDemande = $this->travauxAccesWanRepository->findOneBy([
+                   'numeroDemande' => $row['n° Demande']
                 ]);
 
                 if($row['Date envoi client'] != ''){
@@ -297,17 +303,31 @@ class AccesWanController extends AbstractController {
                     $dateTravaux = null;
                 }
 
-                $travauxOpera = (new TravauxAccesWan())
-                    ->setIdOpera($idOpera)
-                    ->setDateTravauxOpera($dateTravaux)
-                    ->setEtatTravauxOpera($row['ETAT PRODUCTION'])
-                    ->setDebitFinTravauxOpera($row['Débit cible global'])
-                ;
+                if($numeroDemande == '') {
+                    $travauxOpera = (new TravauxAccesWan())
+                        ->setIdOpera($idOpera)
+                        ->setNumeroDemande($row['n° Demande'])
+                        ->setDateTravauxOpera($dateTravaux)
+                        ->setEtatTravauxOpera($row['ETAT PRODUCTION'])
+                        ->setDebitFinTravauxOpera($row['Débit cible global']);
 
-                $em->persist($travauxOpera);
-                $em->flush();
+                    $em->persist($travauxOpera);
+                    $em->flush();
+                }
+
+                else{
+                    $numeroDemande
+                        ->setDebitFinTravauxOpera($row['Débit cible global'])
+                        ->setEtatTravauxOpera($row['ETAT PRODUCTION'])
+                        ->setDateTravauxOpera($dateTravaux)
+                        ->setIdOpera($idOpera);
+                    
+
+                    $em->persist($numeroDemande);
+                    $em->flush();
+                }
+
             }
-
 
             $jsonData = array([
                 'message' => 'importation terminée'
@@ -317,14 +337,12 @@ class AccesWanController extends AbstractController {
         return $this->json($jsonData,200);
     }
 
-
-
-
     /**
      * @Route ("/Admin/ImportAccesWan", name="importAccesWan")
      * @param Request $request
      * @return JsonResponse
      */
+
 
     public function import(Request $request) : JsonResponse
     {
